@@ -9,16 +9,17 @@ function App() {
     tg.close()
   }
   
-  const onSend =() => {
+  const onSendData =() => {
     tg.sendData(JSON.stringify({message: 'hello!'}))
   }
   useEffect(()=>{tg.ready()}, [])
   useEffect(() => {tg.MainButton.show()})
+  useEffect(() => {tg.onEvent('mainButtonClicked', onSendData)})
+  
   return (
     <div className="App">
       <button onClick={onClose}>Закрыть</button>
       <Home/>
-      <button className='btn-send' onClick={onSend}>Send</button>
     </div>
   );
 }
