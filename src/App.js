@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import { Home } from './components/home';
@@ -9,9 +9,12 @@ function App() {
     tg.close()
   }
   
-  const onSendData =() => {
+  
+
+  const onSendData = useCallback(() => {
     tg.sendData(JSON.stringify({message: 'hello!'}))
-  }
+  }, [])
+  
   useEffect(()=>{tg.ready()}, [])
   useEffect(() => {tg.MainButton.show()})
   useEffect(() => {tg.onEvent('mainButtonClicked', onSendData)})
