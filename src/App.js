@@ -6,7 +6,7 @@ const tg = window.Telegram.WebApp
 
 function App() {
   const onClose =() => {
-    tg.onClose()
+    tg.close()
   }
   
   const onSend =() => {
