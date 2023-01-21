@@ -13,6 +13,7 @@ function App() {
     tg.sendData(JSON.stringify({message: 'hello!'}))
   }
   useEffect(()=>{tg.ready()}, [])
+  useEffect(() => {tg.MainButton.show()})
   return (
     <div className="App">
       <button onClick={onClose}>Закрыть</button>
