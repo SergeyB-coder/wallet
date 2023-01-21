@@ -12,9 +12,10 @@ function App() {
   
 
   const onSendData = useCallback(() => {
+    console.log('h')
     tg.sendData(JSON.stringify({message: 'hello!'}))
   }, [])
-  
+
   useEffect(()=>{tg.ready()}, [])
   useEffect(() => {tg.MainButton.show()})
   useEffect(() => {tg.onEvent('mainButtonClicked', onSendData)})
