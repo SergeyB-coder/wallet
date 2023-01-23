@@ -8,7 +8,7 @@ import { useTelegram } from './hooks/useTelegram';
 
 function App() {
   const {tg} = useTelegram()
-  const [title, setTitle] = useState('')
+  const [title, setTitle] = useState('T')
   const onClose =() => {
     tg.close()
   }
