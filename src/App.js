@@ -6,21 +6,21 @@ import { useTelegram } from './hooks/useTelegram';
 
 
 function App() {
-  const {tg} = useTelegram()
+  // const {tg} = useTelegram()
   const onClose =() => {
-    tg.close()
+    // tg.close()
   }
   
   
 
   const onSendData = useCallback(() => {
     console.log('h')
-    tg.sendData(JSON.stringify({message: 'hello!'}))
+    // tg.sendData(JSON.stringify({message: 'hello!'}))
   }, [])
 
-  useEffect(()=>{tg.ready()}, [])
-  useEffect(() => {tg.MainButton.show()})
-  useEffect(() => {tg.onEvent('mainButtonClicked', onSendData)})
+  // useEffect(()=>{tg.ready()}, [])
+  // useEffect(() => {tg.MainButton.show()})
+  // useEffect(() => {tg.onEvent('mainButtonClicked', onSendData)})
   
   return (
     <div className="App">
