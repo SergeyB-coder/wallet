@@ -32,7 +32,7 @@ function App() {
     .then((response) => response.json())
     .then((data) => {
       console.log('data', data)
-      setTitle(data)
+      setTitle(data.res)
     });
   }, [])
 
