@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import { Home } from './components/home';
@@ -8,6 +8,7 @@ import { useTelegram } from './hooks/useTelegram';
 
 function App() {
   const {tg} = useTelegram()
+  const [title, setTitle] = useState('')
   const onClose =() => {
     tg.close()
   }
@@ -31,6 +32,7 @@ function App() {
     .then((response) => response.json())
     .then((data) => {
       console.log('data', data)
+      setTitle(data)
     });
   }, [])
 
@@ -41,6 +43,7 @@ function App() {
   return (
     <div className="App">
       <button onClick={onClose}>Закрыть</button>
+      <h4>{title}</h4>
       <Home/>
     </div>
   );
