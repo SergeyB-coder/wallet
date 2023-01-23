@@ -1,0 +1,1 @@
+export const url = 'https://walletexp.na4u.ru'
