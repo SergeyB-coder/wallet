@@ -2,9 +2,11 @@ import React, { useCallback, useEffect } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import { Home } from './components/home';
-const tg = window.Telegram.WebApp
+import { useTelegram } from './hooks/useTelegram';
+
 
 function App() {
+  const {tg} = useTelegram()
   const onClose =() => {
     tg.close()
   }

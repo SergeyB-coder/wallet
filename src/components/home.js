@@ -6,7 +6,8 @@ export function Home() {
 
   return (
     <div>
-      Hello!
+      <p>Hello!</p>
+      <input placeholder='adress' />
     </div>
   );
 }
