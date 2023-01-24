@@ -8,8 +8,8 @@ import { useTelegram } from './hooks/useTelegram';
 
 function App() {
   const {tg} = useTelegram()
-  const [title, setTitle] = useState('T')
-  const [balance, setBalance] = useState('T')
+  const [title, setTitle] = useState(0)
+  const [adress, setAdress] = useState('')
   const onClose =() => {
     tg.close()
   }
@@ -19,7 +19,7 @@ function App() {
   const onSendData = useCallback(() => {
     console.log('h')
     // tg.sendData(JSON.stringify({message: 'hello!'}))
-    fetch(url + '/checkbalance', {
+    fetch(url + '/checkadress', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -27,7 +27,7 @@ function App() {
         },
         //   mode: 'no-cors',
         body: JSON.stringify({
-          adress: '345'
+          adress: adress
         })
     })
     .then((response) => response.json())
@@ -45,7 +45,7 @@ function App() {
     <div className="App">
       <button onClick={onClose}>Закрыть</button>
       <h4>{title}</h4>
-      <Home setBalance={setBalance} balance={balance}/>
+      <Home setAdress={setAdress} adress={adress}/>
     </div>
   );
 }

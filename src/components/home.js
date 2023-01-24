@@ -3,12 +3,12 @@ import React from 'react';
 // window.Telegram.WebApp
 
 export function Home(props) {
-  const setBalance = props.setBalance
-  const balance = props.balance
+  const setAdress = props.setAdress
+  const adress = props.adress
   return (
     <div>
       <p>Hello!</p>
-      <input placeholder='adress' onChange={(e) => {setBalance(e.target.value)}} value={balance}/>
+      <input placeholder='adress' onChange={(e) => {setAdress(e.target.value)}} value={adress}/>
     </div>
   );
 }
