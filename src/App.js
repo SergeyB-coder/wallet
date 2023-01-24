@@ -35,7 +35,7 @@ function App() {
       console.log('data', data)
       setTitle(data.res)
     });
-  }, [])
+  }, [adress])
 
   useEffect(()=>{tg.ready()})
   useEffect(() => {tg.MainButton.show()})
