@@ -17,7 +17,7 @@ function App() {
   
 
   const onSendData = useCallback(() => {
-    console.log('h')
+    console.log('adress', adress)
     // tg.sendData(JSON.stringify({message: 'hello!'}))
     fetch(url + '/checkadress', {
         method: 'POST',
