@@ -43,7 +43,7 @@ function App() {
   
   return (
     <div className="App">
-      <button onClick={onClose}>Закрыть</button>
+      {/* <button onClick={onClose}>Закрыть</button> */}
       <h4>{title}</h4>
       <Home setAdress={setAdress} adress={adress}/>
     </div>

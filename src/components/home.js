@@ -8,7 +8,7 @@ export function Home(props) {
   return (
     <div>
       <p>Hello!</p>
-      <input placeholder='adress' onChange={(e) => {setAdress(e.target.value)}} value={adress}/>
+      <input className='home-input' placeholder='adress' onChange={(e) => {setAdress(e.target.value)}} value={adress}/>
     </div>
   );
 }

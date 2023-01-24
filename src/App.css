@@ -47,3 +47,9 @@
   background-color: var(--tg-theme-button-color);
   color: var(--tg-theme-text-color);
 }
+
+.home-input {
+  width: 70vw;
+  border-color: var(--tg-theme-hint-color);
+  padding: 5px;
+}
