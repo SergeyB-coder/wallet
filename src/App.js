@@ -16,7 +16,7 @@ function App() {
   
   
 
-  const onSendData = useCallback(() => {
+  const onSendData = () => {
     console.log('adress', adress)
     // tg.sendData(JSON.stringify({message: 'hello!'}))
     fetch(url + '/checkadress', {
@@ -35,7 +35,7 @@ function App() {
       console.log('data', data)
       setTitle(data.res)
     });
-  }, [adress])
+  }
 
   useEffect(()=>{tg.ready()})
   useEffect(() => {tg.MainButton.show()})
