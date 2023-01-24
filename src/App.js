@@ -9,6 +9,7 @@ import { useTelegram } from './hooks/useTelegram';
 function App() {
   const {tg} = useTelegram()
   const [title, setTitle] = useState('T')
+  const [balance, setBalance] = useState('T')
   const onClose =() => {
     tg.close()
   }
@@ -44,7 +45,7 @@ function App() {
     <div className="App">
       <button onClick={onClose}>Закрыть</button>
       <h4>{title}</h4>
-      <Home/>
+      <Home setBalance={setBalance} balance={balance}/>
     </div>
   );
 }
