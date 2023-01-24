@@ -10,9 +10,6 @@ function App() {
   const {tg} = useTelegram()
   const [title, setTitle] = useState(0)
   const [adress, setAdress] = useState('')
-  const onClose =() => {
-    tg.close()
-  }
   
   
 
