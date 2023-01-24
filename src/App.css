@@ -51,5 +51,6 @@
 .home-input {
   width: 70vw;
   border-color: var(--tg-theme-hint-color);
+  border-radius: 5px;
   padding: 5px;
 }

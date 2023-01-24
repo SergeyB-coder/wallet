@@ -36,7 +36,10 @@ function App() {
 
   useEffect(()=>{tg.ready()})
   useEffect(() => {tg.MainButton.show()})
-  useEffect(() => {tg.onEvent('mainButtonClicked', onSendData)})
+  useEffect(() => {
+    tg.onEvent('mainButtonClicked', onSendData)
+    return tg.offEvent('mainButtonClicked', onSendData)
+  })
   
   return (
     <div className="App">
