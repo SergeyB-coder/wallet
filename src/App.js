@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import { Home } from './components/home';
@@ -13,7 +13,7 @@ function App() {
   
   
 
-  const onSendData = () => {
+  const onSendData = useCallback( () => {
     console.log('adress', adress)
     // tg.sendData(JSON.stringify({message: 'hello!'}))
     fetch(url + '/checkadress', {
@@ -32,14 +32,14 @@ function App() {
       console.log('data', data)
       setTitle(data.res)
     });
-  }
+  }, [adress])
 
   useEffect(()=>{tg.ready()})
   useEffect(() => {tg.MainButton.show()})
   useEffect(() => {
     tg.onEvent('mainButtonClicked', onSendData)
     return tg.offEvent('mainButtonClicked', onSendData)
-  })
+  }, [onSendData, tg])
   
   return (
     <div className="App">
