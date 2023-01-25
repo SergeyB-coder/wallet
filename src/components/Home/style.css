@@ -20,14 +20,19 @@
 }
 
 .menu-button-svg-container {
-    width: 5vw;
-    height: 5vw;
+    width: 8vw;
+    height: 8vw;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--tg-theme-bg-color);
-    /* background-color: #E4BB2D; */
-    border-radius: 2.5vw;
+    /* background-color: var(--tg-theme-bg-color); */
+    background-color: #E4BB2D;
+    border-radius: 4vw;
+}
+
+.menu-button-svg-container-p {
+    display: flex;
+    justify-content: center;
 }
 
 .button-menu-text {
