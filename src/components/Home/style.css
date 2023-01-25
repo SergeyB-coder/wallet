@@ -1,11 +1,36 @@
 .button-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1vw;
     width: 20vw;
-    height: 5vh;
+    height: 25vh;
     background-color: var(--tg-theme-button-color);
+    /* background-color: #256EA2; */
+    color: var(--tg-theme-button-text-color);
     /* border: 1px solid black; */
+    border-radius: 10px;
 }
 
 .container-buttons {
     display: flex;
     justify-content: space-between;
+    padding-left: 5vw;
+    padding-right: 5vw;
+}
+
+.menu-button-svg-container {
+    width: 5vw;
+    height: 5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--tg-theme-bg-color);
+    /* background-color: #E4BB2D; */
+    border-radius: 2.5vw;
+}
+
+.button-menu-text {
+    /* color: #E4BB2D; */
+    color: var(--tg-theme-bg-color);
 }
