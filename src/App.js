@@ -1,7 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 // import logo from './logo.svg';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 import './App.css';
-import { Home } from './components/home';
+import { Home } from './components/Home/home';
+import { Ptp } from './components/Ptp/ptp';
 import { url } from './const/urls';
 import { useTelegram } from './hooks/useTelegram';
 
@@ -43,9 +49,22 @@ function App() {
   
   return (
     <div className="App">
-      {/* <button onClick={onClose}>Закрыть</button> */}
-      <h4>{title}</h4>
-      <Home setAdress={setAdress} adress={adress}/>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Home/>
+            }
+          />
+          <Route
+            path="/ptp"
+            element={
+              <Ptp/>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

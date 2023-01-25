@@ -1,0 +1,11 @@
+.button-menu {
+    width: 20vw;
+    height: 5vh;
+    background-color: var(--tg-theme-button-color);
+    /* border: 1px solid black; */
+}
+
+.container-buttons {
+    display: flex;
+    justify-content: space-between;
+}
