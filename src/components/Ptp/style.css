@@ -1,0 +1,49 @@
+.trade-menu-container {
+    background-color: var(--tg-theme-secondary-bg-color);
+    /* background-color: #49515C; */
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.trade-menu-plus-col {
+    /* color: #358ABA; */
+    color: var(--tg-theme-link-color);
+    width: 10vw;
+}
+
+.trade-menu-text-col {
+    color: var(--tg-theme-link-color);
+    /* color: #358ABA; */
+    width: 65vw;
+    text-align: left;
+}
+
+.button-trade-menu {
+    cursor: pointer;
+}
+
+.button-trade-menu:hover  {
+    font-weight: bold ;
+}
+
+.divider {
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    margin-left: 10vw;
+    height: 1px;
+    /* width: 80%; */
+    /* background-color: #358ABA; */
+    background-color: var(--tg-theme-link-color);
+}
+
+.trade-menu-arrow-col {
+    /* color: #358ABA; */
+    color: var(--tg-theme-link-color);
+    width: 10vw;
+}
+
+.trade-menu-user-col {
+    color: var(--tg-theme-link-color);
+    /* color: #358ABA; */
+    width: 10vw;
+}
