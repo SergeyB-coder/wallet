@@ -1,8 +1,8 @@
 export function Button (props) {
-
+    const onClick = props.onClick
     return (
         <>
-            <div className='button-menu'>
+            <div className='button-menu' onClick={onClick}>
                 <div>
                     <div className="menu-button-svg-container-p">
                         <div className='menu-button-svg-container'>

@@ -1,8 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from './button';
 import './style.css'
 
 export function MenuButtons() {
+    const navigate = useNavigate()
+    const handleClickP2P = () => {
+        navigate('/ptp', {replace: true})
+    }
     return (
         <>
             <div>
@@ -26,6 +31,7 @@ export function MenuButtons() {
                         text={'P2P Маркет'} 
                         d_svg={'M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z'}
                         fill_svg={"var(--tg-theme-button-color)"}
+                        onClick={handleClickP2P}
                     />
                 </div>
             </div>
