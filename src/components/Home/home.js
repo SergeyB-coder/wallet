@@ -3,9 +3,7 @@ import { MenuButtons } from './menubuttons';
 // import { useSelector, useDispatch } from 'react-redux';
 // window.Telegram.WebApp
 
-export function Home(props) {
-  const setAdress = props.setAdress
-  const adress = props.adress
+export function Home() {
   return (
     <div>
       <h3>Hello!</h3>
