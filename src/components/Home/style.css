@@ -4,7 +4,7 @@
     align-items: center;
     padding: 1vw;
     width: 20vw;
-    height: 25vh;
+    height: 20vw;
     background-color: var(--tg-theme-button-color);
     /* background-color: #256EA2; */
     color: var(--tg-theme-button-text-color);
@@ -21,8 +21,8 @@
 }
 
 .menu-button-svg-container {
-    width: 70px;
-    height: 70px;
+    width: 8vw;
+    height: 8vw;
     display: flex;
     justify-content: center;
     align-items: center;
