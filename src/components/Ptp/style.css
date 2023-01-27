@@ -1,12 +1,20 @@
+:root {
+    --secondary-bg-color: var(--tg-theme-secondary-bg-color);
+    --bg-color: var(--tg-theme-bg-color);
+    --link-color: var(--tg-theme-link-color);
+    --button-text-color: var(--tg-theme-button-text-color);
+    --button-color: var(--tg-theme-button-color);
+}
+
 .trade-menu-container {
-    background-color: var(--tg-theme-secondary-bg-color);
-    /* background-color: #49515C; */
+    /* background-color: var(--tg-theme-secondary-bg-color); */
+    background-color: #49515C;
     border-radius: 5px;
     padding: 10px;
 }
 
 .currency-settings-container {
-    background-color: var(--tg-theme-secondary-bg-color);
+    background-color: var(--secondary-bg-color);
     position: relative;
     background-color: #49515C;
     border-radius: 5px;
@@ -15,12 +23,12 @@
 
 .trade-menu-plus-col {
     /* color: #358ABA; */
-    color: var(--tg-theme-link-color);
+    color: var(--link-color);
     width: 10vw;
 }
 
 .trade-menu-text-col {
-    color: var(--tg-theme-link-color);
+    color: var(--link-color);
     /* color: #358ABA; */
     width: 65vw;
     text-align: left;
@@ -41,7 +49,7 @@
     height: 1px;
     /* width: 80%; */
     /* background-color: #358ABA; */
-    background-color: var(--tg-theme-link-color);
+    background-color: var(--link-color);
 }
 
 .divider-currency {
@@ -50,24 +58,28 @@
     height: 0.5px;
     /* width: 80%; */
     /* background-color: #358ABA; */
-    background-color: var(--tg-theme-link-color);
+    background-color: var(--secondary-bg-color);
+}
+
+.m-m-10 {
+    margin-right: -10px;
 }
 
 .trade-menu-arrow-col {
     /* color: #358ABA; */
-    color: var(--tg-theme-link-color);
+    color: var(--link-color);
     width: 10vw;
 }
 
 .trade-menu-user-col {
-    color: var(--tg-theme-link-color);
+    color: var(--link-color);
     /* color: #358ABA; */
     width: 10vw;
 }
 
 .currency-settings-item-col1 {
     /* color: #eff1f1; */
-    color: var(--tg-theme-button-text-color);
+    color: var(--button-text-color);
     display: flex;
     justify-content:flex-start;
     width: 40vw;
@@ -79,8 +91,15 @@
     color: var(--tg-theme-link-color);
     display: flex;
     justify-content:flex-end;
-    width: 30vw;
+    width: 40vw;
     font-size: 10px;
+}
+
+.method-pay-col2 {
+    color: var(--tg-theme-button-text-color);
+    display: flex;
+    justify-content:flex-end;
+    width: 40vw;
 }
 
 .t-left-align {
@@ -93,11 +112,25 @@
 
 .time-limit {
     top: 5px;
-    right: 7vw;;
+    right: 10vw;;
     position: absolute;
     /* background-color: #71777f; */
     background-color: var(--tg-theme-secondary-bg-color);
     border-radius: 5px;
     padding: 5px;
+}
+
+.button-next {
+    background-color: var(--tg-theme-button-color);
+    color: var(--tg-theme-button-text-color);
+}
+
+.method-pay-text {
+    text-align: left;
+}
+
+.method-name-col {
+    text-align: left;
+    width: 60vw;
 }
 

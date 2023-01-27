@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 
 import { useTelegram } from '../../hooks/useTelegram';
+import { ButtonNext } from './buttonNext';
 
-export function CreateOrder1() {
+export function CreateOrder1(props) {
+    const setScreen = props.setScreen
     const {tg} = useTelegram()
 
     const price_market = 10
@@ -129,11 +131,11 @@ export function CreateOrder1() {
             <div className='currency-settings-container mt-1'>
                 {limit_order}
             </div>
-            <div className='currency-settings-container mt-1'>
+            <div className='currency-settings-container mt-3 mb-3'>
                 {time_limit}
             </div>
             
-
+            <ButtonNext onClick={() => {setScreen('createorder2')}}/>
         </div>
     );
 }
