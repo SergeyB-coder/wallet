@@ -5,6 +5,14 @@
     padding: 10px;
 }
 
+.currency-settings-container {
+    background-color: var(--tg-theme-secondary-bg-color);
+    position: relative;
+    background-color: #49515C;
+    border-radius: 5px;
+    padding: 10px;
+}
+
 .trade-menu-plus-col {
     /* color: #358ABA; */
     color: var(--tg-theme-link-color);
@@ -36,6 +44,15 @@
     background-color: var(--tg-theme-link-color);
 }
 
+.divider-currency {
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    height: 0.5px;
+    /* width: 80%; */
+    /* background-color: #358ABA; */
+    background-color: var(--tg-theme-link-color);
+}
+
 .trade-menu-arrow-col {
     /* color: #358ABA; */
     color: var(--tg-theme-link-color);
@@ -47,3 +64,40 @@
     /* color: #358ABA; */
     width: 10vw;
 }
+
+.currency-settings-item-col1 {
+    /* color: #eff1f1; */
+    color: var(--tg-theme-button-text-color);
+    display: flex;
+    justify-content:flex-start;
+    width: 40vw;
+    font-size: 10px;
+}
+
+.currency-settings-item-col2 {
+    /* color: #358ABA; */
+    color: var(--tg-theme-link-color);
+    display: flex;
+    justify-content:flex-end;
+    width: 30vw;
+    font-size: 10px;
+}
+
+.t-left-align {
+    text-align: left;
+}
+
+.mini-info {
+    font-size: 8px;
+}
+
+.time-limit {
+    top: 5px;
+    right: 7vw;;
+    position: absolute;
+    /* background-color: #71777f; */
+    background-color: var(--tg-theme-secondary-bg-color);
+    border-radius: 5px;
+    padding: 5px;
+}
+
