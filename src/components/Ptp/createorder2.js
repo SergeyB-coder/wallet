@@ -3,7 +3,8 @@ import React, { useEffect } from 'react';
 import { useTelegram } from '../../hooks/useTelegram';
 import { ButtonNext } from './buttonNext';
 
-export function CreateOrder2() {
+export function CreateOrder2(props) {
+    const setScreen = props.setScreen
     const {tg} = useTelegram()
 
     const bank = 'Raiffeisen Bank'
@@ -67,11 +68,11 @@ export function CreateOrder2() {
             </div>
 
             
-            <div className='trade-menu-container mt-5'>
+            <div className='trade-menu-container mt-5 mb-5'>
                 {renderListMethods}
             </div>
             
-            <ButtonNext/>
+            <ButtonNext onClick={() => setScreen('createorder4')}/>
         </div>
     );
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CreateOrder1 } from './createorder1';
 import { CreateOrder2 } from './createorder2';
+import { CreateOrder4 } from './createorder4';
 import { TradeMenu } from './trademenu';
 // import { useSelector, useDispatch } from 'react-redux';
 // window.Telegram.WebApp
@@ -13,6 +14,7 @@ export function Ptp(props) {
       {screen === 'menu' && <TradeMenu setScreen={setScreen}/>}
       {screen === 'createorder1' && <CreateOrder1 setScreen={setScreen}/>}
       {screen === 'createorder2' && <CreateOrder2 setScreen={setScreen}/>}
+      {screen === 'createorder4' && <CreateOrder4 setScreen={setScreen}/>}
     </div>
   );
 }
