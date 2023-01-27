@@ -5,8 +5,8 @@
     padding: 1vw;
     width: 20vw;
     height: 20vw;
-    /* background-color: var(--tg-theme-button-color); */
-    background-color: #256EA2;
+    background-color: var(--tg-theme-button-color);
+    /* background-color: #256EA2; */
     color: var(--tg-theme-button-text-color);
     /* border: 1px solid black; */
     border-radius: 10px;
@@ -26,8 +26,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background-color: var(--tg-theme-bg-color); */
-    background-color: #E4BB2D;
+    background-color: var(--tg-theme-bg-color);
+    /* background-color: #E4BB2D; */
     border-radius: 4vw;
 }
 
@@ -37,8 +37,8 @@
 }
 
 .button-menu-text {
-    color: #E4BB2D;
-    /* color: var(--tg-theme-bg-color); */
+    /* color: #E4BB2D; */
+    color: var(--tg-theme-bg-color);
     font-size: 11px;
     
 }
