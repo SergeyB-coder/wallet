@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ButtonNext } from './buttonNext';
 
 export function CreateOrder4(props) {
