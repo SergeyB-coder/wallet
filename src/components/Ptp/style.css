@@ -7,8 +7,8 @@
 }
 
 .trade-menu-container {
-    /* background-color: var(--tg-theme-secondary-bg-color); */
-    background-color: #49515C;
+    background-color: var(--secondary-bg-color);
+    /* background-color: #49515C; */
     border-radius: 5px;
     padding: 10px;
 }
