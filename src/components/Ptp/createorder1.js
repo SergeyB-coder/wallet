@@ -97,7 +97,7 @@ export function CreateOrder1() {
     }, );
 
     return (
-        <div className='p-4'>
+        <div>
             <div className='row  mt-3'>
                 <div className='col-9 t-left-align'>Объявление на продажу</div>
                 <div className='col-2'>1/4</div>
