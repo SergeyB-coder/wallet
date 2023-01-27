@@ -39,5 +39,6 @@
 .button-menu-text {
     /* color: #E4BB2D; */
     color: var(--tg-theme-bg-color);
-    font-size: 14px;
+    font-size: 11px;
+    
 }
