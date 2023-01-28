@@ -5,9 +5,9 @@ import { useTelegram } from '../../hooks/useTelegram';
 
 
 export function Home() {
-	const tg = useTelegram()
+	const { user_id} = useTelegram()
 	useEffect(() => {
-		getUserData({user_id: tg.WebAppUser.id}, () => {
+		getUserData({user_id: user_id}, () => {
 
 		})
 	});
