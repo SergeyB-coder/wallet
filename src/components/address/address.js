@@ -34,7 +34,7 @@ export function Address (props) {
           }, {
             selector: '#q',
           })
-    }, []);
+    }, );
     return (
         <>
             <div className='address-container'>
