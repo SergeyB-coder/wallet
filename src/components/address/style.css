@@ -1,0 +1,21 @@
+.address-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 20vh;
+}
+
+.address-text {
+    width: 60vw;
+    word-break: break-all;
+}
+
+.label-address {
+    color: var(--hint-color)
+}
+
+.address-copy-button {
+    margin-top: 10vh;
+    color: var(--button-text-color);
+    background-color: var(--button-color);
+    border-radius: 8px;
+}

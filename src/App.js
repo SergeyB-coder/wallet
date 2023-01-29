@@ -6,6 +6,7 @@ import {
   Route,
 } from "react-router-dom";
 import './App.css';
+import { Address } from './components/address/address';
 import { Home } from './components/Home/home';
 import { Ptp } from './components/Ptp/ptp';
 import { useTelegram } from './hooks/useTelegram';
@@ -57,6 +58,12 @@ function App() {
             path="/ptp"
             element={
               <Ptp/>
+            }
+          />
+          <Route
+            path="/address"
+            element={
+              <Address/>
             }
           />
         </Routes>
