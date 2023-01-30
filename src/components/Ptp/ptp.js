@@ -1,16 +1,26 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../hooks/useTelegram';
 import { CreateOrder1 } from './createorder1';
 import { CreateOrder2 } from './createorder2';
 import { CreateOrder4 } from './createorder4';
 import { CreateOrder5 } from './createorder5';
+import { createOrder } from './ptpApi';
+import { selectCurrencyFiat, selectCurrencyOrder, selectLimitOrder, selectPercentPrice, selectQuantityOrder } from './ptpSlice';
 import { TradeMenu } from './trademenu';
 
 
-export function Ptp(props) {
-    const {tg} = useTelegram()
+export function Ptp() {
+    const {tg, user_id} = useTelegram()
     const navigate = useNavigate()
+
+    const percent_price = useSelector(selectPercentPrice)
+    const quantity_order = useSelector(selectQuantityOrder)
+    const limit_order = useSelector(selectLimitOrder)
+    const currency_fiat = useSelector(selectCurrencyFiat)
+    const currency_order = useSelector(selectCurrencyOrder)
+
     const [screen, setScreen] = useState('menu') 
 
     useEffect(() => {
@@ -30,15 +40,20 @@ export function Ptp(props) {
                 break;
 
             case 'createorder2':
-                setScreen('createorder3')
-                break;
-
-            case 'createorder3':
                 setScreen('createorder4')
                 break;
 
             case 'createorder4':
-                setScreen('createorder5')
+                createOrder({
+                    user_id: user_id,
+                    percent_price: percent_price,
+                    quantity_order: quantity_order,
+                    limit_order: limit_order,
+                    currency_fiat: currency_fiat,
+                    currency_order: currency_order
+                }, () => {
+                    setScreen('createorder5')
+                })
                 break;
 
             default:
@@ -60,17 +75,11 @@ export function Ptp(props) {
                 setScreen('createorder1')
                 break;
 
-            case 'createorder3':
+            case 'createorder4':
                 setScreen('createorder2')
                 break;
-
-            case 'createorder4':
-                setScreen('createorder3')
-                break;
             
-            case 'createorder5':
-                setScreen('createorder4')
-                break;
+            
 
             default:
                 break;

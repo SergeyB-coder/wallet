@@ -1,10 +1,10 @@
 import React from 'react';
 
 
-import { ButtonNext } from './buttonNext';
+// import { ButtonNext } from './buttonNext';
 
 export function CreateOrder2(props) {
-    const setScreen = props.setScreen
+    // const setScreen = props.setScreen
 
     const bank = 'Raiffeisen Bank'
     const card = 'Raiffeisen Bank - 12345'
@@ -68,7 +68,7 @@ export function CreateOrder2(props) {
                 {renderListMethods}
             </div>
             
-            <ButtonNext onClick={() => setScreen('createorder4')}/>
+            {/* <ButtonNext onClick={() => setScreen('createorder4')}/> */}
         </div>
     );
 }

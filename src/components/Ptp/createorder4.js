@@ -1,15 +1,15 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useTelegram } from '../../hooks/useTelegram';
-import { ButtonNext } from './buttonNext';
-import { createOrder } from './ptpApi';
+// import { useTelegram } from '../../hooks/useTelegram';
+// import { ButtonNext } from './buttonNext';
+// import { createOrder } from './ptpApi';
 
-import { selectLimitOrder, selectPercentPrice, selectQuantityOrder, selectCurrencyFiat, selectCurrencyOrder } from './ptpSlice';
+import { selectQuantityOrder, selectCurrencyFiat, selectCurrencyOrder } from './ptpSlice';
 
 export function CreateOrder4(props) {
-    const percent_price = useSelector(selectPercentPrice)
+    // const percent_price = useSelector(selectPercentPrice)
     const quantity_order = useSelector(selectQuantityOrder)
-    const limit_order = useSelector(selectLimitOrder)
+    // const limit_order = useSelector(selectLimitOrder)
     const currency_fiat = useSelector(selectCurrencyFiat)
     const currency_order = useSelector(selectCurrencyOrder)
 
@@ -22,25 +22,13 @@ export function CreateOrder4(props) {
         'USD'
     ]
     // const user_id = '652065848'
-    const {user_id} = useTelegram()
-    const setScreen = props.setScreen
+    // const {user_id} = useTelegram()
+    // const setScreen = props.setScreen
     const price = 2.48
     const divider = 
         <div className='divider-test-order'></div>
     
-    const handleCreateOrder = () => {
-        
-        createOrder({
-            user_id: user_id,
-            percent_price: percent_price,
-            quantity_order: quantity_order,
-            limit_order: limit_order,
-            currency_fiat: currency_fiat,
-            currency_order: currency_order
-        }, () => {
-            setScreen('createorder5')
-        })
-    }
+    
 
     return (
         <div>
@@ -83,7 +71,7 @@ export function CreateOrder4(props) {
                 </div>
 
             </div>
-            <ButtonNext onClick={handleCreateOrder} text={'Создать объявление'}/>
+            {/* <ButtonNext onClick={handleCreateOrder} text={'Создать объявление'}/> */}
         </div>
     );
 }

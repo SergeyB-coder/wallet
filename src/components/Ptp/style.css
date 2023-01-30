@@ -106,7 +106,7 @@ select {
 
 .trade-menu-arrow-col {
     color: var(--button-text-color);
-    width: 10vw;
+    width: 5vw;
 }
 
 .trade-menu-user-col {
@@ -149,7 +149,7 @@ select {
     top: 12px;
     right: 10vw;;
     position: absolute;
-    background-color: var(--secondary-bg-color);
+    background-color: var(--link-color);
     border-radius: 5px;
     padding: 5px;
 }

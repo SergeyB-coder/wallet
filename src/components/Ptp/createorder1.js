@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ButtonNext } from './buttonNext';
+// import { ButtonNext } from './buttonNext';
 import { selectLimitOrder, selectPercentPrice, selectQuantityOrder, setCurrencyFiat, setCurrencyOrder, setLimitOrder, setPercentPrice, setQuantityOrder } from './ptpSlice';
 
 export function CreateOrder1(props) {
     const dispatch = useDispatch()
-    const setScreen = props.setScreen
+    // const setScreen = props.setScreen
 
     const percent_price = useSelector(selectPercentPrice)
     const quantity_order = useSelector(selectQuantityOrder)
@@ -181,7 +181,7 @@ export function CreateOrder1(props) {
                 {time_limit}
             </div>
             
-            <ButtonNext onClick={() => {setScreen('createorder2')}}/>
+            {/* <ButtonNext onClick={() => {setScreen('createorder2')}}/> */}
         </div>
     );
 }
