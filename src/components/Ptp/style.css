@@ -22,7 +22,7 @@
 }
 
 .currency-settings-container {
-    background-color: var(--secondary-bg-color);
+    background-color: var(--button-color);
     position: relative;
     border-radius: 5px;
     padding: 10px;
