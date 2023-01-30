@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import { useTelegram } from '../../hooks/useTelegram';
+
 import { ButtonNext } from './buttonNext';
 
 export function CreateOrder2(props) {
     const setScreen = props.setScreen
-    const {tg} = useTelegram()
 
     const bank = 'Raiffeisen Bank'
     const card = 'Raiffeisen Bank - 12345'

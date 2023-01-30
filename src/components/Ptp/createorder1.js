@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useTelegram } from '../../hooks/useTelegram';
 import { ButtonNext } from './buttonNext';
 import { selectLimitOrder, selectPercentPrice, selectQuantityOrder, setCurrencyFiat, setCurrencyOrder, setLimitOrder, setPercentPrice, setQuantityOrder } from './ptpSlice';
 
 export function CreateOrder1(props) {
     const dispatch = useDispatch()
     const setScreen = props.setScreen
-    const {tg} = useTelegram()
 
     const percent_price = useSelector(selectPercentPrice)
     const quantity_order = useSelector(selectQuantityOrder)
