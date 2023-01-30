@@ -13,6 +13,14 @@ export function CreateOrder4(props) {
     const currency_fiat = useSelector(selectCurrencyFiat)
     const currency_order = useSelector(selectCurrencyOrder)
 
+    const CURRENCY_LIST = [
+        'USDT TRC20',
+        'USDT BEP20'
+    ]
+    const CURRENCY_FIAT_LIST = [
+        'RUB',
+        'USD'
+    ]
     // const user_id = '652065848'
     const {user_id} = useTelegram()
     const setScreen = props.setScreen
@@ -65,9 +73,9 @@ export function CreateOrder4(props) {
                         <p className='text-nowrap'>Оплатить в течение</p>
                     </div>
                     <div className='test-order-info-col'>
-                        <p>3 TON</p>
+                        <p>{quantity_order} {CURRENCY_LIST[currency_order - 1]}</p>
                         <p  className='text-nowrap'>2,00198 ~ 2,989 TON</p>
-                        <p>5 - 7.36 USD</p>
+                        <p>5 - 7.36 {CURRENCY_FIAT_LIST[currency_fiat - 1]}</p>
                         <p>Raiffeisen Bank</p>
                         <p>15 мин</p>
                     </div>

@@ -62,7 +62,7 @@ export function CreateOrder1(props) {
                 Продажа криптовалюты
             </div>
             <div className='currency-settings-item-col2'>
-                <select className="select-currency" aria-label="Default select example" onChange={handleChangeCurrency}>
+                <select className="select-currency" onChange={handleChangeCurrency}>
                     {/* <option className="select-currency" value="1">USDT TRC20</option>
                     <option className="select-currency" value="2">USDT BEP20</option> */}
                     {
@@ -144,22 +144,7 @@ export function CreateOrder1(props) {
                 <div className='time-limit'>15 мин</div>
             </div>
         </div>
-
     
-
-    useEffect(() => {
-        tg.BackButton.show()
-        tg.MainButton.setText('Далее')
-    }, );
-
-    const nextScreen = () => {
-        setScreen('createorder2')
-    }
-    
-    useEffect(() => {
-        tg.onEvent('mainButtonClicked', nextScreen)
-            return () => {tg.offEvent('mainButtonClicked', nextScreen)}
-        }, )
 
     return (
         <div>

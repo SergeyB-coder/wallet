@@ -39,7 +39,7 @@ function App() {
 //   }, [adress])
 
   useEffect(()=>{tg.ready()})
-  useEffect(() => {tg.MainButton.show()})
+  // useEffect(() => {tg.MainButton.show()})
 //   useEffect(() => {
 //     tg.onEvent('mainButtonClicked', onSendData)
 //     return () => {tg.offEvent('mainButtonClicked', onSendData)}

@@ -1,24 +1,40 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useTelegram } from '../../../hooks/useTelegram';
 import { getOrders } from './marketApi';
 import { selectOrders, setOrders } from './marketSlice';
 
 import './style.css'
-// import { useSelector, useDispatch } from 'react-redux';
-// window.Telegram.WebApp
 
-export function Market(props) {
+
+export function Market() {
+    const {tg} = useTelegram()
+    const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const orders = useSelector(selectOrders)
 
-
+    const backScreen = (() => {
+        navigate('/home', {replace: true})
+    })
     
     useEffect(() => {
         getOrders({user_id: ''}, (data) => {
             dispatch(setOrders(data.orders))
         })
     }, [dispatch]);
+
+    useEffect(() => {
+        tg.MainButton.hide()
+        tg.BackButton.show()
+    }, );
+
+    useEffect(() => {
+        tg.onEvent('backButtonClicked', backScreen)
+            return () => {tg.offEvent('backButtonClicked', backScreen)}
+        }, )
+
     return (
         <div className='market-container'>
             Market

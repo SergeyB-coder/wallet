@@ -14,9 +14,12 @@
     --hint-color: #8a939e; */
 }
 
+select {
+	appearance: none;
+}
+
 .trade-menu-container {
-    background-color: var(--secondary-bg-color);
-    /* background-color: #49515C; */
+    background-color: var(--button-color);
     border-radius: 5px;
     padding: 10px;
 }
@@ -31,6 +34,7 @@
 .bg-input {
     background-color: var(--button-color);
     color: var(--button-text-color);
+    /* color: 'red'; */
     border: none;
     outline: none;
 }
@@ -45,18 +49,32 @@
 }
 
 .trade-menu-text-col {
-    color: var(--link-color);
+    color: var(--button-text-color);
     width: 65vw;
     text-align: left;
 }
 
 .button-trade-menu {
+    padding-top: 5px;
+    padding-bottom: 5px;
     cursor: pointer;
 }
 
 .button-trade-menu:hover  {
     font-weight: bold ;
 }
+
+.button-currency-settings {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    cursor: pointer;
+}
+
+.button-currency-settings:hover  {
+    font-weight: bold ;
+}
+
+
 
 .divider {
     margin-top: 1vh;
@@ -87,7 +105,7 @@
 }
 
 .trade-menu-arrow-col {
-    color: var(--link-color);
+    color: var(--button-text-color);
     width: 10vw;
 }
 
@@ -100,15 +118,15 @@
     color: var(--button-text-color);
     display: flex;
     justify-content:flex-start;
-    width: 40vw;
-    font-size: 10px;
+    width: 50vw;
+    font-size: 12px;
 }
 
 .currency-settings-item-col2 {
     color: var(--button-text-color);
     display: flex;
     justify-content:flex-end;
-    width: 40vw;
+    width: 30vw;
     font-size: 10px;
 }
 
@@ -116,7 +134,7 @@
     color: var(--button-text-color);
     display: flex;
     justify-content:flex-end;
-    width: 40vw;
+    width: 30vw;
 }
 
 .t-left-align {
@@ -128,7 +146,7 @@
 }
 
 .time-limit {
-    top: 5px;
+    top: 12px;
     right: 10vw;;
     position: absolute;
     background-color: var(--secondary-bg-color);
@@ -149,12 +167,12 @@
 
 .method-name-col {
     text-align: left;
-    width: 60vw;
+    width: 7    0vw;
     color: var(--button-text-color);
 }
 
 .test-order-container {
-    background-color: var(--secondary-bg-color);
+    background-color: var(--button-color);
     border-radius: 5px;
     padding: 10px;
 }

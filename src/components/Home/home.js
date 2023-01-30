@@ -11,13 +11,18 @@ export function Home() {
 
 	const dispatch = useDispatch()
 
-	// const address = useSelector(selectAddress)
+	const {tg} = useTelegram()
 
 	useEffect(() => {
 		getUserData({user_id: user_id}, (data) => {
 			dispatch(setAddress(data.address))
 		})
 	});
+
+	useEffect(() => {
+        tg.MainButton.hide()
+		tg.BackButton.hide()
+    }, );
 
 	return (
 		<div>

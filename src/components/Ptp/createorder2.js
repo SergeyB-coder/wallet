@@ -51,10 +51,7 @@ export function CreateOrder2(props) {
                 
         </div>
 
-    useEffect(() => {
-        tg.BackButton.show()
-        tg.MainButton.setText('Далее')
-    }, );
+    
 
     return (
         <div>

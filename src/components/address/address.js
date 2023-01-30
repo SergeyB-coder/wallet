@@ -5,12 +5,15 @@ import './style.css'
 import EthereumQRPlugin from 'ethereum-qr-code';
 import { useSelector } from 'react-redux';
 import { selectAddress } from '../Home/homeSlice';
+import { useTelegram } from '../../hooks/useTelegram';
+import { useNavigate } from 'react-router-dom';
 
 // With promises
 
 
 export function Address (props) {
-    
+    const {tg} = useTelegram()
+    const navigate = useNavigate()
     const address = useSelector(selectAddress)
     
     //   useEffect(() => {
@@ -23,6 +26,9 @@ export function Address (props) {
     //   }, []);
     const qr = new EthereumQRPlugin()
 
+    const backScreen = () => {
+        navigate('/home', {replace: true})
+    }
 
     useEffect(() => {
         var e = document.getElementById("q");
@@ -35,6 +41,17 @@ export function Address (props) {
             selector: '#q',
           })
     }, );
+
+    useEffect(() => {
+        tg.MainButton.hide()
+        tg.BackButton.show()
+    }, );
+
+    useEffect(() => {
+        tg.onEvent('backButtonClicked', backScreen)
+            return () => {tg.offEvent('backButtonClicked', backScreen)}
+        }, )
+
     return (
         <>
             <div className='address-container'>
