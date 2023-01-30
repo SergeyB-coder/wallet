@@ -1,17 +1,17 @@
 :root {
-    /* --secondary-bg-color: var(--tg-theme-secondary-bg-color);
+    --secondary-bg-color: var(--tg-theme-secondary-bg-color);
     --bg-color: var(--tg-theme-bg-color);
     --link-color: var(--tg-theme-link-color);
     --button-text-color: var(--tg-theme-button-text-color);
     --button-color: var(--tg-theme-button-color);
-    --hint-color: var(--tg-theme-hint-color); */
+    --hint-color: var(--tg-theme-hint-color);
 
-    --secondary-bg-color: #49515C;
+    /* --secondary-bg-color: #49515C;
     --bg-color: #e8e2ca;
     --link-color: #358ABA;
     --button-text-color: #eff1f1;
     --button-color: #256EA2;
-    --hint-color: #8a939e;
+    --hint-color: #8a939e; */
 }
 
 .trade-menu-container {
@@ -27,6 +27,15 @@
     border-radius: 5px;
     padding: 10px;
 }
+
+.bg-input {
+    background-color: var(--secondary-bg-color);
+    color: var(--button-text-color);
+    border: none;
+    outline: none;
+}
+
+
 
 
 
@@ -96,7 +105,7 @@
 }
 
 .currency-settings-item-col2 {
-    color: var(--link-color);
+    color: var(--button-text-color);
     display: flex;
     justify-content:flex-end;
     width: 40vw;
@@ -131,6 +140,7 @@
     background-color: var(--button-color);
     color: var(--button-text-color);
     border-radius: 5px;
+    padding: 10px;
 }
 
 .method-pay-text {
@@ -186,4 +196,91 @@
 p {
     width: fit-content;
 }
+
+.selectdiv {
+    position: relative;
+    /*Don't really need this just for demo styling*/
+    
+    float: left;
+    min-width: 200px;
+    margin: 50px 33%;
+  }
+  
+  /* IE11 hide native button (thanks Matt!) */
+  select::-ms-expand {
+  display: none;
+  }
+  
+  .selectdiv:after {
+    content: '<>';
+    font: 17px "Consolas", monospace;
+    color: #333;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    right: 11px;
+    /*Adjust for position however you want*/
+    
+    top: 18px;
+    padding: 0 0 2px;
+    border-bottom: 1px solid #999;
+    /*left line */
+    
+    position: absolute;
+    pointer-events: none;
+  }
+  
+  .selectdiv select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* Add some styling */
+    
+    display: block;
+    width: 100%;
+    max-width: 320px;
+    height: 50px;
+    float: right;
+    margin: 5px 0px;
+    padding: 0px 24px;
+    font-size: 16px;
+    line-height: 1.75;
+    color: #333;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    -ms-word-break: normal;
+    word-break: normal;
+  }
+
+  .select-currency {
+    border: none;
+    background: none;
+    color:  var(--button-text-color)
+  }
+
+  .ptp-container {
+    background-image: url('../../static/images/salut.jpg');
+    background-repeat: no-repeat, repeat;
+    background-size: cover;
+    height: 100vh;
+  }
+
+  .salute-text1 {
+    color: var(--button-text-color);
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .salute-text2 {
+    color: var(--button-text-color);
+    font-size: 15px;
+  }
+
+  .salute-container {
+    padding-top: 30vh;
+  }
+
+ 
 

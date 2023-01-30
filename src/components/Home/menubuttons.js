@@ -8,12 +8,18 @@ import { selectAddress, setAddress } from './homeSlice';
 import './style.css'
 
 export function MenuButtons() {
+    // const user_id = '652065848'
     const { user_id } = useTelegram()
     const dispatch = useDispatch()
     const address = useSelector(selectAddress)
     const navigate = useNavigate()
+
     const handleClickP2P = () => {
         navigate('/ptp', {replace: true})
+    }
+    
+    const handleClickMarket = () => {
+        navigate('/market', {replace: true})
     }
 
     const handleClickAddress = () => {
@@ -44,6 +50,7 @@ export function MenuButtons() {
                         text={'Купить'} 
                         d_svg={'M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z'}
                         fill_svg={"var(--tg-theme-button-color)"}
+                        onClick={handleClickMarket}
                     />
                     <Button 
                         text={'P2P Маркет'} 

@@ -1,0 +1,7 @@
+
+.order-item {
+    background-color: var(--button-color);
+    color: var(--button-text-color);
+    border-radius: 8px;
+    margin: 15px;
+}

@@ -8,6 +8,7 @@ import {
 import './App.css';
 import { Address } from './components/address/address';
 import { Home } from './components/Home/home';
+import { Market } from './components/Ptp/market/Market';
 import { Ptp } from './components/Ptp/ptp';
 import { useTelegram } from './hooks/useTelegram';
 
@@ -64,6 +65,12 @@ function App() {
             path="/address"
             element={
               <Address/>
+            }
+          />
+          <Route
+            path="/market"
+            element={
+              <Market/>
             }
           />
         </Routes>
