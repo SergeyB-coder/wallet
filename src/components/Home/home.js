@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getUserData } from './homeApi';
-import { selectAddress, setAddress } from './homeSlice';
+import { setAddress } from './homeSlice';
 import { MenuButtons } from './menubuttons';
 import { useTelegram } from '../../hooks/useTelegram';
 
