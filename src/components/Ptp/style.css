@@ -29,7 +29,7 @@
 }
 
 .bg-input {
-    background-color: var(--secondary-bg-color);
+    background-color: var(--button-color);
     color: var(--button-text-color);
     border: none;
     outline: none;
