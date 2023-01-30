@@ -16,7 +16,7 @@ export function Market() {
     const orders = useSelector(selectOrders)
 
     const backScreen = (() => {
-        navigate('/home', {replace: true})
+        navigate('/', {replace: true})
     })
     
     useEffect(() => {
