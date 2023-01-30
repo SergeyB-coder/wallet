@@ -11,7 +11,7 @@ export function Home() {
 
 	const dispatch = useDispatch()
 
-	const address = useSelector(selectAddress)
+	// const address = useSelector(selectAddress)
 
 	useEffect(() => {
 		getUserData({user_id: user_id}, (data) => {
