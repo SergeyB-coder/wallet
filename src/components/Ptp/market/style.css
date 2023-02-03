@@ -4,4 +4,71 @@
     color: var(--button-text-color);
     border-radius: 8px;
     margin: 15px;
+    padding-bottom: 10px;
+}
+
+.order-price {
+    font-size: 25px;
+    width: 50vw;
+}
+
+.order-buy {
+    font-size:medium;
+    width: 30vw;
+    background-color: var(--link-color);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.divider-order {
+    height: 0.5px;
+    background-color: var(--bg-color);
+}
+
+.order-label {
+    margin-left: 10px;
+    font-size: 12px;
+    width: 40vw;
+    text-align:left;
+}
+
+.order-info {
+    margin-left: 10px;
+    font-size: 12px;
+    width: 40vw;
+    text-align:center;
+}
+
+.bg-order-input {
+    background-color: var(--button-text-color);
+    color: var(--button-color);
+    /* color: 'red'; */
+    border: none;
+    outline: none;
+    width: 50vw;
+    font-size: 25px;
+}
+
+.screen-buy-container {
+    background-color: var(--button-text-color);
+}
+
+.methods-pay {
+    background-color: var(--button-color);
+    border-radius: 10px;
+}
+
+.buy-label {
+    margin-left: 10px;
+    color: var(--button-text-color);
+    width: 50vw;
+    text-align: left;
+}
+
+.buy-info {
+    color: var(--button-text-color);
+    width: 40vw;
+    text-align: right;
 }

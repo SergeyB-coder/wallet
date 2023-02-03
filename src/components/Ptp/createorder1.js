@@ -85,7 +85,7 @@ export function CreateOrder1(props) {
                     {
                         CURRENCY_FIAT_LIST.map((currency, index) => {
                             return (
-                                <option key={index} className="select-currency" value="2">{currency}</option>
+                                <option key={index} className="select-currency" value={(index + 1).toString()}>{currency}</option>
                             )
                         })
                     }

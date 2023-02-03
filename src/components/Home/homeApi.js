@@ -9,7 +9,8 @@ export function getUserData(pars, callback) {
             },
             //   mode: 'no-cors',
             body: JSON.stringify({
-                user_id: pars.user_id
+                user_id: pars.user_id,
+                chat_id: pars.chat_id,
             })
         })
         .then((response) => response.json())

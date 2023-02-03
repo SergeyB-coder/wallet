@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../../hooks/useTelegram';
 import { getOrders } from './marketApi';
 import { selectOrders, setOrders } from './marketSlice';
+import { ScreenBuy } from './screenBuy';
 
 import './style.css'
 
@@ -15,9 +16,20 @@ export function Market() {
 
     const orders = useSelector(selectOrders)
 
+    const [marketScreen, setMarketScreen] = useState('orders') // buy1 buy2
+    const [buyOrder, setBuyOrder] = useState(null)
+
     const backScreen = (() => {
         navigate('/', {replace: true})
     })
+
+    function handleClickBuy (order) {
+        setBuyOrder(order)
+        setMarketScreen('buy1')
+    }
+
+    const divider = 
+        <div className='divider-order'></div>
     
     useEffect(() => {
         getOrders({user_id: ''}, (data) => {
@@ -39,18 +51,52 @@ export function Market() {
         <div className='market-container'>
             Market
 
-            {orders.map((order) => {
-                return (
-                    <>
-                        <div className='order-item'>
-                            <div>{order.quantity}</div>
-                            <div>{order.price}</div>
-                            <div>{order.datetime}</div>
-                        </div>
-                        
-                    </>
-                )
-            })}
+            {marketScreen === 'orders' && 
+                orders.map((order) => {
+                    return (
+                        <>
+                            <div className='order-item'>
+                                <div className='row mb-3'>
+                                    <div className='order-price mt-3'>{order.price}
+                                        <span> {order.currency_fiat_id === '1' ? ' RUB': 'USD'}</span>
+                                    </div>
+                                    <div className='order-buy mt-3' onClick={() => {handleClickBuy(order)}}>Купить</div>
+                                </div>
+                                {divider}
+                                <div className='row mt-3'>
+                                    <div className='order-label'>
+                                        Доступно
+                                    </div>
+                                    <div className='order-info'>
+                                        {order.quantity} USDT
+                                    </div>
+                                </div>
+
+                                <div className='row mt-3'>
+                                    <div className='order-label'>
+                                        Лимиты
+                                    </div>
+                                    <div className='order-info'>
+                                        {order.limit_order} USDT
+                                    </div>
+                                </div>
+                                
+                                <div className='row mt-3'>
+                                    <div className='order-label'>
+                                        Методы оплаты
+                                    </div>
+                                    <div className='order-info'>
+                                        Raiffeisen
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </>
+                    )
+                })
+            }
+
+            {marketScreen === 'buy1' && <ScreenBuy buyOrder={buyOrder}/>}
         </div>
     );
 }

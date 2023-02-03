@@ -9,6 +9,7 @@ import './style.css'
 
 export function MenuButtons() {
     // const user_id = '652065848'
+    // const user_id = '222'
     const { user_id } = useTelegram()
     const dispatch = useDispatch()
     const address = useSelector(selectAddress)
