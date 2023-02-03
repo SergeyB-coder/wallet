@@ -159,6 +159,7 @@ select {
     color: var(--button-text-color);
     border-radius: 5px;
     padding: 10px;
+    cursor: pointer;
 }
 
 .method-pay-text {

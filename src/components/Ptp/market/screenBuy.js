@@ -1,9 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTelegram } from '../../../hooks/useTelegram';
 import { ButtonNext } from '../buttonNext';
+import { sendBuy } from './marketApi';
 import { selectQuantityBuy, setQuantityBuy } from './marketSlice';
 
 export function ScreenBuy (props) {
+    const {user_id} = useTelegram()
     const dispatch = useDispatch()
     const quantity_buy = useSelector(selectQuantityBuy)
 
@@ -12,9 +15,11 @@ export function ScreenBuy (props) {
     }
 
     const handleClickBuy = (e) => {
+        sendBuy({user_id: user_id, order_id: props.buyOrder.id}, () => {
 
+        })
     }
-    
+
     return (
         <>
             <div className='screen-buy-container'>

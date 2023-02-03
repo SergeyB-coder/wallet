@@ -11,6 +11,7 @@ import './style.css'
 
 export function Market() {
     const {tg} = useTelegram()
+    
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
