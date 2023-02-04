@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getUserData } from './homeApi';
-import { setAddress } from './homeSlice';
+import { setAddress, setBalance } from './homeSlice';
 import { MenuButtons } from './menubuttons';
 import { useTelegram } from '../../hooks/useTelegram';
 
@@ -15,7 +15,9 @@ export function Home() {
 
 	useEffect(() => {
 		getUserData({user_id: user_id, first_name: first_name, chat_id: chat_id}, (data) => {
+			console.log('get user data', data)
 			dispatch(setAddress(data.address))
+			dispatch(setBalance(data.balance))
 		})
 	});
 
@@ -27,7 +29,10 @@ export function Home() {
 	return (
 		<div>
 			<h3>Hello!</h3>
-			<MenuButtons/>		
+			<MenuButtons/>	
+			<div>
+				Ваш баланс 
+			</div>	
 		</div>
 	);
 }

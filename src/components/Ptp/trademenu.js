@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTelegram } from '../../hooks/useTelegram';
 import { CompleteDeal } from './completeDeal';
 import { getMyOrders, getOrderDeals } from './market/marketApi';
-import { selectMyOrders, setDealInfo, setMyOrders } from './market/marketSlice';
+import { selectMyOrders, setCurrentOrderId, setDealInfo, setMyOrders } from './market/marketSlice';
 import { OrderItem } from './market/orderItem';
 import './style.css'
 
@@ -72,6 +72,7 @@ export function TradeMenu (props) {
         <div className='divider'></div>
 
     function handleClickOrder(order_id) {
+        dispatch(setCurrentOrderId(order_id))
         setShowCompleteDeal(true)
         getOrderDeals({order_id: order_id}, (data) => {
             dispatch(setDealInfo(data.deals[0]))
@@ -96,7 +97,7 @@ export function TradeMenu (props) {
 
             {showCompleteDeal ? (
                 <div>
-                    <CompleteDeal />
+                    <CompleteDeal setShowCompleteDeal={setShowCompleteDeal}/>
                 </div>
             ): (
                 <div>

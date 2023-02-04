@@ -67,7 +67,7 @@
     /* color: 'red'; */
     border: none;
     outline: none;
-    width: 50vw;
+    width: fit-content;
     font-size: 25px;
 }
 

@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { sendAcceptDeal, sendEndDeal } from './market/marketApi';
-import { selectDealInfo } from './market/marketSlice';
+import { selectCurrentOrderId, selectDealInfo } from './market/marketSlice';
 
-export function CompleteDeal () {
-
+export function CompleteDeal (props) {
+    const setShowCompleteDeal = props.setShowCompleteDeal
     const deal_info = useSelector(selectDealInfo)
+    const order_id = useSelector(selectCurrentOrderId)
 
-    const [statusDeal, setStatusDeal] = useState('pay')
+    const [statusDeal, setStatusDeal] = useState('request')
 
     const handleClickSale = () => {
             sendAcceptDeal({deal_id: deal_info.id, user_buyer_id: deal_info?.user_id}, () => {
@@ -17,8 +18,8 @@ export function CompleteDeal () {
 
     
     const handleClickEndDeal = () => {
-        sendEndDeal({deal_id: deal_info.id}, () => {
-
+        sendEndDeal({deal_id: deal_info.id, order_id: order_id}, () => {
+            setShowCompleteDeal(false)
         })
     }
 
@@ -28,7 +29,7 @@ export function CompleteDeal () {
                 <div className='w-50' style={{textAlign: 'left'}}>
                     {deal_info?.first_name}
                 </div>
-                {statusDeal === 'request' ?
+                {statusDeal === 'request'  ?
                     <div className='w-50' onClick={handleClickSale}>
                         Продать
                     </div>:

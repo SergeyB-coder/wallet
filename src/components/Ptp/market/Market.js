@@ -5,6 +5,7 @@ import { useTelegram } from '../../../hooks/useTelegram';
 import { getOrders } from './marketApi';
 import { selectOrders, setOrders } from './marketSlice';
 import { ScreenBuy } from './screenBuy';
+import { ScreenDeal } from './screenDeal';
 
 import './style.css'
 
@@ -56,7 +57,7 @@ export function Market() {
                 orders.map((order) => {
                     return (
                         <>
-                            <div className='order-item'>
+                            <div className='order-item' key={order.id}>
                                 <div className='row mb-3'>
                                     <div className='order-price mt-3'>{order.price}
                                         <span> {order.currency_fiat_id === '1' ? ' RUB': 'USD'}</span>
@@ -107,7 +108,8 @@ export function Market() {
                 })
             }
 
-            {marketScreen === 'buy1' && <ScreenBuy buyOrder={buyOrder}/>}
+            {marketScreen === 'buy1' && <ScreenBuy buyOrder={buyOrder} setMarketScreen={setMarketScreen}/>}
+            {marketScreen === 'deal' && <ScreenDeal />}
         </div>
     );
 }

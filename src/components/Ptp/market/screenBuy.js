@@ -6,26 +6,29 @@ import { sendBuy } from './marketApi';
 import { selectQuantityBuy, setQuantityBuy } from './marketSlice';
 
 export function ScreenBuy (props) {
-    const {user_id} = useTelegram()
+    const setMarketScreen = props.setMarketScreen
+    const {user_id, first_name} = useTelegram()
     const dispatch = useDispatch()
     const quantity_buy = useSelector(selectQuantityBuy)
 
     const handleChangeQuantity = (e) => {
+        let inp = document.getElementById('quantity')
+        inp.style.width = (e.target.value.length + 1) * 13 + 'px'
         dispatch(setQuantityBuy(e.target.value))
     }
 
     const handleClickBuy = (e) => {
         sendBuy({user_id: user_id, order_id: props.buyOrder.id, quantity: quantity_buy}, () => {
-
+            setMarketScreen('deal')
         })
     }
 
     return (
         <>
             <div className='screen-buy-container'>
-                <div>Вы покупаете у </div>
+                <div>Вы покупаете у {first_name}</div>
                 <div>
-                    <input className='bg-order-input' type='number' value={quantity_buy} onChange={handleChangeQuantity}/><span>USDT</span> 
+                    <input id='quantity' className='bg-order-input' type='number' value={quantity_buy} onChange={handleChangeQuantity}/><span>USDT</span> 
                 </div>
                 <div>Цена за 1 USDT = {props?.buyOrder?.price}</div>
 
