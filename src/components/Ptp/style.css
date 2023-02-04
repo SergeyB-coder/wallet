@@ -301,5 +301,9 @@ p {
     padding-top: 30vh;
   }
 
+  .deal-item {
+    background-color: var(--hint-color);
+  }
+
  
 

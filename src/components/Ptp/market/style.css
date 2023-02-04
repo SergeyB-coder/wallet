@@ -3,7 +3,8 @@
     background-color: var(--button-color);
     color: var(--button-text-color);
     border-radius: 8px;
-    margin: 15px;
+    margin-top: 8px;
+    margin-bottom: 8px;
     padding-bottom: 10px;
 }
 
@@ -22,6 +23,17 @@
     justify-content: center;
 }
 
+.order-request {
+    font-size:medium;
+    width: 30vw;
+    background-color: var(--link-color);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:crimson;
+}
+
 .divider-order {
     height: 0.5px;
     background-color: var(--bg-color);
@@ -30,6 +42,14 @@
 .order-label {
     margin-left: 10px;
     font-size: 12px;
+    width: 40vw;
+    text-align:left;
+}
+
+.order-user-name {
+    margin-left: 10px;
+    font-size: 15px;
+    font-weight: bold;
     width: 40vw;
     text-align:left;
 }

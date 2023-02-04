@@ -15,7 +15,7 @@ export function ScreenBuy (props) {
     }
 
     const handleClickBuy = (e) => {
-        sendBuy({user_id: user_id, order_id: props.buyOrder.id}, () => {
+        sendBuy({user_id: user_id, order_id: props.buyOrder.id, quantity_buy: quantity_buy}, () => {
 
         })
     }

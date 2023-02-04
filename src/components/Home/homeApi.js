@@ -7,11 +7,7 @@ export function getUserData(pars, callback) {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            //   mode: 'no-cors',
-            body: JSON.stringify({
-                user_id: pars.user_id,
-                chat_id: pars.chat_id,
-            })
+            body: JSON.stringify(pars)
         })
         .then((response) => response.json())
         .then((data) => {
@@ -29,9 +25,7 @@ export function getWallet(pars, callback) {
                 'Content-Type': 'application/json'
             },
             //   mode: 'no-cors',
-            body: JSON.stringify({
-                user_id: pars.user_id
-            })
+            body: JSON.stringify(pars)
         })
         .then((response) => response.json())
         .then((data) => {

@@ -1,7 +1,19 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTelegram } from '../../hooks/useTelegram';
+import { CompleteDeal } from './completeDeal';
+import { getMyOrders, getOrderDeals } from './market/marketApi';
+import { selectDealInfo, selectMyOrders, setDealInfo, setMyOrders } from './market/marketSlice';
+import { OrderItem } from './market/orderItem';
 import './style.css'
 
 export function TradeMenu (props) {
+    const my_orders = useSelector(selectMyOrders)
+    const deal_info = useSelector(selectDealInfo)
+    const {user_id} = useTelegram()
+    const dispatch = useDispatch()
+
+    const [showCompleteDeal, setShowCompleteDeal] = useState(false)
 
     const handleClickCreateOrder = () => {
         props.setScreen('createorder1')
@@ -60,6 +72,19 @@ export function TradeMenu (props) {
     const divider = 
         <div className='divider'></div>
 
+    function handleClickOrder(order_id) {
+        setShowCompleteDeal(true)
+        getOrderDeals({order_id: order_id}, (data) => {
+            dispatch(setDealInfo(data.deals[0]))
+        })
+    }
+
+    useEffect(() => {
+        getMyOrders({user_id: user_id}, (data) => {
+            dispatch(setMyOrders(data.orders))
+        })
+    }, [user_id, dispatch]);
+
     return (
         <>
             <div className='trade-menu-container'>
@@ -69,6 +94,26 @@ export function TradeMenu (props) {
                 {divider}
                 {create_order}
             </div>
+
+            {showCompleteDeal ? (
+                <div>
+                    <CompleteDeal />
+                </div>
+            ): (
+                <div>
+                    <div className='my-order-container'>
+                        <div>Мои объявления</div>
+                        {my_orders.map((order) => {
+                                return (
+                                    <>
+                                        <OrderItem onClick={handleClickOrder} order={order} key={order.id}/>
+                                    </>
+                                )
+                            })}
+                    </div>
+                </div>
+            )}
+            
         </>
       );
 }

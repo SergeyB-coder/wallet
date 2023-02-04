@@ -11,7 +11,7 @@ import './style.css'
 
 export function Market() {
     const {tg} = useTelegram()
-    
+
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -64,6 +64,16 @@ export function Market() {
                                     <div className='order-buy mt-3' onClick={() => {handleClickBuy(order)}}>Купить</div>
                                 </div>
                                 {divider}
+
+                                <div className='row mt-3'>
+                                    <div className='order-user-name'>
+                                        {order.first_name}
+                                    </div>
+                                    <div className='order-info'>
+                                        Заявок 0
+                                    </div>
+                                </div>
+
                                 <div className='row mt-3'>
                                     <div className='order-label'>
                                         Доступно

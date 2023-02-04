@@ -5,7 +5,11 @@ export function useTelegram () {
         tg,
         query_id: tg.initDataUnsafe.query_id,
         user_id: tg.initDataUnsafe.user.id,
-        // chat_id: tg.initDataUnsafe.chat.id,
-        chat_id: 1
+        first_name: tg.initDataUnsafe.user.first_name,
+        // user_id: '652065848',
+        // first_name: 'Srg',
     }
 }
+
+// const user_id = '652065848'
+// const user_id = '222'
