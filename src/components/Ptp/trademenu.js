@@ -3,13 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTelegram } from '../../hooks/useTelegram';
 import { CompleteDeal } from './completeDeal';
 import { getMyOrders, getOrderDeals } from './market/marketApi';
-import { selectDealInfo, selectMyOrders, setDealInfo, setMyOrders } from './market/marketSlice';
+import { selectMyOrders, setDealInfo, setMyOrders } from './market/marketSlice';
 import { OrderItem } from './market/orderItem';
 import './style.css'
 
 export function TradeMenu (props) {
     const my_orders = useSelector(selectMyOrders)
-    const deal_info = useSelector(selectDealInfo)
     const {user_id} = useTelegram()
     const dispatch = useDispatch()
 
