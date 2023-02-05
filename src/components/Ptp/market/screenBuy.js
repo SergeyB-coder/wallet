@@ -13,7 +13,7 @@ export function ScreenBuy (props) {
 
     const handleChangeQuantity = (e) => {
         let inp = document.getElementById('quantity')
-        inp.style.width = (e.target.value.length + 1) * 13 + 'px'
+        inp.style.width = (20 + (e.target.value.length + 1) * 13) + 'px'
         dispatch(setQuantityBuy(e.target.value))
     }
 
@@ -25,7 +25,7 @@ export function ScreenBuy (props) {
 
     return (
         <>
-            <div className='screen-buy-container'>
+            <div className='screen-buy-container mt-5'>
                 <div>Вы покупаете у {first_name}</div>
                 <div>
                     <input id='quantity' className='bg-order-input' type='number' value={quantity_buy} onChange={handleChangeQuantity}/><span>USDT</span> 

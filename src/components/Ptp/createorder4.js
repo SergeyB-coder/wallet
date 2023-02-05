@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+// import { ButtonNext } from './buttonNext';
 // import { useTelegram } from '../../hooks/useTelegram';
 // import { ButtonNext } from './buttonNext';
 // import { createOrder } from './ptpApi';
@@ -71,7 +72,7 @@ export function CreateOrder4(props) {
                 </div>
 
             </div>
-            {/* <ButtonNext onClick={handleCreateOrder} text={'Создать объявление'}/> */}
+            {/* <ButtonNext onClick={props.handleClickCreateOrder} text={'Создать объявление'}/> */}
         </div>
     );
 }

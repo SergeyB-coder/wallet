@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getUserData } from './homeApi';
-import { setAddress, setBalance } from './homeSlice';
+import { selectBalance, setAddress, setBalance } from './homeSlice';
 import { MenuButtons } from './menubuttons';
 import { useTelegram } from '../../hooks/useTelegram';
 
@@ -12,6 +12,8 @@ export function Home() {
 	const dispatch = useDispatch()
 
 	const {tg} = useTelegram()
+
+	const balance = useSelector(selectBalance)
 
 	useEffect(() => {
 		getUserData({user_id: user_id, first_name: first_name, chat_id: chat_id}, (data) => {
@@ -30,8 +32,8 @@ export function Home() {
 		<div>
 			<h3>Hello!</h3>
 			<MenuButtons/>	
-			<div>
-				Ваш баланс 
+			<div className='mt-5'>
+				Ваш баланс {balance} USDT
 			</div>	
 		</div>
 	);
