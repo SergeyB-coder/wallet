@@ -9,16 +9,21 @@ export function CompleteDeal (props) {
     const order_id = useSelector(selectCurrentOrderId)
 
     const [statusDeal, setStatusDeal] = useState('request')
+    const [showLoader, setShowLoader] = useState(false)
 
     const handleClickSale = () => {
-            sendAcceptDeal({deal_id: deal_info.id, user_buyer_id: deal_info?.user_id}, () => {
+        setShowLoader(true)
+        sendAcceptDeal({deal_id: deal_info.id, user_buyer_id: deal_info?.user_id}, () => {
+            setShowLoader(false)
             setStatusDeal('pay')
         })
     }
 
     
     const handleClickEndDeal = () => {
+        setShowLoader(true)
         sendEndDeal({deal_id: deal_info.id, order_id: order_id}, () => {
+            setShowLoader(false)
             setShowCompleteDeal(false)
         })
     }
@@ -36,6 +41,9 @@ export function CompleteDeal (props) {
                     <div className='w-50' onClick={handleClickEndDeal}>
                         Оплата получена
                     </div>
+                }
+                {
+                    showLoader && <div class="loader"></div>
                 }
             </div>
             <div className='row deal-item p-3'>
