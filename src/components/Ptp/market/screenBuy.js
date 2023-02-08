@@ -28,9 +28,9 @@ export function ScreenBuy (props) {
             <div className='screen-buy-container mt-5'>
                 <div>Вы покупаете у {first_name}</div>
                 <div>
-                    <input id='quantity' className='bg-order-input' type='number' value={quantity_buy} onChange={handleChangeQuantity}/><span>USDT</span> 
+                    <input id='quantity' className='bg-order-input' type='number' value={quantity_buy} onChange={handleChangeQuantity}/><span>USDT {props.buyOrder.currency_id === 1 ? 'BEP20': 'TRC20'}</span> 
                 </div>
-                <div>Цена за 1 USDT = {props?.buyOrder?.price}</div>
+                <div>Цена за 1 USDT {props.buyOrder.currency_id === 1 ? 'BEP20': 'TRC20'} = {props?.buyOrder?.price}</div>
 
                 <div className='methods-pay pt-3 pb-3 m-2 mt-5'>
                     <div className='row mb-3'>

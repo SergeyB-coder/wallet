@@ -17,8 +17,8 @@ export function CreateOrder1(props) {
     const price_order = 11
     const balance = 3
     const CURRENCY_LIST = [
-        'USDT TRC20',
-        'USDT BEP20'
+        'USDT BEP20',
+        'USDT TRC20'
     ]
     const CURRENCY_FIAT_LIST = [
         'RUB',
@@ -26,7 +26,8 @@ export function CreateOrder1(props) {
     ]
 
     const handleChangeCurrency = (e) => {
-        dispatch(setCurrencyOrder(e.target.value))
+        console.log(typeof(e.target.value), e.target.value)
+        dispatch( setCurrencyOrder(e.target.value) )
     }
     
     const handleChangeCurrencyFiat = (e) => {
@@ -67,7 +68,7 @@ export function CreateOrder1(props) {
                     {
                         CURRENCY_LIST.map((currency, index) => {
                             return (
-                                <option key={index} className="select-currency" value="2">{currency}</option>
+                                <option key={index} className="select-currency" value={index + 1}>{currency}</option>
                             )
                         })
                     }

@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../hooks/useTelegram';
 import { Button } from './button';
-import { getWallet } from './homeApi';
-import { selectAddress, setAddress } from './homeSlice';
+import { getWallet, getWalletTRX } from './homeApi';
+import { selectAddress, selectAddressTRX, setAddress, setAddressTRX } from './homeSlice';
 import './style.css'
 
 export function MenuButtons() {
@@ -13,6 +13,7 @@ export function MenuButtons() {
     const { user_id } = useTelegram()
     const dispatch = useDispatch()
     const address = useSelector(selectAddress)
+    const address_trx = useSelector(selectAddressTRX)
     const navigate = useNavigate()
 
     const handleClickP2P = () => {
@@ -24,13 +25,20 @@ export function MenuButtons() {
     }
 
     const handleClickAddress = () => {
-        if (address) navigate('/address', {replace: true})
-        else {
+        if (!address) {
             getWallet({user_id: user_id}, (data) => {
                 dispatch(setAddress(data.address))
-                navigate('/address', {replace: true})
             })
         }
+
+        if (!address_trx) {
+            getWalletTRX({user_id: user_id}, (data) => {
+                dispatch(setAddressTRX(data.address_trx))
+            })
+        }
+        
+        navigate('/address', {replace: true})
+        
     }
     return (
         <>

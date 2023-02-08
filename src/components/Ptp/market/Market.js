@@ -59,9 +59,14 @@ export function Market() {
                         <>
                             <div className='order-item' key={order.id}>
                                 <div className='row mb-3'>
-                                    <div className='order-price mt-3'>{order.price}
-                                        <span> {order.currency_fiat_id === '1' ? ' RUB': 'USD'}</span>
+                                    <div className='order-price mt-3'>
+                                        <div className='order-price mt-3'>{order.price}
+                                             {order.currency_fiat_id === '1' ? 'RUB': 'USD'}
+                                        </div>
+                                        <div className='order-label'>{order.currency_id === 1 ? 'Token USDT BEP20': 'Token USDT TRC'}</div>
                                     </div>
+                                    
+
                                     <div className='order-buy mt-3' onClick={() => {handleClickBuy(order)}}>Купить</div>
                                 </div>
                                 {divider}

@@ -1,17 +1,17 @@
 :root {
-    --secondary-bg-color: var(--tg-theme-secondary-bg-color);
+    /* --secondary-bg-color: var(--tg-theme-secondary-bg-color);
     --bg-color: var(--tg-theme-bg-color);
     --link-color: var(--tg-theme-link-color);
     --button-text-color: var(--tg-theme-button-text-color);
     --button-color: var(--tg-theme-button-color);
-    --hint-color: var(--tg-theme-hint-color);
+    --hint-color: var(--tg-theme-hint-color); */
 
-    /* --secondary-bg-color: #49515C;
+    --secondary-bg-color: #49515C;
     --bg-color: #e8e2ca;
     --link-color: #358ABA;
     --button-text-color: #eff1f1;
     --button-color: #256EA2;
-    --hint-color: #8a939e; */
+    --hint-color: #8a939e;
 }
 
 select {

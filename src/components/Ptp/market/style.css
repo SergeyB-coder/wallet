@@ -11,6 +11,8 @@
 .order-price {
     font-size: 25px;
     width: 50vw;
+    text-align:left;
+    margin-left: 10px;
 }
 
 .order-buy {
