@@ -3,8 +3,8 @@
     justify-content: center;
     align-items: center;
     padding: 1vw;
-    width: 28vw;
-    height: 28vw;
+    width: 25vw;
+    height: 25vw;
     /* background-color: var(--tg-theme-button-color); */
     /* background-color: #256EA2; */
     /* color: var(--tg-theme-button-text-color); */
@@ -42,7 +42,7 @@
 .button-menu-text {
     /* color: #E4BB2D; */
     color: var(--text-light-color);
-    font-size: 17px;
+    font-size: 14px;
     font-weight: 500;
 }
 
@@ -91,7 +91,7 @@
 }
 
 .wallet-item-info {
-    width: 40vw;
+    width: 35vw;
     color: var(--btn-bg-color)
 }
 
