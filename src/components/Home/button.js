@@ -11,7 +11,7 @@ export function Button (props) {
                             </svg>
                         </div>
                     </div>                    
-                    <div className='button-menu-text text-nowrap'>{props.text}</div>
+                    {/* <div className='button-menu-text text-nowrap'>{props.text}</div> */}
                 </div>
             </div>
         </>
