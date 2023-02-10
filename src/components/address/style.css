@@ -7,15 +7,18 @@
 .address-text {
     width: 60vw;
     word-break: break-all;
+    color: var(--text-light-color)
 }
 
 .label-address {
-    color: var(--hint-color)
+    color: var(--text-light-color)
 }
 
 .address-copy-button {
     margin-top: 10vh;
     color: var(--button-text-color);
-    background-color: var(--button-color);
-    border-radius: 8px;
+    background-color: var(--btn-bg-color);
+    border-radius: 20px;
+    padding: 10px;
+    color: aliceblue;
 }

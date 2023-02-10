@@ -281,7 +281,7 @@ p {
   .select-currency {
     border: none;
     background: none;
-    color:  var(--button-text-color)
+    color:  var(--text-light-color)
   }
 
   .ptp-container {
