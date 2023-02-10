@@ -52,3 +52,21 @@ export function getWalletTRX(pars, callback) {
             return callback(data)
         });
 }
+
+export function fromMain(pars, callback) {
+    fetch(url + '/frommain', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            //   mode: 'no-cors',
+            body: JSON.stringify(pars)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('data getwallettrx', data)
+            
+            return callback(data)
+        });
+}

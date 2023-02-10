@@ -12,6 +12,11 @@
     --button-text-color: #eff1f1;
     --button-color: #256EA2;
     --hint-color: #8a939e; */
+
+    --btn-bg-color: #728788;
+    --text-light-color: #F0EBED;
+    --text-mini: #2DD881;
+    --item-bg: #121f23;
 }
 
 select {
