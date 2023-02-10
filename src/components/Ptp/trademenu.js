@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../hooks/useTelegram';
 import { CompleteDeal } from './completeDeal';
 import { getMyOrders, getOrderDeals } from './market/marketApi';
@@ -11,12 +12,17 @@ export function TradeMenu (props) {
     const my_orders = useSelector(selectMyOrders)
     const {user_id} = useTelegram()
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const [showCompleteDeal, setShowCompleteDeal] = useState(false)
 
     const handleClickCreateOrder = () => {
         props.setScreen('createorder1')
     }
+
+    const handleClickMarket = () => {
+            navigate('/market', {replace: true})
+        }
 
     const arrow_right = 
         <div className='trade-menu-arrow-col'>
@@ -48,7 +54,7 @@ export function TradeMenu (props) {
                     <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
                 </svg>
             </div>
-            <div className='trade-menu-text-col'>
+            <div className='trade-menu-text-col' onClick={handleClickMarket}>
                 Купить
             </div>
             {arrow_right}

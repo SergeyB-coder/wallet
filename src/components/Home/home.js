@@ -55,7 +55,7 @@ export function Home() {
 						<div style={{textAlign: 'left', fontSize: 14}}>{Math.round((parseFloat(balance))*100)/100} USDT BEP</div>
 					</div>
 					<div className='wallet-item-info2'>
-						<div className='button-menu-text text-nowrap' >$ {Math.round((parseFloat(balance))*100*70)/100}</div>
+						<div className='button-menu-text text-nowrap' >$ {Math.round((parseFloat(balance))*100*1.1)/100}</div>
 						<div className='bottom-info text-nowrap'>+ 323% ($400)</div>
 					</div>
 				</div>
@@ -70,10 +70,10 @@ export function Home() {
 					</div>
 					<div className='wallet-item-info ms-2'>
 						<div className='button-menu-text' style={{textAlign: 'left'}}>Tether</div>
-						<div style={{textAlign: 'left', fontSize: 14}}>{Math.round((parseFloat(balance))*100)/100} USDT TRC</div>
+						<div style={{textAlign: 'left', fontSize: 14}}>{Math.round((parseFloat(balance_trx))*100)/100} USDT TRC</div>
 					</div>
 					<div className='wallet-item-info2'>
-						<div className='button-menu-text text-nowrap' >$ {Math.round((parseFloat(balance))*100*70)/100}</div>
+						<div className='button-menu-text text-nowrap' >$ {Math.round((parseFloat(balance_trx))*100*1.1)/100}</div>
 						<div className='bottom-info text-nowrap'>+ 323% ($400)</div>
 					</div>
 				</div>
