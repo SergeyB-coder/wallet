@@ -20,9 +20,9 @@ export function MenuButtons() {
         navigate('/ptp', {replace: true})
     }
     
-    const handleClickMarket = () => {
-        navigate('/market', {replace: true})
-    }
+    // const handleClickMarket = () => {
+    //     navigate('/market', {replace: true})
+    // }
 
     const handleClickAddress = () => {
         if (!address) {
