@@ -46,8 +46,8 @@ select {
 
 
 .bg-input {
-    background-color: var(--button-color);
-    color: var(--btn-bg-color);
+    background-color: var(--btn-bg-color);
+    color: var(--text-light-color);
     /* color: 'red'; */
     border: none;
     outline: none;
