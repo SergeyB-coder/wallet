@@ -57,21 +57,21 @@ export function Market() {
                 orders.map((order) => {
                     return (
                         <>
-                            <div className='order-item' key={order.id}>
-                                <div className='row mb-3'>
-                                    <div className='order-price mt-3'>
-                                        <div className='order-price mt-3'>{order.price}
+                            <div className='order-item mt-3' key={order.id}>
+                                <div className='row mb-3 '>
+                                    <div className='order-price'>
+                                        <div className='order-price mt-2'>{order.price}
                                              {order.currency_fiat_id === '1' ? 'RUB': 'USD'}
                                         </div>
                                         <div className='order-label'>{order.currency_id === 1 ? 'Token USDT BEP20': 'Token USDT TRC'}</div>
                                     </div>
                                     
 
-                                    <div className='order-buy mt-3' onClick={() => {handleClickBuy(order)}}>Купить</div>
+                                    <div className='order-buy mt-4' onClick={() => {handleClickBuy(order)}}>Купить</div>
                                 </div>
                                 {divider}
 
-                                <div className='row mt-3'>
+                                <div className='row mt-1'>
                                     <div className='order-user-name'>
                                         {order.first_name}
                                     </div>

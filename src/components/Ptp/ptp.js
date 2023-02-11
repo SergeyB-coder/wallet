@@ -7,7 +7,7 @@ import { CreateOrder2 } from './createorder2';
 import { CreateOrder4 } from './createorder4';
 import { CreateOrder5 } from './createorder5';
 import { createOrder } from './ptpApi';
-import { selectCurrencyFiat, selectCurrencyOrder, selectLimitOrder, selectPercentPrice, selectQuantityOrder } from './ptpSlice';
+import { selectCurrencyFiat, selectCurrencyOrder, selectLimitOrder, selectPercentPrice, selectPrice, selectQuantityOrder } from './ptpSlice';
 import { TradeMenu } from './trademenu';
 
 
@@ -20,6 +20,7 @@ export function Ptp() {
     const limit_order = useSelector(selectLimitOrder)
     const currency_fiat = useSelector(selectCurrencyFiat)
     const currency_order = useSelector(selectCurrencyOrder)
+    const price = useSelector(selectPrice)
 
     const [screen, setScreen] = useState('menu') 
 
@@ -91,6 +92,7 @@ export function Ptp() {
         createOrder({
             user_id: user_id,
             percent_price: percent_price,
+            price: price,
             quantity_order: quantity_order,
             limit_order: limit_order,
             currency_fiat: currency_fiat,

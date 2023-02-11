@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 export function Selecter (props) {
     const list_values = props.list_values
     const class_name = props.class_name
-    const setValue = props.setValue
+    const setIndex = props.setIndex
     const selected_value = props.selected_value
 
     const [showListCurrency, setShowListCurrency] = useState(false)
@@ -15,13 +15,13 @@ export function Selecter (props) {
 
     function handleClickCurrencyItem(index) {
         console.log(index)
-        setValue(list_values[index])
+        setIndex(index)
         setShowListCurrency(false)
     }
 
     return (
         <div style={{position: 'relative'}}>
-            <div style={{color: 'white'}} onClick={handleClickCurrencyBalance}>{selected_value}</div>
+            <div style={{color: 'white', backgroundColor: 'var(--item-bg)', height: 30, borderRadius: 5, padding: 5, }} onClick={handleClickCurrencyBalance}>{list_values[selected_value - 1]}</div>
             {showListCurrency ? 
             <div className='currency-list-select'>
                 <div>

@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CURRENCY_LIST } from '../../const/devdata';
+import { CURRENCY_FIAT_LIST, CURRENCY_LIST, CURRENCY_TYPES, TIME_LIMITS } from '../../const/devdata';
 import { Selecter } from '../Common/selecter';
+// import { ButtonNext } from './buttonNext';
 // import { ButtonNext } from './buttonNext';
 
 // import { ButtonNext } from './buttonNext';
-import { selectCurrencyType, selectLimitOrder, selectPercentPrice, selectPrice, selectQuantityOrder, setCurrencyFiat, setCurrencyOrder, setCurrencyType, setLimitOrder, setPercentPrice, setPrice, setQuantityOrder } from './ptpSlice';
+import { selectCurrencyFiat, selectCurrencyOrder, selectCurrencyType, selectLimitOrder, selectPercentPrice, selectPrice, selectQuantityOrder, selectTimeLimit, setCurrencyFiat, setCurrencyOrder, setCurrencyType, setLimitOrder, setPercentPrice, setPrice, setQuantityOrder, setTimeLimit } from './ptpSlice';
 
 export function CreateOrder1(props) {
     const dispatch = useDispatch()
@@ -15,31 +16,24 @@ export function CreateOrder1(props) {
     const quantity_order = useSelector(selectQuantityOrder)
     const limit_order = useSelector(selectLimitOrder)
     const price = useSelector(selectPrice)
+    const timeLimit = useSelector(selectTimeLimit)
 
     const price_market = 10
     const price_order = 11
     const balance = 3
     
-    const CURRENCY_FIAT_LIST = [
-        'RUB',
-        'USD'
-    ]
+    
 
-    const CURRENCY_TYPES = [
-        'Фиксированная',
-        'Плавающая'
-    ]
-
-    const [currencyBalance, setCurrencyBalance] = useState(CURRENCY_LIST[0])
-    const [showListCurrency, setShowListCurrency] = useState(false)
+    const currency_order = useSelector(selectCurrencyOrder)
     const currencyType = useSelector(selectCurrencyType)
+    const currencyFiat = useSelector(selectCurrencyFiat)
 
-    function handleSetCurrencyType(t) {
-        dispatch(setCurrencyType(t))
+    function handleSetCurrencyType(index) {
+        dispatch(setCurrencyType(index + 1))
     }
     
-    const handleChangeCurrencyFiat = (e) => {
-        dispatch(setCurrencyFiat(e.target.value))
+    const handleChangeCurrencyFiat = (index) => {
+        dispatch(setCurrencyFiat(index + 1))
     }
     
     const handleChangePercPrice = (e) => {
@@ -58,15 +52,11 @@ export function CreateOrder1(props) {
         dispatch(setLimitOrder(e.target.value))
     }
 
-    const handleClickCurrencyBalance = () => {
-        setShowListCurrency(!showListCurrency)
-    }
+
 
     function handleClickCurrencyItem(index) {
         console.log(index)
-        setCurrencyBalance(CURRENCY_LIST[index])
         dispatch( setCurrencyOrder(index + 1) )
-        setShowListCurrency(false)
     }
 
     const divider = 
@@ -85,31 +75,12 @@ export function CreateOrder1(props) {
                 Продажа криптовалюты
             </div>
             <div className='currency-settings-item-col2'>
-                {/* <select className="select-currency" onChange={handleChangeCurrency}> */}
-                    {/* <option className="select-currency" value="1">USDT TRC20</option>
-                    <option className="select-currency" value="2">USDT BEP20</option> */}
-                    {/* {
-                        CURRENCY_LIST.map((currency, index) => {
-                            return (
-                                <option key={index} className="select-currency" value={index + 1}>{currency}</option>
-                            )
-                        })
-                    }
-                </select> */}
-                <div style={{position: 'relative'}}>
-                        <div style={{color: 'white'}} onClick={handleClickCurrencyBalance}>{currencyBalance}</div>
-                        {showListCurrency ? 
-                        <div className='currency-list-select'>
-                            <div>
-                            {CURRENCY_LIST.map((currency, index) => {
-                                return (
-                                    <div onClick={()=>{handleClickCurrencyItem(index)}} key={index} className="select-currency text-nowrap">{currency}</div>
-                                )
-                            })}
-                            </div>
-                        </div>: null}
-                    </div>
-                {chevron}
+                <Selecter 
+                    list_values={CURRENCY_LIST} 
+                    class_name={'select-currency text-nowrap'} 
+                    setIndex={handleClickCurrencyItem} 
+                    selected_value={currency_order}
+                />{chevron}
             </div>
             
         </div>
@@ -120,7 +91,7 @@ export function CreateOrder1(props) {
                 Фиатная валюта
             </div>
             <div className='currency-settings-item-col2'>
-                <select className="select-currency" aria-label="Default select example" onChange={handleChangeCurrencyFiat}>
+                {/* <select className="select-currency" aria-label="Default select example" onChange={handleChangeCurrencyFiat}>
                     {
                         CURRENCY_FIAT_LIST.map((currency, index) => {
                             return (
@@ -128,7 +99,13 @@ export function CreateOrder1(props) {
                             )
                         })
                     }
-                </select>{chevron}
+                </select>{chevron} */}
+                <Selecter 
+                    list_values={CURRENCY_FIAT_LIST} 
+                    class_name={'select-currency text-nowrap'} 
+                    setIndex={handleChangeCurrencyFiat} 
+                    selected_value={currencyFiat}
+                />{chevron}
             </div>
         </div>
 
@@ -138,7 +115,12 @@ export function CreateOrder1(props) {
                 Тип цены
             </div>
             <div className='currency-settings-item-col2'>
-                <Selecter list_values={CURRENCY_TYPES} class_name={'select-currency text-nowrap'} setValue={handleSetCurrencyType} selected_value={currencyType}/>{chevron}
+                <Selecter 
+                    list_values={CURRENCY_TYPES} 
+                    class_name={'select-currency text-nowrap'} 
+                    setIndex={handleSetCurrencyType} 
+                    selected_value={currencyType}
+                />{chevron}
             </div>
             
         </div>
@@ -180,7 +162,7 @@ export function CreateOrder1(props) {
                 <input className='bg-input' type='number' placeholder='Сумма' onChange={handleChangeLimitOrder} value={limit_order}/>
             </div>
             <div className='currency-settings-item-col2'>
-                USD
+                {CURRENCY_FIAT_LIST[currencyFiat - 1]}
             </div>
         </div>
 
@@ -190,7 +172,12 @@ export function CreateOrder1(props) {
                 Оплатить в течение
             </div>
             <div className='currency-settings-item-col2 '>
-                <div className='time-limit'>15 мин</div>
+                <Selecter 
+                    list_values={TIME_LIMITS} 
+                    class_name={'select-currency text-nowrap'} 
+                    setIndex={(idx) => {dispatch(setTimeLimit(idx + 1))}} 
+                    selected_value={timeLimit}
+                />
             </div>
         </div>
     
@@ -211,7 +198,7 @@ export function CreateOrder1(props) {
             </div>
 
             
-            {currencyType === 'Фиксированная' ?
+            {currencyType === 1 ?
                 (
                     <div>
                         <div className='t-left-align  mt-3 text-dark-color'>Фиксированная цена</div>

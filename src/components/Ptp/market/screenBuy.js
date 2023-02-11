@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTelegram } from '../../../hooks/useTelegram';
 import { ButtonNext } from '../buttonNext';
@@ -23,14 +23,21 @@ export function ScreenBuy (props) {
         })
     }
 
+    useEffect(() => {
+        let inp = document.getElementById('quantity')
+        inp.style.width = (20 + (quantity_buy && quantity_buy?.length + 1) * 13) + 'px'
+    }, [quantity_buy]);
     return (
         <>
             <div className='screen-buy-container mt-5'>
-                <div>Вы покупаете у {first_name}</div>
-                <div>
-                    <input id='quantity' className='bg-order-input' type='number' value={quantity_buy} onChange={handleChangeQuantity}/><span>USDT {props.buyOrder.currency_id === 1 ? 'BEP20': 'TRC20'}</span> 
+                <div className='title-buy'>Покупка у {first_name}</div>
+                <div className=' mt-5'>
+                    <label>Укажите количество:</label>
+                    <div>
+                        <input id='quantity' className='bg-order-input' type='number' value={quantity_buy} onChange={handleChangeQuantity}/><span>USDT {props.buyOrder.currency_id === 1 ? 'BEP20': 'TRC20'}</span> 
+                    </div>                    
                 </div>
-                <div>Цена за 1 USDT {props.buyOrder.currency_id === 1 ? 'BEP20': 'TRC20'} = {props?.buyOrder?.price}</div>
+                <div style={{color: 'var(--text-mini)', fontSize: 14, marginTop: 30}}>Цена за 1 USDT {props.buyOrder.currency_id === 1 ? 'BEP20': 'TRC20'} = {props?.buyOrder?.price}</div>
 
                 <div className='methods-pay pt-3 pb-3 m-2 mt-5'>
                     <div className='row mb-3'>
@@ -44,10 +51,10 @@ export function ScreenBuy (props) {
                     <div className='divider-order'></div>
                     <div className='row mt-3 mb-3'>
                         <div className='buy-label'>
-                            Лимиты
+                            Лимит
                         </div>
                         <div className='buy-info text-nowrap'>
-                            1,345 ~ 20,384 USDT
+                            {props.buyOrder.limit_order} USDT
                         </div>
                     </div>
                     <div className='divider-order'></div>

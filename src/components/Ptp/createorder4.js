@@ -1,31 +1,33 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { CURRENCY_FIAT_LIST, CURRENCY_LIST, TIME_LIMITS } from '../../const/devdata';
+import { useTelegram } from '../../hooks/useTelegram';
+// import { ButtonNext } from './buttonNext';
 // import { ButtonNext } from './buttonNext';
 // import { useTelegram } from '../../hooks/useTelegram';
 // import { ButtonNext } from './buttonNext';
 // import { createOrder } from './ptpApi';
 
-import { selectQuantityOrder, selectCurrencyFiat, selectCurrencyOrder } from './ptpSlice';
+import { selectQuantityOrder, selectCurrencyFiat, selectCurrencyOrder, selectCurrencyType, selectPrice, selectLimitOrder, selectTimeLimit } from './ptpSlice';
 
 export function CreateOrder4(props) {
+    const {first_name} = useTelegram()
     // const percent_price = useSelector(selectPercentPrice)
     const quantity_order = useSelector(selectQuantityOrder)
     // const limit_order = useSelector(selectLimitOrder)
     const currency_fiat = useSelector(selectCurrencyFiat)
     const currency_order = useSelector(selectCurrencyOrder)
+    const currency_type = useSelector(selectCurrencyType)
 
-    const CURRENCY_LIST = [
-        'USDT TRC20',
-        'USDT BEP20'
-    ]
-    const CURRENCY_FIAT_LIST = [
-        'RUB',
-        'USD'
-    ]
+    
+    
     // const user_id = '652065848'
     // const {user_id} = useTelegram()
     // const setScreen = props.setScreen
-    const price = 2.48
+    const price = useSelector(selectPrice)
+    const limit_order = useSelector(selectLimitOrder)
+    const timeLimit = useSelector(selectTimeLimit)
+
     const divider = 
         <div className='divider-test-order'></div>
     
@@ -33,7 +35,7 @@ export function CreateOrder4(props) {
 
     return (
         <div>
-            <div className='row  mt-3'>
+            <div className='row  mt-3 text-dark-color'>
                 <div className='col-9 t-left-align'>Проверка объявления</div>
                 <div className='col-2'>4/4</div>
             </div>
@@ -41,8 +43,8 @@ export function CreateOrder4(props) {
             <div className='test-order-container mt-3 mb-5'>
                 <div className='row d-flex align-items-center'>
                     <div className='test-order-col1'>
-                        <div className='test-order-price'>{`${price} USD`}</div>
-                        <div className='test-order-text'>Плавающая цена за 1 TON</div>
+                        <div className='test-order-price'>{`${price} ${CURRENCY_FIAT_LIST[currency_fiat - 1]}`}</div>
+                        <div className='test-order-text'>{currency_type === 1 ? 'Фиксированная': 'Плавающая'} цена за 1 USDT</div>
                     </div>
                     <div className='test-order-col2'>
                         <div className='test-order-buy'>
@@ -55,18 +57,16 @@ export function CreateOrder4(props) {
 
                 <div className='row'>
                     <div className='test-order-info-col d-flex flex-column justify-content-start'>
-                        <p>Regal Horse</p>
-                        <p>Сумма</p>
-                        <p>Лимиты</p>
+                        <p>{first_name}</p>
+                        <p>Лимит</p>
                         <p>Методы оплаты</p>
                         <p className='text-nowrap'>Оплатить в течение</p>
                     </div>
                     <div className='test-order-info-col'>
                         <p>{quantity_order} {CURRENCY_LIST[currency_order - 1]}</p>
-                        <p  className='text-nowrap'>2,00198 ~ 2,989 TON</p>
-                        <p>5 - 7.36 {CURRENCY_FIAT_LIST[currency_fiat - 1]}</p>
+                        <p>{limit_order} {CURRENCY_FIAT_LIST[currency_fiat - 1]}</p>
                         <p>Raiffeisen Bank</p>
-                        <p>15 мин</p>
+                        <p>{TIME_LIMITS[timeLimit - 1]}</p>
                     </div>
 
                 </div>

@@ -1,6 +1,10 @@
+.market-container {
+    padding: 20px;
+    
+}
 
 .order-item {
-    background-color: var(--button-color);
+    background-color: var(--btn-bg-color);
     color: var(--button-text-color);
     border-radius: 8px;
     margin-top: 8px;
@@ -18,7 +22,8 @@
 .order-buy {
     font-size:medium;
     width: 30vw;
-    background-color: var(--link-color);
+    background-color: var(--item-bg);
+    color: var(--text-light-color);
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -73,8 +78,14 @@
     font-size: 25px;
 }
 
+.title-buy {
+    color: var(--btn-bg-color);
+    font-size: 22px;
+}
+
 .screen-buy-container {
     background-color: var(--button-text-color);
+    color: var(--text-light-color);
 }
 
 .methods-pay {
@@ -85,7 +96,7 @@
 .buy-label {
     margin-left: 10px;
     color: var(--button-text-color);
-    width: 50vw;
+    width: 40vw;
     text-align: left;
 }
 

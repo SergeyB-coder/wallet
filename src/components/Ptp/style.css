@@ -26,11 +26,16 @@
     display: 'flex'; 
     justify-content: 'flex-start';
     background-color: var(--item-bg);
-    border: var(--text-light-color) solid 0.5px
+    border: var(--text-light-color) solid 0.5px;
+    z-index: 10;
 }
 
 .text-dark-color {
     color: var(--btn-bg-color);
+}
+
+.bg-dark-color {
+    background-color: var(--item-bg);
 }
 
 select {
@@ -178,11 +183,12 @@ select {
     background-color: var(--item-bg);
     border-radius: 5px;
     padding: 5px;
+    height: 30px;
 }
 
 .button-next {
-    background-color: var(--button-color);
-    color: var(--button-text-color);
+    background-color: var(--btn-bg-color);
+    color: var(--text-light-color);
     border-radius: 5px;
     padding: 10px;
     cursor: pointer;
@@ -199,7 +205,7 @@ select {
 }
 
 .test-order-container {
-    background-color: var(--button-color);
+    background-color: var(--btn-bg-color);
     border-radius: 5px;
     padding: 10px;
 }
@@ -221,14 +227,14 @@ select {
 .test-order-text {
     text-align: left;
     font-size: 10px;
-    color: var(--button-text-color);
+    color: var(--text-mini);
 }
 
 .test-order-buy {
     font-size: 15px;
     padding: 5px;
-    color: var(--hint-color);
-    background-color: var(--bg-color);
+    color: var(--text-light-color);
+    background-color: var(--item-bg);
     border-radius: 10px;
 }
 

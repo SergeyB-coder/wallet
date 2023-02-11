@@ -1,5 +1,6 @@
 import React from 'react';
 // import { ButtonNext } from './buttonNext';
+// import { ButtonNext } from './buttonNext';
 
 
 // import { ButtonNext } from './buttonNext';
@@ -56,7 +57,7 @@ export function CreateOrder2(props) {
     return (
         <div>
             <div className='row  mt-3'>
-                <div className='col-9 t-left-align'>Добавить методы оплаты</div>
+                <div className='col-9 t-left-align text-dark-color'>Добавить методы оплаты</div>
                 <div className='col-2'>2/4</div>
             </div>
 
