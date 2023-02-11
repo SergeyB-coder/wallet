@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { CURRENCY_LIST } from '../../const/devdata';
+import { Selecter } from '../Common/selecter';
 // import { ButtonNext } from './buttonNext';
 
 // import { ButtonNext } from './buttonNext';
-import { selectLimitOrder, selectPercentPrice, selectQuantityOrder, setCurrencyFiat, setCurrencyOrder, setLimitOrder, setPercentPrice, setQuantityOrder } from './ptpSlice';
+import { selectCurrencyType, selectLimitOrder, selectPercentPrice, selectPrice, selectQuantityOrder, setCurrencyFiat, setCurrencyOrder, setCurrencyType, setLimitOrder, setPercentPrice, setPrice, setQuantityOrder } from './ptpSlice';
 
 export function CreateOrder1(props) {
     const dispatch = useDispatch()
@@ -12,22 +14,28 @@ export function CreateOrder1(props) {
     const percent_price = useSelector(selectPercentPrice)
     const quantity_order = useSelector(selectQuantityOrder)
     const limit_order = useSelector(selectLimitOrder)
+    const price = useSelector(selectPrice)
 
     const price_market = 10
     const price_order = 11
     const balance = 3
-    const CURRENCY_LIST = [
-        'USDT BEP20',
-        'USDT TRC20'
-    ]
+    
     const CURRENCY_FIAT_LIST = [
         'RUB',
         'USD'
     ]
 
-    const handleChangeCurrency = (e) => {
-        console.log(typeof(e.target.value), e.target.value)
-        dispatch( setCurrencyOrder(e.target.value) )
+    const CURRENCY_TYPES = [
+        'Фиксированная',
+        'Плавающая'
+    ]
+
+    const [currencyBalance, setCurrencyBalance] = useState(CURRENCY_LIST[0])
+    const [showListCurrency, setShowListCurrency] = useState(false)
+    const currencyType = useSelector(selectCurrencyType)
+
+    function handleSetCurrencyType(t) {
+        dispatch(setCurrencyType(t))
     }
     
     const handleChangeCurrencyFiat = (e) => {
@@ -37,6 +45,10 @@ export function CreateOrder1(props) {
     const handleChangePercPrice = (e) => {
         dispatch(setPercentPrice(e.target.value))
     }
+
+    const handleChangePrice = (e) => {
+        dispatch(setPrice(e.target.value))
+    }
     
     const handleChangeQuantityOrder = (e) => {
         dispatch(setQuantityOrder(e.target.value))
@@ -44,6 +56,17 @@ export function CreateOrder1(props) {
     
     const handleChangeLimitOrder = (e) => {
         dispatch(setLimitOrder(e.target.value))
+    }
+
+    const handleClickCurrencyBalance = () => {
+        setShowListCurrency(!showListCurrency)
+    }
+
+    function handleClickCurrencyItem(index) {
+        console.log(index)
+        setCurrencyBalance(CURRENCY_LIST[index])
+        dispatch( setCurrencyOrder(index + 1) )
+        setShowListCurrency(false)
     }
 
     const divider = 
@@ -62,17 +85,31 @@ export function CreateOrder1(props) {
                 Продажа криптовалюты
             </div>
             <div className='currency-settings-item-col2'>
-                <select className="select-currency" onChange={handleChangeCurrency}>
+                {/* <select className="select-currency" onChange={handleChangeCurrency}> */}
                     {/* <option className="select-currency" value="1">USDT TRC20</option>
                     <option className="select-currency" value="2">USDT BEP20</option> */}
-                    {
+                    {/* {
                         CURRENCY_LIST.map((currency, index) => {
                             return (
                                 <option key={index} className="select-currency" value={index + 1}>{currency}</option>
                             )
                         })
                     }
-                </select>{chevron}
+                </select> */}
+                <div style={{position: 'relative'}}>
+                        <div style={{color: 'white'}} onClick={handleClickCurrencyBalance}>{currencyBalance}</div>
+                        {showListCurrency ? 
+                        <div className='currency-list-select'>
+                            <div>
+                            {CURRENCY_LIST.map((currency, index) => {
+                                return (
+                                    <div onClick={()=>{handleClickCurrencyItem(index)}} key={index} className="select-currency text-nowrap">{currency}</div>
+                                )
+                            })}
+                            </div>
+                        </div>: null}
+                    </div>
+                {chevron}
             </div>
             
         </div>
@@ -101,8 +138,9 @@ export function CreateOrder1(props) {
                 Тип цены
             </div>
             <div className='currency-settings-item-col2'>
-                Плавающая{chevron}
+                <Selecter list_values={CURRENCY_TYPES} class_name={'select-currency text-nowrap'} setValue={handleSetCurrencyType} selected_value={currencyType}/>{chevron}
             </div>
+            
         </div>
 
     const render_perc_price = 
@@ -114,6 +152,17 @@ export function CreateOrder1(props) {
                 %
             </div>
         </div>
+
+    const render_fix_price =
+        <div className='row button-currency-settings'>
+            <div className='currency-settings-item-col1'>
+                <input className='bg-input' type='number' placeholder='0' onChange={handleChangePrice} value={price}/>
+            </div>
+            <div className='currency-settings-item-col2'>
+                $
+            </div>
+        </div>
+                    
 
     const render_summ_sale = 
         <div className='row button-currency-settings'>
@@ -140,7 +189,7 @@ export function CreateOrder1(props) {
             <div className='currency-settings-item-col1'>
                 Оплатить в течение
             </div>
-            <div className='currency-settings-item-col2'>
+            <div className='currency-settings-item-col2 '>
                 <div className='time-limit'>15 мин</div>
             </div>
         </div>
@@ -148,7 +197,7 @@ export function CreateOrder1(props) {
 
     return (
         <div>
-            <div className='row  mt-3'>
+            <div className='row  mt-3 text-dark-color'>
                 <div className='col-9 t-left-align'>Объявление на продажу</div>
                 <div className='col-2'>1/4</div>
             </div>
@@ -162,10 +211,25 @@ export function CreateOrder1(props) {
             </div>
 
             
-            <div className='t-left-align  mt-3'>Доля от плавающей цены</div>
-            <div className='currency-settings-container mt-1'>
-                {render_perc_price}
-            </div>
+            {currencyType === 'Фиксированная' ?
+                (
+                    <div>
+                        <div className='t-left-align  mt-3 text-dark-color'>Фиксированная цена</div>
+                        <div className='currency-settings-container mt-1'>
+                            {render_fix_price}
+                        </div>
+                    </div>    
+                ):
+                (
+                    <>
+                        <div className='t-left-align  mt-3 text-dark-color'>Доля от плавающей цены</div>
+                        <div className='currency-settings-container mt-1'>
+                            {render_perc_price}
+                        </div>
+                    </>
+                )
+            }
+
             <div className='t-left-align  mini-info'>{`Цена на маркете: ${price_market} $`}</div>
             <div className='t-left-align  mini-info'>{`Цена в вашем объявлении: ${price_order} #`}</div>
 
@@ -175,7 +239,7 @@ export function CreateOrder1(props) {
             </div>
             <div className='t-left-align  mini-info'>{`Ваш баланс: ${balance} TON`}</div>
 
-            <div className='t-left-align  mt-3'>Лимит сделки</div>
+            <div className='t-left-align  mt-3 text-dark-color'>Лимит сделки</div>
             <div className='currency-settings-container mt-1'>
                 {render_limit_order}
             </div>

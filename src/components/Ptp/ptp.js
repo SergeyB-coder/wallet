@@ -26,6 +26,7 @@ export function Ptp() {
     useEffect(() => {
         tg.MainButton.show()
         tg.MainButton.setText('Далее')
+        tg.MainButton.setParams({color: '#728788'})
         tg.BackButton.show()
     }, );
 

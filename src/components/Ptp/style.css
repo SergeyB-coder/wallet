@@ -19,22 +19,31 @@
     --item-bg: #121f23;
 }
 
+.currency-list-select {
+    padding: 2px;
+    position: absolute;
+    width: '30vw'; 
+    display: 'flex'; 
+    justify-content: 'flex-start';
+    background-color: var(--item-bg);
+    border: var(--text-light-color) solid 0.5px
+}
+
+.text-dark-color {
+    color: var(--btn-bg-color);
+}
+
 select {
 	appearance: none;
 }
 
 .trade-menu-container {
-    background-color: var(--button-color);
-    border-radius: 5px;
+    background-color: var(--btn-bg-color);
+    border-radius: 14px;
     padding: 10px;
 }
 
-.currency-settings-container {
-    background-color: var(--button-color);
-    position: relative;
-    border-radius: 5px;
-    padding: 10px;
-}
+
 
 .bg-input {
     background-color: var(--button-color);
@@ -44,7 +53,9 @@ select {
     outline: none;
 }
 
-
+.title-myorders {
+    color: var(--btn-bg-color);
+}
 
 
 
@@ -70,13 +81,14 @@ select {
 }
 
 .button-currency-settings {
+    justify-content: space-between;
     padding-top: 5px;
     padding-bottom: 5px;
     cursor: pointer;
 }
 
 .button-currency-settings:hover  {
-    font-weight: bold ;
+    /* font-weight: bold ; */
 }
 
 
@@ -85,8 +97,8 @@ select {
     margin-top: 1vh;
     margin-bottom: 1vh;
     margin-left: 10vw;
-    height: 1px;
-    background-color: var(--link-color);
+    height: 0.5px;
+    background-color: var(--item-bg);
 }
 
 .divider-currency {
@@ -119,24 +131,32 @@ select {
     width: 10vw;
 }
 
+.currency-settings-container {
+    background-color: var(--btn-bg-color);
+    position: relative;
+    border-radius: 10px;
+    padding: 10px;
+}
+
 .currency-settings-item-col1 {
-    color: var(--button-text-color);
+    color: var(--text-light-color);
     display: flex;
     justify-content:flex-start;
     width: 50vw;
-    font-size: 12px;
+    font-size: 16px;
 }
 
 .currency-settings-item-col2 {
-    color: var(--button-text-color);
+    color: var(--text-light-color);
     display: flex;
     justify-content:flex-end;
-    width: 30vw;
-    font-size: 10px;
+    width: 35vw;
+    height: 30px;
+    font-size: 14px;
 }
 
 .method-pay-col2 {
-    color: var(--button-text-color);
+    color: var(--text-light-color);
     display: flex;
     justify-content:flex-end;
     width: 30vw;
@@ -147,14 +167,15 @@ select {
 }
 
 .mini-info {
-    font-size: 8px;
+    font-size: 12px;
+    color: var(--text-mini)
 }
 
 .time-limit {
-    top: 12px;
+    /* top: 12px;
     right: 10vw;;
-    position: absolute;
-    background-color: var(--link-color);
+    position: absolute; */
+    background-color: var(--item-bg);
     border-radius: 5px;
     padding: 5px;
 }
@@ -281,7 +302,13 @@ p {
   .select-currency {
     border: none;
     background: none;
-    color:  var(--text-light-color)
+    color:  var(--text-light-color);
+    font-size: 14;
+    margin-top: 3;
+    /* border: '0.5px solid grey'; */
+    border-radius: 5;
+    width: 'fit-content';
+    text-align: left;
   }
 
   .ptp-container {
@@ -322,6 +349,21 @@ p {
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+  }
+
+
+
+  ::placeholder {
+    color: var(--text-light-color);
+    opacity: 1; /* Firefox */
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: var(--text-light-color);
+  }
+  
+  ::-ms-input-placeholder { /* Microsoft Edge */
+   color: var(--text-light-color);
   }
 
  

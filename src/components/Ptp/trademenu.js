@@ -108,7 +108,7 @@ export function TradeMenu (props) {
             ): (
                 <div>
                     <div className='my-order-container mt-5'>
-                        <div>Мои объявления</div>
+                        <div className='title-myorders'  >Мои объявления</div>
                         {my_orders.map((order) => {
                                 return (
                                     <>
