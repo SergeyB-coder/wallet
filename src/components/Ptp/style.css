@@ -47,7 +47,7 @@ select {
 
 .bg-input {
     background-color: var(--button-color);
-    color: var(--button-text-color);
+    color: var(--btn-bg-color);
     /* color: 'red'; */
     border: none;
     outline: none;
@@ -151,7 +151,7 @@ select {
     display: flex;
     justify-content:flex-end;
     width: 35vw;
-    height: 30px;
+    height: 25px;
     font-size: 14px;
 }
 

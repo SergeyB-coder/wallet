@@ -81,7 +81,7 @@ export function CreateOrder1(props) {
 
     const currency_sale = 
         <div className='row button-currency-settings'>
-            <div className='currency-settings-item-col1'>
+            <div className='currency-settings-item-col1 text-nowrap'>
                 Продажа криптовалюты
             </div>
             <div className='currency-settings-item-col2'>
