@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import './style.css'
 
 export function Selecter (props) {
     const list_values = props.list_values
@@ -21,7 +22,7 @@ export function Selecter (props) {
 
     return (
         <div style={{position: 'relative'}}>
-            <div style={{color: 'white', backgroundColor: 'var(--item-bg)', height: 30, borderRadius: 5, padding: 5, }} onClick={handleClickCurrencyBalance}>{list_values[selected_value - 1]}</div>
+            <div className='selected-item text-nowrap' onClick={handleClickCurrencyBalance}>{list_values[selected_value - 1]}</div>
             {showListCurrency ? 
             <div className='currency-list-select'>
                 <div>

@@ -84,12 +84,12 @@
 }
 
 .screen-buy-container {
-    background-color: var(--button-text-color);
+    /* background-color: var(--button-text-color); */
     color: var(--text-light-color);
 }
 
 .methods-pay {
-    background-color: var(--button-color);
+    /* background-color: var(--button-color); */
     border-radius: 10px;
 }
 
