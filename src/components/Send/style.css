@@ -1,0 +1,70 @@
+.send-container {
+    color: 'white';
+    padding: 35px; 
+}
+
+.title-send {
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 30px;
+    color: var(--btn-bg-color)
+}
+
+.title-from {
+    color: var(--btn-bg-color);
+    text-align:left;
+    font-size: 14px;
+}
+
+.address-item {
+    background-color: var(--item-bg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 10px;
+}
+
+.address-item-col1 {
+    padding: 10px;
+    width: 70vw;
+}
+
+.address-item-col2 {
+    text-align: right;
+    width: 10vw;
+}
+
+.address-circle {
+    background-color: var(--btn-bg-color);
+    height: 30px;
+    width: 30px;
+    border-radius: 15px;
+}
+
+.address-text {
+    width: 50%;
+}
+
+.send-q-input {
+    background-color: #000000;
+    caret-color: var(--text-mini);
+    color: var(--text-light-color);
+    /* color: 'red'; */
+    border: none;
+    outline: none;
+    text-align: right;
+    font-size: 30px;
+}
+
+.address-to-input {
+    background-color: var(--item-bg);
+    caret-color: var(--text-mini);
+    color: var(--text-light-color);
+    /* color: 'red'; */
+    border: none;
+    outline: none;
+    text-align: left;
+    font-size: 12px;
+    width: 70%;
+}
+

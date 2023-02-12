@@ -10,6 +10,7 @@ import { Address } from './components/address/address';
 import { Home } from './components/Home/home';
 import { Market } from './components/Ptp/market/Market';
 import { Ptp } from './components/Ptp/ptp';
+import { Send } from './components/Send/send';
 import { useTelegram } from './hooks/useTelegram';
 
 
@@ -71,6 +72,12 @@ function App() {
             path="/market"
             element={
               <Market/>
+            }
+          />
+          <Route
+            path="/send"
+            element={
+              <Send/>
             }
           />
         </Routes>

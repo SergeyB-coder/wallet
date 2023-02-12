@@ -69,7 +69,7 @@
 }
 
 .bg-order-input {
-    background-color: var(--button-text-color);
+    background-color: 'black';
     color: var(--button-color);
     /* color: 'red'; */
     border: none;
