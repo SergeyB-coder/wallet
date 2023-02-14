@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { svg_ptp_ico, svg_receive, svg_send } from '../../const/svgs';
+// import { svg_ptp_ico, svg_receive, svg_send } from '../../const/svgs';
 import { useTelegram } from '../../hooks/useTelegram';
 import { Button } from './button';
 // import { Button } from './button';
