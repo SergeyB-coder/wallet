@@ -15,12 +15,22 @@
     cursor: pointer;
 }
 
+.button-svg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1vw;
+    width: 25vw;
+    height: 12vw;
+    cursor: pointer;
+}
+
 .container-buttons {
     display: flex;
     justify-content: space-between;
     padding-left: 5vw;
     padding-right: 5vw;
-    width: 100vw;
+    width: 80vw;
 }
 
 .menu-button-svg-container {
@@ -67,11 +77,11 @@
 .wallet-item {
     display: flex;
     align-items: center;
-    /* justify-content: center; */
+    justify-content:space-between;
     /* height: 50px; */
     padding: 10px;
     width: 90vw;
-    background-color: var(--item-bg);
+    /* background-color: var(--item-bg); */
     border-radius: 10px;
 }
 
@@ -91,11 +101,12 @@
 }
 
 .wallet-item-info {
-    width: 35vw;
+    width: 40vw;
     color: var(--btn-bg-color)
 }
 
 .wallet-item-info2 {
+    /* text-align: right; */
     width: 20vw;
     color: var(--btn-bg-color)
 }
