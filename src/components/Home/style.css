@@ -3,8 +3,8 @@
     justify-content: center;
     align-items: center;
     padding: 1vw;
-    width: 25vw;
-    height: 12vw;
+    width: 20vw;
+    height: 10vw;
     /* background-color: var(--tg-theme-button-color); */
     /* background-color: #256EA2; */
     /* color: var(--tg-theme-button-text-color); */
@@ -30,7 +30,7 @@
     justify-content: space-between;
     padding-left: 5vw;
     padding-right: 5vw;
-    width: 80vw;
+    width: 90vw;
 }
 
 .menu-button-svg-container {
@@ -52,7 +52,7 @@
 .button-menu-text {
     /* color: #E4BB2D; */
     color: var(--text-light-color);
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 500;
 }
 
@@ -80,9 +80,10 @@
     justify-content:space-between;
     /* height: 50px; */
     padding: 10px;
-    width: 90vw;
-    /* background-color: var(--item-bg); */
+    width: 85vw;
+    background-color: var(--item-bg);
     border-radius: 10px;
+    margin-right: 10px;
 }
 
 .wallet-item-container {
@@ -96,18 +97,18 @@
     align-items: center;
     background-color: var(--btn-bg-color);
     border-radius: 17px;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
 }
 
 .wallet-item-info {
-    width: 40vw;
+    width: 35vw;
     color: var(--btn-bg-color)
 }
 
 .wallet-item-info2 {
     /* text-align: right; */
-    width: 20vw;
+    width: 25vw;
     color: var(--btn-bg-color)
 }
 
