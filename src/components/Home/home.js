@@ -4,7 +4,7 @@ import { getUserData } from './homeApi';
 import { selectBalance, selectBalanceTRX, setAddress, setAddressTRX, setBalance, setBalanceTRX } from './homeSlice';
 import { MenuButtons } from './menubuttons';
 import { useTelegram } from '../../hooks/useTelegram';
-import { svg_ethereum } from '../../const/svgs';
+import { svg_bep, svg_tron } from '../../const/svgs';
 
 
 export function Home() {
@@ -48,7 +48,7 @@ export function Home() {
 			<div className='wallet-item-container'>
 				<div className='wallet-item row'>
 					<div className='wallet-item-svg-container'>
-							{svg_ethereum}
+							{svg_bep}
 					</div>
 					<div className='wallet-item-info ms-2'>
 						<div className='button-menu-text' style={{textAlign: 'left'}}>Tether</div>
@@ -66,7 +66,7 @@ export function Home() {
 			<div className='wallet-item-container mt-3'>
 				<div className='wallet-item row'>
 					<div className='wallet-item-svg-container'>
-							{svg_ethereum}
+							{svg_tron}
 					</div>
 					<div className='wallet-item-info ms-2'>
 						<div className='button-menu-text' style={{textAlign: 'left'}}>Tether</div>
