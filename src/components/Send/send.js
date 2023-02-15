@@ -17,7 +17,7 @@ export function Send (props) {
     const address_trx = useSelector(selectAddressTRX)
 
     const [stepSend, setStepSend] = useState('address') // address, confirm, wait, finish 
-    const [showLoader, setShowLoader] = useState(false)
+    // const [showLoader, setShowLoader] = useState(false)
 
     const [address1, setAddress1] = useState(address)
     const [address2, setAddress2] = useState(address_trx)
@@ -129,6 +129,7 @@ export function Send (props) {
         
         // inp.style.width = '40px'
         // inp.focus()
+        setDate(new Date())
     }, []);
 
     return (
@@ -341,7 +342,7 @@ export function Send (props) {
 
             
 
-            {!showLoader && 
+            {/* {!showLoader &&  */}
                 <div className='mx-2'>
                     <ButtonNext onClick={handleClickSend} 
                         style={(stepSend === 'wait' || stepSend === 'finish') ? 'grey': 'green'}
@@ -352,9 +353,9 @@ export function Send (props) {
                         }
                     />
                 </div>
-            }
+            {/* } */}
 
-            {showLoader && <div class="loader"></div>}
+            {/* {showLoader && <div class="loader"></div>} */}
 
         </div>
       );
