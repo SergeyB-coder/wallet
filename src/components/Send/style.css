@@ -1,13 +1,13 @@
 .send-container {
     color: 'white';
-    padding: 35px; 
+    padding: 15px; 
 }
 
 .title-send {
     font-size: 20px;
     font-weight: 700;
     margin-top: 30px;
-    color: var(--btn-bg-color)
+    color: var(--text-light-color)
 }
 
 .title-from {
@@ -21,17 +21,53 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-radius: 10px;
+    border-radius: 16px;
+}
+
+.confirm-data {
+    background-color: var(--item-bg);
+    border-radius: 16px;
+}
+
+.trs-wait {
+    background-color: var(--item-bg);
+    border-radius: 16px;
+}
+
+.trs-text-block {
+    text-align: left;
+    width: 60vw;
+}
+
+.trs-wait-logo {
+    width: 20vw;
+}
+
+.trs-text-1 {
+    color: var(--text-light-color);
+    text-align:left;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.trs-text-2 {
+    color: var(--btn-bg-color);
+    text-align:left;
+    font-size: 12px;
+    font-weight: 400;
 }
 
 .address-item-col1 {
     padding: 10px;
     width: 70vw;
+    /* display: flex;
+    align-items: center; */
 }
 
 .address-item-col2 {
-    text-align: right;
+    text-align: center;
     width: 10vw;
+    margin-right: 20px;
 }
 
 .address-circle {
@@ -41,8 +77,18 @@
     border-radius: 15px;
 }
 
+.svg-circle {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    height: 50px;
+    width: 50px;
+}
+
 .address-text {
     width: 50%;
+    display: flex;
+    align-items: center;
 }
 
 .send-q-input {
@@ -64,7 +110,38 @@
     border: none;
     outline: none;
     text-align: left;
-    font-size: 12px;
-    width: 70%;
+    font-size: 15px;
+    width: 100%;
+}
+
+.txt-r {
+    color: var(--btn-bg-color);
+    text-align: right;
+}
+
+.txt-l {
+    color: var(--btn-bg-color);
+    text-align: left;
+}
+
+.txt-r-w {
+    color: var(--text-light-color);
+    text-align: right;
+    font-weight: 500;
+}
+
+.txt-l-w {
+    color: var(--text-light-color);
+    text-align: left;
+    font-weight: 500;
+}
+
+.send-divider { 
+    height: 0px;
+
+    border-bottom: 0.5px solid var(--btn-bg-color);
+    /* transform: matrix(1, 0, 0, 1, 0, 0); */
+    margin-left: 15px;
+    margin-right: 15px;
 }
 

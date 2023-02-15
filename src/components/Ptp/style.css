@@ -13,10 +13,12 @@
     --button-color: #256EA2;
     --hint-color: #8a939e; */
 
-    --btn-bg-color: #728788;
+    --btn-bg-color: #ABABB0;
     --text-light-color: #F0EBED;
     --text-mini: #2DD881;
-    --item-bg: #121f23;
+    --item-bg: #202020;
+    --btn-bg-color2: #36CD77;
+    --btn-bg-color3: #96969C;
 }
 
 .currency-list-select {
@@ -187,11 +189,23 @@ select {
 }
 
 .button-next {
-    background-color: var(--btn-bg-color);
+    background-color: var(--btn-bg-color2);
     color: var(--text-light-color);
-    border-radius: 5px;
+    border-radius: 16px;
     padding: 10px;
     cursor: pointer;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.button-next-grey {
+    background-color: var(--btn-bg-color3);
+    color: var(--text-light-color);
+    border-radius: 16px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 500;
 }
 
 .method-pay-text {
@@ -360,16 +374,16 @@ p {
 
 
   ::placeholder {
-    color: var(--text-light-color);
+    color: var(--btn-bg-color);
     opacity: 1; /* Firefox */
   }
   
   :-ms-input-placeholder { /* Internet Explorer 10-11 */
-   color: var(--text-light-color);
+   color: var(--btn-bg-color);
   }
   
   ::-ms-input-placeholder { /* Microsoft Edge */
-   color: var(--text-light-color);
+   color: var(--btn-bg-color);
   }
 
  
