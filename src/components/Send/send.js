@@ -167,6 +167,27 @@ export function Send (props) {
                                     </svg>
                                 </div>
                             </div>
+                            {
+                                showListAddresses ? (
+                                    <div className='row address-item mt-2' onClick={handleClickAddresItem}>
+
+                                        <div className='address-item-col1'>
+                                            <div className='row p-0 m-0'>
+                                                {/* <div className='address-circle'></div> */}
+                                                <div className='svg-circle'>{fromLabel2 === 'USDT TRC20' ? svg_tron: svg_bep}</div>
+                                                <div className='address-text text-nowrap'>{fromLabel2}</div>
+                                            </div>
+                                        </div>
+
+                                        <div className='address-item-col2'>
+                                            {/* <svg onClick={handleClickSelectAddress} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"/>
+                                            </svg> */}
+                                        </div>
+
+                                    </div>
+                                ): null
+                            }
 
                             {/* TO */}
                             <div className='row address-item mt-5 mb-5'>
@@ -316,27 +337,7 @@ export function Send (props) {
 
 
 
-            {
-                showListAddresses ? (
-                    <div className='row address-item mt-2' onClick={handleClickAddresItem}>
-
-                        <div className='address-item-col1'>
-                            <div className='row p-0 m-0'>
-                                {/* <div className='address-circle'></div> */}
-                                <div className='svg-circle'>{fromLabel2 === 'USDT TRC20' ? svg_tron: svg_bep}</div>
-                                <div className='address-text text-nowrap'>{fromLabel2}</div>
-                            </div>
-                        </div>
-
-                        <div className='address-item-col2'>
-                            {/* <svg onClick={handleClickSelectAddress} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"/>
-                            </svg> */}
-                        </div>
-
-                    </div>
-                ): null
-            }
+            
 
             
 
