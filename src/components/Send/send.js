@@ -81,7 +81,7 @@ export function Send (props) {
             }, (data) => {
                 // console.log('sendTo', data)
                 setShowLoader(false)
-                navigate('/', {replace: true})
+                navigate('/home', {replace: true})
             })
         }
     }

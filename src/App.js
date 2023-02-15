@@ -6,11 +6,12 @@ import {
   Route,
 } from "react-router-dom";
 import './App.css';
-import { Address } from './components/address/address';
+import { Address } from './components/Address/address';
 import { Home } from './components/Home/home';
 import { Market } from './components/Ptp/market/Market';
 import { Ptp } from './components/Ptp/ptp';
 import { Send } from './components/Send/send';
+import { StartScreen } from './components/StartScreen/startScreen';
 import { useTelegram } from './hooks/useTelegram';
 
 
@@ -50,12 +51,18 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <Home/>
-            }
-          />
+            <Route
+                path="/"
+                element={
+                <StartScreen/>
+                }
+            />
+            <Route
+                path="/home"
+                element={
+                <Home/>
+                }
+            />
           <Route
             path="/ptp"
             element={

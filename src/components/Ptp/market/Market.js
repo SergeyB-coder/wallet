@@ -22,7 +22,7 @@ export function Market() {
     const [buyOrder, setBuyOrder] = useState(null)
 
     const backScreen = (() => {
-        navigate('/', {replace: true})
+        navigate('/home', {replace: true})
     })
 
     function handleClickBuy (order) {

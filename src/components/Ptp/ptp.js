@@ -66,7 +66,7 @@ export function Ptp() {
     const backScreen = () => {
         switch (screen) {
             case 'menu':
-                navigate('/', {replace: true})
+                navigate('/home', {replace: true})
                 break;
             
             case 'createorder1':
