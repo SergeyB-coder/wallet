@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonNext } from './buttonNext';
+// import { ButtonNext } from './buttonNext';
 // import { ButtonNext } from './buttonNext';
 // import { ButtonNext } from './buttonNext';
 
@@ -71,7 +71,7 @@ export function CreateOrder2(props) {
                 {renderListMethods}
             </div>
             
-            <ButtonNext onClick={() => props.setScreen('createorder4')}/>
+            {/* <ButtonNext onClick={() => props.setScreen('createorder4')}/> */}
         </div>
     );
 }

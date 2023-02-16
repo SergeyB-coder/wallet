@@ -42,6 +42,7 @@ export function Ptp() {
                 break;
 
             case 'createorder2':
+                tg.MainButton.hide()
                 setScreen('createorder4')
                 break;
 

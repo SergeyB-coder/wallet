@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CURRENCY_FIAT_LIST, CURRENCY_LIST, CURRENCY_TYPES, TIME_LIMITS } from '../../const/devdata';
 import { Selecter } from '../Common/selecter';
 import { selectBalance, selectBalanceTRX } from '../Home/homeSlice';
-import { ButtonNext } from './buttonNext';
+// import { ButtonNext } from './buttonNext';
 // import { ButtonNext } from './buttonNext';
 // import { ButtonNext } from './buttonNext';
 
@@ -236,7 +236,7 @@ export function CreateOrder1(props) {
                 {time_limit}
             </div>
             
-            <ButtonNext onClick={() => {props.setScreen('createorder2')}}/>
+            {/* <ButtonNext onClick={() => {props.setScreen('createorder2')}}/> */}
         </div>
     );
 }
