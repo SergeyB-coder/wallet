@@ -4,8 +4,8 @@
 }
 
 .order-item {
-    background-color: var(--btn-bg-color);
-    color: var(--button-text-color);
+    background-color: var(--item-bg);
+    color: var(--text-light-color);
     border-radius: 8px;
     margin-top: 8px;
     margin-bottom: 8px;
@@ -22,7 +22,7 @@
 .order-buy {
     font-size:medium;
     width: 30vw;
-    background-color: var(--item-bg);
+    background-color: var(--btn-bg-color3);
     color: var(--text-light-color);
     border-radius: 10px;
     display: flex;
@@ -69,8 +69,8 @@
 }
 
 .bg-order-input {
-    background-color: 'black';
-    color: var(--button-color);
+    background-color:black;
+    color: var(--text-light-color);
     /* color: 'red'; */
     border: none;
     outline: none;
@@ -86,6 +86,7 @@
 .screen-buy-container {
     /* background-color: var(--button-text-color); */
     color: var(--text-light-color);
+
 }
 
 .methods-pay {
@@ -104,4 +105,11 @@
     color: var(--button-text-color);
     width: 40vw;
     text-align: right;
+}
+
+.deal-info-container {
+    background-color: var(--item-bg);
+    border-radius: 16px;
+    padding: 5px;
+    color: var(--text-light-color);
 }

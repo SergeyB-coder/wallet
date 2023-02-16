@@ -1,10 +1,10 @@
 :root {
-    --secondary-bg-color: var(--tg-theme-secondary-bg-color);
+    /* --secondary-bg-color: var(--tg-theme-secondary-bg-color);
     --bg-color: var(--tg-theme-bg-color);
     --link-color: var(--tg-theme-link-color);
     --button-text-color: var(--tg-theme-button-text-color);
     --button-color: var(--tg-theme-button-color);
-    --hint-color: var(--tg-theme-hint-color);
+    --hint-color: var(--tg-theme-hint-color); */
 
     /* --secondary-bg-color: #49515C;
     --bg-color: #e8e2ca;
@@ -45,7 +45,7 @@ select {
 }
 
 .trade-menu-container {
-    background-color: var(--btn-bg-color);
+    background-color: var(--item-bg);
     border-radius: 14px;
     padding: 10px;
 }
@@ -53,7 +53,7 @@ select {
 
 
 .bg-input {
-    background-color: var(--btn-bg-color);
+    background-color: var(--item-bg);
     color: var(--text-light-color);
     /* color: 'red'; */
     border: none;
@@ -67,12 +67,12 @@ select {
 
 
 .trade-menu-plus-col {
-    color: var(--link-color);
+    color: var(--text-light-color);
     width: 10vw;
 }
 
 .trade-menu-text-col {
-    color: var(--button-text-color);
+    color: var(--text-light-color);
     width: 65vw;
     text-align: left;
 }
@@ -129,17 +129,17 @@ select {
 }
 
 .trade-menu-arrow-col {
-    color: var(--button-text-color);
+    color: var(--text-light-color);
     width: 5vw;
 }
 
 .trade-menu-user-col {
-    color: var(--link-color);
+    color: var(--text-light-color);
     width: 10vw;
 }
 
 .currency-settings-container {
-    background-color: var(--btn-bg-color);
+    background-color: var(--item-bg);
     position: relative;
     border-radius: 10px;
     padding: 10px;
@@ -196,6 +196,7 @@ select {
     cursor: pointer;
     font-size: 20px;
     font-weight: 500;
+    text-align: center;
 }
 
 .button-next-grey {
@@ -215,11 +216,11 @@ select {
 .method-name-col {
     text-align: left;
     width: 70vw;
-    color: var(--button-text-color);
+    color: var(--text-light-color);
 }
 
 .test-order-container {
-    background-color: var(--btn-bg-color);
+    background-color: var(--item-bg);
     border-radius: 5px;
     padding: 10px;
 }
@@ -235,7 +236,7 @@ select {
 .test-order-price {
     text-align: left;
     font-size: 20px;
-    color: var(--button-text-color);
+    color: var(--text-light-color);
 }
 
 .test-order-text {
@@ -248,12 +249,12 @@ select {
     font-size: 15px;
     padding: 5px;
     color: var(--text-light-color);
-    background-color: var(--item-bg);
+    background-color: var(--btn-bg-color3);
     border-radius: 10px;
 }
 
 .test-order-info-col {
-    color: var(--button-text-color);
+    color: var(--text-light-color);
     justify-content:start;
     width: 40vw;
 }
@@ -338,14 +339,21 @@ p {
     height: 100vh;
   }
 
+  .buyer-item {
+    background-color: var(--item-bg);
+    color: var(--text-light-color);
+    border-radius: 16px;
+    padding: 10px;
+  }
+
   .salute-text1 {
-    color: var(--button-text-color);
+    color: var(--btn-bg-color3);
     font-size: 20px;
     font-weight: bold;
   }
 
   .salute-text2 {
-    color: var(--button-text-color);
+    color: var(--btn-bg-color3);
     font-size: 15px;
   }
 

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { ButtonNext } from './buttonNext';
 import { sendAcceptDeal, sendEndDeal } from './market/marketApi';
 import { selectCurrentOrderId, selectDealInfo } from './market/marketSlice';
 
 export function CompleteDeal (props) {
-    const setShowCompleteDeal = props.setShowCompleteDeal
+    const handleClose = props.handleClose
     const deal_info = useSelector(selectDealInfo)
     const order_id = useSelector(selectCurrentOrderId)
 
@@ -24,36 +25,40 @@ export function CompleteDeal (props) {
         setShowLoader(true)
         sendEndDeal({deal_id: deal_info.id, order_id: order_id}, () => {
             setShowLoader(false)
-            setShowCompleteDeal(false)
+            handleClose()
         })
+    }
+
+    const handleClickButton = () => {
+        if (statusDeal === 'request') {
+            handleClickSale()
+        }
+        else if (statusDeal === 'pay') {
+            handleClickEndDeal()
+        }
     }
 
     return (
         <>  
-            <div className='row mt-5 deal-item p-3'>
-                <div className='w-50' style={{textAlign: 'left'}}>
+            <div className='mt-5 deal-item p-3'>
+                <div  style={{color: 'var(--text-light-color)'}}>
                     {deal_info?.first_name}
                 </div>
-                {statusDeal === 'request'  ?
-                    <div className='w-50' onClick={handleClickSale}>
-                        Продать
-                    </div>:
-                    <div className='w-50' onClick={handleClickEndDeal}>
-                        Оплата получена
-                    </div>
-                }
-                {
-                    showLoader && <div class="loader"></div>
-                }
             </div>
-            <div className='row deal-item p-3'>
-                <div className='w-50' style={{textAlign: 'left'}}>
-                    Хочет купить
-                </div>
-                <div className='w-50'>
-                    {deal_info?.quantity} USDT
-                </div>
+            <div className='my-2' style={{color: 'var(--text-light-color)'}}>
+                Хочет купить
             </div>
+            <div className='mb-3' style={{color: 'var(--text-light-color)'}}>
+                {deal_info?.quantity} {deal_info.currency}
+            </div>
+
+            
+            
+            {
+                showLoader ? 
+                <div class="loader"></div>:
+                <ButtonNext text={statusDeal === 'request' ? 'Принять запрос': 'Подтвердить оплату'} onClick={handleClickButton}/>
+            }
                 
         </>
       );

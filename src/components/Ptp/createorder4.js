@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { CURRENCY_FIAT_LIST, CURRENCY_LIST, TIME_LIMITS } from '../../const/devdata';
 import { useTelegram } from '../../hooks/useTelegram';
+import { ButtonNext } from './buttonNext';
 // import { ButtonNext } from './buttonNext';
 // import { ButtonNext } from './buttonNext';
 // import { useTelegram } from '../../hooks/useTelegram';
@@ -72,7 +73,7 @@ export function CreateOrder4(props) {
                 </div>
 
             </div>
-            {/* <ButtonNext onClick={props.handleClickCreateOrder} text={'Создать объявление'}/> */}
+            <ButtonNext onClick={props.handleClickCreateOrder} text={'Создать объявление'}/>
         </div>
     );
 }

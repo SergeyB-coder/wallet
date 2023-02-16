@@ -2,6 +2,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CURRENCY_FIAT_LIST, CURRENCY_LIST, CURRENCY_TYPES, TIME_LIMITS } from '../../const/devdata';
 import { Selecter } from '../Common/selecter';
+import { selectBalance, selectBalanceTRX } from '../Home/homeSlice';
+import { ButtonNext } from './buttonNext';
 // import { ButtonNext } from './buttonNext';
 // import { ButtonNext } from './buttonNext';
 
@@ -19,8 +21,8 @@ export function CreateOrder1(props) {
     const timeLimit = useSelector(selectTimeLimit)
 
     const price_market = 10
-    const price_order = 11
-    const balance = 3
+    const balance = useSelector(selectBalance)
+    const balance_trx = useSelector(selectBalanceTRX)
     
     
 
@@ -141,7 +143,7 @@ export function CreateOrder1(props) {
                 <input className='bg-input' type='number' placeholder='0' onChange={handleChangePrice} value={price}/>
             </div>
             <div className='currency-settings-item-col2'>
-                $
+                {currencyFiat === 1 ? 'Руб': '$'}
             </div>
         </div>
                     
@@ -152,7 +154,7 @@ export function CreateOrder1(props) {
                 <input className='bg-input' type='number' placeholder='Сумма' onChange={handleChangeQuantityOrder} value={quantity_order}/>
             </div>
             <div className='currency-settings-item-col2'>
-                TON
+                USDT
             </div>
         </div>
 
@@ -177,7 +179,7 @@ export function CreateOrder1(props) {
                     class_name={'select-currency text-nowrap'} 
                     setIndex={(idx) => {dispatch(setTimeLimit(idx + 1))}} 
                     selected_value={timeLimit}
-                />
+                />{chevron}
             </div>
         </div>
     
@@ -218,13 +220,13 @@ export function CreateOrder1(props) {
             }
 
             <div className='t-left-align  mini-info'>{`Цена на маркете: ${price_market} $`}</div>
-            <div className='t-left-align  mini-info'>{`Цена в вашем объявлении: ${price_order} #`}</div>
+            <div className='t-left-align  mini-info'>{`Цена в вашем объявлении: ${price} #`}</div>
 
 
             <div className='currency-settings-container mt-4'>
                 {render_summ_sale}
             </div>
-            <div className='t-left-align  mini-info'>{`Ваш баланс: ${balance} TON`}</div>
+            <div className='t-left-align  mini-info'>{`Ваш баланс: ${currency_order === 1 ? balance: balance_trx} USDT`}</div>
 
             <div className='t-left-align  mt-3 text-dark-color'>Лимит сделки</div>
             <div className='currency-settings-container mt-1'>
@@ -234,7 +236,7 @@ export function CreateOrder1(props) {
                 {time_limit}
             </div>
             
-            {/* <ButtonNext onClick={() => {props.setScreen('createorder2')}}/> */}
+            <ButtonNext onClick={() => {props.setScreen('createorder2')}}/>
         </div>
     );
 }

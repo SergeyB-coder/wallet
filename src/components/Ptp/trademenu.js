@@ -4,17 +4,18 @@ import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../hooks/useTelegram';
 import { CompleteDeal } from './completeDeal';
 import { getMyOrders, getOrderDeals } from './market/marketApi';
-import { selectMyOrders, setCurrentOrderId, setDealInfo, setMyOrders } from './market/marketSlice';
+import { selectMyOrders, selectOrderDeals, setCurrentOrderId, setDealInfo, setMyOrders, setOrderDeals } from './market/marketSlice';
 import { OrderItem } from './market/orderItem';
 import './style.css'
 
 export function TradeMenu (props) {
     const my_orders = useSelector(selectMyOrders)
+    const order_deals = useSelector(selectOrderDeals)
     const {user_id} = useTelegram()
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const [showCompleteDeal, setShowCompleteDeal] = useState(false)
+    const [content, setContent] = useState('orders') // orders, deals, complete_deal
 
     const handleClickCreateOrder = () => {
         props.setScreen('createorder1')
@@ -23,6 +24,19 @@ export function TradeMenu (props) {
     const handleClickMarket = () => {
             navigate('/market', {replace: true})
         }
+    
+    function handleClickOrder(order_id) {
+        dispatch(setCurrentOrderId(order_id))
+        setContent('deals')
+        getOrderDeals({order_id: order_id}, (data) => {
+            dispatch(setOrderDeals(data.deals))
+        })
+    }
+
+    const handleClickDeal = (deal) => {
+        dispatch(setDealInfo(deal))
+        setContent('complete_deal')
+    }
 
     const arrow_right = 
         <div className='trade-menu-arrow-col'>
@@ -77,13 +91,7 @@ export function TradeMenu (props) {
     const divider = 
         <div className='divider'></div>
 
-    function handleClickOrder(order_id) {
-        dispatch(setCurrentOrderId(order_id))
-        setShowCompleteDeal(true)
-        getOrderDeals({order_id: order_id}, (data) => {
-            dispatch(setDealInfo(data.deals[0]))
-        })
-    }
+    
 
     useEffect(() => {
         getMyOrders({user_id: user_id}, (data) => {
@@ -101,11 +109,10 @@ export function TradeMenu (props) {
                 {create_order}
             </div>
 
-            {showCompleteDeal ? (
-                <div>
-                    <CompleteDeal setShowCompleteDeal={setShowCompleteDeal}/>
-                </div>
-            ): (
+            
+
+            {
+                content === 'orders' &&
                 <div>
                     <div className='my-order-container mt-5'>
                         <div className='title-myorders'  >Мои объявления</div>
@@ -118,7 +125,32 @@ export function TradeMenu (props) {
                             })}
                     </div>
                 </div>
-            )}
+            }
+
+            {   content === 'deals' &&
+                <div className='mt-5'>
+                    <label style={{color: 'var(--text-light-color)'}}>Запросы</label>
+                    {order_deals.map((deal) => {
+                                return (
+                                    <>
+                                        <div className='buyer-item my-2' onClick={() => {handleClickDeal(deal)}}>
+                                            <div style={{textAlign: 'left', color: 'var(--btn-bg-color)'}}>{deal.first_name}</div>
+                                            <div className='row d-flex justify-content-between'>
+                                                <div style={{width: '40vw', textAlign: 'left'}}>Сумма</div>
+                                                <div style={{width: '40vw'}}>{deal.quantity} USDT</div>
+                                            </div>
+                                        </div>
+                                    </>
+                                )
+                            })}
+                </div>
+            }
+
+            {   content === 'complete_deal' &&
+                <div>
+                    <CompleteDeal handleClose={() => setContent('orders')}/>
+                </div>
+            }
             
         </>
       );
