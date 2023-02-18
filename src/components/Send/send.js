@@ -151,31 +151,31 @@ export function Send (props) {
                         <div className='m-3'>
 
                         
-                            <div className='row address-item mt-5'>
+                            <div className='row address-item mt-5 mx-2' onClick={handleClickSelectAddress}>
                                 <div className='address-item-col1'>
                                     {/* <div className='title-from mb-2'>From</div> */}
                                     <div className='row p-0 m-0'>
                                         {/* <div className='address-circle'></div> */}
                                         <div className='svg-circle'>{fromLabel1 === 'USDT TRC20' ? svg_tron: svg_bep}</div>
-                                        <div className='address-text text-nowrap'>{fromLabel1}</div>
+                                        <div className='send-text text-nowrap'>{fromLabel1}</div>
                                     </div>
                                 </div>
 
                                 <div className='address-item-col2'>
-                                    <svg onClick={handleClickSelectAddress} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
+                                    <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
                                         <path fillRule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"/>
                                     </svg>
                                 </div>
                             </div>
                             {
                                 showListAddresses ? (
-                                    <div className='row address-item mt-2' onClick={handleClickAddresItem}>
+                                    <div className='row address-item-2 mt-2' onClick={handleClickAddresItem}>
 
                                         <div className='address-item-col1'>
                                             <div className='row p-0 m-0'>
                                                 {/* <div className='address-circle'></div> */}
                                                 <div className='svg-circle'>{fromLabel2 === 'USDT TRC20' ? svg_tron: svg_bep}</div>
-                                                <div className='address-text text-nowrap'>{fromLabel2}</div>
+                                                <div className='send-text text-nowrap'>{fromLabel2}</div>
                                             </div>
                                         </div>
 
@@ -190,7 +190,7 @@ export function Send (props) {
                             }
 
                             {/* TO */}
-                            <div className='row address-item mt-5 mb-5'>
+                            <div className='row address-item mt-5 mb-2 p-1'>
 
                                 <div className='address-item-col1'>
                                     {/* <div className='title-from mb-2'>To</div> */}
@@ -199,7 +199,7 @@ export function Send (props) {
                                         {/* {
                                             showInputAddressTo ? */}
                                         <input className='address-to-input' type='text' placeholder='Search, public address (0x) or ENS' onChange={handleChangeAddressTo} value={addressTo}/>:
-                                            {/* <div className='address-text text-nowrap'>{`${addressTo.slice(0, 5)} ... ${addressTo.slice(-5)}`}</div>
+                                            {/* <div className='send-text text-nowrap'>{`${addressTo.slice(0, 5)} ... ${addressTo.slice(-5)}`}</div>
                                         } */}
                                         
                                     </div>
@@ -215,7 +215,7 @@ export function Send (props) {
                             </div>
 
                             {/* QUANTITY */}
-                            <div className='row address-item mt-5 mb-5'>
+                            <div className='row address-item mt-2 mb-5 p-1'>
 
                                 <div className='address-item-col1'>
                                     <div className=' p-0 m-0 d-flex align-items-center'>

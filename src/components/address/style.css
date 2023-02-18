@@ -1,7 +1,7 @@
 .address-container {
     display: flex;
     justify-content: center;
-    padding-top: 20vh;
+    padding-top: 10vh;
 }
 
 .address-text {
@@ -21,4 +21,12 @@
     border-radius: 20px;
     padding: 10px;
     color: aliceblue;
+}
+
+.left-1 {
+    left: 20px;
+}
+
+.w-60 {
+    width: 60vw;
 }

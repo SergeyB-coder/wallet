@@ -62,11 +62,11 @@
     color: aliceblue;
     font-size: 41px;
     font-weight:700;
-    margin-top: 80px;
+    margin-top: 40px;
 }
 
 .bottom-balance {
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     color: var(--text-mini);
 }
 
@@ -91,7 +91,10 @@
 .container-deal {
     background-color: var(--item-bg);
     padding: 10px;
-    margin: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
     border-radius: 16px;
 }
 

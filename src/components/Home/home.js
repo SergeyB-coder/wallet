@@ -36,7 +36,6 @@ export function Home() {
 							}
 						</div>
 					</div>
-					
 				</div>
 			</>
 		)
@@ -67,16 +66,16 @@ export function Home() {
 		<div>
 			{/* <h3>Hello!</h3> */}
 			<div className='balance-main'>{Math.round((parseFloat(balance)+parseFloat(balance_trx))*100)/100} USDT</div>
-			<div className='bottom-balance'>&#11014; 323% ($400)</div>
+			<div className='bottom-balance'>+323% ($400)</div>
 			<MenuButtons/>	
 
-			<div style={{marginTop: 50}}>
+			<div style={{marginTop: 30}}>
 				{/* <button onClick={() => {
 					fromMain({user_id: user_id}, (d)=>{console.log('d', d)})
 				}}>TEST</button> */}
 			</div>
 
-			<div className='mt-5' style={{color: 'var(--btn-bg-color)'}}>Manage token list</div>
+			<div className='mt-1' style={{color: 'var(--btn-bg-color)'}}>Manage token list</div>
 
 			<div className='wallet-item-container mt-2'>
 				<div className='wallet-item row'>
@@ -112,7 +111,7 @@ export function Home() {
 				</div>
 			</div>
 
-			<div className='mt-5' style={{color: 'var(--btn-bg-color)'}}>Последние транзакции</div>
+			<div className='mt-5' style={{color: 'var(--btn-bg-color)'}}>Последние сделки</div>
 			
 			{renderlistLastDeals}
 		</div>

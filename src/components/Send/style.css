@@ -24,6 +24,16 @@
     border-radius: 16px;
 }
 
+.address-item-2 {
+    position: absolute;
+    background-color: var(--item-bg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 16px;
+    border: 1px solid var(--btn-bg-color);
+}
+
 .confirm-data {
     background-color: var(--item-bg);
     border-radius: 16px;
@@ -59,14 +69,14 @@
 
 .address-item-col1 {
     padding: 10px;
-    width: 70vw;
+    width: 70%;
     /* display: flex;
     align-items: center; */
 }
 
 .address-item-col2 {
     text-align: center;
-    width: 10vw;
+    width: 10%;
     margin-right: 20px;
 }
 
@@ -85,10 +95,11 @@
     width: 50px;
 }
 
-.address-text {
+.send-text {
     width: 50%;
     display: flex;
     align-items: center;
+    color: var(--text-light-color);
 }
 
 .send-q-input {

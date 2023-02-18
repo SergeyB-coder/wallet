@@ -42,7 +42,7 @@ export function Market() {
     useEffect(() => {
         tg.MainButton.hide()
         tg.BackButton.show()
-    }, );
+    }, [tg.BackButton, tg.MainButton]);
 
     useEffect(() => {
         tg.onEvent('backButtonClicked', backScreen)

@@ -29,7 +29,7 @@ export function Ptp() {
         tg.MainButton.setText('Далее')
         tg.MainButton.setParams({color: '#36CD77'})
         tg.BackButton.show()
-    }, );
+    }, [tg.BackButton, tg.MainButton]);
 
     const nextScreen = () => {
         switch (screen) {
