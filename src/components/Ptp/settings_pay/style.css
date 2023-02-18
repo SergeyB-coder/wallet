@@ -1,0 +1,32 @@
+.method-text {
+    color: var(--text-light-color);
+}
+
+.button-new-method {
+    padding: 7px;
+    background-color: var(--item-bg);
+    border-radius: 12px;
+}
+
+.container-method {
+    padding: 7px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: var(--item-bg);
+    border-radius: 12px;
+}
+
+.method-input {
+    background-color: var(--item-bg);
+    caret-color: var(--text-mini);
+    color: var(--text-light-color);
+    /* color: 'red'; */
+    border: none;
+    outline: none;
+    text-align: left;
+    font-size: 15px;
+    width: 100%;
+    padding: 7px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}

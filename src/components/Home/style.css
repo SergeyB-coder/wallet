@@ -88,6 +88,13 @@
     /* margin-right: 10px; */
 }
 
+.container-deal {
+    background-color: var(--item-bg);
+    padding: 10px;
+    margin: 10px;
+    border-radius: 16px;
+}
+
 .wallet-item-container {
     display: flex;
     justify-content: center;
@@ -113,5 +120,24 @@
     /* text-align: right; */
     width: 30vw;
     color: var(--btn-bg-color)
+}
+
+.label-deal {
+    font-size: 14px;
+    color: var(--btn-bg-color)
+}
+
+.text-deal {
+    text-align: left;
+    color: var(--text-light-color);
+    font-size: 16px;
+}
+
+.deal-col-1 {
+    width: 40%;
+}
+
+.deal-col-2 {
+    width: 60%;
 }
 

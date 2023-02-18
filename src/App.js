@@ -10,6 +10,7 @@ import { Address } from './components/address/address';
 import { Home } from './components/Home/home';
 import { Market } from './components/Ptp/market/Market';
 import { Ptp } from './components/Ptp/ptp';
+import { SettingsPay } from './components/Ptp/settings_pay/SettingsPay';
 import { Send } from './components/Send/send';
 import { StartScreen } from './components/StartScreen/startScreen';
 import { useTelegram } from './hooks/useTelegram';
@@ -85,6 +86,12 @@ function App() {
             path="/send"
             element={
               <Send/>
+            }
+          />
+          <Route
+            path="/settingspay"
+            element={
+              <SettingsPay/>
             }
           />
         </Routes>

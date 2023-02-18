@@ -1,7 +1,7 @@
-import { url } from "../../const/urls";
+import { url } from "../../../const/urls";
 
-export function getUserData(pars, callback) {
-    fetch(url + '/getuserdata', {
+export function getUserMethodsPay(pars, callback) {
+    fetch(url + '/getusermethodspay', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -17,44 +17,40 @@ export function getUserData(pars, callback) {
         });
 }
 
-export function getWallet(pars, callback) {
-    fetch(url + '/getwallet', {
+export function newMethodPay(pars, callback) {
+    fetch(url + '/newmethodpay', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            //   mode: 'no-cors',
             body: JSON.stringify(pars)
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data getwallet', data)
-            
+            console.log('newmethodpay data', data)
             return callback(data)
         });
 }
 
-export function getWalletTRX(pars, callback) {
-    fetch(url + '/getwallettrx', {
+export function getMethodInfo(pars, callback) {
+    fetch(url + '/methodinfo', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            //   mode: 'no-cors',
             body: JSON.stringify(pars)
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data getwallettrx', data)
-            
+            console.log('methodinfo data', data)
             return callback(data)
         });
 }
 
-export function fromMain(pars, callback) {
-    fetch(url + '/frommain', {
+export function updateMethodPay(pars, callback) {
+    fetch(url + '/updatemethod', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -64,25 +60,7 @@ export function fromMain(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data getwallettrx', data)
-            
-            return callback(data)
-        });
-}
-
-export function getUserDeals(pars, callback) {
-    fetch(url + '/getuserdeals', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(pars)
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log('data getUserDeals', data)
-            
+            console.log('updatemethod data', data)
             return callback(data)
         });
 }
