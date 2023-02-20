@@ -1,7 +1,22 @@
 .selected-item {
-    color: 'white'; 
+    color: var(--text-light-color); 
     background-color: var(--item-bg); 
     height: 30px; 
     border-radius: 5px; 
     padding: 5px; 
+    font-size: 14px;
+}
+
+.currency-list-select {
+    /* padding: 5px; */
+    position: absolute;
+    /* width: '30vw';  */
+    display: 'flex'; 
+    justify-content: 'flex-start';
+    background-color:black;
+    /* border: var(--text-light-color) solid 0.5px; */
+    border-radius: 10px;
+    z-index: 10;
+    width: 100%;
+    font-size: 14px;
 }

@@ -7,7 +7,7 @@ import { CreateOrder2 } from './createorder2';
 import { CreateOrder4 } from './createorder4';
 import { CreateOrder5 } from './createorder5';
 import { createOrder } from './ptpApi';
-import { selectCurrencyFiat, selectCurrencyOrder, selectLimitOrder, selectPercentPrice, selectPrice, selectQuantityOrder } from './ptpSlice';
+import { selectCurrencyFiat, selectCurrencyOrder, selectLimitOrder, selectMethodPay, selectPercentPrice, selectPrice, selectQuantityOrder } from './ptpSlice';
 import { TradeMenu } from './trademenu';
 
 
@@ -21,11 +21,12 @@ export function Ptp() {
     const currency_fiat = useSelector(selectCurrencyFiat)
     const currency_order = useSelector(selectCurrencyOrder)
     const price = useSelector(selectPrice)
+    const method_pay = useSelector(selectMethodPay)
 
     const [screen, setScreen] = useState('menu') 
 
     useEffect(() => {
-        tg.MainButton.show()
+        // tg.MainButton.show()
         tg.MainButton.setText('Далее')
         tg.MainButton.setParams({color: '#36CD77'})
         tg.BackButton.show()
@@ -97,7 +98,8 @@ export function Ptp() {
             quantity_order: quantity_order,
             limit_order: limit_order,
             currency_fiat: currency_fiat,
-            currency_order: currency_order
+            currency_order: currency_order,
+            method_pay_id: method_pay?.id
         }, () => {
             setScreen('createorder5')
         })
@@ -109,6 +111,7 @@ export function Ptp() {
         }, )
 
     useEffect(() => {
+        console.log('uef')
         tg.onEvent('backButtonClicked', backScreen)
             return () => {tg.offEvent('backButtonClicked', backScreen)}
         }, )

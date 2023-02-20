@@ -1,17 +1,18 @@
-import React from 'react';
-// import { ButtonNext } from './buttonNext';
-// import { ButtonNext } from './buttonNext';
-// import { ButtonNext } from './buttonNext';
-
-
+import React, {useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTelegram } from '../../hooks/useTelegram';
+import { selectMethodPay, setMethodPay } from './ptpSlice';
+import { getUserMethodsPay } from './settings_pay/settingsPayApi';
+import { selectMethodsPay, setMethodsPay } from './settings_pay/settingsPaySlice';
 // import { ButtonNext } from './buttonNext';
 
 export function CreateOrder2(props) {
-    // const setScreen = props.setScreen
+    const {user_id} = useTelegram()
+    const dispatch = useDispatch()
 
-    const bank = 'Raiffeisen Bank'
-    const card = 'Raiffeisen Bank - 12345'
-    const list_methods = ['Payeer', 'AdvCash', 'Webmoney']
+    const method_pay = useSelector(selectMethodPay)
+
+    const list_methods = useSelector(selectMethodsPay)
 
     const divider = 
         <div className='divider-currency m-m-10'></div>
@@ -25,24 +26,24 @@ export function CreateOrder2(props) {
 
     const renderListMethods = list_methods.map((method, index) => {
         return (
-            <>
-                <div className='row button-trade-menu'>
+            <div key={index} >
+                <div className='row button-trade-menu' onClick={()=>dispatch(setMethodPay(method))}>
                     <div className='method-name-col'>
-                        {method}
+                        {method.name}
                     </div>
                     {arrow_right}
                 </div>
                 {index !== list_methods.length - 1 && divider}
-            </>
+            </div>
         )
     })
 
-    const method_pay = 
+    const render_method_pay = 
         <div className='row button-currency-settings'>
             <div className='currency-settings-item-col1'>
                 <div>
-                    <div className='method-pay-text'>{bank}</div>
-                    <div className='method-pay-text'>{card}</div>
+                    <div className='method-pay-text'>{method_pay?.name}</div>
+                    <div className='method-pay-text'>{method_pay?.card_number}</div>
                 </div>
             </div>
             <div className='method-pay-col2'>
@@ -53,6 +54,14 @@ export function CreateOrder2(props) {
                 
         </div>
 
+    useEffect(() => {
+        getUserMethodsPay({user_id: user_id}, (data) => {
+            dispatch(setMethodsPay(data.methods))
+            if (data.methods.length > 0) {
+                dispatch(setMethodPay(data.methods[0]))
+            }
+        })
+    }, [dispatch, user_id]);
     
 
     return (
@@ -63,7 +72,7 @@ export function CreateOrder2(props) {
             </div>
 
             <div className='currency-settings-container mt-1'>
-                {method_pay}
+                {render_method_pay}
             </div>
 
             

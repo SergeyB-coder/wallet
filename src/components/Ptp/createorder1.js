@@ -4,10 +4,7 @@ import { CURRENCY_FIAT_LIST, CURRENCY_LIST, CURRENCY_TYPES, TIME_LIMITS } from '
 import { Selecter } from '../Common/selecter';
 import { selectBalance, selectBalanceTRX } from '../Home/homeSlice';
 // import { ButtonNext } from './buttonNext';
-// import { ButtonNext } from './buttonNext';
-// import { ButtonNext } from './buttonNext';
 
-// import { ButtonNext } from './buttonNext';
 import { selectCurrencyFiat, selectCurrencyOrder, selectCurrencyType, selectLimitOrder, selectPercentPrice, selectPrice, selectQuantityOrder, selectTimeLimit, setCurrencyFiat, setCurrencyOrder, setCurrencyType, setLimitOrder, setPercentPrice, setPrice, setQuantityOrder, setTimeLimit } from './ptpSlice';
 
 export function CreateOrder1(props) {

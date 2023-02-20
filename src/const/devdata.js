@@ -18,3 +18,10 @@ export const TIME_LIMITS = [
     '30 мин',
     '1 час'
 ]
+
+export const METHOD_PAY_LIST = [
+    'Sber',
+    'Raiff',
+    'QIWI',
+    'VTB'
+]

@@ -28,7 +28,9 @@ export function Selecter (props) {
                 <div>
                 {list_values.map((value, index) => {
                     return (
-                        <div onClick={()=>{handleClickCurrencyItem(index)}} key={index} className={class_name}>{value}</div>
+                        <div style={index !== list_values.length-1 ? {borderBottom: '1px solid var(--btn-bg-color)'}: {}} onClick={()=>{handleClickCurrencyItem(index)}} key={index} className={class_name}>
+                            {value}
+                        </div>
                     )
                 })}
                 </div>

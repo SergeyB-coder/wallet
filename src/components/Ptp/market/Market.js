@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { CURRENCY_FIAT_LIST, CURRENCY_LIST, METHOD_PAY_LIST } from '../../../const/devdata';
 import { useTelegram } from '../../../hooks/useTelegram';
+import { Selecter } from '../../Common/selecter';
 import { getOrders } from './marketApi';
 import { selectOrders, setOrders } from './marketSlice';
 import { ScreenBuy } from './screenBuy';
@@ -20,6 +22,11 @@ export function Market() {
 
     const [marketScreen, setMarketScreen] = useState('orders') // buy1 buy2
     const [buyOrder, setBuyOrder] = useState(null)
+    const [currencyFiat, setCurrencyFiat] = useState(1)
+    const [currencyNum, setCurrencyNum] = useState(1)
+    
+    const [listFilterOrders, setListFilterOrders] = useState([])
+    
 
     const backScreen = (() => {
         navigate('/home', {replace: true})
@@ -30,12 +37,34 @@ export function Market() {
         setMarketScreen('buy1')
     }
 
+    function handleChangeCurrency(index) {
+        setCurrencyNum(index+1)
+        let newListFilterOrders = listFilterOrders.slice()
+        orders.forEach((order, i) => {
+            if (order.currency_id === (index+1)) newListFilterOrders[i] = 1
+            else newListFilterOrders[i] = 0
+        });
+        setListFilterOrders(newListFilterOrders)
+    }
+
+    function handleChangeCurrencyFiat(index) {
+        setCurrencyFiat(index+1)
+        let newListFilterOrders = listFilterOrders.slice()
+        orders.forEach((order, i) => {
+            if (order.currency_fiat_id === (index+1)) newListFilterOrders[i] = 1
+            else newListFilterOrders[i] = 0
+        });
+        setListFilterOrders(newListFilterOrders)
+    }
+
     const divider = 
         <div className='divider-order'></div>
     
     useEffect(() => {
         getOrders({user_id: ''}, (data) => {
             dispatch(setOrders(data.orders))
+            const filter_orders = new Array(data.orders.length).fill(1)
+            setListFilterOrders(filter_orders)
         })
     }, [dispatch]);
 
@@ -51,13 +80,37 @@ export function Market() {
 
     return (
         <div className='market-container'>
-            Market
+            <div className='row d-flex justify-content-between'>
+                <div className='filter-item'>
+                    <Selecter 
+                        list_values={METHOD_PAY_LIST} 
+                        class_name={'select-currency text-nowrap'} 
+                        setIndex={() => {}} 
+                        selected_value={currencyFiat}
+                    />
+                </div>
+                <div className='filter-item'>
+                    <Selecter 
+                        list_values={CURRENCY_LIST} 
+                        class_name={'select-currency text-nowrap'} 
+                        setIndex={handleChangeCurrency} 
+                        selected_value={currencyNum}
+                    />
+                </div>
+                <div className='filter-item'>
+                    <Selecter 
+                        list_values={CURRENCY_FIAT_LIST} 
+                        class_name={'select-currency text-nowrap'} 
+                        setIndex={handleChangeCurrencyFiat} 
+                        selected_value={currencyFiat}
+                    />
+                </div>
+            </div>
 
             {marketScreen === 'orders' && 
-                orders.map((order) => {
+                orders.map((order, index) => {
                     return (
-                        <>
-                            <div className='order-item mt-3' key={order.id}>
+                            <div style={listFilterOrders[index] !== 1 ? {display: 'none'}: {}} className='order-item mt-3' key={order.id}>
                                 <div className='row mb-3 '>
                                     <div className='order-price'>
                                         <div className='order-price mt-2'>{order.price}
@@ -107,8 +160,6 @@ export function Market() {
                                     </div>
                                 </div>
                             </div>
-                            
-                        </>
                     )
                 })
             }
