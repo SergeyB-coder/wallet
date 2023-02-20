@@ -26,7 +26,7 @@ export function Ptp() {
     const [screen, setScreen] = useState('menu') 
 
     useEffect(() => {
-        // tg.MainButton.show()
+        tg.MainButton.show()
         tg.MainButton.setText('Далее')
         tg.MainButton.setParams({color: '#36CD77'})
         tg.BackButton.show()
