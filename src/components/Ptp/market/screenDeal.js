@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ButtonNext } from '../buttonNext';
+import { Chat } from '../chat/chat';
 import { getDealInfo, sendConfirm } from './marketApi';
 import { selectDealScreenInfo, setDealScreenInfo } from './marketSlice';
 // import { useDispatch, useSelector } from 'react-redux';
@@ -49,7 +50,7 @@ export function ScreenDeal () {
         <>
             <div className='title-buy mb-5'>Покупка у {deal_screen_info.saler}</div>
 
-            <label style={{color: 'var(--text-light-color)'}}>{deal_screen_info.saler_id}Количество:</label>
+            <label style={{color: 'var(--text-light-color)'}}>Количество:</label>
             <div style={{color: 'var(--text-light-color)', fontSize: 20}}>{deal_screen_info.quantity} USDT {deal_screen_info.currency === 1 ? 'BEP20': 'TRC20'}</div>
 
             
@@ -89,6 +90,8 @@ export function ScreenDeal () {
             {showConfirmPay &&
                 <ButtonNext text='Подтвердить перевод фиатов' onClick={hanldeConfirm}/>
             }
+
+            <Chat deal_id={deal_screen_info.deal_id}/>
         </>
       );
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ButtonNext } from './buttonNext';
+import { Chat } from './chat/chat';
 import { sendAcceptDeal, sendEndDeal } from './market/marketApi';
 import { selectCurrentOrderId, selectDealInfo } from './market/marketSlice';
 
@@ -11,6 +12,7 @@ export function CompleteDeal (props) {
 
     const [statusDeal, setStatusDeal] = useState('request')
     const [showLoader, setShowLoader] = useState(false)
+    const [showChat, setShowChat] = useState(false)
 
     const handleClickSale = () => {
         setShowLoader(true)
@@ -59,7 +61,15 @@ export function CompleteDeal (props) {
                 <div class="loader"></div>:
                 <ButtonNext text={statusDeal === 'request' ? 'Принять запрос': 'Подтвердить оплату'} onClick={handleClickButton}/>
             }
+
+            <div className='open-chat-btn my-3' onClick={() => {setShowChat(!showChat)}}>
+                {showChat ? 'Закрыть чат': 'Открыть чат'}
+            </div>
                 
+            {
+                showChat &&
+                <Chat deal_id={deal_info.id}/>
+            }
         </>
       );
 }

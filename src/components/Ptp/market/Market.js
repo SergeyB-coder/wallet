@@ -80,32 +80,35 @@ export function Market() {
 
     return (
         <div className='market-container'>
-            <div className='row d-flex justify-content-between'>
-                <div className='filter-item'>
-                    <Selecter 
-                        list_values={METHOD_PAY_LIST} 
-                        class_name={'select-currency text-nowrap'} 
-                        setIndex={() => {}} 
-                        selected_value={currencyFiat}
-                    />
+
+            {marketScreen === 'orders' && 
+                <div className='row d-flex justify-content-between'>
+                    <div className='filter-item'>
+                        <Selecter 
+                            list_values={METHOD_PAY_LIST} 
+                            class_name={'select-currency text-nowrap'} 
+                            setIndex={() => {}} 
+                            selected_value={currencyFiat}
+                        />
+                    </div>
+                    <div className='filter-item'>
+                        <Selecter 
+                            list_values={CURRENCY_LIST} 
+                            class_name={'select-currency text-nowrap'} 
+                            setIndex={handleChangeCurrency} 
+                            selected_value={currencyNum}
+                        />
+                    </div>
+                    <div className='filter-item'>
+                        <Selecter 
+                            list_values={CURRENCY_FIAT_LIST} 
+                            class_name={'select-currency text-nowrap'} 
+                            setIndex={handleChangeCurrencyFiat} 
+                            selected_value={currencyFiat}
+                        />
+                    </div>
                 </div>
-                <div className='filter-item'>
-                    <Selecter 
-                        list_values={CURRENCY_LIST} 
-                        class_name={'select-currency text-nowrap'} 
-                        setIndex={handleChangeCurrency} 
-                        selected_value={currencyNum}
-                    />
-                </div>
-                <div className='filter-item'>
-                    <Selecter 
-                        list_values={CURRENCY_FIAT_LIST} 
-                        class_name={'select-currency text-nowrap'} 
-                        setIndex={handleChangeCurrencyFiat} 
-                        selected_value={currencyFiat}
-                    />
-                </div>
-            </div>
+            }
 
             {marketScreen === 'orders' && 
                 orders.map((order, index) => {

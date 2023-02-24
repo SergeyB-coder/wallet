@@ -124,9 +124,7 @@ export function TradeMenu (props) {
                         <div className='title-myorders'  >Мои объявления</div>
                         {my_orders.map((order) => {
                                 return (
-                                    <>
-                                        <OrderItem onClick={handleClickOrder} order={order} key={order.id}/>
-                                    </>
+                                    <OrderItem onClick={handleClickOrder} order={order} key={order.id}/>
                                 )
                             })}
                     </div>
@@ -136,17 +134,15 @@ export function TradeMenu (props) {
             {   content === 'deals' &&
                 <div className='mt-5'>
                     <label style={{color: 'var(--text-light-color)'}}>Запросы</label>
-                    {order_deals.map((deal) => {
+                    {order_deals.map((deal, index) => {
                                 return (
-                                    <>
-                                        <div className='buyer-item my-2' onClick={() => {handleClickDeal(deal)}}>
-                                            <div style={{textAlign: 'left', color: 'var(--btn-bg-color)'}}>{deal.first_name}</div>
-                                            <div className='row d-flex justify-content-between'>
-                                                <div style={{width: '40vw', textAlign: 'left'}}>Сумма</div>
-                                                <div style={{width: '40vw'}}>{deal.quantity} USDT</div>
-                                            </div>
+                                    <div key={index} className='buyer-item my-2' onClick={() => {handleClickDeal(deal)}}>
+                                        <div style={{textAlign: 'left', color: 'var(--btn-bg-color)'}}>{deal.first_name}</div>
+                                        <div className='row d-flex justify-content-between'>
+                                            <div style={{width: '40vw', textAlign: 'left'}}>Сумма</div>
+                                            <div style={{width: '40vw'}}>{deal.quantity} USDT</div>
                                         </div>
-                                    </>
+                                    </div>
                                 )
                             })}
                 </div>
