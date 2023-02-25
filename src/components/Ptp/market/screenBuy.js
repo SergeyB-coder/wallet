@@ -7,7 +7,7 @@ import { selectQuantityBuy, setDealScreenInfo, setQuantityBuy } from './marketSl
 
 export function ScreenBuy (props) {
     const setMarketScreen = props.setMarketScreen
-    const {user_id, first_name} = useTelegram()
+    const {user_id} = useTelegram()
     const dispatch = useDispatch()
     const quantity_buy = useSelector(selectQuantityBuy)
 
