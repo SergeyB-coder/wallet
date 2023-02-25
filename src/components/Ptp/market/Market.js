@@ -80,22 +80,25 @@ export function Market() {
         }, )
 
     useEffect(() => {
-        console.log('location', location.state.deal)
-        const deal = location.state.deal
-        dispatch(setDealScreenInfo(
-            {
-                deal_id: deal.deal_id,
-                quantity: deal.quantity, 
-                saler: deal.user_from, 
-                price: deal.price,
-                fiat: deal.currency_fiat_id,
-                currency: deal.currency_id,
-                status: deal.status,
-                saler_id: deal.id_from
-            }
-        ))
-        setMarketScreen('deal')
-    }, [dispatch, location.state.deal]);
+        console.log('location', location?.state?.deal)
+        if (location?.state?.deal) {
+            const deal = location.state.deal
+            dispatch(setDealScreenInfo(
+                {
+                    deal_id: deal.deal_id,
+                    quantity: deal.quantity, 
+                    saler: deal.user_from, 
+                    price: deal.price,
+                    fiat: deal.currency_fiat_id,
+                    currency: deal.currency_id,
+                    status: deal.status,
+                    saler_id: deal.id_from
+                }
+            ))
+            setMarketScreen('deal')
+        }
+        
+    }, [dispatch, location?.state?.deal]);
 
     return (
         <div className='market-container'>
