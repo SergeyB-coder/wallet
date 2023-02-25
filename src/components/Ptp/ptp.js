@@ -11,8 +11,7 @@ import {  setMyOrders } from './market/marketSlice';
 import './style.css'
 
 export function Ptp (props) {
-    // const my_orders = useSelector(selectMyOrders)
-    // const order_deals = useSelector(selectOrderDeals)
+    const {tg} = useTelegram()
     const {user_id} = useTelegram()
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -147,6 +146,11 @@ export function Ptp (props) {
 			dispatch(setUserDeals(data.deals))
 		})
 	}, [dispatch, user_id]);
+
+    useEffect(() => {
+        tg.MainButton.hide()
+        tg.BackButton.show()
+    }, [tg.BackButton, tg.MainButton]);
 
     return (
         <>
