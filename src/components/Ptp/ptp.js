@@ -34,6 +34,10 @@ export function Ptp (props) {
         navigate('/myorders', {replace: true})
     }
 
+    const backScreen = () => {
+        navigate('/home', {replace: true})
+    }
+
     const user_deals = useSelector(selectUserDeals)
 
 	function handleClickDeal(deal) {
@@ -152,6 +156,10 @@ export function Ptp (props) {
         tg.BackButton.show()
     }, [tg.BackButton, tg.MainButton]);
 
+    useEffect(() => {
+        tg.onEvent('backButtonClicked', backScreen)
+            return () => {tg.offEvent('backButtonClicked', backScreen)}
+        }, )
     return (
         <>
             <div className='trade-menu-container p-2 m-3'>
