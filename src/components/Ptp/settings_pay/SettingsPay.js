@@ -93,7 +93,7 @@ export function SettingsPay() {
         if (showNewMethod) {
             setShowNewMethod(false)
         }
-        else navigate('/ptp', {replace: true})
+        else navigate('/myorders', {replace: true})
     }
 
     useEffect(() => {

@@ -30,7 +30,7 @@ export function Market() {
     
 
     const backScreen = (() => {
-        navigate('/home', {replace: true})
+        navigate('/ptp', {replace: true})
     })
 
     function handleClickBuy (order) {

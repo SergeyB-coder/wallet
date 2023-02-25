@@ -66,7 +66,7 @@ export function CreateOrder() {
     const backScreen = () => {
         switch (screen) {
             case 'createorder1':
-                navigate('/home', {replace: true})
+                navigate('/ptp', {replace: true})
                 break;
 
             case 'createorder2':

@@ -11,6 +11,7 @@ import { OrderItem } from '../market/orderItem';
 // import './style.css'
 
 export function MyOrders (props) {
+    const {tg} = useTelegram()
     const my_orders = useSelector(selectMyOrders)
     const {user_id} = useTelegram()
     const dispatch = useDispatch()
@@ -29,6 +30,10 @@ export function MyOrders (props) {
     function handleClickOrder(order_id) {
         dispatch(setCurrentOrderId(order_id))
     }
+
+    const backScreen = (() => {
+        navigate('/ptp', {replace: true})
+    })
 
 
     const arrow_right = 
@@ -78,6 +83,11 @@ export function MyOrders (props) {
             dispatch(setMyOrders(data.orders))
         })
     }, [user_id, dispatch]);
+
+    useEffect(() => {
+        tg.onEvent('backButtonClicked', backScreen)
+            return () => {tg.offEvent('backButtonClicked', backScreen)}
+        }, )
 
     return (
         <>
