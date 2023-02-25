@@ -10,7 +10,7 @@ export function useTelegram () {
         // user_id: '638484379',
         // user_id: '2125428302',
         // user_id: '652065848',
-        // first_name: 'Srg',
+        // first_name: 'Saha',
     }
 }
 

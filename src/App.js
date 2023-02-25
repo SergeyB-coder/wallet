@@ -64,36 +64,36 @@ function App() {
                 <Home/>
                 }
             />
-          <Route
-            path="/ptp"
-            element={
-              <Ptp/>
-            }
-          />
-          <Route
-            path="/address"
-            element={
-              <Address/>
-            }
-          />
-          <Route
-            path="/market"
-            element={
-              <Market/>
-            }
-          />
-          <Route
-            path="/send"
-            element={
-              <Send/>
-            }
-          />
-          <Route
-            path="/settingspay"
-            element={
-              <SettingsPay/>
-            }
-          />
+            <Route
+                path="/ptp"
+                element={
+                <Ptp/>
+                }
+            />
+            <Route
+                path="/address"
+                element={
+                <Address/>
+                }
+            />
+            <Route
+                path="/market"
+                element={
+                <Market/>
+                }
+            />
+            <Route
+                path="/send"
+                element={
+                <Send/>
+                }
+            />
+            <Route
+                path="/settingspay"
+                element={
+                <SettingsPay/>
+                }
+            />
         </Routes>
       </BrowserRouter>
     </div>

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { CURRENCY_FIAT_LIST, CURRENCY_LIST, METHOD_PAY_LIST } from '../../../const/devdata';
 import { useTelegram } from '../../../hooks/useTelegram';
 import { Selecter } from '../../Common/selecter';
 import { getOrders } from './marketApi';
-import { selectOrders, setOrders } from './marketSlice';
+import { selectOrders, setDealScreenInfo, setOrders } from './marketSlice';
 import { ScreenBuy } from './screenBuy';
 import { ScreenDeal } from './screenDeal';
 
@@ -13,6 +13,7 @@ import './style.css'
 
 
 export function Market() {
+    const location = useLocation()
     const {tg} = useTelegram()
 
     const navigate = useNavigate()
@@ -77,6 +78,24 @@ export function Market() {
         tg.onEvent('backButtonClicked', backScreen)
             return () => {tg.offEvent('backButtonClicked', backScreen)}
         }, )
+
+    useEffect(() => {
+        console.log('location', location.state.deal)
+        const deal = location.state.deal
+        dispatch(setDealScreenInfo(
+            {
+                deal_id: deal.deal_id,
+                quantity: deal.quantity, 
+                saler: deal.user_from, 
+                price: deal.price,
+                fiat: deal.currency_fiat_id,
+                currency: deal.currency_id,
+                status: deal.status,
+                saler_id: deal.id_from
+            }
+        ))
+        setMarketScreen('deal')
+    }, [dispatch, location.state.deal]);
 
     return (
         <div className='market-container'>

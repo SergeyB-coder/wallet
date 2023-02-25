@@ -118,12 +118,12 @@ export function Ptp() {
 
     return (
         <div className={screen === 'createorder5' ? 'p-4 ptp-container': 'p-4'} >
-        {/* <h3>P2P</h3> */}
-        {screen === 'menu' && <TradeMenu setScreen={setScreen}/>}
-        {screen === 'createorder1' && <CreateOrder1 setScreen={setScreen}/>}
-        {screen === 'createorder2' && <CreateOrder2 setScreen={setScreen}/>}
-        {screen === 'createorder4' && <CreateOrder4 setScreen={setScreen} handleClickCreateOrder={handleClickCreateOrder}/>}
-        {screen === 'createorder5' && <CreateOrder5 setScreen={setScreen}/>}
+            {/* <h3>P2P</h3> */}
+            {screen === 'menu' && <TradeMenu setScreen={setScreen}/>}
+            {screen === 'createorder1' && <CreateOrder1 setScreen={setScreen}/>}
+            {screen === 'createorder2' && <CreateOrder2 setScreen={setScreen}/>}
+            {screen === 'createorder4' && <CreateOrder4 setScreen={setScreen} handleClickCreateOrder={handleClickCreateOrder}/>}
+            {screen === 'createorder5' && <CreateOrder5 setScreen={setScreen}/>}
         </div>
     );
 }

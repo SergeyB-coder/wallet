@@ -23,7 +23,7 @@ export function ScreenBuy (props) {
                 {
                     deal_id: data.deal_id,
                     quantity: quantity_buy, 
-                    saler: first_name, 
+                    saler: props?.buyOrder?.first_name, 
                     price: props?.buyOrder?.price,
                     fiat: props.buyOrder.currency_fiat_id,
                     currency: props.buyOrder.currency_id,
@@ -42,7 +42,7 @@ export function ScreenBuy (props) {
     return (
         <>
             <div className='screen-buy-container mt-5'>
-                <div className='title-buy'>Покупка у {first_name}</div>
+                <div className='title-buy'>Покупка у {props.buyOrder.first_name}</div>
 
                 <div className=' mt-5'>
                     <label>Укажите количество:</label>

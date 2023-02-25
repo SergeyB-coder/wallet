@@ -23,7 +23,7 @@ export function TradeMenu (props) {
 
     const handleClickMarket = () => {
             navigate('/market', {replace: true})
-        }
+    }
 
     const handleClickSettingsPay = () => {
         navigate('/settingspay', {replace: true})
