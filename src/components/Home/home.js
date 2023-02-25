@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserData, getUserDeals } from './homeApi';
-import { selectBalance, selectBalanceTRX, setAddress, setAddressTRX, setBalance, setBalanceTRX, setUserDeals } from './homeSlice';
+import { getUserData } from './homeApi';
+import { selectBalance, selectBalanceTRX, setAddress, setAddressTRX, setBalance, setBalanceTRX } from './homeSlice';
 import { MenuButtons } from './menubuttons';
 import { useTelegram } from '../../hooks/useTelegram';
 import { svg_bep, svg_tron } from '../../const/svgs';
