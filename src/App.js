@@ -65,7 +65,7 @@ function App() {
                 }
             />
             <Route
-                path="/ptp/:par"
+                path="/ptp"
                 element={
                 <Ptp/>
                 }
