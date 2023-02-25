@@ -1,58 +1,26 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserData, getUserDeals } from './homeApi';
-import { selectBalance, selectBalanceTRX, selectUserDeals, setAddress, setAddressTRX, setBalance, setBalanceTRX, setUserDeals } from './homeSlice';
+import { selectBalance, selectBalanceTRX, setAddress, setAddressTRX, setBalance, setBalanceTRX, setUserDeals } from './homeSlice';
 import { MenuButtons } from './menubuttons';
 import { useTelegram } from '../../hooks/useTelegram';
 import { svg_bep, svg_tron } from '../../const/svgs';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 
 export function Home() {
 	const { user_id, chat_id, first_name } = useTelegram()
 
 	const dispatch = useDispatch()
-	const navigate = useNavigate()
+	// const navigate = useNavigate()
 
 	const {tg} = useTelegram()
 
 	const balance = useSelector(selectBalance)
 	const balance_trx = useSelector(selectBalanceTRX)
-	const user_deals = useSelector(selectUserDeals)
+	
 
-	function handleClickDeal(deal) {
-		console.log(deal.id_to, user_id)
-		if (deal.id_to.toString() === user_id) {
-			navigate('/market', {replace: true, state: {deal: deal}})
-		}
-	}
-
-	const renderlistLastDeals = user_deals.slice(0, 3).map((deal, index) => {
-		return (
-				<div key={index} className='container-deal row' onClick={() => {handleClickDeal(deal)}}>
-					<div className='deal-col-1'>
-						<div className='text-deal'><span className='label-deal'>From:</span> {deal.user_from}</div>
-						<div className='text-deal'><span className='label-deal'>To:</span> {deal.user_to}</div>
-					</div>
-					<div className='deal-col-2'>
-						<div className='text-deal'><span className='label-deal'>Кол-во:</span> {deal.quantity} USDT</div>
-						<div className='text-deal text-nowrap'><span className='label-deal'>Статус: </span> 
-							{
-								deal.status === 'request' ? 'Запрос':
-								deal.status === 'pay' ? 'Ожидание оплаты':
-								'Завершена'
-							}
-						</div>
-					</div>
-				</div>
-		)
-	})
-
-	useEffect(() => {
-		getUserDeals({user_id: user_id}, (data) => {
-			dispatch(setUserDeals(data.deals))
-		})
-	}, [dispatch, user_id]);
+	
 
 	useEffect(() => {
 		getUserData({user_id: user_id, first_name: first_name, chat_id: chat_id}, (data) => {
@@ -118,9 +86,7 @@ export function Home() {
 				</div>
 			</div>
 
-			<div className='mt-5' style={{color: 'var(--btn-bg-color)'}}>Последние сделки</div>
 			
-			{renderlistLastDeals}
 		</div>
 	);
 }

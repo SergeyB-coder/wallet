@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useTelegram } from '../../hooks/useTelegram';
-import { selectMethodPay, setMethodPay } from './ptpSlice';
-import { getUserMethodsPay } from './settings_pay/settingsPayApi';
-import { selectMethodsPay, setMethodsPay } from './settings_pay/settingsPaySlice';
+import { useTelegram } from '../../../hooks/useTelegram';
+import { selectMethodPay, setMethodPay } from '../ptpSlice';
+import { getUserMethodsPay } from '../settings_pay/settingsPayApi';
+import { selectMethodsPay, setMethodsPay } from '../settings_pay/settingsPaySlice';
 // import { ButtonNext } from './buttonNext';
 
 export function CreateOrder2(props) {

@@ -8,12 +8,14 @@ import {
 import './App.css';
 import { Address } from './components/address/address';
 import { Home } from './components/Home/home';
+import { MyOrders } from './components/Ptp/MyOrders/myOrders';
 import { Market } from './components/Ptp/market/Market';
 import { Ptp } from './components/Ptp/ptp';
 import { SettingsPay } from './components/Ptp/settings_pay/SettingsPay';
 import { Send } from './components/Send/send';
 import { StartScreen } from './components/StartScreen/startScreen';
 import { useTelegram } from './hooks/useTelegram';
+import { CreateOrder } from './components/Ptp/CreateOrder/createOrder';
 
 
 function App() {
@@ -68,6 +70,18 @@ function App() {
                 path="/ptp"
                 element={
                 <Ptp/>
+                }
+            />
+            <Route
+                path="/myorders"
+                element={
+                <MyOrders/>
+                }
+            />
+            <Route
+                path="/createorder"
+                element={
+                <CreateOrder/>
                 }
             />
             <Route

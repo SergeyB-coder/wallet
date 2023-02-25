@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTelegram } from '../../../hooks/useTelegram';
-import { ButtonNext } from '../buttonNext';
+import { ButtonNext } from '../../Common/buttonNext';
 import { sendBuy } from './marketApi';
 import { selectQuantityBuy, setDealScreenInfo, setQuantityBuy } from './marketSlice';
 

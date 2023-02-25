@@ -1,15 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { CURRENCY_FIAT_LIST, CURRENCY_LIST, TIME_LIMITS } from '../../const/devdata';
-import { useTelegram } from '../../hooks/useTelegram';
-import { ButtonNext } from './buttonNext';
-// import { ButtonNext } from './buttonNext';
-// import { ButtonNext } from './buttonNext';
-// import { useTelegram } from '../../hooks/useTelegram';
-// import { ButtonNext } from './buttonNext';
-// import { createOrder } from './ptpApi';
+import { useTelegram } from '../../../hooks/useTelegram';
+import { ButtonNext } from '../../Common/buttonNext';
+import { CURRENCY_FIAT_LIST, CURRENCY_LIST, TIME_LIMITS } from '../../../const/devdata';
 
-import { selectQuantityOrder, selectCurrencyFiat, selectCurrencyOrder, selectCurrencyType, selectPrice, selectLimitOrder, selectTimeLimit } from './ptpSlice';
+import { selectQuantityOrder, selectCurrencyFiat, selectCurrencyOrder, selectCurrencyType, selectPrice, selectLimitOrder, selectTimeLimit } from '../ptpSlice';
 
 export function CreateOrder4(props) {
     const {first_name} = useTelegram()

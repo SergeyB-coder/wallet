@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTelegram } from '../../hooks/useTelegram';
-import { ButtonNext } from './buttonNext';
+import { useTelegram } from '../../../hooks/useTelegram';
+import { ButtonNext } from '../../Common/buttonNext';
 
 
 export function CreateOrder5(props) {

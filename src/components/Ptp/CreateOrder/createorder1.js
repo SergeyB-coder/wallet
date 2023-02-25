@@ -1,11 +1,11 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CURRENCY_FIAT_LIST, CURRENCY_LIST, CURRENCY_TYPES, TIME_LIMITS } from '../../const/devdata';
-import { Selecter } from '../Common/selecter';
-import { selectBalance, selectBalanceTRX } from '../Home/homeSlice';
+import { CURRENCY_FIAT_LIST, CURRENCY_LIST, CURRENCY_TYPES, TIME_LIMITS } from '../../../const/devdata';
+import { Selecter } from '../../Common/selecter';
+import { selectBalance, selectBalanceTRX } from '../../Home/homeSlice';
 // import { ButtonNext } from './buttonNext';
 
-import { selectCurrencyFiat, selectCurrencyOrder, selectCurrencyType, selectLimitOrder, selectPercentPrice, selectPrice, selectQuantityOrder, selectTimeLimit, setCurrencyFiat, setCurrencyOrder, setCurrencyType, setLimitOrder, setPercentPrice, setPrice, setQuantityOrder, setTimeLimit } from './ptpSlice';
+import { selectCurrencyFiat, selectCurrencyOrder, selectCurrencyType, selectLimitOrder, selectPercentPrice, selectPrice, selectQuantityOrder, selectTimeLimit, setCurrencyFiat, setCurrencyOrder, setCurrencyType, setLimitOrder, setPercentPrice, setPrice, setQuantityOrder, setTimeLimit } from '../ptpSlice';
 
 export function CreateOrder1(props) {
     const dispatch = useDispatch()

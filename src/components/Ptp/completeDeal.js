@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { ButtonNext } from './buttonNext';
+import { ButtonNext } from '../Common/buttonNext';
 import { Chat } from './chat/chat';
 import { sendAcceptDeal, sendEndDeal } from './market/marketApi';
 import { selectCurrentOrderId, selectDealInfo } from './market/marketSlice';
