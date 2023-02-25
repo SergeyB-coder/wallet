@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useTelegram } from '../../hooks/useTelegram';
 import { CreateOrder1 } from './createorder1';
 import { CreateOrder2 } from './createorder2';
@@ -12,6 +12,7 @@ import { TradeMenu } from './trademenu';
 
 
 export function Ptp() {
+    let { par } = useParams();
     const {tg, user_id} = useTelegram()
     const navigate = useNavigate()
 
@@ -24,6 +25,7 @@ export function Ptp() {
     const method_pay = useSelector(selectMethodPay)
 
     const [screen, setScreen] = useState('menu') 
+    const [test, setTest] = useState('') 
 
     useEffect(() => {
         tg.MainButton.show()
@@ -65,6 +67,7 @@ export function Ptp() {
         }
     }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const backScreen = () => {
         switch (screen) {
             case 'menu':
@@ -111,14 +114,15 @@ export function Ptp() {
         }, )
 
     useEffect(() => {
+        setTest(par)
         console.log('uef')
         tg.onEvent('backButtonClicked', backScreen)
             return () => {tg.offEvent('backButtonClicked', backScreen)}
-        }, )
+        }, [backScreen, par, tg])
 
     return (
         <div className={screen === 'createorder5' ? 'p-4 ptp-container': 'p-4'} >
-            {/* <h3>P2P</h3> */}
+            <h3 style={{color: 'var(--text-light-color)'}}>{test}</h3>
             {screen === 'menu' && <TradeMenu setScreen={setScreen}/>}
             {screen === 'createorder1' && <CreateOrder1 setScreen={setScreen}/>}
             {screen === 'createorder2' && <CreateOrder2 setScreen={setScreen}/>}
