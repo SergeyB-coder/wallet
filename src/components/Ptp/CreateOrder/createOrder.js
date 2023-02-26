@@ -11,7 +11,6 @@ import { selectCurrencyFiat, selectCurrencyOrder, selectLimitOrder, selectMethod
 
 
 export function CreateOrder() {
-    // let { par } = useParams();
     const {tg, user_id} = useTelegram()
     const navigate = useNavigate()
 

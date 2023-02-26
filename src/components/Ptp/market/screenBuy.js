@@ -1,12 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../../hooks/useTelegram';
 import { ButtonNext } from '../../Common/buttonNext';
 import { sendBuy } from './marketApi';
 import { selectQuantityBuy, setDealScreenInfo, setQuantityBuy } from './marketSlice';
 
 export function ScreenBuy (props) {
-    const setMarketScreen = props.setMarketScreen
+    const navigate = useNavigate()
     const {user_id} = useTelegram()
     const dispatch = useDispatch()
     const quantity_buy = useSelector(selectQuantityBuy)
@@ -31,7 +32,7 @@ export function ScreenBuy (props) {
                     saler_id: props.buyOrder.user_id
                 }
             ))
-            setMarketScreen('deal')
+            navigate('/deal/0', {replace: true})
         })
     }
 

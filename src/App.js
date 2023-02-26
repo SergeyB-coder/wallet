@@ -16,6 +16,8 @@ import { Send } from './components/Send/send';
 import { StartScreen } from './components/StartScreen/startScreen';
 import { useTelegram } from './hooks/useTelegram';
 import { CreateOrder } from './components/Ptp/CreateOrder/createOrder';
+import { Chat } from './components/Ptp/chat/chat';
+import { Deal } from './components/Ptp/market/Deal';
 
 
 function App() {
@@ -106,6 +108,18 @@ function App() {
                 path="/settingspay"
                 element={
                 <SettingsPay/>
+                }
+            />
+            <Route
+                path="/chat/:deal_id"
+                element={
+                <Chat/>
+                }
+            />
+            <Route
+                path="/deal/:deal_id"
+                element={
+                <Deal/>
                 }
             />
         </Routes>

@@ -130,3 +130,8 @@
 .filter-item {
     width: 30%;
 }
+
+.simple-btn {
+    color:  var(--text-light-color);
+    cursor: pointer;
+}

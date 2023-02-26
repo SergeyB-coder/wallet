@@ -7,7 +7,6 @@ import { Selecter } from '../../Common/selecter';
 import { getOrders } from './marketApi';
 import { selectOrders, setDealScreenInfo, setOrders } from './marketSlice';
 import { ScreenBuy } from './screenBuy';
-import { ScreenDeal } from './screenDeal';
 
 import './style.css'
 
@@ -21,7 +20,7 @@ export function Market() {
 
     const orders = useSelector(selectOrders)
 
-    const [marketScreen, setMarketScreen] = useState('orders') // buy1 buy2
+    const [marketScreen, setMarketScreen] = useState('orders') // buy 
     const [buyOrder, setBuyOrder] = useState(null)
     const [currencyFiat, setCurrencyFiat] = useState(1)
     const [currencyNum, setCurrencyNum] = useState(1)
@@ -35,7 +34,7 @@ export function Market() {
 
     function handleClickBuy (order) {
         setBuyOrder(order)
-        setMarketScreen('buy1')
+        setMarketScreen('buy')
     }
 
     function handleChangeCurrency(index) {
@@ -189,8 +188,7 @@ export function Market() {
                 })
             }
 
-            {marketScreen === 'buy1' && <ScreenBuy buyOrder={buyOrder} setMarketScreen={setMarketScreen}/>}
-            {marketScreen === 'deal' && <ScreenDeal />}
+            {marketScreen === 'buy' && <ScreenBuy buyOrder={buyOrder} setMarketScreen={setMarketScreen}/>}
         </div>
     );
 }

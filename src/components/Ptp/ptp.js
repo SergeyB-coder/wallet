@@ -5,8 +5,6 @@ import { useTelegram } from '../../hooks/useTelegram';
 import { getUserDeals } from '../Home/homeApi';
 import { selectUserDeals, setUserDeals } from '../Home/homeSlice';
 // import { CompleteDeal } from './completeDeal';
-import { getMyOrders } from './market/marketApi';
-import {  setMyOrders } from './market/marketSlice';
 // import { OrderItem } from './market/orderItem';
 import './style.css'
 
@@ -42,9 +40,7 @@ export function Ptp (props) {
 
 	function handleClickDeal(deal) {
 		console.log(deal.id_to, user_id)
-		if (deal.id_to.toString() === user_id) {
-			navigate('/market', {replace: true, state: {deal: deal}})
-		}
+		navigate('/market', {replace: true, state: {deal: deal}})
 	}
 
 	const renderlistLastDeals = user_deals.slice(0, 3).map((deal, index) => {
@@ -139,11 +135,7 @@ export function Ptp (props) {
 
     
 
-    useEffect(() => {
-        getMyOrders({user_id: user_id}, (data) => {
-            dispatch(setMyOrders(data.orders))
-        })
-    }, [user_id, dispatch]);
+    
 
     useEffect(() => {
 		getUserDeals({user_id: user_id}, (data) => {
