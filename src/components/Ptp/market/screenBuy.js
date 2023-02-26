@@ -8,7 +8,7 @@ import { selectQuantityBuy, setDealScreenInfo, setQuantityBuy } from './marketSl
 
 export function ScreenBuy (props) {
     const navigate = useNavigate()
-    const {user_id} = useTelegram()
+    const {user_id, first_name} = useTelegram()
     const dispatch = useDispatch()
     const quantity_buy = useSelector(selectQuantityBuy)
 
@@ -23,13 +23,15 @@ export function ScreenBuy (props) {
             dispatch(setDealScreenInfo(
                 {
                     deal_id: data.deal_id,
-                    quantity: quantity_buy, 
-                    saler: props?.buyOrder?.first_name, 
+                    quantity: quantity_buy,
                     price: props?.buyOrder?.price,
                     fiat: props.buyOrder.currency_fiat_id,
                     currency: props.buyOrder.currency_id,
                     status: 'request',
-                    saler_id: props.buyOrder.user_id
+                    saler_id: props.buyOrder.user_id,
+                    buyer_id: user_id, 
+                    saler: props?.buyOrder?.first_name, 
+                    buyer: first_name,
                 }
             ))
             navigate('/deal/0', {replace: true})

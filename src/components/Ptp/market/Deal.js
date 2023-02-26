@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useTelegram } from '../../../hooks/useTelegram';
 import { ButtonNext } from '../../Common/buttonNext';
 import { getDealInfo, sendConfirm } from './marketApi';
 import { selectDealScreenInfo, setDealScreenInfo } from './marketSlice';
@@ -11,7 +12,8 @@ import { selectDealScreenInfo, setDealScreenInfo } from './marketSlice';
 // import { selectQuantityBuy, setQuantityBuy } from './marketSlice';
 
 export function Deal () {
-    let { deal_id } = useParams();
+    const {tg} = useTelegram()
+    const { deal_id } = useParams();
     const navigate = useNavigate()
 
     const dispatch = useDispatch()
@@ -61,10 +63,19 @@ export function Deal () {
         })
     }
 
+    const backScreen = (() => {
+        navigate('/ptp', {replace: true})
+    })
+
     useEffect(() => {
             handleGetDealInfo()
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        tg.onEvent('backButtonClicked', backScreen)
+            return () => {tg.offEvent('backButtonClicked', backScreen)}
+        }, )
 
     return (
         <>

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import TextareaAutosize from 'react-textarea-autosize';
+import { CURRENCY_FIAT_LIST, CURRENCY_LIST } from '../../../const/devdata';
 
 import { useSocket } from '../../../hooks/useSocket';
 import { useTelegram } from '../../../hooks/useTelegram';
@@ -13,7 +14,9 @@ import './style.css'
 
 
 export function Chat () {
-    let { deal_id } = useParams();
+    const navigate = useNavigate()
+    const {tg} = useTelegram()
+    const { deal_id } = useParams();
     const {socket} = useSocket()
     
     const {user_id, first_name} = useTelegram()
@@ -72,15 +75,23 @@ export function Chat () {
 
     const handleSocketOn = (data) => {
             console.log('message from server', data);
-            if (data.first_name !== first_name) addMsgToChat(data)
+            if (data.first_name !== first_name) {
+                getDealMessages({deal_id: deal_id !== '0' ? deal_id: deal_screen_info.deal_id}, (data) => {
+                    dispatch(setMessages(data.messages))
+                })
+            }
     }
+
+    const backScreen = (() => {
+        navigate(`/deal/${deal_id !== '0' ? deal_id: deal_screen_info.deal_id}`, {replace: true})
+    })
     
 
     useEffect(() => {
         console.log(9)
         socket.on(deal_id !== '0' ? deal_id: deal_screen_info.deal_id, handleSocketOn);
         return () => {
-            socket.removeAllListeners(deal_id);
+            socket.removeAllListeners(deal_id !== '0' ? deal_id: deal_screen_info.deal_id);
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -90,17 +101,25 @@ export function Chat () {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    useEffect(() => {
+        tg.onEvent('backButtonClicked', backScreen)
+            return () => {tg.offEvent('backButtonClicked', backScreen)}
+        }, )
+
     return (
             <div className='chat-container'>
                 <label style={{color: 'var(--text-light-color)'}}>Чат c {deal_screen_info?.buyer_id?.toString() === user_id.toString() ? deal_screen_info.saler: deal_screen_info?.buyer}</label>
-
+                <div style={{color: 'var(--text-light-color)'}}>Сумма сделки: {deal_screen_info.quantity} {CURRENCY_LIST[deal_screen_info.currency-1]}</div>
+                <div style={{color: 'var(--text-light-color)'}}>Цена: {deal_screen_info.price} {CURRENCY_FIAT_LIST[deal_screen_info.fiat-1]}</div>
                 <div className='container-messages my-2'>
                     {
                         list_messages.map((message, index) => {
                             return (
-                                <div key={index}>
-                                    <div className={first_name === message.first_name ? 'sender-msg-chat': 'recipient-msg-chat'}>{message.first_name}</div>
-                                    <div className={first_name === message.first_name ? 'msg-chat': 'msg-chat-recipient'}>{message.text}</div>
+                                <div style={{ display: 'flex', justifyContent: first_name === message.first_name ? 'left': 'right'}}  key={index}>
+                                    <div className='container-message-item px-3 py-2 mt-1'>
+                                        <div className={first_name === message.first_name ? 'sender-msg-chat': 'recipient-msg-chat'}>{message.first_name}</div>
+                                        <div className={first_name === message.first_name ? 'msg-chat': 'msg-chat-recipient'}>{message.text}</div>
+                                    </div>
                                 </div>
                             )
                         })
