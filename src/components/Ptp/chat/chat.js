@@ -72,13 +72,13 @@ export function Chat () {
 
     const handleSocketOn = (data) => {
             console.log('message from server', data);
-            addMsgToChat(data)
+            if (data.first_name !== first_name) addMsgToChat(data)
     }
     
 
     useEffect(() => {
         console.log(9)
-        socket.on(deal_id, handleSocketOn);
+        socket.on(deal_id !== '0' ? deal_id: deal_screen_info.deal_id, handleSocketOn);
         return () => {
             socket.removeAllListeners(deal_id);
         }
