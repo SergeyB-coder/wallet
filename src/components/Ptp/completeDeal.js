@@ -22,7 +22,6 @@ export function CompleteDeal (props) {
         })
     }
 
-    
     const handleClickEndDeal = () => {
         setShowLoader(true)
         sendEndDeal({deal_id: deal_info.id, order_id: order_id}, () => {
@@ -41,7 +40,7 @@ export function CompleteDeal (props) {
     }
 
     return (
-        <>  
+        <div className='p-2'>  
             <div className='mt-5 deal-item p-3'>
                 <div  style={{color: 'var(--text-light-color)'}}>
                     {deal_info?.first_name}
@@ -70,7 +69,7 @@ export function CompleteDeal (props) {
                 showChat &&
                 <Chat deal_id={deal_info.id}/>
             }
-        </>
+        </div>
       );
 }
 

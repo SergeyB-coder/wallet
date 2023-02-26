@@ -18,6 +18,7 @@ import { useTelegram } from './hooks/useTelegram';
 import { CreateOrder } from './components/Ptp/CreateOrder/createOrder';
 import { Chat } from './components/Ptp/chat/chat';
 import { Deal } from './components/Ptp/market/Deal';
+import { CompleteDeal } from './components/Ptp/completeDeal';
 
 
 function App() {
@@ -120,6 +121,12 @@ function App() {
                 path="/deal/:deal_id"
                 element={
                 <Deal/>
+                }
+            />
+            <Route
+                path="/completedeal"
+                element={
+                <CompleteDeal/>
                 }
             />
         </Routes>

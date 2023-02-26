@@ -21,7 +21,6 @@ export function Chat () {
     const deal_screen_info = useSelector(selectDealScreenInfo)
 
     const list_messages = useSelector(selectMessages)
-    let state_list_messages = []
 
     const [message, setMessage] = useState('')
     
@@ -30,9 +29,9 @@ export function Chat () {
     }
 
     const handleClickSendMessage = () => {
-        // setMessage('')
+        setMessage('')
         socket.emit("new_message", {deal_id: deal_screen_info.deal_id, message: message, user_id: user_id, first_name: first_name});
-        // addMsgToChat({text: message, first_name: first_name})
+        addMsgToChat({text: message, first_name: first_name})
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -60,16 +59,14 @@ export function Chat () {
 
         getDealMessages({deal_id: deal_id !== '0' ? deal_id: deal_screen_info.deal_id}, (data) => {
             dispatch(setMessages(data.messages))
-            state_list_messages = data.messages
         })
         
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     function addMsgToChat(msg) {
-        let arr = state_list_messages.slice()
+        let arr = list_messages.slice()
         arr.push(msg)
-        state_list_messages = arr
         dispatch(setMessages(arr))
     }
 
