@@ -108,9 +108,9 @@ export function Chat () {
 
     return (
             <div className='chat-container'>
-                <label style={{color: 'var(--text-light-color)'}}>Чат c {deal_screen_info?.buyer_id?.toString() === user_id.toString() ? deal_screen_info.saler: deal_screen_info?.buyer}</label>
-                <div style={{color: 'var(--text-light-color)'}}>Сумма сделки: {deal_screen_info.quantity} {CURRENCY_LIST[deal_screen_info.currency-1]}</div>
-                <div style={{color: 'var(--text-light-color)'}}>Цена: {deal_screen_info.price} {CURRENCY_FIAT_LIST[deal_screen_info.fiat-1]}</div>
+                <label style={{color: 'var(--text-light-color)'}}>Чат c {deal_screen_info?.buyer_id?.toString() === user_id.toString() ? deal_screen_info?.saler: deal_screen_info?.buyer}</label>
+                <div style={{color: 'var(--text-light-color)'}}>Сумма сделки: {deal_screen_info?.quantity} {CURRENCY_LIST[deal_screen_info?.currency-1]}</div>
+                <div style={{color: 'var(--text-light-color)'}}>Цена: {deal_screen_info?.price} {CURRENCY_FIAT_LIST[deal_screen_info?.fiat-1]}</div>
                 <div className='container-messages my-2'>
                     {
                         list_messages.map((message, index) => {
