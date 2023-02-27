@@ -90,7 +90,7 @@ export function sendAcceptDeal(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data', data)
+            console.log('data acceptdeal', data)
             
             return callback(data)
         });
@@ -108,7 +108,7 @@ export function sendEndDeal(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data', data)
+            console.log('data enddeal', data)
             
             return callback(data)
         });
