@@ -41,7 +41,7 @@ export function Ptp (props) {
 
 	function handleClickDeal(deal) {
 		console.log(deal.id_to, user_id)
-        if (deal.id_to.toString() === user_id) {
+        if (deal.id_to.toString() === user_id.toString()) {
             navigate(`/deal/${deal.deal_id}`, {replace: true, state: {deal: deal}})
         }
         else {

@@ -83,7 +83,7 @@ export function CompleteDeal (props) {
             
             {error !== 'Транзакция выполнена' &&
                 showLoader ? 
-                <div class="loader"></div>:
+                <div className="loader"></div>:
                 <ButtonNext text={deal_info.status === 'request' ? 'Принять запрос': 'Подтвердить оплату'} onClick={handleClickButton}/>
             }
 
