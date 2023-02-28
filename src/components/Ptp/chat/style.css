@@ -3,6 +3,31 @@
     
 }
 
+.modal-send {
+    position: absolute;
+    top: 10vh;
+    left: calc(50% - 70vw/2 - 1px);
+    width: 70vw;
+    /* height: 45vh; */
+    background-color: #FFFFFF;
+    z-index: 10;
+    border-radius: 10px;
+    padding-bottom: 10px;
+}
+
+.img-send {
+    margin: 10px;
+    max-width: 65vw;
+    max-height: 30vh;
+    border-radius: 7px;
+}
+
+.message-img {
+    max-width: 50vw;
+    max-height: 50vw;
+    border-radius: 7px;
+}
+
 .message-input {
     background-color: var(--item-bg);
     caret-color: var(--text-mini);
@@ -27,11 +52,29 @@
     padding: 5px;
 }
 
+.btn-send-file {
+    width: 60%;
+    color: var(--text-light-color);
+    border-radius: 10px;
+    background-color: var(--item-bg);
+    padding: 5px;
+}
+
+.file-upload {
+    width: 5%;
+}
+
+.file-upload>input {
+    display: none;
+}
+
 .container-messages {
     border-radius: 10px;
     background-color: var(--item-bg);
     padding: 5px;
     min-height: 60px;
+    max-height: 80vh;
+    overflow: scroll;
 }
 
 .msg-chat {
