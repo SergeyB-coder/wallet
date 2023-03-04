@@ -130,6 +130,8 @@ export function CompleteDeal (props) {
                 </>
             }
 
+            {deal_info.status === 'pay' && <div className='mini-info'>Ожидание оплаты</div>}
+
             {!error && deal_info.status === 'confirm' && <div className='mini-info mt-2'>Получатель подтвердил оплату</div>}
 
             <div className='open-chat-btn my-3' onClick={()=>{navigate(`/chat/${deal_info.deal_id}`, {replace: true})}}>

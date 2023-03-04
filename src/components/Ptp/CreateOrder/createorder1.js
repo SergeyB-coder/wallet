@@ -167,7 +167,7 @@ export function CreateOrder1(props) {
     const render_summ_sale = 
         <div className='row button-currency-settings'>
             <div className='currency-settings-item-col1'>
-                <input style={quantity_order > balance ? {color: '#DF2E38'}: {}} className='bg-input' type='number' placeholder='Сумма' onChange={handleChangeQuantityOrder} value={quantity_order}/>
+                <input style={parseFloat(quantity_order) > parseFloat(balance) ? {color: '#DF2E38'}: {}} className='bg-input' type='number' placeholder='Сумма' onChange={handleChangeQuantityOrder} value={quantity_order}/>
             </div>
             <div className='currency-settings-item-col2'>
                 USDT

@@ -4,7 +4,7 @@ import { useTelegram } from '../../../hooks/useTelegram';
 import { ButtonNext } from '../../Common/buttonNext';
 import { CURRENCY_FIAT_LIST, CURRENCY_LIST, TIME_LIMITS } from '../../../const/devdata';
 
-import { selectQuantityOrder, selectCurrencyFiat, selectCurrencyOrder, selectCurrencyType, selectPrice, selectLimitOrder, selectTimeLimit } from '../ptpSlice';
+import { selectQuantityOrder, selectCurrencyFiat, selectCurrencyOrder, selectCurrencyType, selectPrice, selectLimitOrder, selectTimeLimit, selectMethodPay } from '../ptpSlice';
 
 export function CreateOrder4(props) {
     const {first_name} = useTelegram()
@@ -15,11 +15,7 @@ export function CreateOrder4(props) {
     const currency_order = useSelector(selectCurrencyOrder)
     const currency_type = useSelector(selectCurrencyType)
 
-    
-    
-    // const user_id = '652065848'
-    // const {user_id} = useTelegram()
-    // const setScreen = props.setScreen
+    const method_pay = useSelector(selectMethodPay)
     const price = useSelector(selectPrice)
     const limit_order = useSelector(selectLimitOrder)
     const timeLimit = useSelector(selectTimeLimit)
@@ -61,7 +57,7 @@ export function CreateOrder4(props) {
                     <div className='test-order-info-col'>
                         <p>{quantity_order} {CURRENCY_LIST[currency_order - 1]}</p>
                         <p>{limit_order} {CURRENCY_FIAT_LIST[currency_fiat - 1]}</p>
-                        <p>Raiffeisen Bank</p>
+                        <p>{method_pay.name}</p>
                         <p>{TIME_LIMITS[timeLimit - 1]}</p>
                     </div>
 

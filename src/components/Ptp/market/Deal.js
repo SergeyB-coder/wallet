@@ -93,7 +93,7 @@ export function Deal () {
                             Методы оплаты
                         </div>
                         <div className='buy-info'>
-                            {deal_screen_info.company}
+                            {deal_screen_info?.company}
                         </div>
                 </div>
 
