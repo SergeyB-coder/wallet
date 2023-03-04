@@ -29,7 +29,7 @@ export function CreateOrder() {
     useEffect(() => {
         tg.MainButton.show()
         tg.MainButton.setText('Далее')
-        tg.MainButton.setParams({color: '#36CD77'})
+        tg.MainButton.setParams({color: 'var(--btn-bg-color2)'})
         tg.BackButton.show()
     }, [tg.BackButton, tg.MainButton]);
 
