@@ -1,0 +1,26 @@
+.select-buy-sale {
+    border: 2px solid var(--btn-bg-color);
+    border-radius: 10px;
+}
+
+.select-buy-sale-item {
+    width: 50%;
+}
+ 
+.is_select {
+    background-color: #000;
+    border-radius: 10px;
+}
+
+.col-50 {
+    width: 50%;
+}
+
+.currency-settings-item-col2m {
+    color: var(--text-light-color);
+    display: flex;
+    justify-content:center;
+    width: 50%;
+    height: 25px;
+    font-size: 14px;
+}

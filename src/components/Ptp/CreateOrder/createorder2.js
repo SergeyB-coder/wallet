@@ -4,7 +4,7 @@ import { useTelegram } from '../../../hooks/useTelegram';
 import { selectMethodPay, setMethodPay } from '../ptpSlice';
 import { getUserMethodsPay } from '../settings_pay/settingsPayApi';
 import { selectMethodsPay, setMethodsPay } from '../settings_pay/settingsPaySlice';
-// import { ButtonNext } from './buttonNext';
+// import { ButtonNext } from '../../Common/buttonNext';
 
 export function CreateOrder2(props) {
     const {user_id} = useTelegram()

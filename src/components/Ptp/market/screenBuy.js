@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../../hooks/useTelegram';
-import { ButtonNext } from '../../Common/buttonNext';
+// import { ButtonNext } from '../../Common/buttonNext';
 import { sendBuy } from './marketApi';
 import { selectQuantityBuy, setDealScreenInfo, setQuantityBuy } from './marketSlice';
 
 export function ScreenBuy (props) {
     const navigate = useNavigate()
-    const {user_id, first_name} = useTelegram()
+    const {tg, user_id, first_name} = useTelegram()
     const dispatch = useDispatch()
     const quantity_buy = useSelector(selectQuantityBuy)
 
@@ -19,7 +19,15 @@ export function ScreenBuy (props) {
     }
 
     const handleClickBuy = (e) => {
-        sendBuy({user_id: user_id, order_id: props.buyOrder.id, quantity: quantity_buy}, (data) => {
+        sendBuy({
+            user_id: user_id, 
+            order_id: props.buyOrder.id, 
+            quantity: quantity_buy, 
+            price: props?.buyOrder?.price, 
+            fiat: props?.buyOrder.currency_fiat_id,
+            company: props?.buyOrder.company,
+            card_number: props?.buyOrder.card_number
+        }, (data) => {
             dispatch(setDealScreenInfo(
                 {
                     deal_id: data.deal_id,
@@ -38,10 +46,24 @@ export function ScreenBuy (props) {
         })
     }
 
+    const nextScreen = () => {
+        handleClickBuy()
+    }
+
     // useEffect(() => {
     //     let inp = document.getElementById('quantity')
     //     inp.style.width = (20 + (quantity_buy && quantity_buy?.length + 1) * 13) + 'px'
     // }, [quantity_buy]);
+    useEffect(() => {
+        tg.onEvent('mainButtonClicked', nextScreen)
+            return () => {tg.offEvent('mainButtonClicked', nextScreen)}
+        }, )
+
+    useEffect(() => {
+        tg.MainButton.show()
+        tg.MainButton.setText('Начать сделку')
+    }, [tg.MainButton]);
+
     return (
         <>
             <div className='screen-buy-container mt-5'>
@@ -95,7 +117,7 @@ export function ScreenBuy (props) {
                 </div>
 
                 <div className='m-2 mt-5'>
-                    <ButtonNext text='Купить' onClick={handleClickBuy}/>
+                    {/* <ButtonNext text='Начать сделку' onClick={handleClickBuy}/> */}
                 </div>
                 
             </div>

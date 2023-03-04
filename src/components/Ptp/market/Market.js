@@ -23,8 +23,11 @@ export function Market() {
     const [buyOrder, setBuyOrder] = useState(null)
     const [currencyFiat, setCurrencyFiat] = useState(1)
     const [currencyNum, setCurrencyNum] = useState(1)
+    const [typeOrderFilter, setTypeOrderFilter] = useState('s')
     
     const [listFilterOrders, setListFilterOrders] = useState([])
+
+    const [filter_quantity, setFilter_quantity] = useState('')
     
 
     const backScreen = (() => {
@@ -56,6 +59,18 @@ export function Market() {
         setListFilterOrders(newListFilterOrders)
     }
 
+    const handleChangeFilterQuantity = (e) => {
+        setFilter_quantity(e.target.value)
+
+        let newListFilterOrders = listFilterOrders.slice()
+        orders.forEach((order, i) => {
+            console.log(order.quantity, parseFloat(e.target.value))
+            if (order.quantity <= parseFloat(e.target.value) ) newListFilterOrders[i] = 1
+            else newListFilterOrders[i] = 0
+        });
+        setListFilterOrders(newListFilterOrders)
+    }
+
     const divider = 
         <div className='divider-order'></div>
     
@@ -81,38 +96,55 @@ export function Market() {
         <div className='market-container'>
 
             {marketScreen === 'orders' && 
-                <div className='row d-flex justify-content-between'>
-                    <div className='filter-item'>
-                        <Selecter 
-                            list_values={METHOD_PAY_LIST} 
-                            class_name={'select-currency text-nowrap'} 
-                            setIndex={() => {}} 
-                            selected_value={currencyFiat}
-                        />
+                <>
+                    <div className='row d-flex justify-content-between p-0 m-0'>
+                        <div className='filter-sale-buy-item'
+                            onClick={() => setTypeOrderFilter('s')}
+                        >
+                            <div className={`selected-item ${typeOrderFilter === 's' && 'is_active'}`}>Купить</div>
+                        </div>
+                        <div className='filter-sale-buy-item'
+                            onClick={() => setTypeOrderFilter('b')}
+                        >
+                            <div className={`selected-item ${typeOrderFilter === 'b' && 'is_active'}`}>Продать</div>
+                        </div>
                     </div>
-                    <div className='filter-item'>
-                        <Selecter 
-                            list_values={CURRENCY_LIST} 
-                            class_name={'select-currency text-nowrap'} 
-                            setIndex={handleChangeCurrency} 
-                            selected_value={currencyNum}
-                        />
+                    <div className='row d-flex justify-content-between mt-2 p-0 m-0'>
+                        <div className='filter-item'>
+                            <Selecter 
+                                list_values={METHOD_PAY_LIST} 
+                                class_name={'select-currency text-nowrap'} 
+                                setIndex={() => {}} 
+                                selected_value={currencyFiat}
+                            />
+                        </div>
+                        <div className='filter-item'>
+                            <Selecter 
+                                list_values={CURRENCY_LIST} 
+                                class_name={'select-currency text-nowrap'} 
+                                setIndex={handleChangeCurrency} 
+                                selected_value={currencyNum}
+                            />
+                        </div>
+                        <div className='filter-item'>
+                            <Selecter 
+                                list_values={CURRENCY_FIAT_LIST} 
+                                class_name={'select-currency text-nowrap'} 
+                                setIndex={handleChangeCurrencyFiat} 
+                                selected_value={currencyFiat}
+                            />
+                        </div>
+                        <div className='filter-item'>
+                            <input className='filter-input' type='number' placeholder='Кол-во' onChange={handleChangeFilterQuantity} value={filter_quantity}/>
+                        </div>
                     </div>
-                    <div className='filter-item'>
-                        <Selecter 
-                            list_values={CURRENCY_FIAT_LIST} 
-                            class_name={'select-currency text-nowrap'} 
-                            setIndex={handleChangeCurrencyFiat} 
-                            selected_value={currencyFiat}
-                        />
-                    </div>
-                </div>
+                </>
             }
 
             {marketScreen === 'orders' && 
                 orders.map((order, index) => {
                     return (
-                            <div style={listFilterOrders[index] !== 1 ? {display: 'none'}: {}} className='order-item mt-3' key={order.id}>
+                            <div style={listFilterOrders[index] !== 1 || order.type !== typeOrderFilter ? {display: 'none'}: {}} className='order-item mt-3' key={order.id}>
                                 <div className='row mb-3 '>
                                     <div className='order-price'>
                                         <div className='order-price mt-2'>{order.price}
@@ -122,7 +154,7 @@ export function Market() {
                                     </div>
                                     
 
-                                    <div className='order-buy mt-4' onClick={() => {handleClickBuy(order)}}>Купить</div>
+                                    <div className='order-buy mt-4' onClick={() => {handleClickBuy(order)}}>{order.type === 's' ? 'Купить': 'Продать'}</div>
                                 </div>
                                 {divider}
 

@@ -3,8 +3,9 @@
     background-color: var(--item-bg); 
     height: 30px; 
     border-radius: 5px; 
-    padding: 5px; 
-    font-size: 14px;
+    padding-top: 5px; 
+    font-size: 13px;
+    text-align: center;
 }
 
 .currency-list-select {

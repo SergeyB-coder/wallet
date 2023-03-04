@@ -10,7 +10,7 @@ import { selectCurrentOrderId, selectDealInfo, setDealInfo } from './market/mark
 export function CompleteDeal (props) {
     const dispatch = useDispatch()
 
-    const {tg} = useTelegram()
+    const {tg, first_name} = useTelegram()
 
     const navigate = useNavigate()
     const deal_info = useSelector(selectDealInfo)
@@ -21,7 +21,8 @@ export function CompleteDeal (props) {
 
     const handleClickSale = () => {
         setShowLoader(true)
-        sendAcceptDeal({deal_id: deal_info.deal_id, user_buyer_id: deal_info?.user_id}, () => {
+        // sendAcceptDeal({deal_id: deal_info.deal_id, user_buyer_id: deal_info?.user_id, }, () => {
+        sendAcceptDeal({deal: deal_info}, () => {
             setShowLoader(false)
             let new_deal = {}
             for (let k in deal_info) {
@@ -34,13 +35,19 @@ export function CompleteDeal (props) {
 
     const handleClickEndDeal = () => {
         setShowLoader(true)
-        sendEndDeal({deal_id: deal_info.deal_id, order_id: order_id}, (data) => {
+        sendEndDeal(
+            {
+                deal_id: deal_info.deal_id, 
+                order_id: order_id, 
+                user_to_id: deal_info.id_to ? deal_info.id_to: deal_info.buyer_id,
+                user_from: first_name
+            }, (data) => {
             setShowLoader(false)
             if (data.error) {
                 setError(data.error)
             }
             else {
-                setError('Транзакция выполнена')
+                setError('Сделка совершена')
             }
             // handleClose()
         })
@@ -50,8 +57,11 @@ export function CompleteDeal (props) {
         if (deal_info.status === 'request') {
             handleClickSale()
         }
-        else if (deal_info.status === 'pay') {
+        else if (deal_info.status === 'confirm' && !error) {
             handleClickEndDeal()
+        }
+        else if (error) {
+            navigate('/home', {replace: true})
         }
     }
 
@@ -66,29 +76,64 @@ export function CompleteDeal (props) {
         }, )
 
     return (
-        <div className='p-2'>  
+        <div className='p-3'>  
             <div className='mt-5 deal-item p-3'>
                 <div  style={{color: 'var(--text-light-color)'}}>
-                    {deal_info?.user_to}
+                    {`${deal_info.user_to ? deal_info.user_to: deal_info.buyer} покупает у вас `}
                 </div>
             </div>
-            <div className='my-2' style={{color: 'var(--text-light-color)'}}>
-                Хочет купить
-            </div>
             <div className='mb-3' style={{color: 'var(--text-light-color)'}}>
-                {deal_info?.quantity} {deal_info.currency}
+                {deal_info?.quantity} {deal_info.currency === '1' ? 'USDT BEP20': 'USDT TRC20'}
             </div>
 
+            <div className='row mt-3 mb-3'>
+                    <div className='sale-label-l'>
+                        Цена
+                    </div>
+                    <div className='sale-label-r text-nowrap'>
+                        {deal_info?.price} {deal_info?.fiat === '1' ? 'RUB': 'USD'}
+                    </div>
+                </div>
+
+                <div className='row mt-3 mb-3'>
+                    <div className='sale-label-l'>
+                        Сумма покупки
+                    </div>
+                    <div className='sale-label-r text-nowrap'>
+                        {deal_info?.price * deal_info?.quantity} {deal_info?.fiat === '1' ? 'RUB': 'USD'}
+                    </div>
+                </div>
+
+                <div className='row mb-3 mt-3'>
+                        <div className='sale-label-l'>
+                            Методы оплаты
+                        </div>
+                        <div className='sale-label-r'>
+                            {deal_info.company}
+                        </div>
+                </div>
             
             
             {error !== 'Транзакция выполнена' &&
                 showLoader ? 
                 <div className="loader"></div>:
-                <ButtonNext text={deal_info.status === 'request' ? 'Принять запрос': 'Подтвердить оплату'} onClick={handleClickButton}/>
+                <>
+                    {deal_info.status !== 'pay' &&
+                        <ButtonNext 
+                            text={
+                                deal_info.status === 'request' ? 'Принять запрос': 
+                                error ? 'Проверить баланс':
+                                'Подтвердить платеж'} 
+                            onClick={handleClickButton}
+                        />
+                    }
+                </>
             }
 
+            {!error && deal_info.status === 'confirm' && <div className='mini-info mt-2'>Получатель подтвердил оплату</div>}
+
             <div className='open-chat-btn my-3' onClick={()=>{navigate(`/chat/${deal_info.deal_id}`, {replace: true})}}>
-                Открыть чат
+                {!error && 'Открыть чат'}
             </div>
 
             {error && <label style={{color: 'var(--text-mini)'}}>{error}</label>}

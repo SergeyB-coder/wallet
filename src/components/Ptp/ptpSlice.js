@@ -1,15 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  currency_order: 1,
-  currency_fiat: 1,
-  percent_price: '',
-  price: '',
-  quantity_order: '',
-  limit_order: '',
-  currency_type: 1,
-  time_limit: 1,
-  method_pay: null,
+    type_order: 's', // s - sale, b - buy
+    currency_order: 1,
+    currency_fiat: 1,
+    percent_price: '',
+    price: '',
+    quantity_order: '',
+    limit_order: '',
+    currency_type: 1,
+    time_limit: 1,
+    method_pay: null,
 };
 
 
@@ -17,6 +18,10 @@ export const ptpSlice = createSlice({
   name: 'ptp',
   initialState,
   reducers: {
+        setTypeOrder: (state, action) => {
+            state.type_order = action.payload;
+        },
+
         setCurrencyOrder: (state, action) => {
             state.currency_order = action.payload;
         },
@@ -55,7 +60,7 @@ export const ptpSlice = createSlice({
     },
 });
 
-export const { setMethodPay, setTimeLimit, setCurrencyOrder, setCurrencyFiat, setPercentPrice, setQuantityOrder, setLimitOrder, setCurrencyType, setPrice } = ptpSlice.actions;
+export const { setTypeOrder, setMethodPay, setTimeLimit, setCurrencyOrder, setCurrencyFiat, setPercentPrice, setQuantityOrder, setLimitOrder, setCurrencyType, setPrice } = ptpSlice.actions;
 
 export const selectCurrencyOrder = (state) => state.ptp.currency_order;
 export const selectCurrencyFiat = (state) => state.ptp.currency_fiat;
@@ -66,6 +71,7 @@ export const selectCurrencyType = (state) => state.ptp.currency_type;
 export const selectPrice = (state) => state.ptp.price;
 export const selectTimeLimit = (state) => state.ptp.time_limit;
 export const selectMethodPay = (state) => state.ptp.method_pay;
+export const selectTypeOrder = (state) => state.ptp.type_order;
 
 
 export default ptpSlice.reducer;

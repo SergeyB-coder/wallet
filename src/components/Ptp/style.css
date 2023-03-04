@@ -21,6 +21,20 @@
     --btn-bg-color3: #96969C;
 }
 
+.sale-label-l {
+    color: var(--text-light-color);
+    width: 50%;
+    text-align: left;
+
+}
+
+.sale-label-r {
+    color: var(--text-light-color);
+    width: 50%;
+    text-align: right;
+
+}
+
 
 
 .text-dark-color {
@@ -140,7 +154,7 @@ select {
     color: var(--text-light-color);
     display: flex;
     justify-content:flex-start;
-    width: 50vw;
+    width: 50%;
     font-size: 16px;
 }
 
@@ -148,7 +162,7 @@ select {
     color: var(--text-light-color);
     display: flex;
     justify-content:flex-end;
-    width: 35vw;
+    width: 50%;
     height: 25px;
     font-size: 14px;
 }
@@ -165,7 +179,7 @@ select {
 }
 
 .mini-info {
-    font-size: 12px;
+    font-size: 13px;
     color: var(--text-mini)
 }
 

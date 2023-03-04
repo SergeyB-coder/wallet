@@ -7,7 +7,7 @@ import { CreateOrder2 } from './createorder2';
 import { CreateOrder4 } from './createorder4';
 import { CreateOrder5 } from './createorder5';
 import { createOrder } from '../ptpApi';
-import { selectCurrencyFiat, selectCurrencyOrder, selectLimitOrder, selectMethodPay, selectPercentPrice, selectPrice, selectQuantityOrder } from '../ptpSlice';
+import { selectCurrencyFiat, selectCurrencyOrder, selectLimitOrder, selectMethodPay, selectPercentPrice, selectPrice, selectQuantityOrder, selectTypeOrder } from '../ptpSlice';
 
 
 export function CreateOrder() {
@@ -21,6 +21,7 @@ export function CreateOrder() {
     const currency_order = useSelector(selectCurrencyOrder)
     const price = useSelector(selectPrice)
     const method_pay = useSelector(selectMethodPay)
+    const type_order = useSelector(selectTypeOrder)
 
     const [screen, setScreen] = useState('createorder1') 
     // const [test, setTest] = useState('') 
@@ -90,7 +91,8 @@ export function CreateOrder() {
             limit_order: limit_order,
             currency_fiat: currency_fiat,
             currency_order: currency_order,
-            method_pay_id: method_pay?.id
+            method_pay_id: method_pay?.id,
+            type: type_order
         }, () => {
             setScreen('createorder5')
         })

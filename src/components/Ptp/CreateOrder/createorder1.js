@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CURRENCY_FIAT_LIST, CURRENCY_LIST, CURRENCY_TYPES, TIME_LIMITS } from '../../../const/devdata';
 import { Selecter } from '../../Common/selecter';
 import { selectBalance, selectBalanceTRX } from '../../Home/homeSlice';
-// import { ButtonNext } from './buttonNext';
+// import { ButtonNext } from '../../Common/buttonNext';
+import './style.css'
 
-import { selectCurrencyFiat, selectCurrencyOrder, selectCurrencyType, selectLimitOrder, selectPercentPrice, selectPrice, selectQuantityOrder, selectTimeLimit, setCurrencyFiat, setCurrencyOrder, setCurrencyType, setLimitOrder, setPercentPrice, setPrice, setQuantityOrder, setTimeLimit } from '../ptpSlice';
+import { selectCurrencyFiat, selectCurrencyOrder, selectCurrencyType, selectLimitOrder, selectPercentPrice, selectPrice, selectQuantityOrder, selectTimeLimit, selectTypeOrder, setCurrencyFiat, setCurrencyOrder, setCurrencyType, setLimitOrder, setPercentPrice, setPrice, setQuantityOrder, setTimeLimit, setTypeOrder } from '../ptpSlice';
 
 export function CreateOrder1(props) {
     const dispatch = useDispatch()
@@ -17,7 +18,7 @@ export function CreateOrder1(props) {
     const price = useSelector(selectPrice)
     const timeLimit = useSelector(selectTimeLimit)
 
-    const price_market = 10
+    const price_market = 1.04
     const balance = useSelector(selectBalance)
     const balance_trx = useSelector(selectBalanceTRX)
     
@@ -26,6 +27,7 @@ export function CreateOrder1(props) {
     const currency_order = useSelector(selectCurrencyOrder)
     const currencyType = useSelector(selectCurrencyType)
     const currencyFiat = useSelector(selectCurrencyFiat)
+    const typeOrder = useSelector(selectTypeOrder)
 
     function handleSetCurrencyType(index) {
         dispatch(setCurrencyType(index + 1))
@@ -67,11 +69,28 @@ export function CreateOrder1(props) {
                 <path fillRule="evenodd" d="M3.646 9.146a.5.5 0 0 1 .708 0L8 12.793l3.646-3.647a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 0-.708zm0-2.292a.5.5 0 0 0 .708 0L8 3.207l3.646 3.647a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 0 0 0 .708z"/>
             </svg>
         </span>
+    
+    const type_order = 
+        <div className='row button-currency-settings'>
+            <div className='currency-settings-item-col1 text-nowrap'>
+                Я хочу
+            </div>
+            <div className='currency-settings-item-col2m'>
+                <div className='row select-buy-sale' onClick={() => dispatch(setTypeOrder(typeOrder === 's' ? 'b': 's'))}>
+                    <div className={`col-50 ${typeOrder === 'b' && 'is_select'}`}>
+                        Купить
+                    </div>
+                    <div className={`col-50 ${typeOrder === 's' && 'is_select'}`}>
+                        Продать
+                    </div>
+                </div>
+            </div>
+        </div>
 
     const currency_sale = 
         <div className='row button-currency-settings'>
             <div className='currency-settings-item-col1 text-nowrap'>
-                Продажа криптовалюты
+                {`${typeOrder === 's' ? 'Продажа': 'Покупка'} криптовалюты`}
             </div>
             <div className='currency-settings-item-col2'>
                 <Selecter 
@@ -148,7 +167,7 @@ export function CreateOrder1(props) {
     const render_summ_sale = 
         <div className='row button-currency-settings'>
             <div className='currency-settings-item-col1'>
-                <input className='bg-input' type='number' placeholder='Сумма' onChange={handleChangeQuantityOrder} value={quantity_order}/>
+                <input style={quantity_order > balance ? {color: '#DF2E38'}: {}} className='bg-input' type='number' placeholder='Сумма' onChange={handleChangeQuantityOrder} value={quantity_order}/>
             </div>
             <div className='currency-settings-item-col2'>
                 USDT
@@ -189,6 +208,8 @@ export function CreateOrder1(props) {
             </div>
 
             <div className='currency-settings-container mt-1'>
+                {type_order}
+                {divider}
                 {currency_sale}
                 {divider}
                 {currency_fiat}
