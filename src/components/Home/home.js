@@ -4,7 +4,7 @@ import { getUserData } from './homeApi';
 import { selectBalance, selectBalanceTRX, setAddress, setAddressTRX, setBalance, setBalanceTRX } from './homeSlice';
 import { MenuButtons } from './menubuttons';
 import { useTelegram } from '../../hooks/useTelegram';
-import { svg_bep, svg_bep1, svg_binance, svg_tron } from '../../const/svgs';
+import { svg_bep1, svg_binance, svg_tron } from '../../const/svgs';
 // import { useNavigate } from 'react-router-dom';
 
 
