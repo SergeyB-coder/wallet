@@ -184,7 +184,7 @@
 .devider-item {
     display: flex;
     align-items: center;
-    justify-content:end;
+    justify-content:flex-end;
     /* height: 50px; */
     padding: 10px;
     width: 90vw;
