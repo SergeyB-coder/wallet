@@ -4,7 +4,7 @@ import { getUserData } from './homeApi';
 import { selectBalance, selectBalanceTRX, setAddress, setAddressTRX, setBalance, setBalanceTRX } from './homeSlice';
 import { MenuButtons } from './menubuttons';
 import { useTelegram } from '../../hooks/useTelegram';
-import { svg_bep, svg_tron } from '../../const/svgs';
+import { svg_bep, svg_bep1, svg_binance, svg_tron } from '../../const/svgs';
 // import { useNavigate } from 'react-router-dom';
 
 
@@ -40,8 +40,9 @@ export function Home() {
 	return (
 		<div>
 			{/* <h3>Hello!</h3> */}
-			<div className='balance-main'>{Math.round((parseFloat(balance)+parseFloat(balance_trx))*100)/100} USDT</div>
-			<div className='bottom-balance'>+323% ($400)</div>
+			<div className='balance-label'>Ваш баланс</div>
+			<div className='balance-main mt-2'><span className='balance-main-sign'>$</span>{Math.round((parseFloat(balance)+parseFloat(balance_trx))*1000)/1000}</div>
+			<div className='bottom-balance mt-2'><span className='bottom-balance-percent'>+32%</span> +$400</div>
 			<MenuButtons/>	
 
 			<div style={{marginTop: 30}}>
@@ -55,33 +56,46 @@ export function Home() {
 			<div className='wallet-item-container mt-2'>
 				<div className='wallet-item row'>
 					<div className='wallet-item-svg-container'>
-							{svg_bep}
+							{svg_bep1}
+							<div style={{position: 'absolute', left: '55%', top: '40%'}}>
+								{svg_binance}
+							</div>
 					</div>
-					<div className='wallet-item-info ms-2'>
-						<div className='button-menu-text' style={{textAlign: 'left'}}>Tether</div>
-						<div style={{textAlign: 'left', fontSize: 14}}>{Math.round((parseFloat(balance))*100)/100} USDT BEP</div>
+					<div className='wallet-item-info ps-0'>
+						<div className='token-text' style={{textAlign: 'left'}}>Tether BEP</div>
+						<div className='token-balance-text mt-2'>{Math.round((parseFloat(balance))*100)/100} USDT</div>
 					</div>
 					<div className='wallet-item-info2'>
-						<div className='button-menu-text text-nowrap' >$ {Math.round((parseFloat(balance))*100*1.1)/100}</div>
-						<div className='bottom-info text-nowrap'>+ 323% ($400)</div>
+						<div className='token-text text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance))*100*1.1)/100}</div>
+						<div className='bottom-info text-nowrap mt-2'>+23%</div>
 					</div>
 				</div>
-
-				
 			</div>
 
-			<div className='wallet-item-container mt-3'>
+			<div className='wallet-item-container'>
+				<div className='wallet-item row'>
+					<div style={{width: '5px'}}>
+
+					</div>
+					<div className='divider-token'>
+
+					</div>
+				</div>
+			</div>
+			
+
+			<div className='wallet-item-container'>
 				<div className='wallet-item row'>
 					<div className='wallet-item-svg-container'>
 							{svg_tron}
 					</div>
-					<div className='wallet-item-info ms-2'>
-						<div className='button-menu-text' style={{textAlign: 'left'}}>Tether</div>
-						<div style={{textAlign: 'left', fontSize: 14}}>{Math.round((parseFloat(balance_trx))*100)/100} USDT TRC</div>
+					<div className='wallet-item-info ps-0'>
+						<div className='token-text' style={{textAlign: 'left'}}>Tether TRC</div>
+						<div className='token-balance-text mt-2'>{Math.round((parseFloat(balance_trx))*100)/100} USDT</div>
 					</div>
 					<div className='wallet-item-info2'>
-						<div className='button-menu-text text-nowrap' >$ {Math.round((parseFloat(balance_trx))*100*1.1)/100}</div>
-						<div className='bottom-info text-nowrap'>+ 323% ($400)</div>
+						<div className='token-text text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance_trx))*100*1.1)/100}</div>
+						<div className='bottom-info text-nowrap mt-2'>+23%</div>
 					</div>
 				</div>
 			</div>
