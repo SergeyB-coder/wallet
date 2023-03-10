@@ -23,7 +23,7 @@ export const svg_tron = <svg width="40" height="40" viewBox="0 0 24 24" fill="no
 
 export const svg_binance = <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect x="0.5" y="0.5" width="19" height="19" rx="9.5" fill="#F3BA2F"/>
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M7.67002 9.04255L10.0006 6.71199L12.3331 9.04454L13.6891 7.68855L10.0006 4L6.31402 7.68655L7.67002 9.04255ZM3.99973 10.0006L5.35537 8.645L6.71101 10.0006L5.35537 11.3563L3.99973 10.0006ZM10.0005 13.2903L7.66998 10.9597L6.31199 12.3137L6.31399 12.3157L10.0005 16.0023L13.6891 12.3137L12.3331 10.9577L10.0005 13.2903ZM13.2889 10.0016L14.6445 8.64595L16.0002 10.0016L14.6445 11.3572L13.2889 10.0016ZM10.0005 8.62516L11.3765 10.0011L10.0005 11.3791L8.62458 10.0031V9.99913L8.86622 9.75749L8.98405 9.64166L10.0005 8.62516Z" fill="white"/>
+    <path fillRule="evenodd" clipRule="evenodd" d="M7.67002 9.04255L10.0006 6.71199L12.3331 9.04454L13.6891 7.68855L10.0006 4L6.31402 7.68655L7.67002 9.04255ZM3.99973 10.0006L5.35537 8.645L6.71101 10.0006L5.35537 11.3563L3.99973 10.0006ZM10.0005 13.2903L7.66998 10.9597L6.31199 12.3137L6.31399 12.3157L10.0005 16.0023L13.6891 12.3137L12.3331 10.9577L10.0005 13.2903ZM13.2889 10.0016L14.6445 8.64595L16.0002 10.0016L14.6445 11.3572L13.2889 10.0016ZM10.0005 8.62516L11.3765 10.0011L10.0005 11.3791L8.62458 10.0031V9.99913L8.86622 9.75749L8.98405 9.64166L10.0005 8.62516Z" fill="white"/>
     <rect x="0.5" y="0.5" width="19" height="19" rx="9.5" stroke="#141414"/>
 </svg>
 
@@ -31,7 +31,7 @@ export const svg_binance = <svg width="20" height="20" viewBox="0 0 20 20" fill=
 export const svg_bep1 = <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect width="38" height="38" rx="19" fill="#50AF95"/>
 <path d="M17.0311 18.7528V14.8448H11.7643V11.4192H26.4819V14.893H21.2151V18.7528H17.0311Z" fill="white"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M9.5 19.1872C9.5 17.8846 13.7332 16.8231 19 16.8231C24.2668 16.8231 28.5 17.8846 28.5 19.1872C28.5 20.4899 24.2668 21.5514 19 21.5514C13.7332 21.5514 9.5 20.4899 9.5 19.1872ZM27.7124 19.1871C27.3678 18.7046 24.5129 17.209 18.9999 17.209C13.487 17.209 10.6321 18.6564 10.2875 19.1871C10.6321 19.6696 13.487 20.3933 18.9999 20.3933C24.5621 20.3933 27.3678 19.6696 27.7124 19.1871Z" fill="white"/>
+<path fillRule="evenodd" clipRule="evenodd" d="M9.5 19.1872C9.5 17.8846 13.7332 16.8231 19 16.8231C24.2668 16.8231 28.5 17.8846 28.5 19.1872C28.5 20.4899 24.2668 21.5514 19 21.5514C13.7332 21.5514 9.5 20.4899 9.5 19.1872ZM27.7124 19.1871C27.3678 18.7046 24.5129 17.209 18.9999 17.209C13.487 17.209 10.6321 18.6564 10.2875 19.1871C10.6321 19.6696 13.487 20.3933 18.9999 20.3933C24.5621 20.3933 27.3678 19.6696 27.7124 19.1871Z" fill="white"/>
 <path d="M21.215 19.9592V17.2574C20.5259 17.2091 19.7876 17.1609 19.0492 17.1609C18.3601 17.1609 17.7202 17.1609 17.0803 17.2091V19.911C17.671 19.911 18.3601 19.9592 19.0492 19.9592C19.7876 20.0075 20.5259 20.0075 21.215 19.9592Z" fill="white"/>
 <path d="M19 21.5516C18.3109 21.5516 17.671 21.5516 17.0311 21.5034V28.6922H21.1658V21.4551C20.4767 21.5034 19.7384 21.5516 19 21.5516Z" fill="white"/>
 </svg>
@@ -57,29 +57,29 @@ export const svg_bep = <svg width="40" height="40" viewBox="0 0 24 24" fill="non
 </svg>
 
 export const svg_address_to = <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M21 8V5C21 3.895 20.105 3 19 3H16" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M8 3H5C3.895 3 3 3.895 3 5V8" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M3 16V19C3 20.105 3.895 21 5 21H8" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M16 21H19C20.105 21 21 20.105 21 19V16" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M3 12H21" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M21 8V5C21 3.895 20.105 3 19 3H16" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M8 3H5C3.895 3 3 3.895 3 5V8" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M3 16V19C3 20.105 3.895 21 5 21H8" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M16 21H19C20.105 21 21 20.105 21 19V16" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M3 12H21" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
 </svg>
 
 export const svg_wait = 
 <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className='svg-wait'>
-    <path d="M20 29.3667V35" stroke="#FFAB2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M13.3667 26.6333L9.40002 30.6" stroke="#FFAB2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M10.6333 20H5" stroke="#FFAB2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M9.40002 9.4L13.3667 13.3667" stroke="#FFAB2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M20 10V5" stroke="#FFAB2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M27.95 12.05L30.6 9.4" stroke="#FFAB2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M35 20H32.5" stroke="#FFAB2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M30.6 30.6L29.7167 29.7167" stroke="#FFAB2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M20 29.3667V35" stroke="#FFAB2E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M13.3667 26.6333L9.40002 30.6" stroke="#FFAB2E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M10.6333 20H5" stroke="#FFAB2E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M9.40002 9.4L13.3667 13.3667" stroke="#FFAB2E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M20 10V5" stroke="#FFAB2E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M27.95 12.05L30.6 9.4" stroke="#FFAB2E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M35 20H32.5" stroke="#FFAB2E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M30.6 30.6L29.7167 29.7167" stroke="#FFAB2E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
 </svg>
 
 export const svg_ok = 
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="15.9999" cy="16.0001" rx="15.0062" ry="15.0063" stroke="#7AD129" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M10.0708 16.5654L13.684 20.1786L13.6606 20.1552L21.8124 12.0035" stroke="#7AD129" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <ellipse cx="15.9999" cy="16.0001" rx="15.0062" ry="15.0063" stroke="#7AD129" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M10.0708 16.5654L13.684 20.1786L13.6606 20.1552L21.8124 12.0035" stroke="#7AD129" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
 
 
