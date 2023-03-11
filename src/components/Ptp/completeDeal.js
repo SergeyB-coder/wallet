@@ -5,16 +5,16 @@ import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../hooks/useTelegram';
 import { ButtonNext } from '../Common/buttonNext';
 import { sendAcceptDeal, sendEndDeal } from './market/marketApi';
-import { selectCurrentOrderId, selectDealInfo, setDealInfo } from './market/marketSlice';
+import { selectDealInfo, setDealInfo } from './market/marketSlice';
 
 export function CompleteDeal (props) {
     const dispatch = useDispatch()
 
-    const {tg, first_name} = useTelegram()
+    const {tg, first_name, user_id} = useTelegram()
 
     const navigate = useNavigate()
     const deal_info = useSelector(selectDealInfo)
-    const order_id = useSelector(selectCurrentOrderId)
+    // const order_id = useSelector(selectCurrentOrderId)
 
     const [showLoader, setShowLoader] = useState(false)
     const [error, setError] = useState('')
@@ -38,9 +38,10 @@ export function CompleteDeal (props) {
         sendEndDeal(
             {
                 deal_id: deal_info.deal_id, 
-                order_id: order_id, 
+                order_id: deal_info.order_id, 
                 user_to_id: deal_info.id_to ? deal_info.id_to: deal_info.buyer_id,
-                user_from: first_name
+                user_from: first_name,
+                user_from_id: user_id
             }, (data) => {
             setShowLoader(false)
             if (data.error) {
