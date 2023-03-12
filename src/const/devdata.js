@@ -8,7 +8,7 @@ export const CURRENCY_FIAT_LIST = [
     'USD'
 ]
 
-export const CURRENCY_TYPES = [
+export const PRICE_TYPES = [
     'Фиксированная',
     'Плавающая'
 ]

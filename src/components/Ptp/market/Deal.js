@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTelegram } from '../../../hooks/useTelegram';
 import { ButtonNext } from '../../Common/buttonNext';
-import { getDealInfo, sendConfirm } from './marketApi';
+import { getDealInfo, sendConfirm, sendEndDeal } from './marketApi';
 import { selectDealScreenInfo, setDealInfo, setDealScreenInfo } from './marketSlice';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { useTelegram } from '../../../hooks/useTelegram';
@@ -12,7 +12,7 @@ import { selectDealScreenInfo, setDealInfo, setDealScreenInfo } from './marketSl
 // import { selectQuantityBuy, setQuantityBuy } from './marketSlice';
 
 export function Deal () {
-    const {tg, user_id} = useTelegram()
+    const {tg, user_id, first_name} = useTelegram()
     const { deal_id } = useParams();
     const navigate = useNavigate()
 
@@ -21,6 +21,10 @@ export function Deal () {
 
     const [showConfirmPay, setShowConfirmPay] = useState(false)
     const [showWait, setShowWait] = useState(false)
+    const [showLoader, setShowLoader] = useState(false)
+    const [error, setError] = useState('')
+
+    const str_type_deal = deal_screen_info?.type_order === 'b' ? 'Вы продаете': 'Вы покупаете у'
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     function handleGetDealInfo() {
@@ -56,6 +60,28 @@ export function Deal () {
         })
     }
 
+    const handleClickEndDeal = () => {
+        setShowLoader(true)
+        sendEndDeal(
+            {
+                deal_id: deal_screen_info.deal_id, 
+                order_id: deal_screen_info.order_id, 
+                user_to_id: deal_screen_info.id_to ? deal_screen_info.id_to: deal_screen_info.buyer_id,
+                user_from: first_name,
+                user_from_id: user_id,
+                type_order: deal_screen_info.type_order
+            }, (data) => {
+            setShowLoader(false)
+            if (data.error) {
+                setError(data.error)
+            }
+            else {
+                setError('Сделка совершена')
+            }
+            // handleClose()
+        })
+    }
+
     const backScreen = (() => {
         navigate('/ptp', {replace: true})
     })
@@ -73,7 +99,7 @@ export function Deal () {
     return (
         <>
             <div className='title-buy-label mt-3'>Сделка № {deal_screen_info?.deal_id}</div>
-            <div className='title-buy'>Вы покупаете у {deal_screen_info?.saler}</div>
+            <div className='title-buy'>{str_type_deal} {deal_screen_info?.saler}</div>
             
 
             {/* <label style={{color: 'var(--text-light-color)'}}>Количество:</label> */}
@@ -127,6 +153,19 @@ export function Deal () {
                     <div className='label-deal-fiat'>{deal_screen_info.company}</div>
                     <div className='label-deal-fiat mb-3'>{deal_screen_info.card_number}</div>
                     <ButtonNext text='Оплачено' onClick={hanldeConfirm}/>
+                </div>
+            }
+
+            {error !== 'Транзакция выполнена' &&
+                showLoader ? 
+                <div className="loader"></div>:
+                <div className='m-3'>
+                    {deal_screen_info.status === 'confirm' && deal_screen_info.type_order === 'b' &&
+                        <ButtonNext 
+                            text={'Подтвердить платеж'} 
+                            onClick={handleClickEndDeal}
+                        />
+                    }
                 </div>
             }
 

@@ -17,3 +17,21 @@ export function createOrder(pars, callback) {
             return callback(data)
         });
 }
+
+export function parsePrice(pars, callback) {
+    fetch(url + '/parseprice', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            //   mode: 'no-cors',
+            body: JSON.stringify(pars)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('data parseprice', data)
+            
+            return callback(data)
+        });
+}

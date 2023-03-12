@@ -68,10 +68,10 @@ export function CreateOrder2(props) {
         <div>
             <div className='row  mt-3'>
                 <div className='col-9 t-left-align text-dark-color'>Добавить методы оплаты</div>
-                <div className='col-2'>2/4</div>
+                <div className='col-2 text-dark-color'>2/4</div>
             </div>
 
-            <div className='currency-settings-container mt-1'>
+            <div className='currency-settings-container mt-2'>
                 {render_method_pay}
             </div>
 

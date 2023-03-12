@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../hooks/useTelegram';
 import { ButtonNext } from '../Common/buttonNext';
-import { sendAcceptDeal, sendEndDeal } from './market/marketApi';
+import { sendAcceptDeal, sendConfirm, sendEndDeal } from './market/marketApi';
 import { selectDealInfo, setDealInfo } from './market/marketSlice';
 
 export function CompleteDeal (props) {
@@ -17,6 +17,7 @@ export function CompleteDeal (props) {
     // const order_id = useSelector(selectCurrentOrderId)
 
     const [showLoader, setShowLoader] = useState(false)
+    const [showWait, setShowWait] = useState(false)
     const [error, setError] = useState('')
 
     const handleClickSale = () => {
@@ -66,6 +67,14 @@ export function CompleteDeal (props) {
         }
     }
 
+    const hanldeConfirm = () => {
+        sendConfirm({deal_id: deal_info.deal_id, saler_id: deal_info.buyer_id}, (data) => {
+            console.log(data)
+            // setShowConfirmPay(false)
+            setShowWait(true)
+        })
+    }
+
     const backScreen = (() => {
         navigate('/ptp', {replace: true})
     })
@@ -80,7 +89,7 @@ export function CompleteDeal (props) {
         <div className='p-3'>  
             <div className='mt-5 deal-item p-3'>
                 <div  style={{color: 'var(--text-light-color)'}}>
-                    {`${deal_info.user_to ? deal_info.user_to: deal_info.buyer} покупает у вас `}
+                    {deal_info.user_to ? deal_info.user_to: deal_info.buyer} { deal_info.type_order === 's' ? ' покупает у вас': ' продает вам'}
                 </div>
             </div>
             <div className='mb-3' style={{color: 'var(--text-light-color)'}}>
@@ -131,7 +140,22 @@ export function CompleteDeal (props) {
                 </>
             }
 
-            {deal_info.status === 'pay' && <div className='mini-info'>Ожидание оплаты</div>}
+            {deal_info.status === 'pay' && !showWait &&
+                (
+                    deal_info.type_order === 's' ?
+                    <div className='mini-info'>Ожидание оплаты</div>:
+                    <div className='m-4'>
+                        <div className='label-deal-fiat'>Переведите фиаты по следующим реквизитам:</div>
+                        <div className='label-deal-fiat'>{deal_info.company}</div>
+                        <div className='label-deal-fiat mb-3'>{deal_info.card_number}</div>
+                        <ButtonNext text='Оплачено' onClick={hanldeConfirm}/>
+                    </div>
+                    
+                )
+                
+            }
+
+            {showWait && <div className='mini-info'>Дождитесь подтверждения об оплате</div>}
 
             {!error && deal_info.status === 'confirm' && <div className='mini-info mt-2'>Получатель подтвердил оплату</div>}
 

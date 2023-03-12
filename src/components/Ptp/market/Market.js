@@ -190,7 +190,7 @@ export function Market() {
                                         Методы оплаты
                                     </div>
                                     <div className='order-info'>
-                                        Raiffeisen
+                                        {order.company}
                                     </div>
                                 </div>
                             </div>

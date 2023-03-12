@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../../hooks/useTelegram';
 import { CreateOrder1 } from './createorder1';
 import { CreateOrder2 } from './createorder2';
 import { CreateOrder4 } from './createorder4';
 import { CreateOrder5 } from './createorder5';
-import { createOrder } from '../ptpApi';
-import { selectCurrencyFiat, selectCurrencyOrder, selectLimitOrder, selectMethodPay, selectPercentPrice, selectPrice, selectQuantityOrder, selectTypeOrder } from '../ptpSlice';
+import { createOrder, parsePrice } from '../ptpApi';
+import { selectCurrencyFiat, selectCurrencyOrder, selectLimitOrder, selectMethodPay, selectPercentPrice, selectPrice, selectPriceType, selectQuantityOrder, selectTypeOrder, setPriceMarket, setPriceMarketTRX, setRubDollar } from '../ptpSlice';
 
 
 export function CreateOrder() {
     const {tg, user_id} = useTelegram()
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const percent_price = useSelector(selectPercentPrice)
     const quantity_order = useSelector(selectQuantityOrder)
@@ -22,16 +23,12 @@ export function CreateOrder() {
     const price = useSelector(selectPrice)
     const method_pay = useSelector(selectMethodPay)
     const type_order = useSelector(selectTypeOrder)
+    const price_type = useSelector(selectPriceType)
 
     const [screen, setScreen] = useState('createorder1') 
     // const [test, setTest] = useState('') 
 
-    useEffect(() => {
-        tg.MainButton.show()
-        tg.MainButton.setText('Далее')
-        tg.MainButton.setParams({color: '#8BFF63'})
-        tg.BackButton.show()
-    }, [tg.BackButton, tg.MainButton]);
+    
 
     const nextScreen = () => {
         switch (screen) {
@@ -92,11 +89,27 @@ export function CreateOrder() {
             currency_fiat: currency_fiat,
             currency_order: currency_order,
             method_pay_id: method_pay?.id,
-            type: type_order
+            type: type_order,
+            type_price_id: price_type,
         }, () => {
             setScreen('createorder5')
         })
     }
+
+    useEffect(() => {
+        parsePrice({}, (data) => {
+            dispatch(setPriceMarket(data.price_market))
+            dispatch(setPriceMarketTRX(data.price_market_trx))
+            dispatch(setRubDollar(data.rub_dollar))            
+        })
+    }, [dispatch]);
+
+    useEffect(() => {
+        tg.MainButton.show()
+        tg.MainButton.setText('Далее')
+        tg.MainButton.setParams({color: '#8BFF63'})
+        tg.BackButton.show()
+    }, [tg.BackButton, tg.MainButton]);
 
     useEffect(() => {
         tg.onEvent('mainButtonClicked', nextScreen)

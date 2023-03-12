@@ -4,7 +4,7 @@ import { useTelegram } from '../../../hooks/useTelegram';
 import { ButtonNext } from '../../Common/buttonNext';
 import { CURRENCY_FIAT_LIST, CURRENCY_LIST, TIME_LIMITS } from '../../../const/devdata';
 
-import { selectQuantityOrder, selectCurrencyFiat, selectCurrencyOrder, selectCurrencyType, selectPrice, selectLimitOrder, selectTimeLimit, selectMethodPay } from '../ptpSlice';
+import { selectQuantityOrder, selectCurrencyFiat, selectCurrencyOrder, selectPriceType, selectPrice, selectLimitOrder, selectTimeLimit, selectMethodPay, selectTypeOrder } from '../ptpSlice';
 
 export function CreateOrder4(props) {
     const {first_name} = useTelegram()
@@ -13,12 +13,14 @@ export function CreateOrder4(props) {
     // const limit_order = useSelector(selectLimitOrder)
     const currency_fiat = useSelector(selectCurrencyFiat)
     const currency_order = useSelector(selectCurrencyOrder)
-    const currency_type = useSelector(selectCurrencyType)
+    const currency_type = useSelector(selectPriceType)
 
     const method_pay = useSelector(selectMethodPay)
     const price = useSelector(selectPrice)
     const limit_order = useSelector(selectLimitOrder)
     const timeLimit = useSelector(selectTimeLimit)
+
+    const typeOrder = useSelector(selectTypeOrder)
 
     const divider = 
         <div className='divider-test-order'></div>
@@ -40,7 +42,7 @@ export function CreateOrder4(props) {
                     </div>
                     <div className='test-order-col2'>
                         <div className='test-order-buy'>
-                            Купить
+                            {typeOrder === 's' ? 'Купить': 'Продать'}
                         </div>
                     </div>
                 </div>

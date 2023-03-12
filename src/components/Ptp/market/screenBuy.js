@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../../hooks/useTelegram';
-// import { ButtonNext } from '../../Common/buttonNext';
+import { ButtonNext } from '../../Common/buttonNext';
 import { sendBuy } from './marketApi';
 import { selectQuantityBuy, setDealScreenInfo, setQuantityBuy } from './marketSlice';
 
@@ -11,6 +11,8 @@ export function ScreenBuy (props) {
     const {tg, user_id, first_name} = useTelegram()
     const dispatch = useDispatch()
     const quantity_buy = useSelector(selectQuantityBuy)
+
+    const is_buy = props.buyOrder.type === 'b'
 
     const handleChangeQuantity = (e) => {
         // let inp = document.getElementById('quantity')
@@ -26,7 +28,8 @@ export function ScreenBuy (props) {
             price: props?.buyOrder?.price, 
             fiat: props?.buyOrder.currency_fiat_id,
             company: props?.buyOrder.company,
-            card_number: props?.buyOrder.card_number
+            card_number: props?.buyOrder.card_number,
+            type_order: props?.buyOrder.type,
         }, (data) => {
             dispatch(setDealScreenInfo(
                 {
@@ -40,6 +43,7 @@ export function ScreenBuy (props) {
                     buyer_id: user_id, 
                     saler: props?.buyOrder?.first_name, 
                     buyer: first_name,
+                    type_order: props?.buyOrder.type,
                 }
             ))
             navigate('/deal/0', {replace: true})
@@ -67,7 +71,7 @@ export function ScreenBuy (props) {
     return (
         <>
             <div className='screen-buy-container mt-5'>
-                <div className='title-buy'>Покупка у {props.buyOrder.first_name}</div>
+                <div className='title-buy'>{is_buy ? 'Продажа': 'Покупка у'} {props.buyOrder.first_name}</div>
 
                 <div className=' mt-5'>
                     <label>Укажите количество:</label>
@@ -91,7 +95,7 @@ export function ScreenBuy (props) {
                             Методы оплаты
                         </div>
                         <div className='buy-info'>
-                            Raiffeisen
+                            {props.buyOrder.company}
                         </div>
                     </div>
                     <div className='divider-order'></div>
@@ -100,7 +104,7 @@ export function ScreenBuy (props) {
                             Лимит
                         </div>
                         <div className='buy-info text-nowrap'>
-                            {props.buyOrder.limit_order} USDT
+                            { props.buyOrder.limit_order} USDT
                         </div>
                     </div>
                     <div className='divider-order'></div>
@@ -117,7 +121,7 @@ export function ScreenBuy (props) {
                 </div>
 
                 <div className='m-2 mt-5'>
-                    {/* <ButtonNext text='Начать сделку' onClick={handleClickBuy}/> */}
+                    <ButtonNext text='Начать сделку' onClick={handleClickBuy}/>
                 </div>
                 
             </div>

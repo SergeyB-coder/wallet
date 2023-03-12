@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CURRENCY_FIAT_LIST, CURRENCY_LIST, CURRENCY_TYPES, TIME_LIMITS } from '../../../const/devdata';
+import { CURRENCY_FIAT_LIST, CURRENCY_LIST, PRICE_TYPES, TIME_LIMITS } from '../../../const/devdata';
 import { Selecter } from '../../Common/selecter';
-import { selectBalance, selectBalanceTRX } from '../../Home/homeSlice';
+import { selectBalance, selectBalanceTRX, selectBalanceTRXv } from '../../Home/homeSlice';
 import { ButtonNext } from '../../Common/buttonNext';
 import './style.css'
 
-import { selectCurrencyFiat, selectCurrencyOrder, selectCurrencyType, selectLimitOrder, selectPercentPrice, selectPrice, selectQuantityOrder, selectTimeLimit, selectTypeOrder, setCurrencyFiat, setCurrencyOrder, setCurrencyType, setLimitOrder, setPercentPrice, setPrice, setQuantityOrder, setTimeLimit, setTypeOrder } from '../ptpSlice';
+import { selectCurrencyFiat, selectCurrencyOrder, selectPriceType, selectLimitOrder, selectPercentPrice, selectPrice, selectPriceMarket, selectQuantityOrder, selectTimeLimit, selectTypeOrder, setCurrencyFiat, setCurrencyOrder, setPriceType, setLimitOrder, setPercentPrice, setPrice, setQuantityOrder, setTimeLimit, setTypeOrder, selectRubDollar } from '../ptpSlice';
 
 export function CreateOrder1(props) {
     const dispatch = useDispatch()
@@ -16,21 +16,24 @@ export function CreateOrder1(props) {
     const quantity_order = useSelector(selectQuantityOrder)
     const limit_order = useSelector(selectLimitOrder)
     const price = useSelector(selectPrice)
+    const type_price = useSelector(selectPriceType)
     const timeLimit = useSelector(selectTimeLimit)
 
-    const price_market = 1.04
+    const price_market = useSelector(selectPriceMarket)
+    const rub_dollar = useSelector(selectRubDollar)
+
     const balance = useSelector(selectBalance)
     const balance_trx = useSelector(selectBalanceTRX)
-    
-    
+    const balance_trx_v = useSelector(selectBalanceTRXv)
 
     const currency_order = useSelector(selectCurrencyOrder)
-    const currencyType = useSelector(selectCurrencyType)
+    const currencyType = useSelector(selectPriceType)
     const currencyFiat = useSelector(selectCurrencyFiat)
     const typeOrder = useSelector(selectTypeOrder)
 
-    function handleSetCurrencyType(index) {
-        dispatch(setCurrencyType(index + 1))
+    function handlesetPriceType(index) {
+        console.log('index', index)
+        dispatch(setPriceType(index + 1))
     }
     
     const handleChangeCurrencyFiat = (index) => {
@@ -127,17 +130,17 @@ export function CreateOrder1(props) {
             </div>
         </div>
 
-    const type_price = 
+    const render_type_price = 
         <div className='row button-currency-settings'>
             <div className='currency-settings-item-col1'>
                 Тип цены
             </div>
             <div className='currency-settings-item-col2'>
                 <Selecter 
-                    list_values={CURRENCY_TYPES} 
+                    list_values={PRICE_TYPES} 
                     class_name={'select-currency text-nowrap'} 
-                    setIndex={handleSetCurrencyType} 
-                    selected_value={currencyType}
+                    setIndex={handlesetPriceType} 
+                    selected_value={type_price}
                 />{chevron}
             </div>
             
@@ -167,7 +170,7 @@ export function CreateOrder1(props) {
     const render_summ_sale = 
         <div className='row button-currency-settings'>
             <div className='currency-settings-item-col1'>
-                <input style={parseFloat(quantity_order) > parseFloat(balance) ? {color: '#DF2E38'}: {}} className='bg-input' type='number' placeholder='Сумма' onChange={handleChangeQuantityOrder} value={quantity_order}/>
+                <input style={parseFloat(quantity_order) > parseFloat(balance) && typeOrder === 's' ? {color: '#DF2E38'}: {}} className='bg-input' type='number' placeholder='Сумма' onChange={handleChangeQuantityOrder} value={quantity_order}/>
             </div>
             <div className='currency-settings-item-col2'>
                 USDT
@@ -214,7 +217,7 @@ export function CreateOrder1(props) {
                 {divider}
                 {currency_fiat}
                 {divider}
-                {type_price}
+                {render_type_price}
             </div>
 
             
@@ -237,14 +240,14 @@ export function CreateOrder1(props) {
                 )
             }
 
-            <div className='t-left-align  mini-info'>{`Цена на маркете: ${price_market} $`}</div>
-            <div className='t-left-align  mini-info'>{`Цена в вашем объявлении: ${price} #`}</div>
+            <div className='t-left-align  mini-info'>{`Цена на маркете: ${Math.round((price_market * (currencyFiat === 1 ? rub_dollar: 1))*1000)/1000}`} {CURRENCY_FIAT_LIST[currencyFiat - 1]}</div>
+            <div className='t-left-align  mini-info'>{`Цена в вашем объявлении: ${type_price === 1 ? price: Math.round(price_market*(currencyFiat === 1 ? rub_dollar: 1)*percent_price*1000/100)/1000}`}  {CURRENCY_FIAT_LIST[currencyFiat - 1]}</div>
 
 
             <div className='currency-settings-container mt-4'>
                 {render_summ_sale}
             </div>
-            <div className='t-left-align  mini-info'>{`Ваш баланс: ${currency_order === 1 ? balance: balance_trx} USDT`}</div>
+            <div className='t-left-align  mini-info'>{`Ваш баланс: ${currency_order === 1 ? balance: balance_trx + balance_trx_v} USDT`}</div>
 
             <div className='t-left-align  mt-3 text-dark-color'>Лимит сделки</div>
             <div className='currency-settings-container mt-1'>

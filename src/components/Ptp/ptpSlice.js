@@ -6,18 +6,33 @@ const initialState = {
     currency_fiat: 1,
     percent_price: '',
     price: '',
+    price_market: 0,
+    price_market_trx: 0,
     quantity_order: '',
     limit_order: '',
-    currency_type: 1,
+    price_type: 1,
     time_limit: 1,
     method_pay: null,
+    rub_dollar: 0,
 };
 
 
 export const ptpSlice = createSlice({
-  name: 'ptp',
-  initialState,
-  reducers: {
+    name: 'ptp',
+    initialState,
+    reducers: {
+        setRubDollar: (state, action) => {
+            state.rub_dollar = action.payload;
+        },
+
+        setPriceMarketTRX: (state, action) => {
+            state.price_market_trx = action.payload;
+        },
+
+        setPriceMarket: (state, action) => {
+            state.price_market = action.payload;
+        },
+
         setTypeOrder: (state, action) => {
             state.type_order = action.payload;
         },
@@ -42,8 +57,8 @@ export const ptpSlice = createSlice({
             state.limit_order = action.payload;
         },
 
-        setCurrencyType: (state, action) => {
-            state.currency_type = action.payload;
+        setPriceType: (state, action) => {
+            state.price_type = action.payload;
         },
 
         setPrice: (state, action) => {
@@ -60,18 +75,21 @@ export const ptpSlice = createSlice({
     },
 });
 
-export const { setTypeOrder, setMethodPay, setTimeLimit, setCurrencyOrder, setCurrencyFiat, setPercentPrice, setQuantityOrder, setLimitOrder, setCurrencyType, setPrice } = ptpSlice.actions;
+export const {setRubDollar, setPriceMarket, setPriceMarketTRX, setTypeOrder, setMethodPay, setTimeLimit, setCurrencyOrder, setCurrencyFiat, setPercentPrice, setQuantityOrder, setLimitOrder, setPriceType, setPrice } = ptpSlice.actions;
 
 export const selectCurrencyOrder = (state) => state.ptp.currency_order;
 export const selectCurrencyFiat = (state) => state.ptp.currency_fiat;
 export const selectPercentPrice = (state) => state.ptp.percent_price;
 export const selectQuantityOrder = (state) => state.ptp.quantity_order;
 export const selectLimitOrder = (state) => state.ptp.limit_order;
-export const selectCurrencyType = (state) => state.ptp.currency_type;
+export const selectPriceType = (state) => state.ptp.price_type;
 export const selectPrice = (state) => state.ptp.price;
+export const selectPriceMarket = (state) => state.ptp.price_market;
+export const selectPriceMarketTRX = (state) => state.ptp.price_market_trx;
 export const selectTimeLimit = (state) => state.ptp.time_limit;
 export const selectMethodPay = (state) => state.ptp.method_pay;
 export const selectTypeOrder = (state) => state.ptp.type_order;
+export const selectRubDollar = (state) => state.ptp.rub_dollar;
 
 
 export default ptpSlice.reducer;
