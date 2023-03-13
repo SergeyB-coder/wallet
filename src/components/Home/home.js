@@ -4,7 +4,9 @@ import { getUserData } from './homeApi';
 import { selectBalance, selectBalanceTRX, selectBalanceTRXv, setAddress, setAddressTRX, setBalance, setBalanceTRX, setBalanceTRXv } from './homeSlice';
 import { MenuButtons } from './menubuttons';
 import { useTelegram } from '../../hooks/useTelegram';
-import { svg_bep1, svg_binance, svg_tron } from '../../const/svgs';
+import { svg_bep1, svg_binance, svg_tron1 } from '../../const/svgs';
+import { useState } from 'react';
+import { Transactions } from './transactions';
 // import { useNavigate } from 'react-router-dom';
 
 
@@ -19,9 +21,23 @@ export function Home() {
 	const balance = useSelector(selectBalance)
 	const balance_trx = useSelector(selectBalanceTRX)
 	const balance_trx_v = useSelector(selectBalanceTRXv)
-	
 
-	
+	const [showTransactions, setShowTransactions] = useState(false);
+
+	const handleClickBep = () => {
+		setShowTransactions(true)
+		tg.BackButton.show()
+	}
+
+	const handleClickTrc = () => {
+		setShowTransactions(true)
+		tg.BackButton.show()
+	}
+
+	const backScreen = () => {
+		tg.BackButton.hide()
+		setShowTransactions(false)
+	}
 
 	useEffect(() => {
 		getUserData({user_id: user_id, first_name: first_name, chat_id: chat_id}, (data) => {
@@ -39,70 +55,89 @@ export function Home() {
 		tg.BackButton.hide()
     }, );
 
+	useEffect(() => {
+        tg.onEvent('backButtonClicked', backScreen)
+            return () => {tg.offEvent('backButtonClicked', backScreen)}
+        }, )
+
 	return (
-		<div>
-			{/* <h3>Hello!</h3> */}
-			<div className='balance-label'>Ваш баланс</div>
-			<div className='balance-main mt-2'><span className='balance-main-sign'>$</span>{Math.round(parseFloat(balance + balance_trx + balance_trx_v)*1000)/1000}</div>
-			<div className='bottom-balance mt-2'><span className='bottom-balance-percent'>+32%</span> +$400</div>
-			<MenuButtons/>	
+		<>
+			{	!showTransactions &&
+				<div>
+					{/* <h3>Hello!</h3> */}
+					<div className='balance-label'>Ваш баланс</div>
+					<div className='balance-main mt-2'><span className='balance-main-sign'>$</span>{Math.round(parseFloat(balance + balance_trx + balance_trx_v)*1000)/1000}</div>
+					<div className='bottom-balance mt-2'><span className='bottom-balance-percent'>+32%</span> +$400</div>
+					<MenuButtons/>	
 
-			<div style={{marginTop: 30}}>
-				{/* <button onClick={() => {
-					fromMain({user_id: user_id}, (d)=>{console.log('d', d)})
-				}}>TEST</button> */}
-			</div>
+					<div style={{marginTop: 30}}>
+						{/* <button onClick={() => {
+							fromMain({user_id: user_id}, (d)=>{console.log('d', d)})
+						}}>TEST</button> */}
+					</div>
 
-			<div className='mt-1' style={{color: 'var(--btn-bg-color)'}}>Manage token list</div>
+					<div className='mt-1' style={{color: 'var(--btn-bg-color)'}}>Manage token list</div>
 
-			<div className='wallet-item-container mt-2'>
-				<div className='wallet-item row'>
-					<div className='wallet-item-svg-container'>
-							{svg_bep1}
-							<div style={{position: 'absolute', left: '55%', top: '40%'}}>
-								{svg_binance}
+					<div className='wallet-item-container mt-2'>
+						<div className='wallet-item row' onClick={handleClickBep}>
+							<div className='wallet-item-svg-container'>
+								{svg_bep1}
+								<div style={{position: 'absolute', left: '55%', top: '40%'}}>
+									{svg_binance}
+								</div>
 							</div>
+							<div className='wallet-item-info ps-0'>
+								<div className='token-text' style={{textAlign: 'left'}}>Tether BEP</div>
+								<div className='token-balance-text mt-2'>{Math.round((parseFloat(balance))*100)/100} USDT</div>
+							</div>
+							<div className='wallet-item-info2'>
+								<div className='token-text text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance))*100*1.1)/100}</div>
+								<div className='bottom-info text-nowrap mt-2'>+23%</div>
+							</div>
+						</div>
 					</div>
-					<div className='wallet-item-info ps-0'>
-						<div className='token-text' style={{textAlign: 'left'}}>Tether BEP</div>
-						<div className='token-balance-text mt-2'>{Math.round((parseFloat(balance))*100)/100} USDT</div>
+
+					<div className='wallet-item-container'>
+						<div className='wallet-item row'>
+							<div style={{width: '5px'}}>
+
+							</div>
+							<div className='divider-token'>
+
+							</div>
+						</div>
 					</div>
-					<div className='wallet-item-info2'>
-						<div className='token-text text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance))*100*1.1)/100}</div>
-						<div className='bottom-info text-nowrap mt-2'>+23%</div>
+					
+
+					<div className='wallet-item-container'>
+						<div className='wallet-item row' onClick={handleClickTrc}>
+							<div className='wallet-item-svg-container'>
+								{svg_bep1}
+								<div style={{position: 'absolute', left: '55%', top: '40%'}}>
+									{svg_tron1}
+								</div>
+							</div>
+							<div className='wallet-item-info ps-0'>
+								<div className='token-text' style={{textAlign: 'left'}}>Tether TRC</div>
+								<div className='token-balance-text mt-2'>{Math.round((parseFloat(balance_trx + balance_trx_v))*100)/100} USDT</div>
+							</div>
+							<div className='wallet-item-info2'>
+								<div className='token-text text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance_trx))*100*1.1)/100}</div>
+								<div className='bottom-info text-nowrap mt-2'>+23%</div>
+							</div>
+						</div>
 					</div>
+
+					
 				</div>
-			</div>
+			}
 
-			<div className='wallet-item-container'>
-				<div className='wallet-item row'>
-					<div style={{width: '5px'}}>
+			{	showTransactions &&
 
-					</div>
-					<div className='divider-token'>
-
-					</div>
+				<div className='p-2'>
+					<Transactions/>
 				</div>
-			</div>
-			
-
-			<div className='wallet-item-container'>
-				<div className='wallet-item row'>
-					<div className='wallet-item-svg-container'>
-							{svg_tron}
-					</div>
-					<div className='wallet-item-info ps-0'>
-						<div className='token-text' style={{textAlign: 'left'}}>Tether TRC</div>
-						<div className='token-balance-text mt-2'>{Math.round((parseFloat(balance_trx + balance_trx_v))*100)/100} USDT</div>
-					</div>
-					<div className='wallet-item-info2'>
-						<div className='token-text text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance_trx))*100*1.1)/100}</div>
-						<div className='bottom-info text-nowrap mt-2'>+23%</div>
-					</div>
-				</div>
-			</div>
-
-			
-		</div>
+			}
+		</>
 	);
 }
