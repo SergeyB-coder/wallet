@@ -160,7 +160,7 @@ export function Deal () {
                 showLoader ? 
                 <div className="loader"></div>:
                 <div className='m-3'>
-                    {deal_screen_info.status === 'confirm' && deal_screen_info.type_order === 'b' &&
+                    {deal_screen_info?.status === 'confirm' && deal_screen_info?.type_order === 'b' &&
                         <ButtonNext 
                             text={'Подтвердить платеж'} 
                             onClick={handleClickEndDeal}

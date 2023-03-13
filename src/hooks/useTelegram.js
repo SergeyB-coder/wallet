@@ -8,9 +8,9 @@ export function useTelegram () {
         first_name: tg.initDataUnsafe.user.first_name,
         
         // user_id: '638484379',
-        // user_id: '2125428302',
-        // user_id: '652065848',
         // first_name: 'Sash',
+        // user_id: '2125428302',
+        // user_id: '652065848',        
         // first_name: 'Srg',
     }
 }

@@ -57,8 +57,10 @@
 }
 
 .divider-order {
+    margin-left: -10px;
     height: 0.5px;
-    background-color: var(--bg-color);
+    background-color: var(--btn-bg-color);
+    width: calc(100% + 20px);
 }
 
 .order-label {
@@ -121,6 +123,11 @@
     color: var(--button-text-color);
     width: 40vw;
     text-align: right;
+}
+
+.title-select-method {
+    color: var(--text-light-color);
+    text-align: center;
 }
 
 .deal-info-container {

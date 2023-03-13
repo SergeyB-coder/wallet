@@ -19,11 +19,12 @@ export function Market() {
 
     const orders = useSelector(selectOrders)
 
-    const [marketScreen, setMarketScreen] = useState('orders') // buy 
+    const [marketScreen, setMarketScreen] = useState('orders') // buy //select_method_pay
     const [buyOrder, setBuyOrder] = useState(null)
     const [currencyFiat, setCurrencyFiat] = useState(1)
     const [currencyNum, setCurrencyNum] = useState(1)
     const [typeOrderFilter, setTypeOrderFilter] = useState('s')
+    const [indexMethod, setIndexMethod] = useState(0);
     
     const [listFilterOrders, setListFilterOrders] = useState([])
 
@@ -71,6 +72,10 @@ export function Market() {
         setListFilterOrders(newListFilterOrders)
     }
 
+    const handleClickSelectMethod = () => {
+        setMarketScreen('select_method')
+    }
+
     const divider = 
         <div className='divider-order'></div>
     
@@ -110,13 +115,14 @@ export function Market() {
                         </div>
                     </div>
                     <div className='row d-flex justify-content-between mt-2 p-0 m-0'>
-                        <div className='filter-item'>
-                            <Selecter 
+                        <div className='filter-item selected-item text-nowrap' onClick={handleClickSelectMethod}>
+                            {/* <Selecter 
                                 list_values={METHOD_PAY_LIST} 
                                 class_name={'select-currency text-nowrap'} 
                                 setIndex={() => {}} 
                                 selected_value={currencyFiat}
-                            />
+                            /> */}
+                            {METHOD_PAY_LIST[indexMethod]}
                         </div>
                         <div className='filter-item'>
                             <Selecter 
@@ -199,6 +205,31 @@ export function Market() {
             }
 
             {marketScreen === 'buy' && <ScreenBuy buyOrder={buyOrder} setMarketScreen={setMarketScreen}/>}
+
+            {marketScreen === 'select_method' && 
+                <div>
+                    <label className='title-select-method'>Выберите способ оплаты</label>
+                    <div className='currency-settings-container mt-3'>
+                        {METHOD_PAY_LIST.map((method, index) => {
+                            return (
+                                <div key={index} >
+                                    <div className='row button-trade-menu' 
+                                        onClick={()=>{
+                                            setIndexMethod(index)
+                                            setMarketScreen('orders')
+                                        }}
+                                    >
+                                        <div className='method-name-col'>
+                                            {method}
+                                        </div>
+                                    </div>
+                                    {index !== METHOD_PAY_LIST.length - 1 && divider}
+                                </div>
+                            )
+                        })}
+                    </div>
+                </div>
+            }
         </div>
     );
 }
