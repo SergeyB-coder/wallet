@@ -71,6 +71,7 @@ export function Deal () {
                 user_from_id: user_id,
                 type_order: deal_screen_info.type_order
             }, (data) => {
+            handleGetDealInfo()
             setShowLoader(false)
             if (data.error) {
                 setError(data.error)
@@ -78,6 +79,7 @@ export function Deal () {
             else {
                 setError('Сделка совершена')
             }
+            
             // handleClose()
         })
     }
@@ -107,9 +109,18 @@ export function Deal () {
 
             <div className='screen-buy-container mt-5'>
                 <label style={{color: 'var(--btn-bg-color)', fontSize: 15}}>Статус</label><br></br>
-                {
-                    deal_screen_info?.status === "request" ? 'Ожидание подтверждения продавца': 
-                    showWait ? 'Дождитесь подтверждения об оплате': 'Продавец подтвердил зявку'}                
+                {   deal_screen_info?.type_order === 's' ?
+                    (
+                        deal_screen_info?.status === "request" ? 'Ожидание подтверждения продавца': 
+                        showWait ? 'Дождитесь подтверждения об оплате': 'Продавец подтвердил зявку'
+                    ):
+                    (
+                        deal_screen_info?.status === 'pay' ?
+                        'Ожидание оплаты':
+                        ''
+                    )
+                    
+                }                
             </div>
 
             <div className='deal-info-container mt-4 mb-3 mx-3'>
@@ -147,7 +158,7 @@ export function Deal () {
 
             </div>
 
-            {showConfirmPay &&
+            {showConfirmPay && deal_screen_info?.type_order === 's' &&
                 <div className='m-4'>
                     <div className='label-deal-fiat'>Переведите фиаты по следующим реквизитам:</div>
                     <div className='label-deal-fiat'>{deal_screen_info.company}</div>
