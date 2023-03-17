@@ -52,7 +52,7 @@ export function OrderItem (props) {
                         Методы оплаты
                     </div>
                     <div className='order-info'>
-                        Raiffeisen
+                        {order?.company}
                     </div>
                 </div>
             </div>
