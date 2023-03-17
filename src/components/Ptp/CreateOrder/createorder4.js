@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useTelegram } from '../../../hooks/useTelegram';
-// import { ButtonNext } from '../../Common/buttonNext';
+import { ButtonNext } from '../../Common/buttonNext';
 import { CURRENCY_FIAT_LIST, CURRENCY_LIST, TIME_LIMITS } from '../../../const/devdata';
 
 import { selectQuantityOrder, selectCurrencyFiat, selectCurrencyOrder, selectPriceType, selectPrice, selectLimitOrder, selectTimeLimit, selectMethodPay, selectTypeOrder } from '../ptpSlice';
@@ -66,7 +66,7 @@ export function CreateOrder4(props) {
                 </div>
 
             </div>
-            {/* <ButtonNext onClick={props.handleClickCreateOrder} text={'Создать объявление'}/> */}
+            <ButtonNext onClick={props.handleClickCreateOrder} text={'Создать объявление'}/>
         </div>
     );
 }
