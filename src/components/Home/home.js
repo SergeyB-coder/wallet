@@ -4,7 +4,7 @@ import { getUserData } from './homeApi';
 import { selectBalance, selectBalanceTRX, selectBalanceTRXv, setAddress, setAddressTRX, setBalance, setBalanceTRX, setBalanceTRXv } from './homeSlice';
 import { MenuButtons } from './menubuttons';
 import { useTelegram } from '../../hooks/useTelegram';
-import { svg_bep1, svg_binance, svg_tron1 } from '../../const/svgs';
+import { svg_bep1, svg_binance, svg_btc, svg_tron1 } from '../../const/svgs';
 import { useState } from 'react';
 import { Transactions } from './transactions';
 // import { useNavigate } from 'react-router-dom';
@@ -116,6 +116,35 @@ export function Home() {
 								<div style={{position: 'absolute', left: '55%', top: '40%'}}>
 									{svg_tron1}
 								</div>
+							</div>
+							<div className='wallet-item-info ps-0'>
+								<div className='token-text' style={{textAlign: 'left'}}>Tether TRC</div>
+								<div className='token-balance-text mt-2'>{Math.round((parseFloat(balance_trx + balance_trx_v))*100)/100} USDT</div>
+							</div>
+							<div className='wallet-item-info2'>
+								<div className='token-text text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance_trx))*100*1.1)/100}</div>
+								<div className='bottom-info text-nowrap mt-2'>+23%</div>
+							</div>
+						</div>
+					</div>
+
+					<div className='wallet-item-container'>
+						<div className='wallet-item row'>
+							<div style={{width: '5px'}}>
+
+							</div>
+							<div className='divider-token'>
+
+							</div>
+						</div>
+					</div>
+					<div className='wallet-item-container'>
+						<div className='wallet-item row' onClick={handleClickTrc}>
+							<div className='wallet-item-svg-container'>
+								{svg_btc}
+								{/* <div style={{position: 'absolute', left: '55%', top: '40%'}}>
+									{svg_tron1}
+								</div> */}
 							</div>
 							<div className='wallet-item-info ps-0'>
 								<div className='token-text' style={{textAlign: 'left'}}>Tether TRC</div>
