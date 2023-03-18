@@ -147,8 +147,8 @@ export function Home() {
 								</div> */}
 							</div>
 							<div className='wallet-item-info ps-0'>
-								<div className='token-text' style={{textAlign: 'left'}}>Tether TRC</div>
-								<div className='token-balance-text mt-2'>{Math.round((parseFloat(balance_trx + balance_trx_v))*100)/100} USDT</div>
+								<div className='token-text' style={{textAlign: 'left'}}>Bitcoin</div>
+								<div className='token-balance-text mt-2'>1 BTC</div>
 							</div>
 							<div className='wallet-item-info2'>
 								<div className='token-text text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance_trx))*100*1.1)/100}</div>
