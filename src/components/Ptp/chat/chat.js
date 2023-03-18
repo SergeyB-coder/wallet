@@ -38,6 +38,7 @@ export function Chat () {
     }
 
     const handleClickSendMessage = () => {
+        if (message.trim() === '') return
         setMessage('')
         socket.emit("new_message", {deal_id: deal_screen_info.deal_id, message: message, user_id: user_id, first_name: first_name});
         addMsgToChat({text: message, first_name: first_name})

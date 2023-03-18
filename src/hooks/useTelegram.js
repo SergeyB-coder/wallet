@@ -6,10 +6,10 @@ export function useTelegram () {
         query_id: tg.initDataUnsafe.query_id,
         user_id: tg.initDataUnsafe.user.id,
         
-        // user_id: '638484379',
+        // user_id: 638484379,
         // first_name: 'Sash',
         // user_id: '2125428302',
-        // user_id: '652065848',
+        // user_id: 652065848,
         // first_name: 'Srg',
         // user_id: '1234567',
         // first_name: 'Super'
