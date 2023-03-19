@@ -77,7 +77,7 @@ export function Market() {
     }
 
     const divider = 
-        <div className='divider-order'></div>
+        <div className='divider-order-market'></div>
     
     useEffect(() => {
         getOrders({user_id: ''}, (data) => {
@@ -154,7 +154,7 @@ export function Market() {
                                 <div className='row mb-3 '>
                                     <div className='order-price'>
                                         <div className='order-price mt-2'>{order.price}
-                                             {order.currency_fiat_id === '1' ? 'RUB': 'USD'}
+                                             {order.currency_fiat_id === 1 ? 'RUB': 'USD'}
                                         </div>
                                         <div className='order-label'>{order.currency_id === 1 ? 'Token USDT BEP20': 'Token USDT TRC'}</div>
                                     </div>

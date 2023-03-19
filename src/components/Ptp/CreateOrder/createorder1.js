@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CURRENCY_FIAT_LIST, CURRENCY_LIST, PRICE_TYPES, TIME_LIMITS } from '../../../const/devdata';
 import { Selecter } from '../../Common/selecter';
 import { selectBalance, selectBalanceTRX, selectBalanceTRXv } from '../../Home/homeSlice';
-// import { ButtonNext } from '../../Common/buttonNext';
+import { ButtonNext } from '../../Common/buttonNext';
 import './style.css'
 
 import { selectCurrencyFiat, selectCurrencyOrder, selectPriceType, selectLimitOrder, selectPercentPrice, selectPrice, selectPriceMarket, selectQuantityOrder, selectTimeLimit, selectTypeOrder, setCurrencyFiat, setCurrencyOrder, setPriceType, setLimitOrder, setPercentPrice, setPrice, setQuantityOrder, setTimeLimit, setTypeOrder, selectRubDollar } from '../ptpSlice';
@@ -257,7 +257,7 @@ export function CreateOrder1(props) {
                 {time_limit}
             </div>
             
-            {/* <ButtonNext onClick={() => {props.setScreen('createorder2')}}/> */}
+            <ButtonNext onClick={() => {props.setScreen('createorder2')}}/>
         </div>
     );
 }

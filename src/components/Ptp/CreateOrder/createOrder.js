@@ -7,7 +7,8 @@ import { CreateOrder2 } from './createorder2';
 import { CreateOrder4 } from './createorder4';
 import { CreateOrder5 } from './createorder5';
 import { createOrder, parsePrice } from '../ptpApi';
-import { selectCurrencyFiat, selectCurrencyOrder, selectLimitOrder, selectMethodPay, selectPercentPrice, selectPrice, selectPriceType, selectQuantityOrder, selectTypeOrder, setPriceMarket, setPriceMarketTRX, setRubDollar } from '../ptpSlice';
+import { selectComment, selectCurrencyFiat, selectCurrencyOrder, selectLimitOrder, selectMethodPay, selectPercentPrice, selectPrice, selectPriceType, selectQuantityOrder, selectTypeOrder, setPriceMarket, setPriceMarketTRX, setRubDollar } from '../ptpSlice';
+import { CreateOrder3 } from './createorder3';
 
 
 export function CreateOrder() {
@@ -24,6 +25,7 @@ export function CreateOrder() {
     const method_pay = useSelector(selectMethodPay)
     const type_order = useSelector(selectTypeOrder)
     const price_type = useSelector(selectPriceType)
+    const comment = useSelector(selectComment)
 
     const [screen, setScreen] = useState('createorder1') 
     // const [test, setTest] = useState('') 
@@ -91,6 +93,7 @@ export function CreateOrder() {
             method_pay_id: method_pay?.id,
             type: type_order,
             type_price_id: price_type,
+            comment: comment,
         }, () => {
             setScreen('createorder5')
         })
@@ -127,6 +130,7 @@ export function CreateOrder() {
         <div className={screen === 'createorder5' ? 'p-4 ptp-container': 'p-4'} >
             {screen === 'createorder1' && <CreateOrder1 setScreen={setScreen}/>}
             {screen === 'createorder2' && <CreateOrder2 setScreen={setScreen}/>}
+            {screen === 'createorder3' && <CreateOrder3 setScreen={setScreen}/>}
             {screen === 'createorder4' && <CreateOrder4 setScreen={setScreen} handleClickCreateOrder={handleClickCreateOrder}/>}
             {screen === 'createorder5' && <CreateOrder5 setScreen={setScreen}/>}
         </div>

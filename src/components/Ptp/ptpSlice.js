@@ -14,6 +14,7 @@ const initialState = {
     time_limit: 1,
     method_pay: null,
     rub_dollar: 0,
+    comment: ''
 };
 
 
@@ -21,6 +22,10 @@ export const ptpSlice = createSlice({
     name: 'ptp',
     initialState,
     reducers: {
+        setComment: (state, action) => {
+            state.comment = action.payload;
+        },
+
         setRubDollar: (state, action) => {
             state.rub_dollar = action.payload;
         },
@@ -75,7 +80,7 @@ export const ptpSlice = createSlice({
     },
 });
 
-export const {setRubDollar, setPriceMarket, setPriceMarketTRX, setTypeOrder, setMethodPay, setTimeLimit, setCurrencyOrder, setCurrencyFiat, setPercentPrice, setQuantityOrder, setLimitOrder, setPriceType, setPrice } = ptpSlice.actions;
+export const {setComment, setRubDollar, setPriceMarket, setPriceMarketTRX, setTypeOrder, setMethodPay, setTimeLimit, setCurrencyOrder, setCurrencyFiat, setPercentPrice, setQuantityOrder, setLimitOrder, setPriceType, setPrice } = ptpSlice.actions;
 
 export const selectCurrencyOrder = (state) => state.ptp.currency_order;
 export const selectCurrencyFiat = (state) => state.ptp.currency_fiat;
@@ -90,6 +95,7 @@ export const selectTimeLimit = (state) => state.ptp.time_limit;
 export const selectMethodPay = (state) => state.ptp.method_pay;
 export const selectTypeOrder = (state) => state.ptp.type_order;
 export const selectRubDollar = (state) => state.ptp.rub_dollar;
+export const selectComment = (state) => state.ptp.comment;
 
 
 export default ptpSlice.reducer;

@@ -16,6 +16,22 @@
     width: 50%;
 }
 
+.comment-input {
+    background-color: var(--item-bg);
+    caret-color: var(--text-mini);
+    color: var(--text-light-color);
+    /* color: 'red'; */
+    border: none;
+    outline: none;
+    text-align: left;
+    font-size: 15px;
+    width: 100%;
+    padding: 7px;
+    border-radius: 10px;
+    /* margin: 10px; */
+    resize: none;
+}
+
 .currency-settings-item-col2m {
     color: var(--text-light-color);
     display: flex;
