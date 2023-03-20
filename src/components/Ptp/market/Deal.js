@@ -36,10 +36,7 @@ export function Deal () {
                 navigate('/completedeal', {replace: true})
             }
             else {
-                dispatch(setDealScreenInfo(
-                    data.deal
-                ))
-    
+                dispatch(setDealScreenInfo(data.deal))    
                 if (data.deal.status === "pay") {
                     setShowConfirmPay(true)
                 }
@@ -66,7 +63,9 @@ export function Deal () {
             {
                 deal_id: deal_screen_info.deal_id, 
                 order_id: deal_screen_info.order_id, 
-                user_to_id: deal_screen_info.id_to ? deal_screen_info.id_to: deal_screen_info.buyer_id,
+                user_to_id: deal_screen_info.type_order === 's' ?
+                    (deal_screen_info.id_to ? deal_screen_info.id_to: deal_screen_info.buyer_id):
+                    deal_screen_info.id_from,
                 user_from: first_name,
                 user_from_id: user_id,
                 type_order: deal_screen_info.type_order
@@ -116,8 +115,9 @@ export function Deal () {
                     ):
                     (
                         deal_screen_info?.status === "request" ? 'Ожидание подтверждения покупателя': 
-                        deal_screen_info?.status === 'pay' ?
-                        'Ожидание оплаты':
+                        deal_screen_info?.status === 'pay' ? 'Ожидание оплаты':
+                        deal_screen_info?.status === 'confirm' ? 'Получатель подтвердил оплату':
+                        deal_screen_info?.status === 'end' ? 'Сделка совершена':
                         ''
                     )
                     
