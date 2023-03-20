@@ -35,3 +35,4 @@ export function parsePrice(pars, callback) {
             return callback(data)
         });
 }
+

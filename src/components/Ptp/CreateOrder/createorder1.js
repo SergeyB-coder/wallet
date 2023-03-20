@@ -189,7 +189,7 @@ export function CreateOrder1(props) {
 
     const time_limit = 
         <div className='row button-currency-settings'>
-            <div className='currency-settings-item-col1'>
+            <div className='currency-settings-item-col1 text-nowrap'>
                 Оплатить в течение
             </div>
             <div className='currency-settings-item-col2 '>

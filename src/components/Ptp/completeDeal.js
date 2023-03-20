@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../hooks/useTelegram';
 import { ButtonNext } from '../Common/buttonNext';
-import { sendAcceptDeal, sendConfirm, sendEndDeal } from './market/marketApi';
+import { sendAcceptDeal, sendCancelDeal, sendConfirm, sendEndDeal } from './market/marketApi';
 import { selectDealInfo, setDealInfo } from './market/marketSlice';
 
 export function CompleteDeal (props) {
@@ -19,6 +19,7 @@ export function CompleteDeal (props) {
     const [showLoader, setShowLoader] = useState(false)
     const [showWait, setShowWait] = useState(false)
     const [error, setError] = useState('')
+    const [isCancelDeal, setIsCancelDeal] = useState(false)
 
     const handleClickSale = () => {
         setShowLoader(true)
@@ -42,7 +43,8 @@ export function CompleteDeal (props) {
                 order_id: deal_info.order_id, 
                 user_to_id: deal_info.id_to ? deal_info.id_to: deal_info.buyer_id,
                 user_from: first_name,
-                user_from_id: user_id
+                user_from_id: user_id,
+                type_order: deal_info.type_order
             }, (data) => {
             setShowLoader(false)
             if (data.error) {
@@ -73,6 +75,14 @@ export function CompleteDeal (props) {
             // setShowConfirmPay(false)
             setShowWait(true)
         })
+    }
+
+    
+    const handleClickCancelDeal = () => {
+        sendCancelDeal({deal_id: deal_info.deal_id, saler_id: deal_info.buyer_id}, (data) => {
+            console.log(data)
+        })
+        setIsCancelDeal(true)
     }
 
     const backScreen = (() => {
@@ -124,11 +134,11 @@ export function CompleteDeal (props) {
                 </div>
             
             
-            {error !== 'Транзакция выполнена' &&
+            {error !== 'Транзакция выполнена' && 
                 showLoader ? 
                 <div className="loader"></div>:
                 <>
-                    {deal_info.status !== 'pay' &&
+                    {deal_info.status !== 'pay' && !isCancelDeal &&
                         <ButtonNext 
                             text={
                                 deal_info.status === 'request' ? 'Принять запрос': 
@@ -138,6 +148,17 @@ export function CompleteDeal (props) {
                         />
                     }
                 </>
+            }
+
+            {
+                deal_info.status === 'request' && !isCancelDeal &&
+                <div className='button-cancel-deal mt-3' onClick={handleClickCancelDeal}>
+                    Отказаться от сделки
+                </div>
+            }
+
+            {
+                isCancelDeal && <div className='mini-info'>Сделка отменена</div>
             }
 
             {deal_info.status === 'pay' && !showWait &&

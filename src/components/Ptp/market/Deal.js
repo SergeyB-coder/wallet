@@ -115,6 +115,7 @@ export function Deal () {
                         showWait ? 'Дождитесь подтверждения об оплате': 'Продавец подтвердил зявку'
                     ):
                     (
+                        deal_screen_info?.status === "request" ? 'Ожидание подтверждения покупателя': 
                         deal_screen_info?.status === 'pay' ?
                         'Ожидание оплаты':
                         ''
@@ -139,7 +140,7 @@ export function Deal () {
                         Цена
                     </div>
                     <div className='buy-info text-nowrap'>
-                        {deal_screen_info?.price} {deal_screen_info?.fiat === '1' ? 'RUB': 'USD'}
+                        {deal_screen_info?.price} {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
                     </div>
                 </div>
 
@@ -148,7 +149,7 @@ export function Deal () {
                         Сумма покупки
                     </div>
                     <div className='buy-info text-nowrap'>
-                        {deal_screen_info?.price * deal_screen_info?.quantity} {deal_screen_info?.fiat === '1' ? 'RUB': 'USD'}
+                        {deal_screen_info?.price * deal_screen_info?.quantity} {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
                     </div>
                 </div>
 

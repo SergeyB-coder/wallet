@@ -114,6 +114,24 @@ export function sendEndDeal(pars, callback) {
         });
 }
 
+export function sendCancelDeal(pars, callback) {
+    fetch(url + '/canceldeal', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            //   mode: 'no-cors',
+            body: JSON.stringify(pars)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('data enddeal', data)
+            
+            return callback(data)
+        });
+}
+
 export function getDealInfo(pars, callback) {
     fetch(url + '/getdealinfo', {
             method: 'POST',

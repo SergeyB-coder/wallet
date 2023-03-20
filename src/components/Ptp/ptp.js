@@ -64,6 +64,7 @@ export function Ptp (props) {
 							{
 								deal.status === 'request' ? 'Запрос':
 								deal.status === 'pay' ? 'Ожидание оплаты':
+                                deal.status === 'cancel' ? 'Отменена':
 								'Завершена'
 							}
 						</div>
