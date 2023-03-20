@@ -72,8 +72,12 @@ export function CreateOrder() {
                 setScreen('createorder1')
                 break;
 
-            case 'createorder4':
+            case 'createorder3':
                 setScreen('createorder2')
+                break;
+
+            case 'createorder4':
+                setScreen('createorder3')
                 break;
             
             default:
