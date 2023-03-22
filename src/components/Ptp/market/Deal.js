@@ -149,7 +149,7 @@ export function Deal () {
                         Сумма покупки
                     </div>
                     <div className='buy-info text-nowrap'>
-                        {deal_screen_info?.price * deal_screen_info?.quantity} {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
+                        {Math.round(deal_screen_info?.price * deal_screen_info?.quantity*1000)/1000} {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
                     </div>
                 </div>
 

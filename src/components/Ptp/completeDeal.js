@@ -111,7 +111,7 @@ export function CompleteDeal (props) {
                         Цена
                     </div>
                     <div className='sale-label-r text-nowrap'>
-                        {deal_info?.price} {deal_info?.fiat === '1' ? 'RUB': 'USD'}
+                        {deal_info?.price} {deal_info?.fiat === 1 ? 'RUB': 'USD'}
                     </div>
                 </div>
 
