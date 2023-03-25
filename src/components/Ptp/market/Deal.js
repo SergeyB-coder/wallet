@@ -59,13 +59,14 @@ export function Deal () {
 
     const handleClickEndDeal = () => {
         setShowLoader(true)
+        console.log('deal_screen_info', deal_screen_info)
         sendEndDeal(
             {
                 deal_id: deal_screen_info.deal_id, 
                 order_id: deal_screen_info.order_id, 
                 user_to_id: deal_screen_info.type_order === 's' ?
                     (deal_screen_info.id_to ? deal_screen_info.id_to: deal_screen_info.buyer_id):
-                    deal_screen_info.id_from,
+                    (deal_screen_info.id_from ? deal_screen_info.id_from: deal_screen_info.saler_id),
                 user_from: first_name,
                 user_from_id: user_id,
                 type_order: deal_screen_info.type_order

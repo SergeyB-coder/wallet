@@ -49,6 +49,22 @@ export function getMethodInfo(pars, callback) {
         });
 }
 
+export function getCompaniesPay(pars, callback) {
+    fetch(url + '/companiespay', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(pars)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('methodinfo data', data)
+            return callback(data)
+        });
+}
+
 export function updateMethodPay(pars, callback) {
     fetch(url + '/updatemethod', {
             method: 'POST',

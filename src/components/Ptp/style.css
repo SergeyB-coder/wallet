@@ -24,6 +24,9 @@
     --text-label-color: #B4B4B4;
     --text-color: #FFFFFF;
     --text-green: #86EFAC;
+
+    --bg-container-color: #333333;
+    --divider-color: rgba(151, 151, 151, 0.8);
 }
 
 .sale-label-l {
@@ -122,7 +125,7 @@ select {
     margin-top: 1vh;
     margin-bottom: 1vh;
     height: 0.5px;
-    background-color: var(--bg-color);
+    background-color: var(--divider-color);
 }
 
 .divider-test-order {

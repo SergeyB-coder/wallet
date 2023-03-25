@@ -9,6 +9,7 @@ import { CreateOrder5 } from './createorder5';
 import { createOrder, parsePrice } from '../ptpApi';
 import { selectComment, selectCurrencyFiat, selectCurrencyOrder, selectLimitOrder, selectMethodPay, selectPercentPrice, selectPrice, selectPriceType, selectQuantityOrder, selectTypeOrder, setPriceMarket, setPriceMarketTRX, setRubDollar } from '../ptpSlice';
 import { CreateOrder3 } from './createorder3';
+import { selectMethodsPay } from '../settings_pay/settingsPaySlice';
 
 
 export function CreateOrder() {
@@ -26,8 +27,10 @@ export function CreateOrder() {
     const type_order = useSelector(selectTypeOrder)
     const price_type = useSelector(selectPriceType)
     const comment = useSelector(selectComment)
+    const list_methods = useSelector(selectMethodsPay)
 
     const [screen, setScreen] = useState('createorder1') 
+    const [listCheckedMethods, setListCheckedMethods] = useState([]);
     // const [test, setTest] = useState('') 
 
     
@@ -40,20 +43,12 @@ export function CreateOrder() {
 
             case 'createorder2':
                 tg.MainButton.hide()
+                
                 setScreen('createorder4')
                 break;
 
             case 'createorder4':
-                createOrder({
-                    user_id: user_id,
-                    percent_price: percent_price,
-                    quantity_order: quantity_order,
-                    limit_order: limit_order,
-                    currency_fiat: currency_fiat,
-                    currency_order: currency_order
-                }, () => {
-                    setScreen('createorder5')
-                })
+                handleClickCreateOrder()
                 break;
 
             default:
@@ -86,6 +81,14 @@ export function CreateOrder() {
     }
 
     const handleClickCreateOrder = () => {
+        console.log('handleClickCreateOrder', list_methods, listCheckedMethods)
+        let list_method_id = []
+        for (let ind in list_methods) {
+            if (listCheckedMethods[ind]) {
+                list_method_id.push(list_methods[ind].id)
+            }
+        }
+
         createOrder({
             user_id: user_id,
             percent_price: percent_price,
@@ -98,6 +101,7 @@ export function CreateOrder() {
             type: type_order,
             type_price_id: price_type,
             comment: comment,
+            list_method_id: list_method_id,
         }, () => {
             setScreen('createorder5')
         })
@@ -133,7 +137,7 @@ export function CreateOrder() {
     return (
         <div className={screen === 'createorder5' ? 'p-4 ptp-container': 'p-4'} >
             {screen === 'createorder1' && <CreateOrder1 setScreen={setScreen}/>}
-            {screen === 'createorder2' && <CreateOrder2 setScreen={setScreen}/>}
+            {screen === 'createorder2' && <CreateOrder2 setScreen={setScreen} listCheckedMethods={listCheckedMethods} setListCheckedMethods={setListCheckedMethods}/>}
             {screen === 'createorder3' && <CreateOrder3 setScreen={setScreen}/>}
             {screen === 'createorder4' && <CreateOrder4 setScreen={setScreen} handleClickCreateOrder={handleClickCreateOrder}/>}
             {screen === 'createorder5' && <CreateOrder5 setScreen={setScreen}/>}

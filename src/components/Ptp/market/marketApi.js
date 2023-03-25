@@ -60,6 +60,25 @@ export function getOrderDeals(pars, callback) {
         });
 }
 
+
+export function getOrderMethods(pars, callback) {
+    fetch(url + '/getordermethods', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            //   mode: 'no-cors',
+            body: JSON.stringify(pars)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('getordermethods data', data)
+            
+            return callback(data)
+        });
+}
+
 export function sendBuy(pars, callback) {
     fetch(url + '/sendbuy', {
             method: 'POST',

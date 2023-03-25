@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../../hooks/useTelegram';
 import { ButtonNext } from '../../Common/buttonNext';
-import { sendBuy } from './marketApi';
+import { getOrderMethods, sendBuy } from './marketApi';
 import { selectQuantityBuy, setDealScreenInfo, setQuantityBuy } from './marketSlice';
 
 export function ScreenBuy (props) {
@@ -11,6 +12,9 @@ export function ScreenBuy (props) {
     const {tg, user_id, first_name} = useTelegram()
     const dispatch = useDispatch()
     const quantity_buy = useSelector(selectQuantityBuy)
+
+    const [showMethodsPay, setShowMethodsPay] = useState(false);
+    const [listMethodsPay, setListMethodsPay] = useState([]);
 
     const is_buy = props.buyOrder.type === 'b'
 
@@ -44,15 +48,31 @@ export function ScreenBuy (props) {
                     saler: props?.buyOrder?.first_name, 
                     buyer: first_name,
                     type_order: props?.buyOrder.type,
+                    id_from: user_id
                 }
             ))
             navigate('/deal/0', {replace: true})
         })
     }
 
+    const handleClickMethodsPay = () => {
+        setShowMethodsPay(true)
+    }
+
     const nextScreen = () => {
         handleClickBuy()
     }
+
+    const backScreen = () => {
+        if (showMethodsPay) setShowMethodsPay(false)
+    }
+
+    useEffect(() => {
+        getOrderMethods({order_id: props.buyOrder.id}, (data) => {
+            setListMethodsPay(data.order_methods)
+            console.log('getOrderMethods', data)
+        })
+    }, [props.buyOrder.id]);
 
     // useEffect(() => {
     //     let inp = document.getElementById('quantity')
@@ -64,12 +84,29 @@ export function ScreenBuy (props) {
         }, )
 
     useEffect(() => {
+        tg.onEvent('backButtonClicked', backScreen)
+            return () => {tg.offEvent('backButtonClicked', backScreen)}
+        }, )
+
+    useEffect(() => {
         tg.MainButton.show()
         tg.MainButton.setText('Начать сделку')
     }, [tg.MainButton]);
 
     return (
         <>
+        {   showMethodsPay ?
+            <div>
+                <div style={{height: '43vh', borderBottomRightRadius: 0, borderBottomLeftRadius: 0}} className='container-list-companies overflow-auto mb-3'>
+                    {listMethodsPay.map ((method, index) => {
+                        return (
+                                <div key={method.id} className='container-company row d-flex align-items-center'>
+                                    <div className='text-company'>{method.company_name}</div>
+                                </div>
+                        )
+                    })}
+                </div>
+            </div>:
             <div className='screen-buy-container mt-5'>
                 <div className='title-buy'>{is_buy ? 'Продажа': 'Покупка у'} {props.buyOrder.first_name}</div>
 
@@ -90,7 +127,7 @@ export function ScreenBuy (props) {
                 <div style={{color: 'var(--text-mini)', fontSize: 14, marginTop: 30}}>Цена за 1 USDT {props.buyOrder.currency_id === 1 ? 'BEP20': 'TRC20'} = {props?.buyOrder?.price}</div>
 
                 <div className='methods-pay pt-3 pb-3 m-2 mt-5'>
-                    <div className='row mb-3'>
+                    <div className='row mb-3' onClick={handleClickMethodsPay}>
                         <div className='buy-label'>
                             Методы оплаты
                         </div>
@@ -126,6 +163,7 @@ export function ScreenBuy (props) {
                 </div>
                 
             </div>
+        }
         </>
       );
 }

@@ -1,11 +1,18 @@
 .method-text {
     color: var(--text-light-color);
+    /* color: #2B2B2B */
+}
+
+.method-text-button {
+    /* color: var(--text-light-color); */
+    color: #2B2B2B
 }
 
 .button-new-method {
     padding: 7px;
-    background-color: var(--item-bg);
-    border-radius: 12px;
+    /* background-color: var(--item-bg); */
+    background-color: #86EFAC;
+    border-radius: 4px;
 }
 
 .container-method {
@@ -13,12 +20,47 @@
     margin-top: 10px;
     margin-bottom: 10px;
     background-color: var(--item-bg);
-    border-radius: 12px;
+    border-radius: 10px;
+}
+
+.container-company {
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    /* margin-top: 10px; */
+    /* margin-bottom: 20px; */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.text-company {
+    text-align: left;
+    width: 90%;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    /* identical to box height */
+
+    letter-spacing: 0.05em;
+
+    color: #FFFFFF;
+}
+
+.container-list-companies {
+    background-color: var(--bg-container-color);
+    border-radius: 10px;
 }
 
 .method-input {
-    background-color: var(--item-bg);
+    background: rgba(255, 255, 255, 0.1);
+    /* shadow/sm */
+
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
     caret-color: var(--text-mini);
+
     color: var(--text-light-color);
     /* color: 'red'; */
     border: none;
@@ -27,10 +69,66 @@
     font-size: 15px;
     width: 100%;
     padding: 7px;
-    border-radius: 10px;
     margin-bottom: 10px;
+}
+
+.method-input::placeholder {
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    /* identical to box height, or 133% */
+
+
+    color: rgba(255, 255, 255, 0.5)
 }
 
 .container-new-method {
     color: var(--text-light-color)
+}
+
+.container-method-info {
+    background: #333333;
+    opacity: 0.5;
+    border-radius: 10px;
+    /* margin-left: 20px;
+    margin-right: 20px; */
+}
+
+.method-pay-label {
+    text-align: left;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 10.5px;
+    line-height: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.method-pay-text {
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    /* identical to box height, or 133% */
+
+
+    color: rgba(255, 255, 255, 0.5);
+
+}
+
+.method-pay-title {
+    text-align: left;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 10.5px;
+    line-height: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase
 }

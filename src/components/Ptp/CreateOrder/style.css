@@ -12,6 +12,75 @@
     border-radius: 10px;
 }
 
+.method-order-text1 {
+    text-align: left;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 11px;
+    line-height: 13px;
+    /* identical to box height */
+
+    letter-spacing: 0.085em;
+    text-transform: uppercase;
+
+    color: #FFFFFF;
+}
+
+.method-switch {
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 30px;
+    width: 60px;
+    border: 1px solid #B1B1B1;
+    border-radius: 21px;
+}
+
+.method-switch-circle {
+    width: 23px;
+    height: 23px;
+
+    background: #86EFAC;
+    border-radius: 100px;
+}
+
+.method-switch-off {
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 30px;
+    width: 60px;
+    /* border: 1px solid #B1B1B1; */
+    border-radius: 21px;
+    background: #3D3D3F;
+}
+
+.method-switch-off-circle {
+    width: 23px;
+    height: 23px;
+
+    background: #8E8E93;
+    border-radius: 100px;
+}
+
+.method-order-text2 {
+    text-align: left;
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    /* identical to box height */
+
+    letter-spacing: 0.085em;
+    text-transform: uppercase;
+
+    color: #9C9595;
+}
+
 .col-50 {
     width: 50%;
 }
