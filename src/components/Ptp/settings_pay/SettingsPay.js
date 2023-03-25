@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../../hooks/useTelegram';
 import { getCompaniesPay, getMethodInfo, getUserMethodsPay, newMethodPay, updateMethodPay } from './settingsPayApi';
-import { selectBank, selectCard, selectCompaniesPay, selectInfo, selectMethodsPay, selectNameMethod, setBank, setCard, setCompaniesPay, setInfo, setMethodsPay, setNameMethod } from './settingsPaySlice';
+import {  selectCard, selectCompaniesPay, selectInfo, selectMethodsPay, selectNameMethod, setBank, setCard, setCompaniesPay, setInfo, setMethodsPay, setNameMethod } from './settingsPaySlice';
 
 import './style.css'
 
