@@ -4,7 +4,7 @@ import { useTelegram } from '../../../hooks/useTelegram';
 import { setMethodPay } from '../ptpSlice';
 import { getCompaniesPay, getUserMethodsPay, newMethodPay } from '../settings_pay/settingsPayApi';
 import { selectCard, selectCompaniesPay, selectMethodsPay, setCard, setCompaniesPay, setMethodsPay } from '../settings_pay/settingsPaySlice';
-import { ButtonNext } from '../../Common/buttonNext';
+// import { ButtonNext } from '../../Common/buttonNext';
 import { useState } from 'react';
 
 export function CreateOrder2(props) {
@@ -182,9 +182,8 @@ export function CreateOrder2(props) {
                     })}
                 </div>
                 
-                <ButtonNext onClick={() => {
-                    console.log('list_methods', list_methods)
-                    props.setScreen('createorder3')}}/>
+                {/* <ButtonNext onClick={() => {
+                    props.setScreen('createorder3')}}/> */}
             </div>
         }
         </>

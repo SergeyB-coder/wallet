@@ -42,6 +42,11 @@ export function CreateOrder() {
                 break;
 
             case 'createorder2':
+                
+                setScreen('createorder3')
+                break;
+
+            case 'createorder3':
                 tg.MainButton.hide()
                 
                 setScreen('createorder4')

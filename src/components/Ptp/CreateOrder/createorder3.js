@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import TextareaAutosize from 'react-textarea-autosize';
 
 // import { useTelegram } from '../../../hooks/useTelegram';
-import { ButtonNext } from '../../Common/buttonNext';
+// import { ButtonNext } from '../../Common/buttonNext';
 import { selectComment, setComment } from '../ptpSlice';
 
 export function CreateOrder3(props) {
@@ -25,7 +25,7 @@ export function CreateOrder3(props) {
 
             
             <TextareaAutosize  className='comment-input mt-3' type='text' onChange={handleChangeComment} value={comment}/>
-            <ButtonNext onClick={() => props.setScreen('createorder4')}/>
+            {/* <ButtonNext onClick={() => props.setScreen('createorder4')}/> */}
         </div>
     );
 }
