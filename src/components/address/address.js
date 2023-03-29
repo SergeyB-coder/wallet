@@ -63,6 +63,7 @@ export function Address (props) {
     }
 
     const handleClickAddresItem = () => {
+        
         const from1 = fromLabel2
         const from2 = fromLabel1
         setFromLabel1(from1)
@@ -72,18 +73,32 @@ export function Address (props) {
         setAddress1(a2)
         setAddress2(a1)
         setShowListAddresses(false)
+
+        // var e = document.getElementById("q");
+        // var child = e.firstElementChild;
+        // if (child) e.removeChild(child);
+        // qr.toCanvas(
+        //     {
+        //         to: address,
+        //         gas: 21000,
+        //     }, {
+        //         selector: '#q',
+        //     }
+        // )
     }
 
     useEffect(() => {
         var e = document.getElementById("q");
         var child = e.firstElementChild;
         if (child) e.removeChild(child);
-        qr.toCanvas({
-            to: address,
-            gas: 21000,
-          }, {
-            selector: '#q',
-          })
+        qr.toCanvas(
+            {
+                to: address,
+                gas: 21000,
+            }, {
+                selector: '#q',
+            }
+        )
     }, );
 
     useEffect(() => {

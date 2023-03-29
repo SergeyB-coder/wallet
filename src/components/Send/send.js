@@ -150,7 +150,7 @@ export function Send (props) {
             {stepSend === 'address' &&
                 (
                     <>
-                        {showQrScanner && <QrReader setAddressTo={setAddressTo}/>}
+                        {showQrScanner && <QrReader setAddressTo={setAddressTo} setShowQrScanner={setShowQrScanner}/>}
                         <div className='m-3'>
 
                         
