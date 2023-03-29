@@ -169,7 +169,8 @@ export function Address (props) {
                     
 
                     <button className='address-copy-button' onClick={() => {
-                            navigator.clipboard.writeText(address)
+                            const copy_address = fromLabel1 !== 'USDT TRC20' ? address: address_trx
+                            navigator.clipboard.writeText(copy_address)
                             setShowMessage(true)
                             setTimeout(() => {setShowMessage(false)}, 1000)
                         }}
