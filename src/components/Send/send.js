@@ -8,7 +8,7 @@ import { ButtonNext } from '../Common/buttonNext';
 import { sendTo } from './sendApi';
 
 import './style.css'
-import { QrReader, QrScanner } from './qrscanner';
+import { QrReader } from './qrscanner';
 
 export function Send (props) {
     const [date, setDate] = useState(new Date())
