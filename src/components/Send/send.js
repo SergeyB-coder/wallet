@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { svg_address_to, svg_bep, svg_ok, svg_tron, svg_wait } from '../../const/svgs';
 import { useTelegram } from '../../hooks/useTelegram';
-import { selectAddress, selectAddressTRX } from '../Home/homeSlice';
+import { selectAddress, selectAddressTRX, selectBalance, selectBalanceTRX } from '../Home/homeSlice';
 import { ButtonNext } from '../Common/buttonNext';
 import { sendTo } from './sendApi';
 
@@ -16,6 +16,9 @@ export function Send (props) {
     const navigate = useNavigate()
     const address = useSelector(selectAddress)
     const address_trx = useSelector(selectAddressTRX)
+
+    const balance = useSelector(selectBalance)
+	const balance_trx = useSelector(selectBalanceTRX)
 
     const [stepSend, setStepSend] = useState('address') // address, confirm, wait, finish 
     // const [showLoader, setShowLoader] = useState(false)
@@ -44,6 +47,7 @@ export function Send (props) {
     }
 
     const handleClickAddresItem = () => {
+        setQuantity(0)
         const from1 = fromLabel2
         const from2 = fromLabel1
         setFromLabel1(from1)
@@ -227,7 +231,11 @@ export function Send (props) {
                                 </div>
 
                                 <div className='address-item-col2'>
-                                    <div style={{color: 'var(--text-mini)'}}>Max</div>
+                                    <div style={{color: 'var(--text-mini)'}}
+                                        onClick={() => {fromLabel1 === 'USDT TRC20' ? setQuantity(balance_trx): setQuantity(balance)}}
+                                    >
+                                        Max
+                                    </div>
                                 </div>
 
                             </div>
