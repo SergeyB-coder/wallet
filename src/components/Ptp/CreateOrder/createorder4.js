@@ -4,7 +4,7 @@ import { useTelegram } from '../../../hooks/useTelegram';
 import { ButtonNext } from '../../Common/buttonNext';
 import { CURRENCY_FIAT_LIST, CURRENCY_LIST, TIME_LIMITS } from '../../../const/devdata';
 
-import { selectQuantityOrder, selectCurrencyFiat, selectCurrencyOrder, selectPriceType, selectPrice, selectLimitOrder, selectTimeLimit, selectMethodPay, selectTypeOrder } from '../ptpSlice';
+import { selectQuantityOrder, selectCurrencyFiat, selectCurrencyOrder, selectPriceType, selectPrice, selectLimitOrder, selectTimeLimit, selectTypeOrder } from '../ptpSlice';
 import { selectMethodsPay } from '../settings_pay/settingsPaySlice';
 
 export function CreateOrder4(props) {

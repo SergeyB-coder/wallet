@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './style.css'
 
 import QRCode from 'qrcode'
-import EthereumQRPlugin from 'ethereum-qr-code';
+// import EthereumQRPlugin from 'ethereum-qr-code';
 import { useSelector } from 'react-redux';
 import { selectAddress, selectAddressTRX } from '../Home/homeSlice';
 import { useTelegram } from '../../hooks/useTelegram';
@@ -33,7 +33,7 @@ export function Address (props) {
     const [showMessage, setShowMessage] = useState(false)
     
       
-    const qr = new EthereumQRPlugin()
+    // const qr = new EthereumQRPlugin()
 
     const backScreen = () => {
         navigate('/home', {replace: true})
