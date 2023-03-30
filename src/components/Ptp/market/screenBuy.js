@@ -15,6 +15,7 @@ export function ScreenBuy (props) {
 
     const [showMethodsPay, setShowMethodsPay] = useState(false);
     const [listMethodsPay, setListMethodsPay] = useState([]);
+    const [indexMethodPay, setIndexMethodPay] = useState(0);
 
     const is_buy = props.buyOrder.type === 'b'
 
@@ -34,6 +35,7 @@ export function ScreenBuy (props) {
             company: props?.buyOrder.company,
             card_number: props?.buyOrder.card_number,
             type_order: props?.buyOrder.type,
+            method_pay_id: listMethodsPay[indexMethodPay].id
         }, (data) => {
             dispatch(setDealScreenInfo(
                 {
@@ -57,6 +59,11 @@ export function ScreenBuy (props) {
 
     const handleClickMethodsPay = () => {
         setShowMethodsPay(true)
+    }
+
+    function handleClickMethodPay(index) {
+        setIndexMethodPay(index)
+        setShowMethodsPay(false)
     }
 
     const nextScreen = () => {
@@ -100,7 +107,9 @@ export function ScreenBuy (props) {
                 <div style={{height: '43vh', borderBottomRightRadius: 0, borderBottomLeftRadius: 0}} className='container-list-companies overflow-auto mb-3'>
                     {listMethodsPay.map ((method, index) => {
                         return (
-                                <div key={method.id} className='container-company row d-flex align-items-center'>
+                                <div key={method.id} className='container-company row d-flex align-items-center'
+                                    onClick={()=>handleClickMethodPay(index)}
+                                >
                                     <div className='text-company'>{method.company_name}</div>
                                 </div>
                         )
@@ -132,7 +141,7 @@ export function ScreenBuy (props) {
                             Методы оплаты
                         </div>
                         <div className='buy-info'>
-                            {props.buyOrder.company}
+                            {listMethodsPay[indexMethodPay]?.company_name || ''}
                         </div>
                     </div>
                     <div className='divider-order'></div>

@@ -1,12 +1,16 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useSelector } from 'react-redux';
 import { useTelegram } from '../../../hooks/useTelegram';
 import { ButtonNext } from '../../Common/buttonNext';
 import { CURRENCY_FIAT_LIST, CURRENCY_LIST, TIME_LIMITS } from '../../../const/devdata';
 
 import { selectQuantityOrder, selectCurrencyFiat, selectCurrencyOrder, selectPriceType, selectPrice, selectLimitOrder, selectTimeLimit, selectMethodPay, selectTypeOrder } from '../ptpSlice';
+import { selectMethodsPay } from '../settings_pay/settingsPaySlice';
 
 export function CreateOrder4(props) {
+    const listCheckedMethods = props.listCheckedMethods
+
+    const [methodPay, setMethodPay] = useState('');
     const {first_name} = useTelegram()
     // const percent_price = useSelector(selectPercentPrice)
     const quantity_order = useSelector(selectQuantityOrder)
@@ -15,7 +19,8 @@ export function CreateOrder4(props) {
     const currency_order = useSelector(selectCurrencyOrder)
     const currency_type = useSelector(selectPriceType)
 
-    const method_pay = useSelector(selectMethodPay)
+    // const method_pay = useSelector(selectMethodPay)
+    const methods_pay = useSelector(selectMethodsPay)
     const price = useSelector(selectPrice)
     const limit_order = useSelector(selectLimitOrder)
     const timeLimit = useSelector(selectTimeLimit)
@@ -25,7 +30,12 @@ export function CreateOrder4(props) {
     const divider = 
         <div className='divider-test-order'></div>
     
-    
+    useEffect(() => {
+        const ind = listCheckedMethods.findIndex(e => e)
+        if (ind !== -1) {
+            setMethodPay(methods_pay[ind].company_name)
+        }
+    }, [listCheckedMethods, methods_pay]);
     
     return (
         <div>
@@ -59,7 +69,7 @@ export function CreateOrder4(props) {
                     <div className='test-order-info-col'>
                         <p>{quantity_order} {CURRENCY_LIST[currency_order - 1]}</p>
                         <p>{limit_order} {CURRENCY_FIAT_LIST[currency_fiat - 1]}</p>
-                        <p>{method_pay.name}</p>
+                        <p>{methodPay}</p>
                         <p>{TIME_LIMITS[timeLimit - 1]}</p>
                     </div>
 

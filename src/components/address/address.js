@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './style.css'
 
-// import QRCode from 'qrcode'
+import QRCode from 'qrcode'
 import EthereumQRPlugin from 'ethereum-qr-code';
 import { useSelector } from 'react-redux';
 import { selectAddress, selectAddressTRX } from '../Home/homeSlice';
@@ -32,14 +32,7 @@ export function Address (props) {
 
     const [showMessage, setShowMessage] = useState(false)
     
-    //   useEffect(() => {
-    //     QRCode.toCanvas('0x0ce47b5b9117d09e72511e5feef84f917edad4cb', { errorCorrectionLevel: 'H' }, function (err, canvas) {
-    //         if (err) throw err
-          
-    //         var container = document.getElementById('q')
-    //         container.appendChild(canvas)
-    //       })
-    //   }, []);
+      
     const qr = new EthereumQRPlugin()
 
     const backScreen = () => {
@@ -87,19 +80,33 @@ export function Address (props) {
         // )
     }
 
+    // useEffect(() => {
+    //     var e = document.getElementById("q");
+    //     var child = e.firstElementChild;
+    //     if (child) e.removeChild(child);
+    //     qr.toCanvas(
+    //         {
+    //             to: address,
+    //             gas: 21000,
+    //         }, {
+    //             selector: '#q',
+    //         }
+    //     )
+    // }, );
+
     useEffect(() => {
-        var e = document.getElementById("q");
-        var child = e.firstElementChild;
-        if (child) e.removeChild(child);
-        qr.toCanvas(
-            {
-                to: address,
-                gas: 21000,
-            }, {
-                selector: '#q',
-            }
-        )
-    }, );
+        if (address_trx !== '' && address !== '') {
+            QRCode.toCanvas(fromLabel1 === 'USDT TRC20' ? address_trx: address, { errorCorrectionLevel: 'H' }, function (err, canvas) {
+                if (err) throw err
+              
+                var container = document.getElementById('q')
+                var child = container.firstElementChild;
+                if (child) container.removeChild(child);
+                container.appendChild(canvas)
+              })
+        }
+        
+      }, [address, address_trx, fromLabel1]);
 
     useEffect(() => {
         tg.MainButton.hide()

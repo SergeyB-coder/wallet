@@ -158,6 +158,11 @@ select {
     padding: 10px;
 }
 
+.w-47 {
+    
+    width: 47%;
+}
+
 .currency-settings-item-col1 {
     color: var(--text-light-color);
     display: flex;

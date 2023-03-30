@@ -144,7 +144,7 @@ export function CreateOrder() {
             {screen === 'createorder1' && <CreateOrder1 setScreen={setScreen}/>}
             {screen === 'createorder2' && <CreateOrder2 setScreen={setScreen} listCheckedMethods={listCheckedMethods} setListCheckedMethods={setListCheckedMethods}/>}
             {screen === 'createorder3' && <CreateOrder3 setScreen={setScreen}/>}
-            {screen === 'createorder4' && <CreateOrder4 setScreen={setScreen} handleClickCreateOrder={handleClickCreateOrder}/>}
+            {screen === 'createorder4' && <CreateOrder4 setScreen={setScreen} listCheckedMethods={listCheckedMethods} handleClickCreateOrder={handleClickCreateOrder}/>}
             {screen === 'createorder5' && <CreateOrder5 setScreen={setScreen}/>}
         </div>
     );

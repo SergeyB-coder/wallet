@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { CURRENCY_FIAT_LIST, CURRENCY_LIST, METHOD_PAY_LIST } from '../../../const/devdata';
+import { CURRENCY_FIAT_LIST, CURRENCY_LIST } from '../../../const/devdata';
 import { useTelegram } from '../../../hooks/useTelegram';
 import { Selecter } from '../../Common/selecter';
+import { getCompaniesPay } from '../settings_pay/settingsPayApi';
+import { selectCompaniesPay, setCompaniesPay } from '../settings_pay/settingsPaySlice';
 import { getOrders } from './marketApi';
 import { selectOrders, setOrders } from './marketSlice';
 import { ScreenBuy } from './screenBuy';
@@ -18,6 +20,7 @@ export function Market() {
     const dispatch = useDispatch()
 
     const orders = useSelector(selectOrders)
+    const companies_pay = useSelector(selectCompaniesPay)
 
     const [marketScreen, setMarketScreen] = useState('orders') // buy //select_method_pay
     const [buyOrder, setBuyOrder] = useState(null)
@@ -78,6 +81,13 @@ export function Market() {
 
     const divider = 
         <div className='divider-order-market'></div>
+
+    useEffect(() => {
+        getCompaniesPay({}, (data) => {
+            console.log('getCompaniesPay', data)
+            dispatch(setCompaniesPay(data.companies_pay))
+        })
+    }, [dispatch]);
     
     useEffect(() => {
         getOrders({user_id: ''}, (data) => {
@@ -122,7 +132,7 @@ export function Market() {
                                 setIndex={() => {}} 
                                 selected_value={currencyFiat}
                             /> */}
-                            {METHOD_PAY_LIST[indexMethod]}
+                            {companies_pay[indexMethod]?.name}
                         </div>
                         <div className='filter-item'>
                             <Selecter 
@@ -150,7 +160,12 @@ export function Market() {
             {marketScreen === 'orders' && 
                 orders.map((order, index) => {
                     return (
-                            <div style={listFilterOrders[index] !== 1 || order.type !== typeOrderFilter ? {display: 'none'}: {}} className='order-item mt-3' key={order.id}>
+                            <div 
+                                style={
+                                    companies_pay[indexMethod].id !== order.company_pay_id || listFilterOrders[index] !== 1 || order.type !== typeOrderFilter ? {display: 'none'}: {}
+                                } 
+                                className='order-item mt-3' key={order.id}
+                            >
                                 <div className='row mb-3 '>
                                     <div className='order-price'>
                                         <div className='order-price mt-2'>{order.price}
@@ -187,7 +202,7 @@ export function Market() {
                                         Лимиты
                                     </div>
                                     <div className='order-info'>
-                                        {order.limit_order} USDT
+                                        {order.limit_order} {order.currency_fiat_id === 1 ? 'RUB': 'USD'}
                                     </div>
                                 </div>
                                 
@@ -210,7 +225,7 @@ export function Market() {
                 <div>
                     <label className='title-select-method'>Выберите способ оплаты</label>
                     <div className='currency-settings-container mt-3'>
-                        {METHOD_PAY_LIST.map((method, index) => {
+                        {companies_pay.map((method, index) => {
                             return (
                                 <div key={index} >
                                     <div className='row button-trade-menu' 
@@ -220,10 +235,10 @@ export function Market() {
                                         }}
                                     >
                                         <div className='method-name-col'>
-                                            {method}
+                                            {method.name}
                                         </div>
                                     </div>
-                                    {index !== METHOD_PAY_LIST.length - 1 && divider}
+                                    {index !== companies_pay.length - 1 && divider}
                                 </div>
                             )
                         })}

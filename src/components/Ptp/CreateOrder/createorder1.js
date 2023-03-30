@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CURRENCY_FIAT_LIST, CURRENCY_LIST, PRICE_TYPES, TIME_LIMITS } from '../../../const/devdata';
 import { Selecter } from '../../Common/selecter';
 import { selectBalance, selectBalanceTRX, selectBalanceTRXv } from '../../Home/homeSlice';
-// import { ButtonNext } from '../../Common/buttonNext';
+import { ButtonNext } from '../../Common/buttonNext';
 import './style.css'
 
 import { selectCurrencyFiat, selectCurrencyOrder, selectPriceType, selectLimitOrder, selectPercentPrice, selectPrice, selectPriceMarket, selectQuantityOrder, selectTimeLimit, selectTypeOrder, setCurrencyFiat, setCurrencyOrder, setPriceType, setLimitOrder, setPercentPrice, setPrice, setQuantityOrder, setTimeLimit, setTypeOrder, selectRubDollar } from '../ptpSlice';
@@ -170,22 +170,42 @@ export function CreateOrder1(props) {
     const render_summ_sale = 
         <div className='row button-currency-settings'>
             <div className='currency-settings-item-col1'>
-                <input style={parseFloat(quantity_order) > parseFloat(balance) && typeOrder === 's' ? {color: '#DF2E38'}: {}} className='bg-input' type='number' placeholder='Сумма' onChange={handleChangeQuantityOrder} value={quantity_order}/>
+                <input 
+                    style={parseFloat(quantity_order) > parseFloat(balance) && typeOrder === 's' ? {color: '#DF2E38'}: {}} 
+                    className='bg-input' type='number' placeholder='Сумма' 
+                    onChange={handleChangeQuantityOrder} value={quantity_order}/>
             </div>
             <div className='currency-settings-item-col2'>
                 USDT
             </div>
         </div>
 
-    const render_limit_order = 
+    const render_limit_order_min = 
+    <div className='row'>
         <div className='row button-currency-settings'>
             <div className='currency-settings-item-col1'>
-                <input className='bg-input' type='number' placeholder='Сумма' onChange={handleChangeLimitOrder} value={limit_order}/>
+                <input className='bg-input w-100' type='number' placeholder='min' onChange={handleChangeLimitOrder} value={limit_order}/>
             </div>
-            <div className='currency-settings-item-col2'>
+            <div className='currency-settings-item-col2 p-1'>
                 {CURRENCY_FIAT_LIST[currencyFiat - 1]}
             </div>
         </div>
+    </div>
+
+    const render_limit_order_max = 
+    <div className='row'>
+        <div className='row button-currency-settings'>
+            <div className='currency-settings-item-col1'>
+                <input className='bg-input w-100' type='number' placeholder='max' onChange={handleChangeLimitOrder} 
+                    value={ parseFloat(quantity_order) * price }
+                />
+            </div>
+            <div className='currency-settings-item-col2 p-1'>
+                {CURRENCY_FIAT_LIST[currencyFiat - 1]}
+            </div>
+        </div>
+    </div>
+        
 
     const time_limit = 
         <div className='row button-currency-settings'>
@@ -250,14 +270,20 @@ export function CreateOrder1(props) {
             <div className='t-left-align  mini-info'>{`Ваш баланс: ${currency_order === 1 ? balance: balance_trx + balance_trx_v} USDT`}</div>
 
             <div className='t-left-align  mt-3 text-dark-color'>Лимит сделки</div>
-            <div className='currency-settings-container mt-1'>
-                {render_limit_order}
+            <div className='row d-flex justify-content-between p-0 m-0'>
+                <div className='currency-settings-container w-47 mt-1'>
+                    {render_limit_order_min}
+                </div>
+                <div className='currency-settings-container w-47 mt-1'>
+                    {render_limit_order_max}
+                </div>
             </div>
+            
             <div className='currency-settings-container mt-3 mb-3'>
                 {time_limit}
             </div>
             
-            {/* <ButtonNext onClick={() => {props.setScreen('createorder2')}}/> */}
+            <ButtonNext onClick={() => {props.setScreen('createorder2')}}/>
         </div>
     );
 }

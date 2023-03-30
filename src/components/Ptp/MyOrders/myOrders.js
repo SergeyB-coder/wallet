@@ -19,7 +19,7 @@ export function MyOrders (props) {
 
 
     const handleClickCreateOrder = () => {
-        props.setScreen('createorder1')
+        navigate('/createorder', {replace: true})
     }
 
     const handleClickSettingsPay = () => {

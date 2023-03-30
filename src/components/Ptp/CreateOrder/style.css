@@ -12,6 +12,10 @@
     border-radius: 10px;
 }
 
+.limit {
+    width: 40%;
+}
+
 .method-order-text1 {
     text-align: left;
     font-family: 'Raleway';
