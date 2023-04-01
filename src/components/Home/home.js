@@ -65,20 +65,30 @@ export function Home() {
 			{	!showTransactions &&
 				<div>
 					{/* <h3>Hello!</h3> */}
-					<div className='balance-label'>Ваш баланс</div>
-					<div className='balance-main mt-2'><span className='balance-main-sign'>$</span>{Math.round(parseFloat(balance + balance_trx + balance_trx_v)*1000)/1000}</div>
-					<div className='bottom-balance mt-2'><span className='bottom-balance-percent'>+32%</span> +$400</div>
+					<div className='home-container-balance'>
+						<div className='d-flex justify-content-center'>
+							<div className='row d-flex justify-content-between align-items-center mt-30 title-balance' >
+								<div className='balance-label'>Ваш баланс</div>
+								<div className='bottom-balance'>
+									+$400
+									<span className='bottom-balance-percent'>+32%</span>
+								</div>
+							</div>
+						</div>
+						
+						
+						<div className='balance-main'><span className='balance-main-sign'>$</span>{Math.round(parseFloat(balance + balance_trx + balance_trx_v)*1000)/1000}</div>
+						
+					</div>
+					
 					<MenuButtons/>	
 
-					<div style={{marginTop: 30}}>
-						{/* <button onClick={() => {
-							fromMain({user_id: user_id}, (d)=>{console.log('d', d)})
-						}}>TEST</button> */}
+					<div className='d-flex justify-content-center'>
+						<div className='text-token-manage'>Управление токенами</div>
 					</div>
+					
 
-					<div className='mt-1' style={{color: 'var(--btn-bg-color)'}}>Manage token list</div>
-
-					<div className='wallet-item-container mt-2'>
+					<div className='wallet-item-container mt-21'>
 						<div className='wallet-item row' onClick={handleClickBep}>
 							<div className='wallet-item-svg-container'>
 								{svg_bep1}
@@ -87,7 +97,7 @@ export function Home() {
 								</div>
 							</div>
 							<div className='wallet-item-info ps-0'>
-								<div className='token-text' style={{textAlign: 'left'}}>Tether BEP</div>
+								<div className='token-text text-nowrap' style={{textAlign: 'left'}}>Tether BEP</div>
 								<div className='token-balance-text mt-2'>{Math.round((parseFloat(balance))*100)/100} USDT</div>
 							</div>
 							<div className='wallet-item-info2'>
@@ -97,19 +107,9 @@ export function Home() {
 						</div>
 					</div>
 
-					<div className='wallet-item-container'>
-						<div className='wallet-item row'>
-							<div style={{width: '5px'}}>
-
-							</div>
-							<div className='divider-token'>
-
-							</div>
-						</div>
-					</div>
 					
 
-					<div className='wallet-item-container'>
+					<div className='wallet-item-container mt-16'>
 						<div className='wallet-item row' onClick={handleClickTrc}>
 							<div className='wallet-item-svg-container'>
 								{svg_bep1}
@@ -118,27 +118,16 @@ export function Home() {
 								</div>
 							</div>
 							<div className='wallet-item-info ps-0'>
-								<div className='token-text' style={{textAlign: 'left'}}>Tether TRC</div>
+								<div className='token-text text-nowrap' style={{textAlign: 'left'}}>Tether TRC</div>
 								<div className='token-balance-text mt-2'>{Math.round((parseFloat(balance_trx + balance_trx_v))*100)/100} USDT</div>
 							</div>
 							<div className='wallet-item-info2'>
-								<div className='token-text text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance_trx))*100*1.1)/100}</div>
+								<div className='token-balance-text2 text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance_trx))*100*1.1)/100}</div>
 								<div className='bottom-info text-nowrap mt-2'>+23%</div>
 							</div>
 						</div>
 					</div>
-
-					<div className='wallet-item-container'>
-						<div className='wallet-item row'>
-							<div style={{width: '5px'}}>
-
-							</div>
-							<div className='divider-token'>
-
-							</div>
-						</div>
-					</div>
-					<div className='wallet-item-container'>
+					<div className='wallet-item-container mt-16'>
 						<div className='wallet-item row' onClick={handleClickTrc}>
 							<div className='wallet-item-svg-container'>
 								{svg_btc}
@@ -147,7 +136,7 @@ export function Home() {
 								</div> */}
 							</div>
 							<div className='wallet-item-info ps-0'>
-								<div className='token-text' style={{textAlign: 'left'}}>Bitcoin</div>
+								<div className='token-text text-nowrap' style={{textAlign: 'left'}}>Bitcoin</div>
 								<div className='token-balance-text mt-2'>1 BTC</div>
 							</div>
 							<div className='wallet-item-info2'>
