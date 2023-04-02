@@ -13,7 +13,7 @@ import { Market } from './components/Ptp/market/Market';
 import { Ptp } from './components/Ptp/ptp';
 import { SettingsPay } from './components/Ptp/settings_pay/SettingsPay';
 import { Send } from './components/Send/send';
-import { StartScreen } from './components/StartScreen/startScreen';
+// import { StartScreen } from './components/StartScreen/startScreen';
 import { useTelegram } from './hooks/useTelegram';
 import { CreateOrder } from './components/Ptp/CreateOrder/createOrder';
 import { Chat } from './components/Ptp/chat/chat';
