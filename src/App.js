@@ -57,14 +57,14 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-            <Route
+            {/* <Route
                 path="/"
                 element={
                 <StartScreen/>
                 }
-            />
+            /> */}
             <Route
-                path="/home"
+                path="/"
                 element={
                 <Home/>
                 }

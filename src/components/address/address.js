@@ -36,7 +36,8 @@ export function Address (props) {
     // const qr = new EthereumQRPlugin()
 
     const backScreen = () => {
-        navigate('/home', {replace: true})
+        navigate('/', {replace: true})
+        // navigate('/home', {replace: true})
     }
 
     

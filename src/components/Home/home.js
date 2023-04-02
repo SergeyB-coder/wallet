@@ -22,7 +22,9 @@ export function Home() {
 	const balance_trx = useSelector(selectBalanceTRX)
 	const balance_trx_v = useSelector(selectBalanceTRXv)
 
+	const [isLoadData, setIsLoadData] = useState(true);
 	const [showTransactions, setShowTransactions] = useState(false);
+	const [isHide, setIsHide] = useState(false);
 
 	const handleClickBep = () => {
 		setShowTransactions(true)
@@ -41,12 +43,16 @@ export function Home() {
 
 	useEffect(() => {
 		getUserData({user_id: user_id, first_name: first_name, chat_id: chat_id}, (data) => {
+			setIsHide(true)
 			console.log('get user data', data)
 			dispatch(setAddress(data.address))
 			dispatch(setAddressTRX(data.address_trx))
 			dispatch(setBalance(data.balance))
 			dispatch(setBalanceTRX(data.balance_trx))
 			dispatch(setBalanceTRXv(data.balance_trx_v))
+			
+			setTimeout(() => {setIsLoadData(false)}, 1000)
+			
 		})
 	}, [chat_id, dispatch, first_name, user_id]);
 
@@ -65,7 +71,7 @@ export function Home() {
 			{	!showTransactions &&
 				<div>
 					{/* <h3>Hello!</h3> */}
-					<div className='home-container-balance'>
+					<div className={`home-container-balance ${isHide && 'grow'} ${isLoadData ? 'h-205': 'h-230'}`}>
 						<div className='d-flex justify-content-center'>
 							<div className='row d-flex justify-content-between align-items-center mt-30 title-balance' >
 								<div className='balance-label'>Ваш баланс</div>
@@ -76,9 +82,13 @@ export function Home() {
 							</div>
 						</div>
 						
+						<div className='d-flex justify-content-center'>
+							{isLoadData && <div className={`balance-load ${isHide ? 'hide-balace-load': 'gradient'}`}></div>}
+							{/* <div className={`balance-load hide-balace-load ${isLoadData ? '': 'hide-balace-load'}`}></div> */}
+							{!isLoadData && <div className='balance-main'><span className='balance-main-sign'>$</span>{Math.round(parseFloat(balance + balance_trx + balance_trx_v)*1000)/1000}</div>}
+						</div>
 						
-						<div className='balance-main'><span className='balance-main-sign'>$</span>{Math.round(parseFloat(balance + balance_trx + balance_trx_v)*1000)/1000}</div>
-						
+						{isLoadData && <div className={`home-container-balance-load ${isHide ? 'hide-balace-load': ''}`}>2</div>}
 					</div>
 					
 					<MenuButtons/>	
@@ -105,6 +115,12 @@ export function Home() {
 								<div className='bottom-info text-nowrap mt-2'>+23%</div>
 							</div>
 						</div>
+
+						{	isLoadData &&
+							<div className={`wallet-item-load ${isHide ? 'hide-balace-load': 'gradient'}`}>
+
+							</div>
+						}
 					</div>
 
 					
@@ -126,7 +142,15 @@ export function Home() {
 								<div className='bottom-info text-nowrap mt-2'>+23%</div>
 							</div>
 						</div>
+
+						{	isLoadData &&
+							<div className={`wallet-item-load ${isHide ? 'hide-balace-load': 'gradient'}`}>
+
+							</div>
+						}
 					</div>
+
+
 					<div className='wallet-item-container mt-16'>
 						<div className='wallet-item row' onClick={handleClickTrc}>
 							<div className='wallet-item-svg-container'>
@@ -144,6 +168,12 @@ export function Home() {
 								<div className='bottom-info text-nowrap mt-2'>+23%</div>
 							</div>
 						</div>
+
+						{	isLoadData &&
+							<div className={`wallet-item-load ${isHide ? 'hide-balace-load': 'gradient'}`}>
+
+							</div>
+						}
 					</div>
 
 					

@@ -117,7 +117,8 @@ export function Send (props) {
         }
 
         else if (stepSend === 'finish') {
-            navigate('/home', {replace: true})
+            navigate('/', {replace: true})
+            // navigate('/home', {replace: true})
         }
         
     }

@@ -65,7 +65,8 @@ export function CompleteDeal (props) {
             handleClickEndDeal()
         }
         else if (error) {
-            navigate('/home', {replace: true})
+            navigate('/', {replace: true})
+            // navigate('/home', {replace: true})
         }
     }
 

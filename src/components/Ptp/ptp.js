@@ -34,7 +34,8 @@ export function Ptp (props) {
     }
 
     const backScreen = () => {
-        navigate('/home', {replace: true})
+        navigate('/', {replace: true})
+        // navigate('/home', {replace: true})
     }
 
     const user_deals = useSelector(selectUserDeals)
