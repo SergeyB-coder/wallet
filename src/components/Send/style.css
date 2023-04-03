@@ -17,11 +17,18 @@
 }
 
 .address-item {
-    background-color: var(--item-bg);
+    width: 335px;
+    height: 60px;
+
+    border: 1px solid #585858;
+    /* shadow/sm */
+
+    filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.05));
+    border-radius: 6px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-radius: 16px;
 }
 
 .address-item-2 {
@@ -68,7 +75,7 @@
 }
 
 .address-item-col1 {
-    padding: 10px;
+    /* padding: 10px; */
     width: 70%;
     /* display: flex;
     align-items: center; */
@@ -91,15 +98,23 @@
     display: flex;
     align-items: center;
     padding: 0;
-    height: 50px;
-    width: 50px;
+    height: 20px;
+    width: 21px;
 }
 
 .send-text {
     width: 50%;
     display: flex;
     align-items: center;
-    color: var(--text-light-color);
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    /* identical to box height, or 171% */
+
+
+    color: #FFFFFF;
 }
 
 .send-q-input {

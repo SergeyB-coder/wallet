@@ -88,7 +88,7 @@ export function Home() {
 							{!isLoadData && <div className='balance-main'><span className='balance-main-sign'>$</span>{Math.round(parseFloat(balance + balance_trx + balance_trx_v)*1000)/1000}</div>}
 						</div>
 						
-						{isLoadData && <div className={`home-container-balance-load ${isHide ? 'hide-balace-load': ''}`}>2</div>}
+						{isLoadData && <div className={`home-container-balance-load ${isHide ? 'hide-balace-load grow': ''}`}>2</div>}
 					</div>
 					
 					<MenuButtons/>	
@@ -108,7 +108,7 @@ export function Home() {
 							</div>
 							<div className='wallet-item-info ps-0'>
 								<div className='token-text text-nowrap' style={{textAlign: 'left'}}>Tether BEP</div>
-								<div className='token-balance-text mt-2'>{Math.round((parseFloat(balance))*100)/100} USDT</div>
+								<div className='token-balance-text mt-2 text-nowrap'>{Math.round((parseFloat(balance))*100)/100} USDT</div>
 							</div>
 							<div className='wallet-item-info2'>
 								<div className='token-text text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance))*100*1.1)/100}</div>
