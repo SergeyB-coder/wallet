@@ -58,12 +58,34 @@ select {
 }
 
 .trade-menu-container {
-    background-color: var(--item-bg);
-    border-radius: 14px;
-    padding: 10px;
+    padding-top: 8px;
+    margin-top: 72px;
+    width: 335px;
+    height: 295px;
+
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
 }
 
+.container-menu {
+    width: 335px;
+}
 
+.title-last-deals {
+    margin-left: 17px;
+    margin-top: 41px;
+    
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 10.5px;
+    line-height: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    
+    text-align: left;
+    color: #B4B4B4;
+}
 
 .bg-input {
     background-color: var(--item-bg);
@@ -85,15 +107,46 @@ select {
 }
 
 .trade-menu-text-col {
-    color: var(--text-light-color);
-    width: 65vw;
-    text-align: left;
+    width: fit-content;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 10.5px;
+    line-height: 12px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+
+    color: #FFFFFF;
+}
+
+.trade-menu-text-col-2 {
+    width: fit-content;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 9px;
+    line-height: 11px;
+    display: flex;
+    align-items: center;
+    text-align: right;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+
+    color: #86EFAC;
 }
 
 .button-trade-menu {
-    padding-top: 5px;
-    padding-bottom: 5px;
+    height: 56px;
+    /* padding-top: 5px; */
+    /* padding-bottom: 5px; */
     cursor: pointer;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    padding-left: 17px;
+    padding-right: 17px;
 }
 
 .button-trade-menu:hover  {
@@ -114,11 +167,10 @@ select {
 
 
 .divider {
-    margin-top: 1vh;
-    margin-bottom: 1vh;
-    margin-left: 10vw;
-    height: 0.5px;
-    background-color: var(--item-bg);
+    width: 300px;
+    height: 0px;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .divider-currency {
