@@ -34,6 +34,12 @@ export function Send (props) {
     
     const [showListAddresses, setShowListAddresses] = useState(false)
     const [showQrScanner, setShowQrScanner] = useState(false);
+    const [isReady, setIsReady] = useState(false);
+
+    function checkIsReady(address_to, q) {
+        if (address_to.length > 0 && q.length > 0) setIsReady(true)
+        else setIsReady(false)
+    }
 
     const handleClickSelectAddress = () => {
         setShowListAddresses(!showListAddresses)
@@ -43,6 +49,7 @@ export function Send (props) {
         // console.log(e.target.value)
         // let inp = document.getElementById('q-send')
         // inp.style.width = (30 + (e.target.value.toString().length + 1) * 15) + 'px'
+        checkIsReady(addressTo, e.target.value)
         setQuantity(e.target.value)
     }
 
@@ -61,6 +68,7 @@ export function Send (props) {
 
     
     const handleChangeAddressTo = (e) => {
+        checkIsReady(e.target.value, quantity)
         setAddressTo(e.target.value)
     }
 
@@ -140,236 +148,220 @@ export function Send (props) {
     }, []);
 
     return (
-        <div className='send-container'>
-            <div className='title-send'>
-                Отправить
-            </div>
+        <div className='d-flex justify-content-center'>
+            <div className='send-container'>
+                <div className='title-send'>
+                    Отправить
+                </div>
 
-            {/* <div className='row d-flex align-items-center justify-content-center'>
-                <input id='q-send' className='send-q-input' type='number'  onChange={handleChangeQuantity} value={quantity}/>
-                <span style={{color: 'white', width: 'fit-content', height: 'fit-content'}}>USDT</span>
-            </div> */}
+                {/* <div className='row d-flex align-items-center justify-content-center'>
+                    <input id='q-send' className='send-q-input' type='number'  onChange={handleChangeQuantity} value={quantity}/>
+                    <span style={{color: 'white', width: 'fit-content', height: 'fit-content'}}>USDT</span>
+                </div> */}
 
-            
+                
 
-            {stepSend === 'address' &&
-                (
-                    <>
-                        {showQrScanner && <QrReader setAddressTo={setAddressTo} setShowQrScanner={setShowQrScanner}/>}
-                        <div className='m-3'>
+                {stepSend === 'address' &&
+                    (
+                        <>
+                            {showQrScanner && <QrReader setAddressTo={setAddressTo} setShowQrScanner={setShowQrScanner}/>}
+                            <div className=''>
+                                <div className='address-item' onClick={handleClickSelectAddress}>
+                                    {/* <div className='address-item-col1'> */}
+                                        {/* <div className='title-from mb-2'>From</div> */}
+                                        {/* <div className='row p-0 m-0'> */}
+                                            {/* <div className='address-circle'></div> */}
+                                    <div className='svg-circle'>{fromLabel1 === 'USDT TRC20' ? svg_tron: svg_bep}</div>
+                                    <div className='send-text text-nowrap'>{fromLabel1}</div>
+                                        {/* </div> */}
+                                    {/* </div> */}
 
-                        
-                            <div className='row address-item mt-5 mx-2' onClick={handleClickSelectAddress}>
-                                <div className='address-item-col1'>
-                                    {/* <div className='title-from mb-2'>From</div> */}
-                                    <div className='row p-0 m-0'>
-                                        {/* <div className='address-circle'></div> */}
-                                        <div className='svg-circle'>{fromLabel1 === 'USDT TRC20' ? svg_tron: svg_bep}</div>
-                                        <div className='send-text text-nowrap'>{fromLabel1}</div>
+                                    <div className='address-item-col2'>
+                                        <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M4 0C4.26522 5.96046e-08 4.51957 0.105357 4.70711 0.292893L7.70711 3.29289C8.09763 3.68342 8.09763 4.31658 7.70711 4.70711C7.31658 5.09763 6.68342 5.09763 6.29289 4.70711L4 2.41421L1.70711 4.70711C1.31658 5.09763 0.683417 5.09763 0.292893 4.70711C-0.0976311 4.31658 -0.097631 3.68342 0.292893 3.29289L3.29289 0.292893C3.48043 0.105357 3.73478 0 4 0ZM0.292893 9.29289C0.683417 8.90237 1.31658 8.90237 1.70711 9.29289L4 11.5858L6.29289 9.29289C6.68342 8.90237 7.31658 8.90237 7.70711 9.29289C8.09763 9.68342 8.09763 10.3166 7.70711 10.7071L4.70711 13.7071C4.31658 14.0976 3.68342 14.0976 3.29289 13.7071L0.292893 10.7071C-0.0976311 10.3166 -0.0976311 9.68342 0.292893 9.29289Z" fill="white"/>
+                                        </svg>
                                     </div>
                                 </div>
+                                {
+                                    showListAddresses ? (
+                                        <div className='row address-item-2 mt-2' onClick={handleClickAddresItem}>
 
-                                <div className='address-item-col2'>
-                                    <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" className="bi bi-chevron-compact-down" viewBox="0 0 16 16">
-                                        <path fillRule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"/>
-                                    </svg>
-                                </div>
-                            </div>
-                            {
-                                showListAddresses ? (
-                                    <div className='row address-item-2 mt-2' onClick={handleClickAddresItem}>
-
-                                        <div className='address-item-col1'>
-                                            <div className='row p-0 m-0'>
-                                                {/* <div className='address-circle'></div> */}
-                                                <div className='svg-circle'>{fromLabel2 === 'USDT TRC20' ? svg_tron: svg_bep}</div>
-                                                <div className='send-text text-nowrap'>{fromLabel2}</div>
+                                            <div className='address-item-col1'>
+                                                <div className='row p-0 m-0'>
+                                                    {/* <div className='address-circle'></div> */}
+                                                    <div className='svg-circle'>{fromLabel2 === 'USDT TRC20' ? svg_tron: svg_bep}</div>
+                                                    <div className='send-text text-nowrap'>{fromLabel2}</div>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div className='address-item-col2'>
-                                            {/* <svg onClick={handleClickSelectAddress} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" className="bi bi-chevron-compact-down" viewBox="0 0 16 16">
-                                                <path fillRule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"/>
-                                            </svg> */}
-                                        </div>
+                                            <div className='address-item-col2'>
+                                                {/* <svg onClick={handleClickSelectAddress} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" className="bi bi-chevron-compact-down" viewBox="0 0 16 16">
+                                                    <path fillRule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"/>
+                                                </svg> */}
+                                            </div>
 
+                                        </div>
+                                    ): null
+                                }
+
+                                {/* TO */}
+                                <div className='send-address'>
+                                    <input className='address-to-input' type='text' placeholder='Search, public address (0x) or ENS' onChange={handleChangeAddressTo} value={addressTo}/>:                                    
+                                    <div className='address-item-col2'>
+                                        <div onClick={()=>setShowQrScanner(true)}>{svg_address_to}</div>
+                                        {/* <svg onClick={handleClickCross} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" className="bi bi-x" viewBox="0 0 16 16">
+                                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                        </svg> */}
                                     </div>
-                                ): null
-                            }
+                                </div>
 
-                            {/* TO */}
-                            <div className='row address-item mt-5 mb-2 p-1'>
-
-                                <div className='address-item-col1'>
-                                    {/* <div className='title-from mb-2'>To</div> */}
-                                    <div className=' p-0 m-0 d-flex align-items-center'>
-                                        {/* <div className='address-circle'></div> */}
-                                        {/* {
-                                            showInputAddressTo ? */}
-                                        <input className='address-to-input' type='text' placeholder='Search, public address (0x) or ENS' onChange={handleChangeAddressTo} value={addressTo}/>:
-                                            {/* <div className='send-text text-nowrap'>{`${addressTo.slice(0, 5)} ... ${addressTo.slice(-5)}`}</div>
-                                        } */}
+                                {/* QUANTITY */}
+                                <div className='send-address'>
+                                    <input className='address-to-input-2' type='number' placeholder='0 USDT' onChange={handleChangeQuantity} value={quantity}/>
                                         
+
+                                    <div className='address-item-col2'>
+                                        <div style={{color: 'var(--text-mini)'}}
+                                            onClick={() => {fromLabel1 === 'USDT TRC20' ? setQuantity(balance_trx): setQuantity(balance)}}
+                                        >
+                                            Max
+                                        </div>
                                     </div>
+
                                 </div>
 
-                                <div className='address-item-col2'>
-                                    <div onClick={()=>setShowQrScanner(true)}>{svg_address_to}</div>
-                                    {/* <svg onClick={handleClickCross} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" className="bi bi-x" viewBox="0 0 16 16">
-                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                                    </svg> */}
-                                </div>
-
-                            </div>
-
-                            {/* QUANTITY */}
-                            <div className='row address-item mt-2 mb-5 p-1'>
-
-                                <div className='address-item-col1'>
-                                    <div className=' p-0 m-0 d-flex align-items-center'>
-                                        <input className='address-to-input' type='number' placeholder='0 USDT' onChange={handleChangeQuantity} value={quantity}/>
+                                <div className='container-balance'>
+                                    <div className='your-balance-text'>
+                                        Ваш баланс
                                     </div>
-                                </div>
-
-                                <div className='address-item-col2'>
-                                    <div style={{color: 'var(--text-mini)'}}
-                                        onClick={() => {fromLabel1 === 'USDT TRC20' ? setQuantity(balance_trx): setQuantity(balance)}}
-                                    >
-                                        Max
+                                    <div className='your-balance-q'>
+                                        {fromLabel1 === 'USDT TRC20' ? balance_trx: balance} USDT
                                     </div>
                                 </div>
 
                             </div>
+                        </>
+                    )
+                }
+                {stepSend === 'confirm' && (
+                    <>
+                        <div>
+                            <label style={{color: 'white', fontSize: 34, marginTop: 30}}>{`${quantity} USDT`}</label>
+                            <br></br>
+                            <label style={{color: 'var(--btn-bg-color)'}}>{`${quantity} $`}</label>
+                        </div>
 
+                        <div className='confirm-data mt-5 mb-5 py-1'>
+                            <div className='row m-2 py-2 d-flex justify-content-between'>
+                                <div className='col-5 txt-l'>
+                                    Актив
+                                </div>
+                                <div className='col-5 txt-r'>
+                                    {fromLabel1}
+                                </div>
+                            </div>
+
+                            {divider}
+
+                            <div className='row m-2 py-2 d-flex justify-content-between'>
+                                <div className='col-5 txt-l'>
+                                    Получатель
+                                </div>
+                                <div className='col-5 txt-r'>
+                                    {addressTo}
+                                </div>
+                            </div>
+
+                            {divider}
+
+                            <div className='row m-2 py-2 d-flex justify-content-between'>
+                                <div className='col-5 txt-l'>
+                                    Сетевой сбор
+                                </div>
+                                <div className='col-5 txt-r'>
+                                    50 TRX
+                                </div>
+                            </div>
+
+                            {divider}
+
+                            <div className='row m-2 py-2 d-flex justify-content-between'>
+                                <div className='col-5 txt-l-w'>
+                                    Макс Тотал
+                                </div>
+                                <div className='col-5 txt-r-w'>
+                                    {`$ ${quantity}`}
+                                </div>
+                            </div>
                         </div>
                     </>
-                )
-            }
-            {stepSend === 'confirm' && (
-                <>
-                    <div>
-                        <label style={{color: 'white', fontSize: 34, marginTop: 30}}>{`${quantity} USDT`}</label>
-                        <br></br>
-                        <label style={{color: 'var(--btn-bg-color)'}}>{`${quantity} $`}</label>
-                    </div>
+                )}
 
-                    <div className='confirm-data mt-5 mb-5 py-1'>
-                        <div className='row m-2 py-2 d-flex justify-content-between'>
-                            <div className='col-5 txt-l'>
-                                Актив
-                            </div>
-                            <div className='col-5 txt-r'>
-                                {fromLabel1}
+                {(stepSend === 'wait' || stepSend === 'finish') && (
+                    <>
+                        <div className='trs-wait mt-5'>
+                            <div className='row my-2 py-2 d-flex align-items-center'>
+                                <div className='trs-wait-logo'>
+                                    {stepSend === 'wait' ? svg_wait: svg_ok}
+                                </div>
+                                <div className='trs-text-block'>
+                                    <label className='trs-text-1'>{(stepSend === 'wait' ? 'Транзакция в процессе': 'Транзакция завершена!')}</label>
+                                    <br></br>
+                                    <label className='trs-text-2'>{(stepSend === 'wait' ? 'Ожидаем подтверждений': '')}</label>
+                                </div>
                             </div>
                         </div>
 
-                        {divider}
-
-                        <div className='row m-2 py-2 d-flex justify-content-between'>
-                            <div className='col-5 txt-l'>
-                                Получатель
+                        <div className='confirm-data mt-5 mb-5'>
+                            <div className='row m-2 py-2 d-flex justify-content-between'>
+                                <div className='col-5 txt-l'>
+                                    Дата
+                                </div>
+                                <div className='col-5 txt-r'>
+                                    {date.toLocaleDateString()}
+                                </div>
                             </div>
-                            <div className='col-5 txt-r'>
-                                {addressTo}
-                            </div>
-                        </div>
 
-                        {divider}
-
-                        <div className='row m-2 py-2 d-flex justify-content-between'>
-                            <div className='col-5 txt-l'>
-                                Сетевой сбор
+                            <div className='row m-2 py-2 d-flex justify-content-between'>
+                                <div className='col-5 txt-l'>
+                                    Сетевой сбор
+                                </div>
+                                <div className='col-5 txt-r'>
+                                    50 TRX
+                                </div>
                             </div>
-                            <div className='col-5 txt-r'>
-                                50 TRX
-                            </div>
-                        </div>
 
-                        {divider}
-
-                        <div className='row m-2 py-2 d-flex justify-content-between'>
-                            <div className='col-5 txt-l-w'>
-                                Макс Тотал
-                            </div>
-                            <div className='col-5 txt-r-w'>
-                                {`$ ${quantity}`}
+                            <div className='row m-2 py-2 d-flex justify-content-between'>
+                                <div className='col-5 txt-l-w'>
+                                    Макс Тотал
+                                </div>
+                                <div className='col-5 txt-r-w'>
+                                    {`$ ${quantity}`}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </>
-            )}
-
-            {(stepSend === 'wait' || stepSend === 'finish') && (
-                <>
-                    <div className='trs-wait mt-5'>
-                        <div className='row my-2 py-2 d-flex align-items-center'>
-                            <div className='trs-wait-logo'>
-                                {stepSend === 'wait' ? svg_wait: svg_ok}
-                            </div>
-                            <div className='trs-text-block'>
-                                <label className='trs-text-1'>{(stepSend === 'wait' ? 'Транзакция в процессе': 'Транзакция завершена!')}</label>
-                                <br></br>
-                                <label className='trs-text-2'>{(stepSend === 'wait' ? 'Ожидаем подтверждений': '')}</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className='confirm-data mt-5 mb-5'>
-                        <div className='row m-2 py-2 d-flex justify-content-between'>
-                            <div className='col-5 txt-l'>
-                                Дата
-                            </div>
-                            <div className='col-5 txt-r'>
-                                {date.toLocaleDateString()}
-                            </div>
-                        </div>
-
-                        <div className='row m-2 py-2 d-flex justify-content-between'>
-                            <div className='col-5 txt-l'>
-                                Сетевой сбор
-                            </div>
-                            <div className='col-5 txt-r'>
-                                50 TRX
-                            </div>
-                        </div>
-
-                        <div className='row m-2 py-2 d-flex justify-content-between'>
-                            <div className='col-5 txt-l-w'>
-                                Макс Тотал
-                            </div>
-                            <div className='col-5 txt-r-w'>
-                                {`$ ${quantity}`}
-                            </div>
-                        </div>
-                    </div>
-                </>
-            )}
+                    </>
+                )}
 
 
+                {/* {!showLoader &&  */}
+                    {/* <div className='mx-2'>
+                        <ButtonNext onClick={handleClickSend} 
+                            style={(stepSend === 'wait' || stepSend === 'finish') ? 'grey': 'green'}
+                            text={
+                                stepSend === 'address' ? 'Далее': 
+                                stepSend === 'confirm' ? 'Отправить':
+                                'TRONSCAN'
+                            }
+                        />
+                    </div> */}
+                {/* } */}
 
-
-
-            
-
-            
-
-            
-
-            {/* {!showLoader &&  */}
-                <div className='mx-2'>
-                    <ButtonNext onClick={handleClickSend} 
-                        style={(stepSend === 'wait' || stepSend === 'finish') ? 'grey': 'green'}
-                        text={
-                            stepSend === 'address' ? 'Далее': 
-                            stepSend === 'confirm' ? 'Отправить':
-                            'TRONSCAN'
-                        }
-                    />
+                {/* {showLoader && <div className="loader"></div>} */}
+                <div className={`button-send-box ${isReady ? 'button-active-send-bg active-text': 'button-send-bg disable-text'}  mt-20`}>
+                    {isReady ? 'Отправить': 'Заполните данные'}
                 </div>
-            {/* } */}
-
-            {/* {showLoader && <div className="loader"></div>} */}
-
+            </div>
         </div>
       );
 }

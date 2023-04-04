@@ -1,13 +1,20 @@
 .send-container {
-    color: 'white';
-    padding: 15px; 
+    width: 335px;
 }
 
 .title-send {
-    font-size: 20px;
+    margin-top: 28px;
+
+    text-align: left;
+    font-family: 'Raleway';
+    font-style: normal;
     font-weight: 700;
-    margin-top: 30px;
-    color: var(--text-light-color)
+    font-size: 10.5px;
+    line-height: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+
+    color: #FFFFFF;
 }
 
 .title-from {
@@ -17,6 +24,7 @@
 }
 
 .address-item {
+    margin-top: 20px;
     width: 335px;
     height: 60px;
 
@@ -28,7 +36,7 @@
 
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    /* justify-content: space-between; */
 }
 
 .address-item-2 {
@@ -82,9 +90,7 @@
 }
 
 .address-item-col2 {
-    text-align: center;
-    width: 10%;
-    margin-right: 20px;
+        margin-left: 20px;
 }
 
 .address-circle {
@@ -95,6 +101,7 @@
 }
 
 .svg-circle {
+    margin-left: 13px;
     display: flex;
     align-items: center;
     padding: 0;
@@ -102,8 +109,60 @@
     width: 21px;
 }
 
+.send-address {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 13px;
+    gap: 8px;
+
+    width: 335px;
+    height: 42px;
+
+    background: rgba(255, 255, 255, 0.1);
+    /* shadow/sm */
+
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+}
+
+.address-to-input-2 {
+    outline: none;
+    border: none;
+    background:none;
+
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    /* identical to box height, or 133% */
+
+
+    color: #FFFFFF;
+}
+
+.address-to-input {
+    outline: none;
+    border: none;
+    background:none;
+
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 20px;
+    /* identical to box height, or 111% */
+
+
+    color: #86EFAC;
+}
+
 .send-text {
-    width: 50%;
+    width: 240px;
+    margin-left: 12px;
     display: flex;
     align-items: center;
     font-family: 'Roboto Flex';
@@ -128,16 +187,17 @@
     font-size: 30px;
 }
 
-.address-to-input {
-    background-color: var(--item-bg);
-    caret-color: var(--text-mini);
-    color: var(--text-light-color);
-    /* color: 'red'; */
-    border: none;
-    outline: none;
-    text-align: left;
-    font-size: 15px;
-    width: 100%;
+
+
+.address-to-input::placeholder {
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    /* identical to box height, or 133% */
+
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .txt-r {
@@ -170,4 +230,91 @@
     margin-left: 15px;
     margin-right: 15px;
 }
+
+.button-send-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 46px;
+    opacity: 0.84;
+}
+
+.button-send-bg {
+    background: #3D3D3D;
+    border-radius: 5px;
+}
+
+.button-active-send-bg {
+    background: #86EFAC;
+    border-radius: 5px;
+}
+
+.disable-text {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    /* or 114% */
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #979797;
+}
+
+.active-text {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    /* or 114% */
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #2B2B2B;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.container-balance {
+    display: flex;
+    justify-content: space-between;
+}
+
+.your-balance-text {
+    margin-top: 4px;
+    margin-left: 14.47px;
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10.5px;
+    line-height: 20px;
+    /* identical to box height, or 190% */
+
+
+    color: #B4B4B4;
+}
+
+.your-balance-q {
+    margin-top: 4px;
+    margin-right: 11.13px;
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10.5px;
+    line-height: 20px;
+    /* identical to box height, or 190% */
+
+
+    color: #86EFAC;
+}
+
+
 
