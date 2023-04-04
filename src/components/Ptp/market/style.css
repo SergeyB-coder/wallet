@@ -1,6 +1,6 @@
 .market-container {
-    padding: 20px;
-    
+    padding-top: 17px;
+    width: 335px;
 }
 
 .filter-input {
@@ -11,38 +11,88 @@
     font-size: 12;
     margin-top: 3;
     width: 100%;
-    text-align: center;
+    text-align: left;
     height: 30px; 
     border-radius: 5px; 
     padding: 5px; 
     /* font-size: 14px; */
 }
 
+.container-buy-sale {
+    width: 262px;
+    height: 36px;
+    display: flex;
+
+}
+
+.container-filter-sale-buy {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-header {
+    display:flex;
+    justify-content: space-between;
+    
+    height: 66px;
+    background: radial-gradient(101.38% 2292.84% at 100% 64.79%, rgba(35, 35, 35, 0.1) 0%, rgba(94, 161, 119, 0.1) 74.25%, rgba(134, 239, 172, 0.1) 100%);
+    mix-blend-mode: normal;
+    /* opacity: 0.1; */
+    border-radius: 10px;
+}
+
 .order-item {
-    background-color: var(--item-bg);
-    color: var(--text-light-color);
-    border-radius: 8px;
+    height: 237px;
+
+    background: rgba(51, 51, 51, 0.5);
+    border-radius: 10px;
+
+    color:#FFFFFF;
     margin-top: 8px;
     margin-bottom: 8px;
-    padding-bottom: 10px;
 }
 
 .order-price {
-    font-size: 25px;
-    width: 50vw;
-    text-align:left;
-    margin-left: 10px;
+    margin-top: 16px;
+    margin-left: 17px;
+    text-align: left;
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 20px;
+
+    color: #FFFFFF;
 }
 
 .order-buy {
-    font-size:medium;
-    width: 30vw;
-    background-color: var(--btn-bg-color3);
-    color: var(--text-light-color);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    gap: 10px;
+
+    width: 79px;
+    height: 25px;
+
+    border: 1px solid #86EFAC;
     border-radius: 10px;
+
+
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    text-align: right;
+
+    color: #86EFAC;
+
+    margin-right: 15px;
 }
 
 .order-request {
@@ -71,10 +121,70 @@
 }
 
 .order-label {
-    margin-left: 10px;
-    font-size: 12px;
-    width: 40vw;
-    text-align:left;
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 140%;
+    /* or 15px */
+
+    display: flex;
+    align-items: center;
+
+    color: #86EFAC;
+}
+
+.order-info-3 {
+    width: fit-content;
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
+    /* or 138% */
+
+    display: flex;
+    align-items: center;
+    text-align: right;
+
+    color: #FFFFFF;
+
+    margin-right: 17px;
+}
+
+.order-line-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 5px 0px;
+
+    width: 301px;
+    height: 10px;
+    
+}
+
+.order-line {
+    margin-left: 17px;
+    width: 301px;
+    height: 0px;
+
+    border: 1px solid #353535;
+}
+
+.order-label-2 {
+    margin-left: 17px;
+    width: fit-content;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 9px;
+    line-height: 11px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.085em;
+    text-transform: uppercase;
+
+    color: #9C9595;
 }
 
 .order-comment {
@@ -83,20 +193,61 @@
     color: var(--btn-bg-color)
 }
 
-.order-user-name {
-    margin-left: 10px;
-    font-size: 15px;
-    font-weight: bold;
-    width: 40vw;
-    text-align:left;
+.order-row-1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
 }
 
-.order-info {
-    margin-left: 10px;
+.order-user-name {
+    width: fit-content;
+    margin-left: 17px;
+    /* margin-top: 10px; */
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 700;
     font-size: 12px;
-    width: 40vw;
+    line-height: 14px;
+    display: flex;
+    align-items: center;
+
+    color: #FFFFFF;
+}
+
+.order-info-1 {
+    width: fit-content;
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 18px;
+    /* or 164% */
+
+    display: flex;
+    align-items: center;
     text-align: right;
 
+    color: #FFFFFF;
+    margin-right: 20px;
+}
+
+.order-info-2 {
+    width: fit-content;
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 18px;
+    /* or 164% */
+
+    display: flex;
+    align-items: center;
+    text-align: right;
+
+    color: #86EFAC;
+
+    margin-right: 17px;
 }
 
 .bg-order-input {
@@ -170,12 +321,12 @@
 }
 
 .filter-sale-buy-item {
-    width: 48%;
+    width: 131px;
     padding: 0;
 }
 
 .is_active {
-    border: 1px solid var(--btn-bg-color);
+    background: #585858;
 }
 
 .simple-btn {
@@ -196,4 +347,139 @@
     color: var(--btn-bg-color);
     font-size: 15px;
     text-align: left;
+}
+
+
+/* market */
+
+.text-market {
+    width: fit-content;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 10.5px;
+    line-height: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+
+    color: #FFFFFF;
+}
+
+.selected-item-buy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    border: 1px solid #585858;
+    border-radius: 4px 0px 0px 4px;
+}
+
+.selected-item-sale {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    border: 1px solid #505050;
+    border-radius: 0px 4px 4px 0px;
+}
+
+.buy-sale-text {
+    /* text-align: center; */
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    /* or 143% */
+
+    /* display: flex; */
+    /* align-items: center; */
+    text-align: center;
+
+    color: #FFFFFF;
+}
+
+.filter-item-quantity {
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 9px 7px 9px 13px;
+    gap: 4px;
+
+    width: 184px;
+    height: 36px;
+
+    border: 1px solid #585858;
+    /* shadow/sm */
+
+    filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.05));
+    border-radius: 6px;
+}
+
+.filter-item-currency {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-items: center;
+    padding: 9px 7px 9px 13px;
+    gap: 4px;
+
+    width: 143px;
+    height: 36px;
+
+    border: 1px solid #585858;
+    /* shadow/sm */
+
+    filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.05));
+    border-radius: 6px;
+}
+
+.filter-item-fiat {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 7px 9px 13px;
+    gap: 4px;
+
+    width: 83px;
+    height: 36px;
+
+    border: 1px solid #585858;
+    /* shadow/sm */
+
+    filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.05));
+    border-radius: 6px;
+}
+
+.filter-item-company {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 7px 9px 13px;
+    gap: 4px;
+
+    width: 244px;
+    height: 36px;
+
+    border: 1px solid #585858;
+    /* shadow/sm */
+
+    filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.05));
+    border-radius: 6px;
+}
+
+.filter-item-company-text {
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    /* identical to box height, or 171% */
+
+
+    color: #FFFFFF;
 }
