@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { svg_address_to, svg_bep, svg_ok, svg_tron, svg_wait } from '../../const/svgs';
 import { useTelegram } from '../../hooks/useTelegram';
 import { selectAddress, selectAddressTRX, selectBalance, selectBalanceTRX } from '../Home/homeSlice';
-// import { ButtonNext } from '../Common/buttonNext';
 import { sendTo } from './sendApi';
 
 import './style.css'
