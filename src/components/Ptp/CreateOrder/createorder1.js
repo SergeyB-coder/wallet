@@ -6,7 +6,7 @@ import { selectBalance, selectBalanceTRX, selectBalanceTRXv } from '../../Home/h
 // import { ButtonNext } from '../../Common/buttonNext';
 import './style.css'
 
-import { selectCurrencyFiat, selectCurrencyOrder, selectPriceType, selectLimitOrder, selectPercentPrice, selectPrice, selectPriceMarket, selectQuantityOrder, selectTypeOrder, setCurrencyFiat, setCurrencyOrder, setPriceType, setLimitOrder, setPercentPrice, setPrice, setQuantityOrder, setTimeLimit, setTypeOrder, selectRubDollar } from '../ptpSlice';
+import { selectCurrencyFiat, selectCurrencyOrder, selectPriceType, selectLimitOrder, selectPercentPrice, selectPrice, selectPriceMarket, selectQuantityOrder, selectTypeOrder, setCurrencyFiat, setCurrencyOrder, setPriceType, setLimitOrder, setPercentPrice, setPrice, setQuantityOrder, setTypeOrder, selectRubDollar } from '../ptpSlice';
 
 export function CreateOrder1(props) {
     const dispatch = useDispatch()
