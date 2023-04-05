@@ -4,7 +4,7 @@ import { useTelegram } from '../../../hooks/useTelegram';
 import { setMethodPay } from '../ptpSlice';
 import { getCompaniesPay, getUserMethodsPay, newMethodPay } from '../settings_pay/settingsPayApi';
 import { selectCard, selectCompaniesPay, selectMethodsPay, setCard, setCompaniesPay, setMethodsPay } from '../settings_pay/settingsPaySlice';
-import { ButtonNext } from '../../Common/buttonNext';
+// import { ButtonNext } from '../../Common/buttonNext';
 import { useState } from 'react';
 
 export function CreateOrder2(props) {
@@ -15,7 +15,7 @@ export function CreateOrder2(props) {
     const setListCheckedMethods = props.setListCheckedMethods
     
     const [showNewMethod, setShowNewMethod] = useState(false);
-    const [indexSelectedCompany, setIndexSelectedCompany] = useState(0)
+    const [indexSelectedCompany] = useState(0)
 
     // const method_pay = useSelector(selectMethodPay)
     const companies_pay = useSelector(selectCompaniesPay)
@@ -24,14 +24,16 @@ export function CreateOrder2(props) {
     const card = useSelector(selectCard)
 
     const divider = 
-        <div className='divider-currency m-m-10'></div>
-
-    const arrow_right = 
-        <div className='trade-menu-arrow-col'>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-chevron-right" viewBox="0 0 16 16">
-                <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-            </svg>
+        <div className='container-center'>
+            <div className='divider-method'></div>
         </div>
+
+    // const arrow_right = 
+    //     <div className='trade-menu-arrow-col'>
+    //         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-chevron-right" viewBox="0 0 16 16">
+    //             <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+    //         </svg>
+    //     </div>
 
     // const render_method_pay = 
     // <div className='row button-currency-settings'>
@@ -49,10 +51,10 @@ export function CreateOrder2(props) {
             
     // </div>
 
-    function handleClickCompany(index) {
-        setIndexSelectedCompany(index)
-        setShowNewMethod(true)
-    }
+    // function handleClickCompany(index) {
+    //     setIndexSelectedCompany(index)
+    //     setShowNewMethod(true)
+    // }
 
     function handleClickCheck(index) {
         let arr = listCheckedMethods.slice()
@@ -69,14 +71,12 @@ export function CreateOrder2(props) {
                     </div>
                     {arrow_right}
                 </div> */}
-                <div className='row button-currency-settings'>
-                    <div className='currency-settings-item-col1'>
-                        <div>
-                            <div className='method-order-text1'>{method?.company_name}</div>
-                            <div className='method-order-text2'>{method?.card_number}</div>
-                        </div>
+                <div className='method-pay-row'>
+                    <div>
+                        <div className='method-order-text1'>{method?.company_name}</div>
+                        <div className='method-order-text2'>{method?.card_number}</div>
                     </div>
-                    <div className='method-pay-col2'>
+                    <div className=''>
                         <div className={listCheckedMethods[index] ? 'method-switch': 'method-switch-off'}
                             onClick={() => {handleClickCheck(index)}}
                         >
@@ -156,10 +156,11 @@ export function CreateOrder2(props) {
                        
                 </div>
             </div>:
-            <div>
-                <div className='row  mt-3'>
-                    <div className='col-9 t-left-align text-dark-color'>Добавить методы оплаты</div>
-                    <div className='col-2 text-dark-color'>2/4</div>
+
+            <div className='container-create-order mt-20'>
+                <div className='container-title'>
+                    <div className='title-text'>Добавить методы оплаты</div>
+                    <div className='page-number'>2/4</div>
                 </div>
 
                 {/* <div className='currency-settings-container mt-2'>
@@ -167,11 +168,11 @@ export function CreateOrder2(props) {
                 </div> */}
 
                 
-                <div className='trade-menu-container mt-5 mb-5'>
+                <div className='methods-pay-container mt-20'>
                     {renderListMethods}
                 </div>
 
-                <div style={{height: '43vh', borderBottomRightRadius: 0, borderBottomLeftRadius: 0}} className='container-list-companies overflow-auto mb-3'>
+                {/* <div style={{height: '43vh', borderBottomRightRadius: 0, borderBottomLeftRadius: 0}} className='container-list-companies overflow-auto mb-3'>
                     {companies_pay.map ((company, index) => {
                         return (
                                 <div key={company.id} className='container-company row d-flex align-items-center' onClick={() => {handleClickCompany(index)}}>
@@ -180,9 +181,24 @@ export function CreateOrder2(props) {
                                 </div>
                         )
                     })}
+                </div> */}
+                <div className='container-center mt-20'>
+                    <div className='btn-add-method-pay'>
+                        <div className='svg-add-method'>
+                            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M15 30C23.2843 30 30 23.2843 30 15C30 6.71573 23.2843 0 15 0C6.71573 0 0 6.71573 0 15C0 23.2843 6.71573 30 15 30ZM22 17.9251V13.0749H17.2752V8H11.7248V13.0749H7V17.9251H11.7248V23H17.2752V17.9251H22Z" fill="#86EFAC"/>
+                            </svg>
+                        </div>
+                        <div className='btn-add-method-text'>Добавить метод оплаты</div>
+                    </div>
                 </div>
                 
-                <ButtonNext onClick={() => {props.setScreen('createorder3')}}/>
+                
+                {/* <ButtonNext onClick={() => {props.setScreen('createorder3')}}/> */}
+
+                <div onClick={() => {props.setScreen('createorder3')}} className='button-send-box button-active-send-bg active-text mt-20'>
+                    Далее
+                </div>
             </div>
         }
         </>

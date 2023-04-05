@@ -1,34 +1,36 @@
 import React, {useEffect, useState} from 'react';
 import { useSelector } from 'react-redux';
-import { useTelegram } from '../../../hooks/useTelegram';
-import { ButtonNext } from '../../Common/buttonNext';
-import { CURRENCY_FIAT_LIST, CURRENCY_LIST, TIME_LIMITS } from '../../../const/devdata';
+// import { useTelegram } from '../../../hooks/useTelegram';
+// import { ButtonNext } from '../../Common/buttonNext';
+import {  TIME_LIMITS } from '../../../const/devdata';
 
-import { selectQuantityOrder, selectCurrencyFiat, selectCurrencyOrder, selectPriceType, selectPrice, selectLimitOrder, selectTimeLimit, selectTypeOrder } from '../ptpSlice';
+import { selectQuantityOrder,  selectLimitOrder, selectTimeLimit } from '../ptpSlice';
 import { selectMethodsPay } from '../settings_pay/settingsPaySlice';
 
 export function CreateOrder4(props) {
     const listCheckedMethods = props.listCheckedMethods
 
     const [methodPay, setMethodPay] = useState('');
-    const {first_name} = useTelegram()
+    // const {first_name} = useTelegram()
     // const percent_price = useSelector(selectPercentPrice)
     const quantity_order = useSelector(selectQuantityOrder)
     // const limit_order = useSelector(selectLimitOrder)
-    const currency_fiat = useSelector(selectCurrencyFiat)
-    const currency_order = useSelector(selectCurrencyOrder)
-    const currency_type = useSelector(selectPriceType)
+    // const currency_fiat = useSelector(selectCurrencyFiat)
+    // const currency_order = useSelector(selectCurrencyOrder)
+    // const currency_type = useSelector(selectPriceType)
 
     // const method_pay = useSelector(selectMethodPay)
     const methods_pay = useSelector(selectMethodsPay)
-    const price = useSelector(selectPrice)
+    // const price = useSelector(selectPrice)
     const limit_order = useSelector(selectLimitOrder)
     const timeLimit = useSelector(selectTimeLimit)
 
-    const typeOrder = useSelector(selectTypeOrder)
+    // const typeOrder = useSelector(selectTypeOrder)
 
     const divider = 
-        <div className='divider-test-order'></div>
+        <div className='container-center'>
+            <div className='divider-check-order'></div>
+        </div>
     
     useEffect(() => {
         const ind = listCheckedMethods.findIndex(e => e)
@@ -38,45 +40,72 @@ export function CreateOrder4(props) {
     }, [listCheckedMethods, methods_pay]);
     
     return (
-        <div>
-            <div className='row  mt-3 text-dark-color'>
-                <div className='col-9 t-left-align'>Проверка объявления</div>
-                <div className='col-2'>4/4</div>
+        <div className='container-create-order mt-20'>
+            <div className='container-title'>
+                <div className='title-text'>Проверьте объявление</div>
+                <div className='page-number'>4/4</div>
             </div>
             
-            <div className='test-order-container mt-3 mb-5'>
-                <div className='row d-flex align-items-center'>
-                    <div className='test-order-col1'>
-                        <div className='test-order-price'>{`${price} ${CURRENCY_FIAT_LIST[currency_fiat - 1]}`}</div>
-                        <div className='test-order-text'>{currency_type === 1 ? 'Фиксированная': 'Плавающая'} цена за 1 USDT</div>
+            <div className='container-check-order mt-20'>
+                <div className='check-order-container-item'>
+                    <div className='order-settings-label'>
+                        Сумма
                     </div>
-                    <div className='test-order-col2'>
-                        <div className='test-order-buy'>
-                            {typeOrder === 's' ? 'Купить': 'Продать'}
-                        </div>
+
+                    <div className='check-order-text'>
+                        {quantity_order}
                     </div>
                 </div>
                 
                 {divider}
 
-                <div className='row'>
-                    <div className='test-order-info-col d-flex flex-column justify-content-start'>
-                        <p>{first_name}</p>
-                        <p>Лимит</p>
-                        <p>Методы оплаты</p>
-                        <p className='text-nowrap'>Оплатить в течение</p>
-                    </div>
-                    <div className='test-order-info-col'>
-                        <p>{quantity_order} {CURRENCY_LIST[currency_order - 1]}</p>
-                        <p>{limit_order} {CURRENCY_FIAT_LIST[currency_fiat - 1]}</p>
-                        <p>{methodPay}</p>
-                        <p>{TIME_LIMITS[timeLimit - 1]}</p>
+                <div className='check-order-container-item'>
+                    <div className='order-settings-label'>
+                        Лимиты
                     </div>
 
+                    <div className='check-order-text'>
+                        {limit_order}
+                    </div>
+                </div>
+
+                {divider}
+
+                <div className='check-order-container-item'>
+                    <div className='order-settings-label'>
+                        Метод оплаты
+                    </div>
+
+                    <div className='check-order-text'>
+                        {methodPay}
+                    </div>
+                </div>
+
+                {divider}
+
+                <div className='check-order-container-item'>
+                    <div className='order-settings-label text-nowrap'>
+                        Оплатить в течение
+                    </div>
+
+                    <div className='check-order-text'>
+                        {TIME_LIMITS[timeLimit - 1]}
+                    </div>
+                </div>
+
+                {divider}
+
+                <div className='comment-check-order mt-20'>
+                    Комиссия продавца за каждую транзакцию — 0.9%.
+                    Комиссия покупателя — 0%
                 </div>
 
             </div>
-            <ButtonNext onClick={props.handleClickCreateOrder} text={'Создать объявление'}/>
+            {/* <ButtonNext onClick={props.handleClickCreateOrder} text={'Создать объявление'}/> */}
+
+            <div onClick={props.handleClickCreateOrder} className='button-send-box button-active-send-bg active-text mt-20'>
+                Создать объявление
+            </div>
         </div>
     );
 }

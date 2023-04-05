@@ -1,11 +1,16 @@
 .selected-item {
-    color: var(--text-light-color); 
-    background-color: var(--item-bg); 
-    height: 30px; 
-    border-radius: 5px; 
-    padding-top: 5px; 
-    font-size: 13px;
-    text-align: center;
+    width: 80px;
+    height: 24px;
+
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    /* identical to box height, or 171% */
+    text-align: left;
+
+    color: #FFFFFF;
 }
 
 .currency-list-select {

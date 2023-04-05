@@ -218,7 +218,6 @@ export function Send (props) {
                                 <div className='send-address'>
                                     <input className='address-to-input-2' type='number' placeholder='0 USDT' onChange={handleChangeQuantity} value={quantity}/>
                                         
-
                                     <div className='address-item-col2'>
                                         <div style={{color: 'var(--text-mini)'}}
                                             onClick={() => {fromLabel1 === 'USDT TRC20' ? setQuantity(balance_trx): setQuantity(balance)}}
@@ -226,7 +225,7 @@ export function Send (props) {
                                             Max
                                         </div>
                                     </div>
-
+                                    
                                 </div>
 
                                 <div className='container-balance'>

@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../../hooks/useTelegram';
-import { ButtonNext } from '../../Common/buttonNext';
+// import { ButtonNext } from '../../Common/buttonNext';
+import { svg_salute } from '../../../const/svgs';
 
 
 export function CreateOrder5(props) {
@@ -18,14 +19,29 @@ export function CreateOrder5(props) {
     }, );
 
     return (
-        <div className='salute-container'>
-            <div className='salute-text1'>
-                Объявление создано
+        <div className='container-create-order mt-20'>
+            <div className='container-title'>
+                <div className='title-text'>Объявление размещено</div>
+                <div className='page-number'>5/5</div>
             </div>
-            <div className='salute-text2 mb-5'>
-                Мы сообщим, когда на него откликнуться
+            <div className='container-finish-order mt-20'>
+                <div className=''>
+                    {svg_salute}
+                </div>
+                <div className='d-flex justify-content-center'>
+                    <div className='salute-text1'>
+                        Объявление успешно размещено
+                    </div>
+                </div>
+                
             </div>
-            <ButtonNext onClick={handleOpenMarket} text='Открыть маркет'/>
+            
+            
+            {/* <ButtonNext onClick={handleOpenMarket} text='Открыть маркет'/> */}
+
+            <div onClick={handleOpenMarket} className='button-send-box button-active-send-bg active-text mt-20'>
+                Перейти в маркет
+            </div>
         </div>
     );
 }

@@ -35,31 +35,31 @@ export function CreateOrder() {
 
     
 
-    const nextScreen = () => {
-        switch (screen) {
-            case 'createorder1':
-                setScreen('createorder2')
-                break;
+    // const nextScreen = () => {
+    //     switch (screen) {
+    //         case 'createorder1':
+    //             setScreen('createorder2')
+    //             break;
 
-            case 'createorder2':
+    //         case 'createorder2':
                 
-                setScreen('createorder3')
-                break;
+    //             setScreen('createorder3')
+    //             break;
 
-            case 'createorder3':
-                tg.MainButton.hide()
+    //         case 'createorder3':
+    //             tg.MainButton.hide()
                 
-                setScreen('createorder4')
-                break;
+    //             setScreen('createorder4')
+    //             break;
 
-            case 'createorder4':
-                handleClickCreateOrder()
-                break;
+    //         case 'createorder4':
+    //             handleClickCreateOrder()
+    //             break;
 
-            default:
-                break;
-        }
-    }
+    //         default:
+    //             break;
+    //     }
+    // }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const backScreen = () => {
@@ -121,16 +121,16 @@ export function CreateOrder() {
     }, [dispatch]);
 
     useEffect(() => {
-        tg.MainButton.show()
-        tg.MainButton.setText('Далее')
-        tg.MainButton.setParams({color: '#86EFAC'})
+        // tg.MainButton.show()
+        // tg.MainButton.setText('Далее')
+        // tg.MainButton.setParams({color: '#86EFAC'})
         tg.BackButton.show()
-    }, [tg.BackButton, tg.MainButton]);
+    }, [tg.BackButton]);
 
-    useEffect(() => {
-        tg.onEvent('mainButtonClicked', nextScreen)
-            return () => {tg.offEvent('mainButtonClicked', nextScreen)}
-        }, )
+    // useEffect(() => {
+    //     tg.onEvent('mainButtonClicked', nextScreen)
+    //         return () => {tg.offEvent('mainButtonClicked', nextScreen)}
+    //     }, )
 
     useEffect(() => {
         // setTest(par)
@@ -140,7 +140,7 @@ export function CreateOrder() {
         })
 
     return (
-        <div className={screen === 'createorder5' ? 'p-4 ptp-container': 'p-4'} >
+        <div className='d-flex justify-content-center'>
             {screen === 'createorder1' && <CreateOrder1 setScreen={setScreen}/>}
             {screen === 'createorder2' && <CreateOrder2 setScreen={setScreen} listCheckedMethods={listCheckedMethods} setListCheckedMethods={setListCheckedMethods}/>}
             {screen === 'createorder3' && <CreateOrder3 setScreen={setScreen}/>}
