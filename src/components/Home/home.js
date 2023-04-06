@@ -72,7 +72,7 @@ export function Home() {
 				<div>
 					{/* <h3>Hello!</h3> */}
 					<div className={`home-container-balance ${isHide && 'grow'} ${isLoadData ? 'h-205': 'h-230'}`}>
-						<div className='d-flex justify-content-center'>
+						<div className='d-flex justify-content-center '>
 							<div className='row d-flex justify-content-between align-items-center mt-30 title-balance' >
 								<div className='balance-label'>Ваш баланс</div>
 								<div className='bottom-balance'>
@@ -85,10 +85,10 @@ export function Home() {
 						<div className='d-flex justify-content-center'>
 							{isLoadData && <div className={`balance-load ${isHide ? 'hide-balace-load': 'gradient'}`}></div>}
 							{/* <div className={`balance-load hide-balace-load ${isLoadData ? '': 'hide-balace-load'}`}></div> */}
-							{!isLoadData && <div className='balance-main'><span className='balance-main-sign'>$</span>{Math.round(parseFloat(balance + balance_trx + balance_trx_v)*1000)/1000}</div>}
+							{!isLoadData  && <div className='balance-main'><span className='balance-main-sign'>$</span>{Math.round(parseFloat(balance + balance_trx + balance_trx_v)*1000)/1000}</div>}
 						</div>
 						
-						{isLoadData && <div className={`home-container-balance-load ${isHide ? 'hide-balace-load grow': ''}`}>2</div>}
+						{isLoadData && <div className={`home-container-balance-load ${isHide ? 'grow-hide': ''}`}></div>}
 					</div>
 					
 					<MenuButtons/>	

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { svg_address_to, svg_bep, svg_ok, svg_tron, svg_wait } from '../../const/svgs';
+import { svg_address_to, svg_bep, svg_gear, svg_ok, svg_tron } from '../../const/svgs';
 import { useTelegram } from '../../hooks/useTelegram';
 import { selectAddress, selectAddressTRX, selectBalance, selectBalanceTRX } from '../Home/homeSlice';
 import { sendTo } from './sendApi';
@@ -135,7 +135,9 @@ export function Send (props) {
     // }
 
     const divider = 
-        <div className='send-divider'></div>
+        <div className='container-center'>
+            <div className='line-2'></div>
+        </div>
 
     
     useEffect(() => {
@@ -149,8 +151,24 @@ export function Send (props) {
     return (
         <div className='d-flex justify-content-center'>
             <div className='send-container'>
-                <div className='title-send'>
-                    Отправить
+                <div className='container-title mt-20'>
+                    <div className='title-send'>
+                        {
+                            stepSend === 'address' ? 'Отправить': 
+                            stepSend === 'confirm' ? 'Подтвердите перевод':
+                            stepSend === 'wait' ? 'Ожидайте статус':
+                            'Транзакция завершена'
+                        }
+                    </div>
+                    
+                    <div className='page-number'>
+                        {
+                            stepSend === 'address' ? '1/4': 
+                            stepSend === 'confirm' ? '2/4':
+                            stepSend === 'wait' ? '3/4':
+                            '4/4'
+                        }
+                    </div>
                 </div>
 
                 {/* <div className='row d-flex align-items-center justify-content-center'>
@@ -242,75 +260,135 @@ export function Send (props) {
                     )
                 }
                 {stepSend === 'confirm' && (
-                    <>
-                        <div>
-                            <label style={{color: 'white', fontSize: 34, marginTop: 30}}>{`${quantity} USDT`}</label>
-                            <br></br>
-                            <label style={{color: 'var(--btn-bg-color)'}}>{`${quantity} $`}</label>
+                    <div className='color-bg-cntr h-162 pt-15 mt-20'>
+                        <div className='row-2 p-17 h-29'>
+                            <div className='send-text-1'>Актив</div>
+                            <div className='send-text-2'>{quantity} USDT</div>
                         </div>
 
-                        <div className='confirm-data mt-5 mb-5 py-1'>
-                            <div className='row m-2 py-2 d-flex justify-content-between'>
-                                <div className='col-5 txt-l'>
-                                    Актив
-                                </div>
-                                <div className='col-5 txt-r'>
-                                    {fromLabel1}
-                                </div>
-                            </div>
+                        {divider}
 
-                            {divider}
-
-                            <div className='row m-2 py-2 d-flex justify-content-between'>
-                                <div className='col-5 txt-l'>
-                                    Получатель
-                                </div>
-                                <div className='col-5 txt-r'>
-                                    {addressTo}
-                                </div>
-                            </div>
-
-                            {divider}
-
-                            <div className='row m-2 py-2 d-flex justify-content-between'>
-                                <div className='col-5 txt-l'>
-                                    Сетевой сбор
-                                </div>
-                                <div className='col-5 txt-r'>
-                                    50 TRX
-                                </div>
-                            </div>
-
-                            {divider}
-
-                            <div className='row m-2 py-2 d-flex justify-content-between'>
-                                <div className='col-5 txt-l-w'>
-                                    Макс Тотал
-                                </div>
-                                <div className='col-5 txt-r-w'>
-                                    {`$ ${quantity}`}
-                                </div>
-                            </div>
+                        <div className='row-2 p-17 h-29'>
+                            <div className='send-text-1'>Получатель</div>
+                            <div className='send-text-2'>{addressTo} USDT</div>
                         </div>
-                    </>
+
+                        {divider}
+
+                        <div className='row-2 p-17 h-29'>
+                            <div className='send-text-1'>Сетевой сбор</div>
+                            <div className='send-text-2'>50 TRX</div>
+                        </div>
+
+                        {divider}
+
+                        <div className='row-2 p-17 h-29 mt-6'>
+                            <div className='send-text-1'>Итого</div>
+                            <div className='send-text-2'>${quantity + 50}</div>
+                        </div>
+                    </div>
+                    // <>
+                        
+                    //     <div>
+                    //         <label style={{color: 'white', fontSize: 34, marginTop: 30}}>{`${quantity} USDT`}</label>
+                    //         <br></br>
+                    //         <label style={{color: 'var(--btn-bg-color)'}}>{`${quantity} $`}</label>
+                    //     </div>
+
+                    //     <div className='confirm-data mt-5 mb-5 py-1'>
+                    //         <div className='row m-2 py-2 d-flex justify-content-between'>
+                    //             <div className='col-5 txt-l'>
+                    //                 Актив
+                    //             </div>
+                    //             <div className='col-5 txt-r'>
+                    //                 {fromLabel1}
+                    //             </div>
+                    //         </div>
+
+                    //         {divider}
+
+                    //         <div className='row m-2 py-2 d-flex justify-content-between'>
+                    //             <div className='col-5 txt-l'>
+                    //                 Получатель
+                    //             </div>
+                    //             <div className='col-5 txt-r'>
+                    //                 {addressTo}
+                    //             </div>
+                    //         </div>
+
+                    //         {divider}
+
+                    //         <div className='row m-2 py-2 d-flex justify-content-between'>
+                    //             <div className='col-5 txt-l'>
+                    //                 Сетевой сбор
+                    //             </div>
+                    //             <div className='col-5 txt-r'>
+                    //                 50 TRX
+                    //             </div>
+                    //         </div>
+
+                    //         {divider}
+
+                    //         <div className='row m-2 py-2 d-flex justify-content-between'>
+                    //             <div className='col-5 txt-l-w'>
+                    //                 Макс Тотал
+                    //             </div>
+                    //             <div className='col-5 txt-r-w'>
+                    //                 {`$ ${quantity}`}
+                    //             </div>
+                    //         </div>
+                    //     </div>
+                    // </>
                 )}
 
                 {(stepSend === 'wait' || stepSend === 'finish') && (
                     <>
-                        <div className='trs-wait mt-5'>
-                            <div className='row my-2 py-2 d-flex align-items-center'>
-                                <div className='trs-wait-logo'>
-                                    {stepSend === 'wait' ? svg_wait: svg_ok}
-                                </div>
-                                <div className='trs-text-block'>
-                                    <label className='trs-text-1'>{(stepSend === 'wait' ? 'Транзакция в процессе': 'Транзакция завершена!')}</label>
-                                    <br></br>
-                                    <label className='trs-text-2'>{(stepSend === 'wait' ? 'Ожидаем подтверждений': '')}</label>
-                                </div>
+                        <div className='color-bg-cntr h-cntr-deal pt-17 mt-20'>
+                            {stepSend === 'wait' ? svg_gear: svg_ok}
+                            <div className='wait-text'>
+                                Транзакция выполняется
+                            </div>
+                            <div className='wait-text-1 mt-10'>
+                                Ожидаем кода подтверждения
                             </div>
                         </div>
 
-                        <div className='confirm-data mt-5 mb-5'>
+                        <div className='color-bg-cntr h-198 pt-15 mt-20'>
+                            <div className='row-2 p-17 h-29'>
+                                <div className='send-text-1'>Дата операции</div>
+                                <div className='send-text-2'>{date.toLocaleDateString()}</div>
+                            </div>
+
+                            {divider}
+
+                            <div className='row-2 p-17 h-29'>
+                                <div className='send-text-1'>Актив</div>
+                                <div className='send-text-2'>{quantity} USDT</div>
+                            </div>
+
+                            {divider}
+
+                            <div className='row-2 p-17 h-29'>
+                                <div className='send-text-1'>Получатель</div>
+                                <div className='send-text-2'>{addressTo} USDT</div>
+                            </div>
+
+                            {divider}
+
+                            <div className='row-2 p-17 h-29'>
+                                <div className='send-text-1'>Сетевой сбор</div>
+                                <div className='send-text-2'>50 TRX</div>
+                            </div>
+
+                            {divider}
+
+                            <div className='row-2 p-17 h-29 mt-6'>
+                                <div className='send-text-1'>Итого</div>
+                                <div className='send-text-2'>${quantity + 50}</div>
+                            </div>
+                        </div>
+
+                        {/* <div className='confirm-data mt-5 mb-5'>
                             <div className='row m-2 py-2 d-flex justify-content-between'>
                                 <div className='col-5 txt-l'>
                                     Дата
@@ -337,7 +415,7 @@ export function Send (props) {
                                     {`$ ${quantity}`}
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </>
                 )}
 
@@ -356,8 +434,12 @@ export function Send (props) {
                 {/* } */}
 
                 {/* {showLoader && <div className="loader"></div>} */}
-                <div onClick={handleClickSend} className={`button-send-box ${isReady ? 'button-active-send-bg active-text': 'button-send-bg disable-text'}  mt-20`}>
-                    {isReady ? 'Отправить': 'Заполните данные'}
+                <div onClick={handleClickSend} className={`button-send-box ${isReady && stepSend !== 'wait' ? 'button-active-send-bg active-text': 'button-send-bg disable-text'}  mt-20`}>
+                    {
+                        stepSend === 'confirm' ? 'Подтвердить':
+                        stepSend === 'wait' ? 'TRONSCAN':
+                        isReady ? 'Отправить': 'Заполните данные'
+                    } 
                 </div>
             </div>
         </div>

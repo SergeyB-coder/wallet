@@ -66,7 +66,7 @@ export function Ptp (props) {
 						<div className='text-deal-request-from'>{`Запрос от ${deal.user_to}`}</div>
 					</div>
 					<div className='deal-col-2'>
-						<div className='text-deal-quantity'>{deal.quantity} USDT</div>
+						<div className='text-deal-quantity mr-17'>{deal.quantity} USDT</div>
                         <div className='text-deal-q-fiat'>${deal.quantity}</div>
 						{/* <div className='text-deal text-nowrap'><span className='label-deal'>Статус: </span> 
 							{

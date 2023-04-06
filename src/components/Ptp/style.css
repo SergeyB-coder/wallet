@@ -480,9 +480,27 @@ p {
    color: var(--btn-bg-color);
   }
 
+  .line-green {
+    height: 0px;
+    width: 129px;
+
+    border: 1px solid #86EFAC;
+  }
+
 
   .open-chat-btn {
-    color: var(--text-light-color)
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    /* or 114% */
+
+    /* display: flex;
+    align-items: center; */
+    text-align: center;
+
+    color: #DADADA;
   }
 
  

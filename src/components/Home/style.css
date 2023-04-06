@@ -120,7 +120,10 @@
     align-items: flex-end; */
     text-align: center;
 
-    
+    animation-name: show;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
 }
 
 .hide-balace-load {
@@ -130,6 +133,19 @@
     animation-iteration-count: 1;
     animation-timing-function: ease;
     /* opacity: 0; */
+}
+
+@keyframes show {
+	0% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 0.5;
+	}
+	100% {
+		opacity: 1;
+        /* display: none; */
+	}
 }
 
 @keyframes hide {
@@ -166,6 +182,24 @@
     animation-duration: 1s;
     animation-iteration-count: 1;
     animation-timing-function: ease;
+}
+
+.grow-hide {
+    animation-name: growhide;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
+}
+
+@keyframes growhide {
+	0% {
+		height: 205px;
+        opacity: 1;
+	}
+	100% {
+		height: 230px;
+        opacity: 0;
+	}
 }
 
 @keyframes grow {
@@ -549,14 +583,14 @@
 
 .text-deal-quantity {
     margin-top: 21px;
-    margin-right: 17px;
+    /* margin-right: 17px; */
     font-family: 'Roboto Flex';
     font-style: normal;
     font-weight: 700;
     font-size: 14px;
     line-height: 16px;
-    display: flex;
-    align-items: center;
+    /* display: flex;
+    align-items: center; */
     text-align: right;
 
     color: #FFFFFF;
@@ -578,6 +612,18 @@
     color: #86EFAC;
 }
 
+.deal-text-3 {
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 20px;
+    /* identical to box height, or 182% */
+    text-align: right;
+
+    color: #FFFFFF;
+}
+
 .text-deal-r {
     text-align: right;
     color: var(--text-light-color);
@@ -589,7 +635,7 @@
 }
 
 
-/* new design */
+/* NEW DESIGN */
 
 .color-bg-cntr {
     background: #272728;
@@ -601,12 +647,25 @@
     border-radius: 10px;
 }
 
+.color-bg-deal {
+    background: rgba(51, 51, 51, 0.5);
+    border-radius: 10px;
+}
+
 .w-cntr {
     width: 335px;
 }
 
 .h-cntr-deal {
     height: 209px;
+}
+
+.h-198 {
+    height: 198px;
+}
+
+.h-162 {
+    height: 162px;
 }
 
 .h-cntr-person {
@@ -617,8 +676,16 @@
     height: 118px;
 }
 
+.h-77 {
+    height: 77px;
+}
+
 .h-47 {
     height: 47px;
+}
+
+.h-29 {
+    height: 34px;
 }
 
 .item-text {
@@ -633,6 +700,32 @@
     color: #FFFFFF;
 }
 
+.deal-text {
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    /* identical to box height, or 123% */
+
+    text-align: left;
+
+    color: #FFFFFF;
+}
+
+.deal-text-2 {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    /* identical to box height, or 133% */
+
+    text-align: left;
+
+    color: #979797;
+}
+
 .title-text {
     font-family: 'Raleway';
     font-style: normal;
@@ -643,6 +736,18 @@
     text-transform: uppercase;
     text-align: left;
     color: #FFFFFF;
+}
+
+.title-text-g {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 10.5px;
+    line-height: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-align: left;
+    color: #86EFAC;
 }
 
 .name-text {
@@ -683,6 +788,35 @@
     color: #8E8E93;
 }
 
+.send-text-1 {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 9px;
+    line-height: 11px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.085em;
+    text-transform: uppercase;
+
+    color: #FFFFFF;
+}
+
+.send-text-2 {
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 150% */
+
+    display: flex;
+    align-items: center;
+    text-align: right;
+
+    color: #FFFFFF;
+}
+
 .pt-26 {
     padding-top: 26px;
 }
@@ -696,12 +830,36 @@
     padding-right: 17px;
 }
 
+.pt-17 {
+    padding-top: 17px;
+}
+
+.pt-15 {
+    padding-top: 15px;
+}
+
 .pt-9 {
     padding-top: 9px;
 }
 
+.mr-17 {
+    margin-right: 17px;
+}
+
+.mt-21 {
+    margin-top: 21px;
+}
+
+.mt-13 {
+    margin-top: 13px;
+}
+
 .mt-10 {
     margin-top: 10px;
+}
+
+.mt-6 {
+    margin-top: 6px;
 }
 
 .w-227 {
@@ -733,6 +891,61 @@
     height: 0px;
 
     border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.line-2 {
+    width: 301px;
+    height: 0px;
+
+    border: 1px solid #353535;
+}
+
+.btn-accept-deal {
+    width: 157px;
+    height: 46px;
+
+    opacity: 0.84;
+
+    background: #86EFAC;
+    border-radius: 5px;
+
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    /* or 114% */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    color: #2B2B2B;
+
+    margin-right: 17px;
+}
+
+.btn-disable-deal {
+    margin-left: 17px;
+    background: #333333;
+    border-radius: 5px;
+    width: 130px;
+    height: 46px;
+
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    /* or 114% */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    color: #FF8F8F;
 }
 
 
