@@ -19,6 +19,7 @@ import { CreateOrder } from './components/Ptp/CreateOrder/createOrder';
 import { Chat } from './components/Ptp/chat/chat';
 import { Deal } from './components/Ptp/market/Deal';
 import { CompleteDeal } from './components/Ptp/completeDeal';
+import { Person } from './components/person/person';
 
 
 function App() {
@@ -63,6 +64,13 @@ function App() {
                 <StartScreen/>
                 }
             /> */}
+            <Route
+                path="/person"
+                element={
+                <Person/>
+                }
+            />
+
             <Route
                 path="/"
                 element={

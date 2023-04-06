@@ -25,6 +25,10 @@ export function Ptp (props) {
         navigate('/market', {replace: true})
     }
 
+    const handleClickPerson = () => {
+        navigate('/person', {replace: true})
+    }
+
     // const handleClickSettingsPay = () => {
     //     navigate('/settingspay', {replace: true})
     // }
@@ -154,7 +158,7 @@ export function Ptp (props) {
                     <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
                 </svg>
             </div> */}
-            <div className='trade-menu-text-col' onClick={handleClickMarket}>
+            <div className='trade-menu-text-col' onClick={handleClickPerson}>
                 Личный кабинет
             </div>
             {/* {arrow_right} */}

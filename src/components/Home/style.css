@@ -588,15 +588,16 @@
     margin-left: 20px;
 }
 
-.deal-col-2 {
-    /* width: 60%; */
-}
-
 
 /* new design */
 
 .color-bg-cntr {
     background: #272728;
+    border-radius: 10px;
+}
+
+.color-bg-cntr-person {
+    background: #333333;
     border-radius: 10px;
 }
 
@@ -607,5 +608,132 @@
 .h-cntr-deal {
     height: 209px;
 }
+
+.h-cntr-person {
+    height: 104px;
+}
+
+.h-118 {
+    height: 118px;
+}
+
+.h-47 {
+    height: 47px;
+}
+
+.item-text {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    /* identical to box height */
+
+
+    color: #FFFFFF;
+}
+
+.title-text {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 10.5px;
+    line-height: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-align: left;
+    color: #FFFFFF;
+}
+
+.name-text {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 20px;
+    /* identical to box height, or 100% */
+
+    text-align: center;
+
+    color: #86EFAC;
+}
+
+.num-text {
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 20px;
+    /* identical to box height, or 100% */
+
+    text-align: center;
+
+    color: #86EFAC;
+}
+
+.mini-text {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 140%;
+
+    text-align: center;
+
+    color: #8E8E93;
+}
+
+.pt-26 {
+    padding-top: 26px;
+}
+
+.pt-22 {
+    padding-top: 22px;
+}
+
+.p-17 {
+    padding-left: 17px;
+    padding-right: 17px;
+}
+
+.pt-9 {
+    padding-top: 9px;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.w-227 {
+    width: 227px;
+}
+
+.cntr-2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 19px 11px 14px;
+
+    width: 162.5px;
+    height: 79px;
+}
+
+.row-2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.a-c {
+    align-items: center;
+}
+
+.line {
+    width: 294px;
+    height: 0px;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 
 
