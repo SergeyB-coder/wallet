@@ -593,4 +593,19 @@
 }
 
 
+/* new design */
+
+.color-bg-cntr {
+    background: #272728;
+    border-radius: 10px;
+}
+
+.w-cntr {
+    width: 335px;
+}
+
+.h-cntr-deal {
+    height: 209px;
+}
+
 
