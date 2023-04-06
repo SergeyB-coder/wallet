@@ -66,9 +66,9 @@ export function ScreenBuy (props) {
         setShowMethodsPay(false)
     }
 
-    const nextScreen = () => {
-        handleClickBuy()
-    }
+    // const nextScreen = () => {
+    //     handleClickBuy()
+    // }
 
     const backScreen = () => {
         if (showMethodsPay) setShowMethodsPay(false)
@@ -85,20 +85,20 @@ export function ScreenBuy (props) {
     //     let inp = document.getElementById('quantity')
     //     inp.style.width = (20 + (quantity_buy && quantity_buy?.length + 1) * 13) + 'px'
     // }, [quantity_buy]);
-    useEffect(() => {
-        tg.onEvent('mainButtonClicked', nextScreen)
-            return () => {tg.offEvent('mainButtonClicked', nextScreen)}
-        }, )
+    // useEffect(() => {
+    //     tg.onEvent('mainButtonClicked', nextScreen)
+    //         return () => {tg.offEvent('mainButtonClicked', nextScreen)}
+    //     }, )
 
     useEffect(() => {
         tg.onEvent('backButtonClicked', backScreen)
             return () => {tg.offEvent('backButtonClicked', backScreen)}
         }, )
 
-    useEffect(() => {
-        tg.MainButton.show()
-        tg.MainButton.setText('Начать сделку')
-    }, [tg.MainButton]);
+    // useEffect(() => {
+    //     tg.MainButton.show()
+    //     tg.MainButton.setText('Начать сделку')
+    // }, [tg.MainButton]);
 
     return (
         <>
