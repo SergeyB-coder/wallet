@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../../hooks/useTelegram';
 // import { ButtonNext } from '../../Common/buttonNext';
-import { svg_salute } from '../../../const/svgs';
+// import { svg_salute } from '../../../const/svgs';
 
 import salute_gif from '../../../static/animations/salute.gif'
 
@@ -28,7 +28,7 @@ export function CreateOrder5(props) {
             <div className='container-finish-order mt-20'>
                 <div className=''>
                     {/* {svg_salute} */}
-                    <img style={{width: '131.4px', height: '132px'}} src={salute_gif}/>
+                    <img style={{width: '131.4px', height: '132px'}} src={salute_gif} alt=''/>
                 </div>
                 
                 <div className='d-flex justify-content-center'>
