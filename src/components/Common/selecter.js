@@ -23,7 +23,7 @@ export function Selecter (props) {
     }
 
     return (
-        <div >
+        <div className=''>
             <div className='selected-item text-nowrap' onClick={handleClickCurrencyBalance}>{list_values[selected_value - 1]}</div>
             {showListCurrency && is_show ? 
             <div className='currency-list-select'>

@@ -5,13 +5,13 @@ import { useTelegram } from '../../../hooks/useTelegram';
 // import { ButtonNext } from '../../Common/buttonNext';
 import { getDealInfo, sendConfirm, sendEndDeal } from './marketApi';
 import { selectDealScreenInfo, setDealInfo, setDealScreenInfo } from './marketSlice';
-import { svg_clock, svg_hands, svg_salute } from '../../../const/svgs';
+import { svg_hands, svg_salute } from '../../../const/svgs';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { useTelegram } from '../../../hooks/useTelegram';
 // import { ButtonNext } from '../buttonNext';
 // import { sendBuy } from './marketApi';
 // import { selectQuantityBuy, setQuantityBuy } from './marketSlice';
-
+import clock_gif from '../../../static/animations/clock.gif'
 export function Deal () {
     const {tg, user_id, first_name} = useTelegram()
     const { deal_id } = useParams();
@@ -25,8 +25,12 @@ export function Deal () {
     const [showLoader, setShowLoader] = useState(false)
     const [error, setError] = useState('')
 
+    const [timer, setTimer] = useState(60);
+    let t = 60
+
     const str_type_deal = deal_screen_info?.type_order === 'b' ? 'Вы продаете': 'Вы покупаете'
 
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
     function handleGetDealInfo() {
         console.log('handleGetDealInfo', deal_id)
@@ -41,6 +45,15 @@ export function Deal () {
                 if (data.deal.status === "pay") {
                     setShowConfirmPay(true)
                 }
+                else if (data.deal.status === "request") {
+                    const I = setInterval(()=>{
+                        if (t === 0) clearInterval(I)
+                        t--;
+                        setTimer(t)
+                    }, 1000)
+                }
+
+                
             }
             
         }) 
@@ -116,9 +129,11 @@ export function Deal () {
                     {/* <label style={{color: 'var(--btn-bg-color)', fontSize: 15}}>Статус</label><br></br> */}
                     
                     <div className='container-center'>
-                        {showConfirmPay && deal_screen_info?.type_order === 's' ? svg_hands: 
-                        deal_screen_info?.status === 'end' ? svg_salute:
-                        svg_clock}
+                        {
+                            showConfirmPay && deal_screen_info?.type_order === 's' ? svg_hands: 
+                            deal_screen_info?.status === 'end' ? svg_salute:
+                            <img style={{width: '131.4px', height: '132px'}} src={clock_gif} alt=''/>
+                        }
                     </div>
 
                     <div className='wait-text'>
@@ -269,10 +284,11 @@ export function Deal () {
 
                 {deal_screen_info?.status === "request" &&
                     <div className="button-send-box button-send-bg disable-text">
-                        63 секунды
+                        {timer} секунд
                     </div>
                 }
             </div>
+            
             
         </div>
       );

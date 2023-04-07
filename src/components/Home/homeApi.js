@@ -86,3 +86,20 @@ export function getUserDeals(pars, callback) {
             return callback(data)
         });
 }
+
+export function getTransactions(pars, callback) {
+    fetch(url + '/gettransactions', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(pars)
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        console.log('data gettransactions', data)
+        
+        return callback(data)
+    });
+}

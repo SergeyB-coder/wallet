@@ -169,7 +169,7 @@ export function Market() {
 
                         <div className='row d-flex justify-content-between mt-2 p-0 m-0'>
                             
-                            <div className='filter-item-currency '>
+                            <div className='filter-item-currency position-relative'>
                                 {/* <div className='p-0 m-0 h-100'> */}
                                     <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <circle cx="4" cy="4" r="4" fill="#34D399"/>
@@ -211,7 +211,7 @@ export function Market() {
                                             <div className='mt-2'>{order.price}
                                                 {order.currency_fiat_id === 1 ? 'RUB': 'USD'}
                                             </div>
-                                            <div className='order-label'>Цена за 1 {order.currency_id === 1 ? 'USDT BEP20': 'USDT TRC20'}</div>
+                                            <div className={order.type === 's' ? 'order-label':'mini-text-r'}>Цена за 1 {order.currency_id === 1 ? 'USDT BEP20': 'USDT TRC20'}</div>
                                         </div>
                                         
                                         

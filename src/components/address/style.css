@@ -132,3 +132,9 @@
 
     color: #979797;
 }
+
+.pos-abs {
+    position: absolute;
+    top: 60px;
+    left: 0;
+}

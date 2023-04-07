@@ -44,6 +44,8 @@
     border-radius: 10px;
 }
 
+
+
 .order-item {
     height: 237px;
 
@@ -78,7 +80,7 @@
     width: 89px;
     height: 25px;
 
-    border: 1px solid #FFCF97;
+    border: 1px solid #FF8F8F;
     border-radius: 10px;
 
     font-family: 'Raleway';
@@ -90,7 +92,7 @@
     align-items: center;
     text-align: right;
 
-    color: #FFCF97;
+    color: #FF8F8F;
     margin-right: 15px;
 }
 
@@ -603,19 +605,19 @@
     background:none;
 
     
-    width: 12px;
+    width: 30px;
 }
 
-.buy-input::placeholder {
+/* .buy-input::placeholder {
     font-family: 'Roboto Flex';
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
-    line-height: 24px;
+    line-height: 24px; */
     /* identical to box height, or 171% */
 
-    color: #FFFFFF;
-}
+    /* color: #FFFFFF; */
+/* } */
 
 .text-buy {
     font-family: 'Roboto Flex';
