@@ -103,7 +103,8 @@ export function Address (props) {
                     color: {
                         dark: '#86EFAC',  // Blue dots
                         light: '#141414' // Transparent background
-                    } 
+                    } ,
+                    width: 188
                 }, 
                 function (err, canvas) {
                     if (err) throw err
@@ -133,33 +134,26 @@ export function Address (props) {
                 <div className='widget-container'>
                     
                     <div style={{position: 'relative'}}>
-                        <div className='row address-item m-0 p-0' onClick={handleClickSelectAddress}>
-                            <div className='address-item-col1'>
-                                {/* <div className='title-from mb-2'>From</div> */}
+                        <div className='row-2 color-bg-address h-60 a-c p-17' onClick={handleClickSelectAddress}>
                                 <div className='row p-0 m-0'>
                                     {/* <div className='address-circle'></div> */}
                                     <div className='svg-circle'>{fromLabel1 === 'USDT TRC20' ? svg_tron: svg_bep}</div>
                                     <div className='send-text text-nowrap'>{fromLabel1}</div>
                                 </div>
-                            </div>
-
-                            <div className='address-item-col2'>
                                 <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M4 0C4.26522 5.96046e-08 4.51957 0.105357 4.70711 0.292893L7.70711 3.29289C8.09763 3.68342 8.09763 4.31658 7.70711 4.70711C7.31658 5.09763 6.68342 5.09763 6.29289 4.70711L4 2.41421L1.70711 4.70711C1.31658 5.09763 0.683417 5.09763 0.292893 4.70711C-0.0976311 4.31658 -0.097631 3.68342 0.292893 3.29289L3.29289 0.292893C3.48043 0.105357 3.73478 0 4 0ZM0.292893 9.29289C0.683417 8.90237 1.31658 8.90237 1.70711 9.29289L4 11.5858L6.29289 9.29289C6.68342 8.90237 7.31658 8.90237 7.70711 9.29289C8.09763 9.68342 8.09763 10.3166 7.70711 10.7071L4.70711 13.7071C4.31658 14.0976 3.68342 14.0976 3.29289 13.7071L0.292893 10.7071C-0.0976311 10.3166 -0.0976311 9.68342 0.292893 9.29289Z" fill="white"/>
                                 </svg>
-                            </div>
                         </div>
                         {
                             showListAddresses ? (
-                                <div className='row address-item-2 mt-2 left-1 w-60' onClick={handleClickAddresItem}>
+                                <div className='row-2 color-bg-address h-60 a-c p-17' onClick={handleClickAddresItem}>
 
-                                    <div className='address-item-col1'>
+                                    
                                         <div className='row p-0 m-0'>
                                             {/* <div className='address-circle'></div> */}
                                             <div className='svg-circle'>{fromLabel2 === 'USDT TRC20' ? svg_tron: svg_bep}</div>
                                             <div className='send-text text-nowrap'>{fromLabel2}</div>
                                         </div>
-                                    </div>
 
                                     <div className='address-item-col2'>
                                         {/* <svg onClick={handleClickSelectAddress} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" className="bi bi-chevron-compact-down" viewBox="0 0 16 16">
@@ -180,7 +174,14 @@ export function Address (props) {
                         Адрес вашего кошелька
                     </div>
 
-                    <div className='address-text'>
+                    <div className='address-text'
+                        onClick={() => {
+                            const copy_address = fromLabel1 !== 'USDT TRC20' ? address: address_trx
+                            navigator.clipboard.writeText(copy_address)
+                            setShowMessage(true)
+                            setTimeout(() => {setShowMessage(false)}, 1000)
+                        }}
+                    >
                         {fromLabel1 !== 'USDT TRC20' ? address: address_trx}
                     </div>
 

@@ -8,8 +8,7 @@
 }
  
 .is_select {
-    background-color: #000;
-    border-radius: 10px;
+    background-color: #585858
 }
 
 .limit {
@@ -35,7 +34,7 @@
     padding: 3px;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    /* justify-content: flex-end; */
     height: 30px;
     width: 60px;
     border: 1px solid #B1B1B1;
@@ -45,7 +44,7 @@
 .method-switch-circle {
     width: 23px;
     height: 23px;
-
+    margin-left: 30px;
     background: #86EFAC;
     border-radius: 100px;
 }
@@ -54,12 +53,14 @@
     padding: 3px;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    /* justify-content: flex-start; */
     height: 30px;
     width: 60px;
-    /* border: 1px solid #B1B1B1; */
+    /* border-style: solid; */
     border-radius: 21px;
     background: #3D3D3F;
+
+    
 }
 
 .method-switch-off-circle {
@@ -68,6 +69,94 @@
 
     background: #8E8E93;
     border-radius: 100px;
+}
+
+.anim-circle {
+    animation-name: slide;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
+}
+
+.anim-circle-b {
+    animation-name: slide_b;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
+}
+
+@keyframes slide {
+
+    0% { 
+        margin-left: 0;
+
+    }
+    100% { 
+        margin-left: 30px;
+    }
+
+}
+
+@keyframes slide_b {
+
+    0% { 
+        margin-left: 30px;
+
+    }
+    50% { 
+        margin-left: -5px;
+    }
+    100% { 
+        margin-left: 0;
+    }
+
+}
+
+.anim-switch-off {
+    animation-name: switch_to_off;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
+}
+
+.anim-switch {
+    animation-name: switch_to;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
+}
+
+
+
+@keyframes switch_to {
+
+    0% { 
+        /* border-width: 0px; */
+        
+        border-color: #3D3D3F;
+        background: #3D3D3F;
+
+    }
+    100% { 
+        /* border-width: 1px;  */
+        border-color: #B1B1B1;
+        background: none;
+    }
+
+}
+
+@keyframes switch_to_off {
+    0% { 
+        /* border-width: 1px; */
+        border-color: #B1B1B1;
+        background: none;
+
+    }
+    100% { 
+        /* border-width: 0px;  */
+        border-color: #3D3D3F;
+        background: #3D3D3F;
+    }  
 }
 
 .method-order-text2 {
@@ -274,13 +363,14 @@
 }
 
 .order-type-sale {
+    border: 1px solid #585858;
     display: flex;
     align-items: center;
     justify-content: center;
 
     height: 36px;
     width: 94.6px;
-    background: #585858;
+    /* background: #585858; */
     border-radius: 0px 4px 4px 0px;
 
     font-family: 'Roboto Flex';
@@ -322,6 +412,28 @@
 
     /* filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.05)); */
     border-radius: 6px;
+}
+
+.order-currency-selecter {
+    height: 36px;
+    width: 189.2px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 7px 9px 13px;
+    gap: 4px;
+
+
+    border: 1px solid #585858;
+    /* shadow/sm */
+
+    /* filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.05)); */
+    border-radius: 6px;
+}
+
+.is-select-1 {
+    opacity: 0.5;
 }
 
 .order-rect {

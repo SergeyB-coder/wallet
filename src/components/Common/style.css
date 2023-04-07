@@ -1,5 +1,6 @@
 .selected-item {
-    width: 80px;
+    position: relative;
+    /* width: 80px; */
     height: 24px;
 
     font-family: 'Roboto Flex';
@@ -11,18 +12,21 @@
     text-align: left;
 
     color: #FFFFFF;
+    z-index: 11;
 }
 
 .currency-list-select {
     /* padding: 5px; */
     position: absolute;
+    top: 40px;
+    left: 0;
     /* width: '30vw';  */
     display: 'flex'; 
     justify-content: 'flex-start';
-    background-color:black;
+    background: #333333;
     /* border: var(--text-light-color) solid 0.5px; */
     border-radius: 10px;
-    z-index: 10;
+    z-index: 20;
     /* width: 100%; */
     font-size: 14px;
 }

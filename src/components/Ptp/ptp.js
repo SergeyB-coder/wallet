@@ -208,7 +208,7 @@ export function Ptp (props) {
         <>
         
             <div className='d-flex justify-content-center'>
-                <div className='trade-menu-container'>
+                <div className='trade-menu-container mt-20'>
                     {menu_market}
                     <div className='d-flex justify-content-center'>{divider}</div>
                     {person}

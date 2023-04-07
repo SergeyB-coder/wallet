@@ -4,6 +4,7 @@ import { useTelegram } from '../../../hooks/useTelegram';
 // import { ButtonNext } from '../../Common/buttonNext';
 import { svg_salute } from '../../../const/svgs';
 
+import salute_gif from '../../../static/animations/salute.gif'
 
 export function CreateOrder5(props) {
     const {tg} = useTelegram()
@@ -26,8 +27,10 @@ export function CreateOrder5(props) {
             </div>
             <div className='container-finish-order mt-20'>
                 <div className=''>
-                    {svg_salute}
+                    {/* {svg_salute} */}
+                    <img style={{width: '131.4px', height: '132px'}} src={salute_gif}/>
                 </div>
+                
                 <div className='d-flex justify-content-center'>
                     <div className='salute-text1'>
                         Объявление успешно размещено

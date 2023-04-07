@@ -33,6 +33,7 @@ export function Market() {
 
     const [filter_quantity, setFilter_quantity] = useState('')
     
+    const [currentSelecter, setCurrentSelecter] = useState(''); //currency, fiat
 
     const backScreen = (() => {
         navigate('/ptp', {replace: true})
@@ -148,12 +149,14 @@ export function Market() {
                                 </div>
                             </div>
 
-                            <div className='filter-item-fiat'>
+                            <div className='filter-item-fiat position-relative'>
                                 <Selecter 
                                     list_values={CURRENCY_FIAT_LIST} 
-                                    class_name={'select-currency text-nowrap'} 
+                                    class_name={'filter-item-fiat text-nowrap'} 
                                     setIndex={handleChangeCurrencyFiat} 
                                     selected_value={currencyFiat}
+                                    is_show={currentSelecter === 'fiat'}
+                                    setSelecter={()=>setCurrentSelecter('fiat')}
                                 />
                                 <div>
                                     <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -166,7 +169,7 @@ export function Market() {
 
                         <div className='row d-flex justify-content-between mt-2 p-0 m-0'>
                             
-                            <div className='filter-item-currency'>
+                            <div className='filter-item-currency '>
                                 {/* <div className='p-0 m-0 h-100'> */}
                                     <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <circle cx="4" cy="4" r="4" fill="#34D399"/>
@@ -174,19 +177,20 @@ export function Market() {
                                 {/* </div> */}
                                 <Selecter 
                                     list_values={CURRENCY_LIST} 
-                                    class_name={'select-currency text-nowrap'} 
+                                    class_name={'filter-item-currency text-nowrap'} 
                                     setIndex={handleChangeCurrency} 
                                     selected_value={currencyNum}
+                                    is_show={currentSelecter === 'currency'}
+                                    setSelecter={()=>setCurrentSelecter('currency')}
                                 />
 
-                                <div>
+                                
                                     <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M4 0C4.26522 5.96046e-08 4.51957 0.105357 4.70711 0.292893L7.70711 3.29289C8.09763 3.68342 8.09763 4.31658 7.70711 4.70711C7.31658 5.09763 6.68342 5.09763 6.29289 4.70711L4 2.41421L1.70711 4.70711C1.31658 5.09763 0.683417 5.09763 0.292893 4.70711C-0.0976311 4.31658 -0.097631 3.68342 0.292893 3.29289L3.29289 0.292893C3.48043 0.105357 3.73478 0 4 0ZM0.292893 9.29289C0.683417 8.90237 1.31658 8.90237 1.70711 9.29289L4 11.5858L6.29289 9.29289C6.68342 8.90237 7.31658 8.90237 7.70711 9.29289C8.09763 9.68342 8.09763 10.3166 7.70711 10.7071L4.70711 13.7071C4.31658 14.0976 3.68342 14.0976 3.29289 13.7071L0.292893 10.7071C-0.0976311 10.3166 -0.0976311 9.68342 0.292893 9.29289Z" fill="white"/>
                                     </svg>
-                                </div>
                             </div>
                             
-                            <div className='filter-item-quantity'>
+                            <div className='filter-item-quantity position-relative'>
                                 <input className='filter-input' type='number' placeholder='Кол-во' onChange={handleChangeFilterQuantity} value={filter_quantity}/>
                             </div>
                         </div>
@@ -202,7 +206,7 @@ export function Market() {
                                     } 
                                     className='order-item mt-3' key={order.id}
                                 >
-                                    <div className='order-header'>
+                                    <div className='order-header a-c'>
                                         <div className='order-price'>
                                             <div className='mt-2'>{order.price}
                                                 {order.currency_fiat_id === 1 ? 'RUB': 'USD'}
@@ -211,7 +215,7 @@ export function Market() {
                                         </div>
                                         
                                         
-                                        <div className='order-buy mt-4' 
+                                        <div className={order.type === 'b' ? 'order-sale': 'order-buy'} 
                                             onClick={() => {handleClickBuy(order)}}
                                         >
                                                 {order.type === 's' ? 'Купить': 'Продать'}

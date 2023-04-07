@@ -6,7 +6,7 @@ import { selectBalance, selectBalanceTRX, selectBalanceTRXv } from '../../Home/h
 // import { ButtonNext } from '../../Common/buttonNext';
 import './style.css'
 
-import { selectCurrencyFiat, selectCurrencyOrder, selectPriceType, selectLimitOrder, selectPercentPrice, selectPrice, selectPriceMarket, selectQuantityOrder, selectTypeOrder, setCurrencyFiat, setCurrencyOrder, setPriceType, setLimitOrder, setPercentPrice, setPrice, setQuantityOrder, setTypeOrder, selectRubDollar } from '../ptpSlice';
+import { selectCurrencyFiat, selectCurrencyOrder, selectPriceType, selectLimitOrder, selectPercentPrice, selectPrice, selectPriceMarket, selectQuantityOrder, selectTypeOrder, setCurrencyFiat, setCurrencyOrder, setPriceType, setLimitOrder, setPercentPrice, setPrice, setQuantityOrder, setTypeOrder, selectRubDollar, setTimeLimit, selectTimeLimit } from '../ptpSlice';
 
 export function CreateOrder1(props) {
     const dispatch = useDispatch()
@@ -15,6 +15,7 @@ export function CreateOrder1(props) {
     const percent_price = useSelector(selectPercentPrice)
     const quantity_order = useSelector(selectQuantityOrder)
     const limit_order = useSelector(selectLimitOrder)
+    const time_limit_order = useSelector(selectTimeLimit)
     const price = useSelector(selectPrice)
     const type_price = useSelector(selectPriceType)
     // const timeLimit = useSelector(selectTimeLimit)
@@ -93,16 +94,18 @@ export function CreateOrder1(props) {
             <div className='order-settings-label'>
                 {`${typeOrder === 's' ? 'Продажа': 'Покупка'} криптовалюты`}
             </div>
-            <div className='order-settings-item-col2'>
+            <div className='order-settings-item-col2 position-relative'>
                 <svg width="9" height="8" viewBox="0 0 9 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="4.21594" cy="4" r="4" fill="#34D399"/>
                 </svg>
 
                 <Selecter 
                     list_values={CURRENCY_LIST} 
-                    class_name={'select-currency text-nowrap'} 
+                    class_name={'order-currency-selecter text-nowrap'} 
                     setIndex={handleClickCurrencyItem} 
                     selected_value={currency_order}
+                    is_show={true}
+                    setSelecter={()=>{}}
                 />
                 <svg style={{marginLeft: '49.2px'}} width="9" height="14" viewBox="0 0 9 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M4.41858 0C4.6838 5.96046e-08 4.93815 0.105357 5.12569 0.292893L8.12569 3.29289C8.51621 3.68342 8.51621 4.31658 8.12569 4.70711C7.73516 5.09763 7.102 5.09763 6.71147 4.70711L4.41858 2.41421L2.12569 4.70711C1.73516 5.09763 1.102 5.09763 0.711472 4.70711C0.320948 4.31658 0.320948 3.68342 0.711472 3.29289L3.71147 0.292893C3.89901 0.105357 4.15336 0 4.41858 0ZM0.711472 9.29289C1.102 8.90237 1.73516 8.90237 2.12569 9.29289L4.41858 11.5858L6.71147 9.29289C7.102 8.90237 7.73516 8.90237 8.12569 9.29289C8.51621 9.68342 8.51621 10.3166 8.12569 10.7071L5.12569 13.7071C4.73516 14.0976 4.102 14.0976 3.71147 13.7071L0.711472 10.7071C0.320948 10.3166 0.320948 9.68342 0.711472 9.29289Z" fill="white"/>
@@ -117,7 +120,7 @@ export function CreateOrder1(props) {
             <div className='order-settings-label'>
                 Фиатная валюта
             </div>
-            <div className='order-settings-item-col2'>
+            <div className='order-settings-item-col2 position-relative'>
                 {/* <select className="select-currency" aria-label="Default select example" onChange={handleChangeCurrencyFiat}>
                     {
                         CURRENCY_FIAT_LIST.map((currency, index) => {
@@ -129,9 +132,11 @@ export function CreateOrder1(props) {
                 </select>{chevron} */}
                 <Selecter 
                     list_values={CURRENCY_FIAT_LIST} 
-                    class_name={'select-currency text-nowrap'} 
+                    class_name={'order-currency-selecter text-nowrap'} 
                     setIndex={handleChangeCurrencyFiat} 
                     selected_value={currencyFiat}
+                    is_show={true}
+                    setSelecter={()=>{}}
                 />
                 <svg width="9" height="14" viewBox="0 0 9 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M4.41858 0C4.6838 5.96046e-08 4.93815 0.105357 5.12569 0.292893L8.12569 3.29289C8.51621 3.68342 8.51621 4.31658 8.12569 4.70711C7.73516 5.09763 7.102 5.09763 6.71147 4.70711L4.41858 2.41421L2.12569 4.70711C1.73516 5.09763 1.102 5.09763 0.711472 4.70711C0.320948 4.31658 0.320948 3.68342 0.711472 3.29289L3.71147 0.292893C3.89901 0.105357 4.15336 0 4.41858 0ZM0.711472 9.29289C1.102 8.90237 1.73516 8.90237 2.12569 9.29289L4.41858 11.5858L6.71147 9.29289C7.102 8.90237 7.73516 8.90237 8.12569 9.29289C8.51621 9.68342 8.51621 10.3166 8.12569 10.7071L5.12569 13.7071C4.73516 14.0976 4.102 14.0976 3.71147 13.7071L0.711472 10.7071C0.320948 10.3166 0.320948 9.68342 0.711472 9.29289Z" fill="white"/>
@@ -144,12 +149,14 @@ export function CreateOrder1(props) {
             <div className='order-settings-label'>
                 Тип цены
             </div>
-            <div className='order-settings-item-col2'>
+            <div className='order-settings-item-col2 position-relative'>
                 <Selecter 
                     list_values={PRICE_TYPES} 
-                    class_name={'select-currency text-nowrap'} 
+                    class_name={'order-currency-selecter text-nowrap'} 
                     setIndex={handlesetPriceType} 
                     selected_value={type_price}
+                    is_show={true}
+                    setSelecter={()=>{}}
                 />
                 <svg width="9" height="14" viewBox="0 0 9 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M4.41858 0C4.6838 5.96046e-08 4.93815 0.105357 5.12569 0.292893L8.12569 3.29289C8.51621 3.68342 8.51621 4.31658 8.12569 4.70711C7.73516 5.09763 7.102 5.09763 6.71147 4.70711L4.41858 2.41421L2.12569 4.70711C1.73516 5.09763 1.102 5.09763 0.711472 4.70711C0.320948 4.31658 0.320948 3.68342 0.711472 3.29289L3.71147 0.292893C3.89901 0.105357 4.15336 0 4.41858 0ZM0.711472 9.29289C1.102 8.90237 1.73516 8.90237 2.12569 9.29289L4.41858 11.5858L6.71147 9.29289C7.102 8.90237 7.73516 8.90237 8.12569 9.29289C8.51621 9.68342 8.51621 10.3166 8.12569 10.7071L5.12569 13.7071C4.73516 14.0976 4.102 14.0976 3.71147 13.7071L0.711472 10.7071C0.320948 10.3166 0.320948 9.68342 0.711472 9.29289Z" fill="white"/>
@@ -266,7 +273,7 @@ export function CreateOrder1(props) {
 
     const render_limit_order_max = 
             <div className='limit-order-container'>
-                    <input className='bg-input w-order' type='number' placeholder='Макс.' onChange={handleChangeLimitOrder} 
+                    <input className='address-to-input-2 w-order' type='number' placeholder='Макс.' onChange={handleChangeLimitOrder} 
                         value={ parseFloat(quantity_order) * price }
                     />
                 <div className='currency-fiat-label'>
@@ -288,13 +295,17 @@ export function CreateOrder1(props) {
                     selected_value={timeLimit}
                 />{chevron}
             </div> */}
-            <div className='order-rect w-time-limit-2 order-text-2'>
+            <div className={`order-rect w-time-limit-2 order-text-2 ${time_limit_order === 1 && 'is-select-1'}`} 
+                onClick={ () => dispatch(setTimeLimit(1))} 
+            >
                 15 мин
             </div>
-            <div className='order-rect w-time-limit-1 order-text-2'>
+            <div className={`order-rect w-time-limit-1 order-text-2 ${time_limit_order === 2 && 'is-select-1'}`}
+                onClick={ () => dispatch(setTimeLimit(2))}>
                 30 мин
             </div>
-            <div className='order-rect w-time-limit order-text-2'>
+            <div className={`order-rect w-time-limit order-text-2 ${time_limit_order === 3 && 'is-select-1'}`}
+                onClick={ () => dispatch(setTimeLimit(3))}>
                 1 час
             </div>
         </div>

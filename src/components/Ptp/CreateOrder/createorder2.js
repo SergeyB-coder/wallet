@@ -77,10 +77,10 @@ export function CreateOrder2(props) {
                         <div className='method-order-text2'>{method?.card_number}</div>
                     </div>
                     <div className=''>
-                        <div className={listCheckedMethods[index] ? 'method-switch': 'method-switch-off'}
+                        <div className={listCheckedMethods[index] ? 'method-switch anim-switch': 'method-switch-off anim-switch-off'}
                             onClick={() => {handleClickCheck(index)}}
                         >
-                            <div className={listCheckedMethods[index] ? 'method-switch-circle':'method-switch-off-circle'}></div>
+                            <div className={listCheckedMethods[index] ? 'method-switch-circle anim-circle':'method-switch-off-circle anim-circle-b'}></div>
                         </div>
                     </div>
                         

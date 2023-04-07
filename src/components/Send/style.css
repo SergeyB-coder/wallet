@@ -101,7 +101,7 @@
 }
 
 .svg-circle {
-    margin-left: 13px;
+    /* margin-left: 13px; */
     display: flex;
     align-items: center;
     padding: 0;
