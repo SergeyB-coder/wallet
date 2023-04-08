@@ -11,6 +11,7 @@ import { selectOrders, setOrders } from './marketSlice';
 import { ScreenBuy } from './screenBuy';
 
 import './style.css'
+import { svg_share } from '../../../const/svgs';
 
 
 export function Market() {
@@ -214,11 +215,13 @@ export function Market() {
                                             <div className={order.type === 's' ? 'order-label':'mini-text-r'}>Цена за 1 {order.currency_id === 1 ? 'USDT BEP20': 'USDT TRC20'}</div>
                                         </div>
                                         
-                                        
-                                        <div className={order.type === 'b' ? 'order-sale': 'order-buy'} 
-                                            onClick={() => {handleClickBuy(order)}}
-                                        >
-                                                {order.type === 's' ? 'Купить': 'Продать'}
+                                        <div className='container-center a-c'>
+                                            {svg_share}
+                                            <div className={order.type === 'b' ? 'order-sale ml-12': 'order-buy ml-12'} 
+                                                onClick={() => {handleClickBuy(order)}}
+                                            >
+                                                    {order.type === 's' ? 'Купить': 'Продать'}
+                                            </div>
                                         </div>
                                     </div>
                                     {/* {divider} */}

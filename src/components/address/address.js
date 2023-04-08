@@ -182,7 +182,7 @@ export function Address (props) {
                             setTimeout(() => {setShowMessage(false)}, 1000)
                         }}
                     >
-                        {fromLabel1 !== 'USDT TRC20' ? address: address_trx}
+                        {fromLabel1 !== 'USDT TRC20' ? address: address_trx.trim()}
                     </div>
 
                     <div className='message-address'>

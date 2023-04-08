@@ -18,6 +18,8 @@
     letter-spacing: 0.16em;
     text-transform: uppercase;
 
+    text-align: left;
+
     color: #86EFAC;
     /* width: 60vw;
     word-break: break-all;
@@ -136,5 +138,11 @@
 .pos-abs {
     position: absolute;
     top: 60px;
+    left: 0;
+}
+
+.pos-abs-t-40 {
+    position: absolute;
+    top: 40px;
     left: 0;
 }

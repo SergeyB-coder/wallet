@@ -1,8 +1,22 @@
 import React from 'react';
 import { useTelegram } from '../../hooks/useTelegram';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 export function Person (props) {
     const { first_name } = useTelegram()
+    const navigate = useNavigate()
+
+    const [allOrderActive, setAllOrderActive] = useState(true);
+
+    const handleClickCreateOrder = () => {
+        navigate('/createorder', {replace: true})
+    }
+
+    const handleClickSettingsPay = () => {
+        navigate('/settingspay', {replace: true})
+    }
+
     return (
         <div className='container-center'>
             <div className='w-cntr'>
@@ -41,7 +55,7 @@ export function Person (props) {
 
                 <div className='h-118 color-bg-cntr-person pt-9 mt-10'>
 
-                    <div className='row-2 p-17 a-c h-47'>
+                    <div className='row-2 p-17 a-c h-47' onClick={handleClickSettingsPay}>
                         <div className='item-text'>
                             Настройка оплаты
                         </div>
@@ -60,11 +74,19 @@ export function Person (props) {
                         <div className='item-text'>
                             Активность всех объявлений
                         </div>
-                        <div>
+                        {/* <div>
                             <div className={1 ? 'method-switch': 'method-switch-off'}
                                 onClick={() => {}}
                             >
                                 <div className={1 ? 'method-switch-circle':'method-switch-off-circle'}></div>
+                            </div>
+                        </div> */}
+
+                        <div className=''>
+                            <div className={allOrderActive ? 'method-switch anim-switch': 'method-switch-off anim-switch-off'}
+                                onClick={() => {setAllOrderActive(!allOrderActive)}}
+                            >
+                                <div className={allOrderActive ? 'method-switch-circle anim-circle':'method-switch-off-circle anim-circle-b'}></div>
                             </div>
                         </div>
                     </div>
@@ -81,7 +103,9 @@ export function Person (props) {
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M15 30C23.2843 30 30 23.2843 30 15C30 6.71573 23.2843 0 15 0C6.71573 0 0 6.71573 0 15C0 23.2843 6.71573 30 15 30ZM22 17.9251V13.0749H17.2752V8H11.7248V13.0749H7V17.9251H11.7248V23H17.2752V17.9251H22Z" fill="#86EFAC"/>
                             </svg>
                         </div>
-                        <div className='btn-add-method-text'>Создать объявление</div>
+                        <div className='btn-add-method-text' onClick={handleClickCreateOrder}>
+                            Создать объявление
+                        </div>
                     </div>
                 </div>
             </div>
