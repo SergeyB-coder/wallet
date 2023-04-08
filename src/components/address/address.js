@@ -130,7 +130,7 @@ export function Address (props) {
 
     return (
         <>
-            <div className='address-container'>
+            <div className='address-container mt-20'>
                 <div className='widget-container'>
                     
                     <div style={{position: 'relative'}}>
@@ -146,7 +146,7 @@ export function Address (props) {
                         </div>
                         {
                             showListAddresses ? (
-                                <div className='row-2 color-bg-address h-60 a-c p-17 pos-abs w-100 ' onClick={handleClickAddresItem}>
+                                <div className='row-2 color-bg-address h-60 a-c p-17 pos-abs w-100 color-bg-cntr' onClick={handleClickAddresItem}>
 
                                     
                                         <div className='row p-0 m-0'>

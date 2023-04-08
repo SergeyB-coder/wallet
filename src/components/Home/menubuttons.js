@@ -61,7 +61,7 @@ export function MenuButtons() {
 
                     <div className='button-svg'>
                         <div  onClick={handleClickAddress}>
-                            {svg_send}
+                            {svg_receive}
                             <div className='text-button-menu'>Получить</div>
                         </div>                        
                     </div>
@@ -79,7 +79,7 @@ export function MenuButtons() {
 
                     <div className='button-svg'>
                         <div onClick={handleClickSend}>
-                            {svg_receive}
+                            {svg_send}
                             <div className='text-button-menu'>Отправить</div>
                         </div>
                     </div>
