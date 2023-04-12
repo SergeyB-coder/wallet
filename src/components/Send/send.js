@@ -7,6 +7,8 @@ import { selectAddress, selectAddressTRX, selectBalance, selectBalanceTRX } from
 import { sendTo } from './sendApi';
 
 import gear_gif from '../../static/animations/gear.gif'
+import success_gif from '../../static/animations/success.gif'
+
 import './style.css'
 import { QrReader } from './qrscanner';
 
@@ -39,6 +41,7 @@ export function Send (props) {
     const [isValidAddress, setIsValidAddress] = useState(true);
 
     const gear_anim = <img style={{width: '131.4px', height: '132px'}} src={gear_gif} alt=''/>
+    const success_anim = <img style={{width: '131.4px', height: '132px'}} src={success_gif} alt=''/>
 
     function checkValidAddress(adderss) {
         if      (fromLabel1 === 'USDT TRC20' && adderss.length > 0) return adderss[0] === 'T'
@@ -48,7 +51,7 @@ export function Send (props) {
     }
 
     function checkIsReady(address_to, q) {
-        if (address_to.length > 0 && q.length > 0) setIsReady(true)
+        if (address_to.length > 0 && q.length > 0 && q !== '0') setIsReady(true)
         else setIsReady(false)
     }
 
@@ -65,13 +68,14 @@ export function Send (props) {
     }
 
     const handleClickAddresItem = () => {
-        setQuantity(0)
+        setQuantity('0')
         const from1 = fromLabel2
         const from2 = fromLabel1
         setFromLabel1(from1)
         setFromLabel2(from2)
         const a1 = address1
         const a2 = address2
+        console.log('a2', a2)
         setAddress1(a2)
         setAddress2(a1)
         setShowListAddresses(false)
@@ -86,32 +90,28 @@ export function Send (props) {
         setAddressTo(e.target.value)
     }
 
-    function valid() {
-        let res = true
-        if (quantity === 0) {
-            res = false
-        }
+    function commission() {
+        return fromLabel1 === 'USDT TRC20' ? 10: 0.1
+     }
 
-        if (quantity.toString().length === 0) {
-            res = false
-        }
+    function getCurrentBalance() {
+        if (fromLabel1 === 'USDT TRC20') return parseFloat(balance_trx)
+        else return parseFloat(balance)
+    }
 
-        return res
+    function getScanner() {
+        if (fromLabel1 === 'USDT TRC20') return 'TRONSCAN'
+        else return 'Etherscan'
+    }
+
+    function isCorrectQuantity() {
+        return parseFloat(quantity || 0) <= getCurrentBalance()
     }
 
     const handleClickSend = () => {
         if (stepSend === 'address') {
-            let net = ''
-            if (address1 === address) net = 'b'
-            else if (address1 === address_trx) net = 't'
-            console.log(typeof(quantity), quantity, address1)
 
-            if (!valid()  || net === '') {
-                alert('Проверьте данные')
-                return
-            }
-            else {
-                // setShowLoader(true)
+            if (isValidAddress && isCorrectQuantity() && isReady) {
 
                 setStepSend('confirm')
             }
@@ -148,6 +148,8 @@ export function Send (props) {
     // const handleClickCross = () => {
     //     setShowInputAddressTo(true)
     // }
+
+    
 
     const backScreen = () => {
         switch (stepSend) {
@@ -271,7 +273,13 @@ export function Send (props) {
 
                                 {/* QUANTITY */}
                                 <div className='send-address'>
-                                    <input className='address-to-input-2' type='number' placeholder='0 USDT' onChange={handleChangeQuantity} value={quantity}/>
+                                    <input 
+                                        className={isCorrectQuantity() ? 'address-to-input-2': 'address-to-input-2 not-valid'} 
+                                        type='number' 
+                                        placeholder='0 USDT' 
+                                        onChange={handleChangeQuantity} 
+                                        value={quantity}
+                                    />
                                         
                                     <div className='address-item-col2'>
                                         <div style={{color: 'var(--text-mini)'}}
@@ -316,14 +324,14 @@ export function Send (props) {
 
                         <div className='row-2 p-17 h-29'>
                             <div className='send-text-1'>Сетевой сбор</div>
-                            <div className='send-text-2'>50 TRX</div>
+                            <div className='send-text-2'>{fromLabel1 === 'USDT TRC20' ? '10 USDT': '0.1 USDT'}</div>
                         </div>
 
                         {divider}
 
                         <div className='row-2 p-17 h-29 mt-6'>
                             <div className='send-text-1'>Итого</div>
-                            <div className='send-text-2'>${quantity + 50}</div>
+                            <div className='send-text-2'>${parseFloat(quantity) + commission()}</div>
                         </div>
                     </div>
                     
@@ -332,12 +340,12 @@ export function Send (props) {
                 {(stepSend === 'wait' || stepSend === 'finish') && (
                     <>
                         <div className='color-bg-cntr h-cntr-deal pt-17 mt-20'>
-                            {stepSend === 'wait' ? gear_anim: svg_ok}
+                            {stepSend === 'wait' ? gear_anim: success_anim}
                             <div className='wait-text'>
-                                Транзакция выполняется
+                                {stepSend === 'wait' ? 'Транзакция выполняется': 'Транзакция завершена!'}
                             </div>
                             <div className='wait-text-1 mt-10'>
-                                Ожидаем кода подтверждения
+                                {stepSend === 'wait' && 'Ожидаем кода подтверждения'}
                             </div>
                         </div>
 
@@ -365,14 +373,14 @@ export function Send (props) {
 
                             <div className='row-2 p-17 h-29'>
                                 <div className='send-text-1'>Сетевой сбор</div>
-                                <div className='send-text-2'>50 TRX</div>
+                                <div className='send-text-2'>{fromLabel1 === 'USDT TRC20' ? '10 USDT': '0.1 USDT'}</div>
                             </div>
 
                             {divider}
 
                             <div className='row-2 p-17 h-29 mt-6'>
                                 <div className='send-text-1'>Итого</div>
-                                <div className='send-text-2'>${quantity + 50}</div>
+                                <div className='send-text-2'>${(parseFloat(quantity) || 0) + commission()}</div>
                             </div>
                         </div>
 
@@ -421,14 +429,32 @@ export function Send (props) {
                     </div> */}
                 {/* } */}
 
+                {   stepSend === 'finish' &&
+                    <div className='button-send-box button-active-send-bg active-text mt-20' 
+                        onClick={() => {navigate('/', {replace: true})}}
+                    >
+                        На главный экран
+                    </div>
+                }
+
                 {/* {showLoader && <div className="loader"></div>} */}
                 {   !showQrScanner &&
-                    <div onClick={handleClickSend} className={`button-send-box ${isReady && stepSend !== 'wait' ? 'button-active-send-bg active-text': 'button-send-bg disable-text'}  mt-20`}>
+                    <div onClick={handleClickSend} 
+                        className={`button-send-box 
+                                ${isCorrectQuantity() && isValidAddress && isReady && stepSend !== 'wait' ? 
+                                    'button-active-send-bg active-text': 
+                                    stepSend === 'finish' ? 'button-send-bg green-text': 'button-send-bg disable-text'
+                                }  mt-20`
+                            }
+                    >
                         {
                             stepSend === 'confirm' ? 'Подтвердить':
-                            stepSend === 'wait' ? 'TRONSCAN':
-                            isReady ? 'Отправить': 
-                            isValidAddress ? 'Заполните данные': 'Неверный формат адреса'
+                            stepSend === 'wait' ? getScanner():
+                            stepSend === 'finish' ? `Посмотреть на ${getScanner()}`:
+                            !isValidAddress ? 'Неверный формат адреса':
+                            !isCorrectQuantity() ? 'Сумма превышает баланс':
+                            isReady ? 'Отправить': 'Заполните данные'
+                            
                         } 
                     </div>
                 }
