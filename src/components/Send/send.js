@@ -153,7 +153,7 @@ export function Send (props) {
         switch (stepSend) {
             case 'address':
                 if (showQrScanner) setShowQrScanner(false)
-                else navigate('/home', {replace: true})
+                else navigate('/', {replace: true})
                 break;
 
             case 'confirm':
