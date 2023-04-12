@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { svg_address_to, svg_bep, svg_ok, svg_tron } from '../../const/svgs';
+import { svg_address_to, svg_bep, svg_tron } from '../../const/svgs';
 import { useTelegram } from '../../hooks/useTelegram';
 import { selectAddress, selectAddressTRX, selectBalance, selectBalanceTRX } from '../Home/homeSlice';
 import { sendTo } from './sendApi';
