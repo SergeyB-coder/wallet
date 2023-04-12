@@ -186,7 +186,7 @@ export function Address (props) {
                     </div>
 
                     <div className='message-address'>
-                        Отправляйте только Tether (TRC20) на этот адрес.
+                        Отправляйте только Tether ({fromLabel1 !== 'USDT TRC20' ? 'BEP20':'TRC20'}) на этот адрес.
                         Отправка любых других монет может привести к их безвозвратной потере.
                     </div>
 

@@ -82,10 +82,10 @@ export function Home() {
 							</div>
 						</div>
 						
-						<div className='d-flex justify-content-center'>
+						<div className='d-flex justify-content-center position-relative'>
 							{isLoadData && <div className={`balance-load ${isHide ? 'hide-balace-load': 'gradient'}`}></div>}
 							{/* <div className={`balance-load hide-balace-load ${isLoadData ? '': 'hide-balace-load'}`}></div> */}
-							{!isLoadData  && <div className='balance-main'><span className='balance-main-sign'>$</span>{Math.round(parseFloat(balance + balance_trx + balance_trx_v)*1000)/1000}</div>}
+							{isHide  && <div className='balance-main'><span className='balance-main-sign'>$</span>{Math.round(parseFloat(balance + balance_trx + balance_trx_v)*1000)/1000}</div>}
 						</div>
 						
 						{isLoadData && <div className={`home-container-balance-load ${isHide ? 'grow-hide': ''}`}></div>}

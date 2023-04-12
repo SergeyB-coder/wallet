@@ -36,8 +36,16 @@ export function Send (props) {
     const [showListAddresses, setShowListAddresses] = useState(false)
     const [showQrScanner, setShowQrScanner] = useState(false);
     const [isReady, setIsReady] = useState(false);
+    const [isValidAddress, setIsValidAddress] = useState(true);
 
     const gear_anim = <img style={{width: '131.4px', height: '132px'}} src={gear_gif} alt=''/>
+
+    function checkValidAddress(adderss) {
+        if      (fromLabel1 === 'USDT TRC20' && adderss.length > 0) return adderss[0] === 'T'
+        else if (fromLabel1 === 'USDT BEP20' && adderss.length > 1) return adderss.slice(0, 2) === '0x'
+
+        return false
+    }
 
     function checkIsReady(address_to, q) {
         if (address_to.length > 0 && q.length > 0) setIsReady(true)
@@ -72,6 +80,9 @@ export function Send (props) {
     
     const handleChangeAddressTo = (e) => {
         checkIsReady(e.target.value, quantity)
+
+        setIsValidAddress( checkValidAddress(e.target.value) )
+
         setAddressTo(e.target.value)
     }
 
@@ -141,7 +152,8 @@ export function Send (props) {
     const backScreen = () => {
         switch (stepSend) {
             case 'address':
-                navigate('/home', {replace: true})
+                if (showQrScanner) setShowQrScanner(false)
+                else navigate('/home', {replace: true})
                 break;
 
             case 'confirm':
@@ -171,6 +183,10 @@ export function Send (props) {
         tg.onEvent('backButtonClicked', backScreen)
             return () => {tg.offEvent('backButtonClicked', backScreen)}
         })
+    
+    useEffect(() => {
+        tg.BackButton.show()
+    }, [tg.BackButton]);
 
     return (
         <div className='d-flex justify-content-center'>
@@ -205,7 +221,7 @@ export function Send (props) {
                 {stepSend === 'address' &&
                     (
                         <>
-                            {showQrScanner && <QrReader setAddressTo={setAddressTo} setShowQrScanner={setShowQrScanner}/>}
+                            {showQrScanner ? <QrReader setAddressTo={setAddressTo} setShowQrScanner={setShowQrScanner}/>:
                             <div className=''>
                                 <div className='address-item p-17 position-relative' onClick={handleClickSelectAddress}>
                                     {/* <div className='address-item-col1'> */}
@@ -277,6 +293,7 @@ export function Send (props) {
                                 </div>
 
                             </div>
+                            }
                         </>
                     )
                 }
@@ -405,13 +422,16 @@ export function Send (props) {
                 {/* } */}
 
                 {/* {showLoader && <div className="loader"></div>} */}
-                <div onClick={handleClickSend} className={`button-send-box ${isReady && stepSend !== 'wait' ? 'button-active-send-bg active-text': 'button-send-bg disable-text'}  mt-20`}>
-                    {
-                        stepSend === 'confirm' ? 'Подтвердить':
-                        stepSend === 'wait' ? 'TRONSCAN':
-                        isReady ? 'Отправить': 'Заполните данные'
-                    } 
-                </div>
+                {   !showQrScanner &&
+                    <div onClick={handleClickSend} className={`button-send-box ${isReady && stepSend !== 'wait' ? 'button-active-send-bg active-text': 'button-send-bg disable-text'}  mt-20`}>
+                        {
+                            stepSend === 'confirm' ? 'Подтвердить':
+                            stepSend === 'wait' ? 'TRONSCAN':
+                            isReady ? 'Отправить': 
+                            isValidAddress ? 'Заполните данные': 'Неверный формат адреса'
+                        } 
+                    </div>
+                }
             </div>
         </div>
       );
