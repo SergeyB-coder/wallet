@@ -115,7 +115,7 @@ export function SettingsPay() {
         if (showNewMethod) {
             setShowNewMethod(false)
         }
-        else navigate('/myorders', {replace: true})
+        else navigate('/person', {replace: true})
     }
 
     const handleSelectMethodClick = () => {
@@ -134,6 +134,12 @@ export function SettingsPay() {
             dispatch(setMethodsPay(data.methods))
         })
     }, [dispatch, user_id]);
+
+
+    useEffect(() => {
+        tg.MainButton.hide()
+        tg.BackButton.show()
+    }, [tg.BackButton, tg.MainButton]);
 
     useEffect(() => {
         tg.onEvent('backButtonClicked', backScreen)

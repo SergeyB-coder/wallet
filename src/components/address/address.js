@@ -190,7 +190,12 @@ export function Address (props) {
                         Отправка любых других монет может привести к их безвозвратной потере.
                     </div>
 
+                    
+
                     <div className='button-address-container'>
+
+                        {showMessage && <div className='address-copy-message'>Адрес скопирован!</div>}
+
                         <div className='address-copy-button'
                             onClick={() => {
                                 const copy_address = fromLabel1 !== 'USDT TRC20' ? address: address_trx
@@ -204,6 +209,7 @@ export function Address (props) {
                         <div className='address-share-button'>
                             <label className='share-label'>Поделиться</label>
                         </div>
+
                     </div>
 
                     {/* <div style={{position: 'relative'}}>
@@ -232,7 +238,7 @@ export function Address (props) {
                         Копировать адрес
                     </button> */}
 
-                    {showMessage && <div className='address-text'>Адрес скопирован!</div>}
+                    
                 </div>
             </div>
             

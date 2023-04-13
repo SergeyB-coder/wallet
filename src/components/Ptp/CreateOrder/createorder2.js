@@ -56,9 +56,17 @@ export function CreateOrder2(props) {
     //     setShowNewMethod(true)
     // }
 
-    function handleClickCheck(index) {
+    function handleClickCheck(index) {        
         let arr = listCheckedMethods.slice()
         arr[index] = !arr[index]
+
+        const initialValue = 0;
+        const sumWithInitial = arr.reduce(
+            (accumulator, currentValue) => accumulator + currentValue*1,
+            initialValue
+        );
+        
+        if (sumWithInitial > 3) return
         setListCheckedMethods(arr)
     }
 
@@ -122,7 +130,7 @@ export function CreateOrder2(props) {
 
     useEffect(() => {
         getUserMethodsPay({user_id: user_id}, (data) => {
-            setListCheckedMethods(Array(data.methods.length).fill(true))
+            setListCheckedMethods(Array(data.methods.length).fill(false))
             dispatch(setMethodsPay(data.methods))
             if (data.methods.length > 0) {
                 dispatch(setMethodPay(data.methods[0]))

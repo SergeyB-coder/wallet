@@ -27,14 +27,14 @@ export function CreateOrder3(props) {
                 <TextareaAutosize placeholder='Коментарий'  className='comment-input' type='text' onChange={handleChangeComment} value={comment}/>
             </div>
             
-            <div className='px-17 mt-20'>
+            {/* <div className='px-17 mt-20'>
                 <div className='comment-mini-text clr-white'>Пример сообщения:</div>
                 <div  className='comment-mini-text clr-grey'>
                     
                     Владельцем платежного счета и аккаунта на Р2Р
                     Маркете Wallet должен быть один человек. Не указывайте тикеры монет (например, TON) в комментарии к переводу.
                 </div>
-            </div>
+            </div> */}
             
             {/* <ButtonNext onClick={() => props.setScreen('createorder4')}/> */}
             <div onClick={() => {props.setScreen('createorder4')}} className='button-send-box button-active-send-bg active-text mt-20'>

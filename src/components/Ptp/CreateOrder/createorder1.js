@@ -7,6 +7,7 @@ import { selectBalance, selectBalanceTRX, selectBalanceTRXv } from '../../Home/h
 import './style.css'
 
 import { selectCurrencyFiat, selectCurrencyOrder, selectPriceType, selectLimitOrder, selectPercentPrice, selectPrice, selectPriceMarket, selectQuantityOrder, selectTypeOrder, setCurrencyFiat, setCurrencyOrder, setPriceType, setLimitOrder, setPercentPrice, setPrice, setQuantityOrder, setTypeOrder, selectRubDollar, setTimeLimit, selectTimeLimit } from '../ptpSlice';
+import { useState } from 'react';
 
 export function CreateOrder1(props) {
     const dispatch = useDispatch()
@@ -31,6 +32,8 @@ export function CreateOrder1(props) {
     const currencyType = useSelector(selectPriceType)
     const currencyFiat = useSelector(selectCurrencyFiat)
     const typeOrder = useSelector(selectTypeOrder)
+
+    const [currentSelector, setCurrentSelector] = useState('');
 
     function handlesetPriceType(index) {
         console.log('index', index)
@@ -64,6 +67,15 @@ export function CreateOrder1(props) {
         dispatch( setCurrencyOrder(index + 1) )
     }
 
+    function getCurrentBalance() {
+        if (currency_order === 2) return parseFloat(balance_trx)
+        else return parseFloat(balance)
+    }
+
+    function isCorrectQuantity() {
+        return parseFloat(quantity_order || 0) <= getCurrentBalance()
+    }
+
     // const divider = 
     //     <div className='divider-currency'></div>
 
@@ -79,7 +91,12 @@ export function CreateOrder1(props) {
             <div className='order-settings-label text-nowrap'>
                 Я хочу
             </div>
-            <div className='container-buy-sale-type' onClick={() => dispatch(setTypeOrder(typeOrder === 's' ? 'b': 's'))}>
+            <div className='container-buy-sale-type' 
+                onClick={() => {
+
+                    dispatch(setTypeOrder(typeOrder === 's' ? 'b': 's'))
+                }}
+            >
                 <div className={`order-type-buy ${typeOrder === 'b' && 'is_select'}`}>
                     Купить
                 </div>
@@ -104,8 +121,8 @@ export function CreateOrder1(props) {
                     class_name={'order-currency-selecter text-nowrap'} 
                     setIndex={handleClickCurrencyItem} 
                     selected_value={currency_order}
-                    is_show={true}
-                    setSelecter={()=>{}}
+                    is_show={currentSelector === 'currency'}
+                    setSelecter={()=>{setCurrentSelector('currency')}}
                 />
                 <svg style={{marginLeft: '49.2px'}} width="9" height="14" viewBox="0 0 9 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M4.41858 0C4.6838 5.96046e-08 4.93815 0.105357 5.12569 0.292893L8.12569 3.29289C8.51621 3.68342 8.51621 4.31658 8.12569 4.70711C7.73516 5.09763 7.102 5.09763 6.71147 4.70711L4.41858 2.41421L2.12569 4.70711C1.73516 5.09763 1.102 5.09763 0.711472 4.70711C0.320948 4.31658 0.320948 3.68342 0.711472 3.29289L3.71147 0.292893C3.89901 0.105357 4.15336 0 4.41858 0ZM0.711472 9.29289C1.102 8.90237 1.73516 8.90237 2.12569 9.29289L4.41858 11.5858L6.71147 9.29289C7.102 8.90237 7.73516 8.90237 8.12569 9.29289C8.51621 9.68342 8.51621 10.3166 8.12569 10.7071L5.12569 13.7071C4.73516 14.0976 4.102 14.0976 3.71147 13.7071L0.711472 10.7071C0.320948 10.3166 0.320948 9.68342 0.711472 9.29289Z" fill="white"/>
@@ -135,8 +152,8 @@ export function CreateOrder1(props) {
                     class_name={'order-currency-selecter text-nowrap'} 
                     setIndex={handleChangeCurrencyFiat} 
                     selected_value={currencyFiat}
-                    is_show={true}
-                    setSelecter={()=>{}}
+                    is_show={currentSelector === 'fiat'}
+                    setSelecter={()=>setCurrentSelector('fiat')}
                 />
                 <svg width="9" height="14" viewBox="0 0 9 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M4.41858 0C4.6838 5.96046e-08 4.93815 0.105357 5.12569 0.292893L8.12569 3.29289C8.51621 3.68342 8.51621 4.31658 8.12569 4.70711C7.73516 5.09763 7.102 5.09763 6.71147 4.70711L4.41858 2.41421L2.12569 4.70711C1.73516 5.09763 1.102 5.09763 0.711472 4.70711C0.320948 4.31658 0.320948 3.68342 0.711472 3.29289L3.71147 0.292893C3.89901 0.105357 4.15336 0 4.41858 0ZM0.711472 9.29289C1.102 8.90237 1.73516 8.90237 2.12569 9.29289L4.41858 11.5858L6.71147 9.29289C7.102 8.90237 7.73516 8.90237 8.12569 9.29289C8.51621 9.68342 8.51621 10.3166 8.12569 10.7071L5.12569 13.7071C4.73516 14.0976 4.102 14.0976 3.71147 13.7071L0.711472 10.7071C0.320948 10.3166 0.320948 9.68342 0.711472 9.29289Z" fill="white"/>
@@ -242,7 +259,7 @@ export function CreateOrder1(props) {
         // </div>
         <div>
             <div className='send-address'>
-                <input className='address-to-input-2' type='number' placeholder='0 USDT' onChange={handleChangeQuantityOrder} value={quantity_order}/>
+                <input className={isCorrectQuantity() ? 'address-to-input-2': 'address-to-input-2 not-valid'} type='number' placeholder='0 USDT' onChange={handleChangeQuantityOrder} value={quantity_order}/>
                     
                 <div className='address-item-col2'>
                     <div style={{color: 'var(--text-mini)'}}>
@@ -302,11 +319,11 @@ export function CreateOrder1(props) {
             </div>
             <div className={`order-rect w-time-limit-1 order-text-2 ${time_limit_order === 2 && 'is-select-1'}`}
                 onClick={ () => dispatch(setTimeLimit(2))}>
-                30 мин
-            </div>
-            <div className={`order-rect w-time-limit order-text-2 ${time_limit_order === 3 && 'is-select-1'}`}
-                onClick={ () => dispatch(setTimeLimit(3))}>
                 1 час
+            </div>
+            <div className={`order-rect w-time-limit order-text-2 text-nowrap ${time_limit_order === 3 && 'is-select-1'}`}
+                onClick={ () => dispatch(setTimeLimit(3))}>
+                6 часов
             </div>
         </div>
     
@@ -363,7 +380,7 @@ export function CreateOrder1(props) {
             {/* <ButtonNext onClick={() => {props.setScreen('createorder2')}}/> */}
 
             <div onClick={() => {props.setScreen('createorder2')}} className='button-send-box button-active-send-bg active-text mt-20'>
-                Далее
+                {isCorrectQuantity() ? 'Далее': 'Сумма превышает баланс'}
             </div>
         </div>
     );

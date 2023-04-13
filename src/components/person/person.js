@@ -2,9 +2,10 @@ import React from 'react';
 import { useTelegram } from '../../hooks/useTelegram';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 export function Person (props) {
-    const { first_name } = useTelegram()
+    const { tg, first_name } = useTelegram()
     const navigate = useNavigate()
 
     const [allOrderActive, setAllOrderActive] = useState(true);
@@ -16,6 +17,21 @@ export function Person (props) {
     const handleClickSettingsPay = () => {
         navigate('/settingspay', {replace: true})
     }
+
+    const backScreen = () => {
+        navigate('/', {replace: true})
+        // navigate('/home', {replace: true})
+    }
+
+    useEffect(() => {
+        tg.MainButton.hide()
+        tg.BackButton.show()
+    }, [tg.BackButton, tg.MainButton]);
+
+    useEffect(() => {
+        tg.onEvent('backButtonClicked', backScreen)
+            return () => {tg.offEvent('backButtonClicked', backScreen)}
+        }, )
 
     return (
         <div className='container-center'>

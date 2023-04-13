@@ -46,7 +46,7 @@ export function Send (props) {
     function checkValidAddress(adderss) {
         if      (fromLabel1 === 'USDT TRC20' && adderss.length > 0) return adderss[0] === 'T'
         else if (fromLabel1 === 'USDT BEP20' && adderss.length > 1) return adderss.slice(0, 2) === '0x'
-
+        if (adderss.length === 0) return true
         return false
     }
 
@@ -262,7 +262,9 @@ export function Send (props) {
 
                                 {/* TO */}
                                 <div className='send-address'>
-                                    <input className='address-to-input' type='text' placeholder='Search, public address (0x) or ENS' onChange={handleChangeAddressTo} value={addressTo}/>:                                    
+                                    <input className='address-to-input' type='text' placeholder='Search, public address (0x) or ENS' 
+                                        onChange={handleChangeAddressTo} value={addressTo}
+                                    />:                                    
                                     <div className='address-item-col2'>
                                         <div onClick={()=>setShowQrScanner(true)}>{svg_address_to}</div>
                                         {/* <svg onClick={handleClickCross} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" className="bi bi-x" viewBox="0 0 16 16">
