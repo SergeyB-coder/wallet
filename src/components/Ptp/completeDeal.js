@@ -7,6 +7,9 @@ import { ButtonNext } from '../Common/buttonNext';
 import { sendAcceptDeal, sendCancelDeal, sendConfirm, sendEndDeal } from './market/marketApi';
 import { selectDealInfo, setDealInfo } from './market/marketSlice';
 
+import clock_gif from '../../static/animations/clock.gif'
+import hands_gif from '../../static/animations/hands.gif'
+
 export function CompleteDeal (props) {
     const dispatch = useDispatch()
 
@@ -71,11 +74,18 @@ export function CompleteDeal (props) {
     }
 
     const hanldeConfirm = () => {
-        sendConfirm({deal_id: deal_info.deal_id, saler_id: deal_info.buyer_id}, (data) => {
-            console.log(data)
-            // setShowConfirmPay(false)
-            setShowWait(true)
-        })
+        sendConfirm(
+            {
+                deal_id: deal_info.deal_id, 
+                saler_id: deal_info.buyer_id,
+                sum_deal: deal_info?.price * deal_info?.quantity
+            }, 
+            (data) => {
+                console.log(data)
+                // setShowConfirmPay(false)
+                setShowWait(true)
+            }
+        )
     }
 
     
@@ -110,11 +120,47 @@ export function CompleteDeal (props) {
                 </div>
 
                 <div className='title-buy-2 mt-20'>
-                    {deal_info?.quantity} {deal_info.currency === '1' ? 'USDT BEP20': 'USDT TRC20'}
+                    {deal_info?.quantity} {deal_info.currency === 1 ? 'USDT BEP20': 'USDT TRC20'}
                 </div>
 
                 <div className='container-center mt-20'>
-                    <div className='price-info-buy'>Цена за 1 USDT {deal_info.currency === '1' ? 'BEP20': 'TRC20'} = {deal_info?.price}</div>
+                    <div className='price-info-buy'>Цена за 1 USDT {deal_info.currency === 1 ? 'BEP20': 'TRC20'} = {deal_info?.price}</div>
+                </div>
+
+                <div className='color-bg-cntr h-cntr-deal w-cntr mt-20'>
+                    <div className='container-center'>
+                        
+                        {
+                            deal_info?.status === 'pay' &&
+                            <img style={{width: '131.4px', height: '132px'}} src={clock_gif} alt=''/>
+                        }
+                        {
+                            deal_info?.status === 'confirm' &&
+                            <img style={{width: '131.4px', height: '132px'}} src={hands_gif} alt=''/>
+                        }
+                    </div>
+
+                    {   deal_info?.status === 'pay' &&
+                        <>
+                            <div className='wait-text'>
+                                Ожидание оплаты
+                            </div>  
+                            <div className='wait-text-1 mt-20'>
+                                От покупателя
+                            </div> 
+                        </>
+                    }
+
+                    {   deal_info?.status === 'confirm' &&
+                        <>
+                            <div className='wait-text'>
+                                Платеж совершен
+                            </div>  
+                            <div className='wait-text-1 mt-20'>
+                                покупателем
+                            </div> 
+                        </>
+                    }
                 </div>
 
                 
@@ -147,6 +193,13 @@ export function CompleteDeal (props) {
                         </div>  
                     </div>
                 </div>
+
+                {
+                    deal_info?.status === 'confirm' &&
+                    <div onClick={hanldeConfirm} className='button-send-box button-active-send-bg active-text mt-20'>
+                            Подтвердить платеж
+                        </div>
+                }
 
                 {
                     deal_info.status === 'request' && !isCancelDeal &&

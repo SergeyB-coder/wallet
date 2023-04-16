@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../hooks/useTelegram';
 import { getUserDeals } from '../Home/homeApi';
 import { selectUserDeals, setUserDeals } from '../Home/homeSlice';
-import { setDealInfo } from './market/marketSlice';
+// import { setDealInfo } from './market/marketSlice';
 // import { CompleteDeal } from './completeDeal';
 // import { OrderItem } from './market/orderItem';
 import './style.css'
@@ -46,13 +46,15 @@ export function Ptp (props) {
 
 	function handleClickDeal(deal) {
 		console.log(deal.id_to, user_id)
-        if (deal.id_to.toString() === user_id.toString()) {
-            navigate(`/deal/${deal.deal_id}`, {replace: true, state: {deal: deal}})
-        }
-        else {
-            dispatch(setDealInfo(deal))
-            navigate('/completedeal', {replace: true, state: {deal: deal}})
-        }
+        // if (deal.id_to.toString() === user_id.toString()) {
+        //     navigate(`/deal/${deal.deal_id}`, {replace: true, state: {deal: deal}})
+        // }
+        // else {
+        //     dispatch(setDealInfo(deal))
+        //     navigate('/completedeal', {replace: true, state: {deal: deal}})
+        // }
+
+        navigate(`/deal/${deal.deal_id}`, {replace: true})
 		
 	}
 

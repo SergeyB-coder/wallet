@@ -28,6 +28,7 @@ export function ScreenBuy (props) {
     const handleClickBuy = (e) => {
         sendBuy({
             user_id: user_id, 
+            first_name: first_name,
             order_id: props.buyOrder.id, 
             quantity: quantity_buy, 
             price: props?.buyOrder?.price, 
@@ -35,25 +36,26 @@ export function ScreenBuy (props) {
             company: props?.buyOrder.company,
             card_number: props?.buyOrder.card_number,
             type_order: props?.buyOrder.type,
-            method_pay_id: listMethodsPay[indexMethodPay].id
+            method_pay_id: listMethodsPay[indexMethodPay].method_pay_id
         }, (data) => {
-            dispatch(setDealScreenInfo(
-                {
-                    deal_id: data.deal_id,
-                    quantity: quantity_buy,
-                    price: props?.buyOrder?.price,
-                    fiat: props.buyOrder.currency_fiat_id,
-                    currency: props.buyOrder.currency_id,
-                    status: 'request',
-                    saler_id: props.buyOrder.user_id,
-                    buyer_id: user_id, 
-                    saler: props?.buyOrder?.first_name, 
-                    buyer: first_name,
-                    type_order: props?.buyOrder.type,
-                    id_from: user_id
-                }
-            ))
-            navigate('/deal/0', {replace: true})
+            // dispatch(setDealScreenInfo(
+            //     {
+            //         deal_id: data.deal_id,
+            //         quantity: quantity_buy,
+            //         price: props?.buyOrder?.price,
+            //         fiat: props.buyOrder.currency_fiat_id,
+            //         currency: props.buyOrder.currency_id,
+            //         status: 'request',
+            //         saler_id: props.buyOrder.user_id,
+            //         buyer_id: user_id, 
+            //         saler: props?.buyOrder?.first_name, 
+            //         buyer: first_name,
+            //         type_order: props?.buyOrder.type,
+            //         id_from: user_id,
+            //         company: props?.buyOrder.company
+            //     }
+            // ))
+            navigate('/deal/' + data.deal_id.toString(), {replace: true})
         })
     }
 

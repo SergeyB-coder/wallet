@@ -182,6 +182,21 @@
     margin-right: 17px;
 }
 
+.deal-end-text-1 {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    /* or 114% */
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #86EFAC;
+}
+
 .order-line-container {
     display: flex;
     flex-direction: column;
@@ -193,12 +208,35 @@
     
 }
 
+.deal-line {
+    width: 301px;
+    height: 0px;
+
+    border: 1px solid #353535;
+}
+
 .order-line {
     margin-left: 17px;
     width: 301px;
     height: 0px;
 
     border: 1px solid #353535;
+}
+
+.deal-label-1 {
+    width: fit-content;
+    height: 19px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 9px;
+    line-height: 11px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.085em;
+    text-transform: uppercase;
+
+    color: #9C9595;
 }
 
 .order-label-2 {
@@ -218,6 +256,23 @@
     color: #9C9595;
 }
 
+.deal-label-2 {
+    margin-left: 17px;
+    height: 19px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 9px;
+    line-height: 11px;
+    /* display: flex;
+    align-items: center; */
+    letter-spacing: 0.085em;
+    text-transform: uppercase;
+    text-align: left;
+
+    color: #9C9595;
+}
+
 .order-comment {
     padding-top: 17px;
     background: #272728;
@@ -230,6 +285,12 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 5px;
+}
+
+.deal-row-1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .order-user-name {
@@ -337,6 +398,79 @@
     
 }
 
+.allert-text-2 {
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
+    /* or 138% */
+
+    display: flex;
+    align-items: center;
+    text-align: right;
+
+    color: #FFFFFF;
+}
+
+.alert-text {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 9px;
+    line-height: 11px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.085em;
+    text-transform: uppercase;
+
+    color: #86EFAC;
+}
+
+.deal-text-1 {
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 24px;
+    /* or 185% */
+
+    display: flex;
+    align-items: center;
+
+    color: #FFFFFF;
+}
+
+.timer-text {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 16px;
+    /* or 53% */
+
+    /* display: flex;
+    align-items: center; */
+    text-align: center;
+
+    color: #FFFFFF;
+}
+
+.deal-text-3 {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 130%;
+    /* or 14px */
+
+    /* display: flex;
+    align-items: center; */
+    text-align: center;
+
+    color: #86EFAC;
+}
+
 .wait-text {
     font-family: 'Raleway';
     font-style: normal;
@@ -429,6 +563,23 @@
 
 .w-50p {
     width: 50%;
+}
+
+.title-buy-mini {
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 140%;
+    /* or 15px */
+
+    /* display: flex;
+    align-items: center; */
+    text-align: center;
+
+    color: #86EFAC;
+
+    
 }
 
 .title-buy-label {

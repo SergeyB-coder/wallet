@@ -83,7 +83,7 @@ export function Home() {
 						</div>
 						
 						<div className='d-flex justify-content-center position-relative'>
-							{isLoadData && <div className={`balance-load ${isHide ? 'hide-balace-load': 'gradient'}`}></div>}
+							{isLoadData && <div className={`balance-load ${isHide ? 'hide-balace-load': 'gradient-back'}`}></div>}
 							{/* <div className={`balance-load hide-balace-load ${isLoadData ? '': 'hide-balace-load'}`}></div> */}
 							{isHide  && <div className='balance-main'><span className='balance-main-sign'>$</span>{Math.round(parseFloat(balance + balance_trx + balance_trx_v)*1000)/1000}</div>}
 						</div>
@@ -144,7 +144,7 @@ export function Home() {
 						</div>
 
 						{	isLoadData &&
-							<div className={`wallet-item-load ${isHide ? 'hide-balace-load': 'gradient'}`}>
+							<div className={`wallet-item-load ${isHide ? 'hide-balace-load': 'gradient-back'}`}>
 
 							</div>
 						}

@@ -68,8 +68,12 @@ export function CreateOrder1(props) {
     }
 
     function getCurrentBalance() {
-        if (currency_order === 2) return parseFloat(balance_trx)
+        if (currency_order === 2) return parseFloat(balance_trx+balance_trx_v)
         else return parseFloat(balance)
+    }
+
+    function isCorrectLimit () {
+        return limit_order <= quantity_order*price
     }
 
     function isCorrectQuantity() {
@@ -224,7 +228,7 @@ export function CreateOrder1(props) {
                 {render_fix_price}
             </div> */}
             <div className='send-address'>
-                <input className='address-to-input-2' type='number' placeholder='0 USDT' onChange={handleChangePrice} value={price}/>
+                <input className='address-to-input-2' type='number' placeholder='0' onChange={handleChangePrice} value={price}/>
                     
                 <div className='address-item-col2'>
                     <div style={{color: 'var(--text-mini)'}}>
@@ -281,7 +285,7 @@ export function CreateOrder1(props) {
 
     const render_limit_order_min = 
             <div className='limit-order-container'>
-                <input className='bg-input w-order' type='number' placeholder='Мин.' onChange={handleChangeLimitOrder} value={limit_order}/>
+                <input className={`${isCorrectLimit() ? 'limit-input': 'limit-input-bad'} w-order`} type='number' placeholder='Мин.' onChange={handleChangeLimitOrder} value={limit_order}/>
                 
                 <div className='currency-fiat-label'>
                     {CURRENCY_FIAT_LIST[currencyFiat - 1]}
@@ -379,8 +383,18 @@ export function CreateOrder1(props) {
             
             {/* <ButtonNext onClick={() => {props.setScreen('createorder2')}}/> */}
 
-            <div onClick={() => {props.setScreen('createorder2')}} className='button-send-box button-active-send-bg active-text mt-20'>
-                {isCorrectQuantity() ? 'Далее': 'Сумма превышает баланс'}
+            <div 
+                onClick={() => {
+                    if (isCorrectQuantity() && isCorrectLimit()) props.setScreen('createorder2')
+                }} 
+                className={`button-send-box ${isCorrectQuantity() && isCorrectLimit() ? 'button-active-send-bg active-text': 'button-send-bg disable-text'} mt-20`}
+            >
+                {
+                    !isCorrectQuantity() ? 'Сумма превышает баланс': 
+                    !isCorrectLimit() ? 'Неверный лимит':
+                    'Далее'
+                     
+                }
             </div>
         </div>
     );

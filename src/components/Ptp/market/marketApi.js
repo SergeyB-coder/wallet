@@ -186,3 +186,21 @@ export function sendConfirm(pars, callback) {
             return callback(data)
         });
 }
+
+
+export function setEndDeal(pars, callback) {
+    fetch(url + '/enddealn', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(pars)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('data', data)
+            
+            return callback(data)
+        });
+}
