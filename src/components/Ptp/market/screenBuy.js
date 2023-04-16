@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../../hooks/useTelegram';
 // import { ButtonNext } from '../../Common/buttonNext';
 import { getOrderMethods, sendBuy } from './marketApi';
-import { selectQuantityBuy, setDealScreenInfo, setQuantityBuy } from './marketSlice';
+import { selectQuantityBuy, setQuantityBuy } from './marketSlice';
 
 export function ScreenBuy (props) {
     const navigate = useNavigate()
