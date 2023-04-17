@@ -496,20 +496,15 @@ export function Deal () {
 
                     <>
 
-
-                        {   deal_screen_info?.status === 'confirm' &&
-                            confirm_pay
-                        }
-
-                        {   (deal_screen_info?.status === 'request' || deal_screen_info?.status === 'pay') &&
+                        {   deal_screen_info?.status === 'pay' &&
                             <>
                                 <div className='title-buy-label mt-20'>Сделка № {deal_screen_info?.deal_id}</div>
                                 {/* <div className='title-buy'>{str_type_deal} {deal_screen_info?.saler}</div> */}
-                                <div className='title-buy mt-20'>{str_type_deal}</div>
+                                <div className='title-buy mt-20'>Вы продаете</div>
                                 {quantity_deal}
 
                                 {/* <div className='saler-buyer mt-20'>{str_type_deal.charAt(3).toUpperCase() + str_type_deal.slice(4, str_type_deal.length-1)} {deal_screen_info?.saler}</div> */}
-                                <div className='saler-buyer mt-20'>Продает {deal_screen_info?.saler}</div>
+                                <div className='saler-buyer mt-20'>Покупает {deal_screen_info?.buyer}</div>
 
                                 <div className='color-bg-cntr h-cntr-deal w-cntr mt-20'>
                                     <div className='container-center'>
@@ -522,14 +517,10 @@ export function Deal () {
                                         } */}
                                         <img style={{width: '131.4px', height: '132px'}} src={clock_gif} alt=''/>
                                     </div>
-                                    <div className='wait-text'>Ожиданием подтверждения
+                                    <div className='wait-text'>Ожиданием подтверждения {deal_screen_info?.status === 'pay' && 'оплаты'}
                                     </div>  
                                     <div className='wait-text-1 mt-20'>
-                                        {  
-                                            deal_screen_info?.status === 'end' ? 
-                                            'Сделка совершена': 
-                                            'от продавца'
-                                        }  
+                                        от покупателя
                                     </div> 
                                 </div>
 
@@ -573,6 +564,81 @@ export function Deal () {
 
                                 <div onClick={()=>handleGetDealInfo()} className='button-send-box button-active-send-bg active-text mt-20'>
                                     Обновить статус
+                                </div>
+                            </>
+                        }
+
+                        {   deal_screen_info?.status === 'confirm' &&
+                            confirm_pay
+                        }
+
+                        {   deal_screen_info?.status === 'request' &&
+                            <>  
+                                <div className='container-title mt-20'>
+                                    <div className='title-text'><span className='title-text-g'>{deal_screen_info.buyer}</span> хочет купить у вас</div>
+                                </div>
+                                {quantity_deal}
+                                <div className='container-center mt-20'>
+                                    <div className='price-info-buy'>
+                                        Цена за 1 USDT {deal_screen_info.currency === 1 ? 'BEP20': 'TRC20'} = {deal_screen_info?.price}
+                                    </div>
+                                </div>
+
+                                <div className='container-center mt-20'>
+                                    <div className='w-100'>
+                                        <div className='order-row-1'>
+                                            <div className='order-label-2'>
+                                                Метод оплаты
+                                            </div>
+                                            <div className='order-info-3'>
+                                                {deal_screen_info.company}
+                                            </div>
+                                        </div>
+
+                                        <div className='order-line-container'>
+                                            <div className='order-line'></div>
+                                        </div> 
+
+                                        <div className='order-row-1'>
+                                            <div className='order-label-2'>
+                                                Сумма
+                                            </div>
+                                            <div className='order-info-3'>
+                                                {deal_screen_info?.price * deal_screen_info?.quantity} {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
+                                            </div>
+                                        </div>
+
+                                        <div className='order-line-container'>
+                                            <div className='order-line'></div>
+                                        </div>  
+                                    </div>
+                                </div>
+
+
+                                <div className='cntr-center'>
+                                    <div className='open-chat-btn mt-13' onClick={()=>{navigate(`/chat/${deal_screen_info.deal_id}`, {replace: true})}}>
+                                        Чат с покупателем
+                                    </div>
+                                </div>
+
+                                <div className='cntr-center'>
+                                    <div className='line-green'></div>
+                                </div>
+
+                                
+
+                                <div className='row-2 mt-20'>
+                                    <div className='btn-disable-deal' 
+                                    // onClick={handleClickCancelDeal}
+                                    >
+                                        Отказаться
+                                    </div>
+
+                                    <div className='btn-accept-deal' 
+                                        onClick={handleClickAccept}
+                                    >
+                                        Принять запрос
+                                    </div>
                                 </div>
                             </>
                         }
