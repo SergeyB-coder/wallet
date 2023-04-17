@@ -63,6 +63,12 @@ export function Market() {
             else newListFilterOrders[i] = 0
         });
         setListFilterOrders(newListFilterOrders)
+
+        setIndexMethod(0)
+        getCompaniesPay({fiat_id: index+1}, (data) => {
+            console.log('getCompaniesPay', data)
+            dispatch(setCompaniesPay([{name: 'Все'}, ...data.companies_pay]))
+        })
     }
 
     const handleChangeFilterQuantity = (e) => {
@@ -85,11 +91,11 @@ export function Market() {
         <div className='divider-order-market'></div>
 
     useEffect(() => {
-        getCompaniesPay({}, (data) => {
+        getCompaniesPay({fiat_id: currencyFiat}, (data) => {
             console.log('getCompaniesPay', data)
             dispatch(setCompaniesPay([{name: 'Все'}, ...data.companies_pay]))
         })
-    }, [dispatch]);
+    }, [currencyFiat, dispatch]);
     
     useEffect(() => {
         getOrders({user_id: ''}, (data) => {

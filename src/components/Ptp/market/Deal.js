@@ -14,11 +14,13 @@ import { selectDealScreenInfo, setDealScreenInfo } from './marketSlice';
 import clock_gif from '../../../static/animations/clock.gif'
 // import hands_gif from '../../../static/animations/hands.gif'
 import salute_gif from '../../../static/animations/salute.gif'
+import { useSocket } from '../../../hooks/useSocket';
 
 export function Deal () {
     const {tg, user_id} = useTelegram()
     const { deal_id } = useParams();
     const navigate = useNavigate()
+    const {socket} = useSocket()
 
     const dispatch = useDispatch()
     const deal_screen_info = useSelector(selectDealScreenInfo)
@@ -33,8 +35,11 @@ export function Deal () {
 
     const str_type_deal = deal_screen_info?.type_order === 'b' ? 'Вы продаете': 'Вы покупаете'
 
-    
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const handleSendMessage = (status) => {
+        console.log('emit', status)
+        socket.emit("new_message", {type: 'deal', deal_id: deal_screen_info.deal_id, status: status});
+    }
+
     function handleGetDealInfo() {
         console.log('handleGetDealInfo', deal_id)
         getDealInfo( {deal_id: deal_id === '0' ? deal_screen_info?.deal_id: deal_id}, (data) => {
@@ -64,9 +69,12 @@ export function Deal () {
         }) 
     }
 
-    // const handleClickRefresh = () => {
-    //      handleGetDealInfo(deal_screen_info.deal_id)
-    // }
+    const handleClickAccept = () => {
+        sendAcceptDeal({deal_id: deal_screen_info.deal_id}, () => {
+            handleGetDealInfo()
+        })
+        handleSendMessage('pay')
+    }
 
     const hanldeConfirm = () => {
         sendConfirm(
@@ -82,6 +90,7 @@ export function Deal () {
                 // setShowWait(true)
             }
         )
+        handleSendMessage('confirm')
     }
 
     const handleEndDeal = () => {
@@ -102,40 +111,13 @@ export function Deal () {
             
             // handleClose()
         })
+        handleSendMessage('enddeal')
     }
 
-    // const handleClickEndDeal = () => {
-    //     setShowLoader(true)
-    //     console.log('deal_screen_info', deal_screen_info)
-    //     sendEndDeal(
-    //         {
-    //             deal_id: deal_screen_info.deal_id, 
-    //             order_id: deal_screen_info.order_id, 
-    //             user_to_id: deal_screen_info.type_order === 's' ?
-    //                 (deal_screen_info.id_to ? deal_screen_info.id_to: deal_screen_info.buyer_id):
-    //                 (deal_screen_info.id_from ? deal_screen_info.id_from: deal_screen_info.saler_id),
-    //             user_from: first_name,
-    //             user_from_id: user_id,
-    //             type_order: deal_screen_info.type_order
-    //         }, (data) => {
-    //         handleGetDealInfo()
-    //         setShowLoader(false)
-    //         if (data.error) {
-    //             setError(data.error)
-    //         }
-    //         else {
-    //             setError('Сделка совершена')
-    //         }
-            
-    //         // handleClose()
-    //     })
-    // }
-
-    const handleClickAccept = () => {
-        sendAcceptDeal({deal_id: deal_screen_info.deal_id}, () => {
-            handleGetDealInfo()
-        })
-    }
+    const handleSocketOn = (data) => {
+        console.log('message from server', data);
+        if (data.status !== deal_screen_info?.status) handleGetDealInfo()
+}
 
     const backScreen = (() => {
         navigate('/ptp', {replace: true})
@@ -317,8 +299,19 @@ export function Deal () {
     </>
 
     useEffect(() => {
+        console.log(9)
+        socket.on(deal_id !== '0' ? `deal${deal_id}`: `{deal${deal_screen_info.deal_id}}`, handleSocketOn);
+        return () => {
+            socket.removeAllListeners(deal_id !== '0' ? deal_id: deal_screen_info.deal_id);
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+            console.log('uef')
             handleGetDealInfo()
-    }, [handleGetDealInfo]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[]);
 
     useEffect(() => {
         tg.onEvent('backButtonClicked', backScreen)
@@ -1127,4 +1120,31 @@ export function Deal () {
         </div>
       );
 }
+
+// const handleClickEndDeal = () => {
+    //     setShowLoader(true)
+    //     console.log('deal_screen_info', deal_screen_info)
+    //     sendEndDeal(
+    //         {
+    //             deal_id: deal_screen_info.deal_id, 
+    //             order_id: deal_screen_info.order_id, 
+    //             user_to_id: deal_screen_info.type_order === 's' ?
+    //                 (deal_screen_info.id_to ? deal_screen_info.id_to: deal_screen_info.buyer_id):
+    //                 (deal_screen_info.id_from ? deal_screen_info.id_from: deal_screen_info.saler_id),
+    //             user_from: first_name,
+    //             user_from_id: user_id,
+    //             type_order: deal_screen_info.type_order
+    //         }, (data) => {
+    //         handleGetDealInfo()
+    //         setShowLoader(false)
+    //         if (data.error) {
+    //             setError(data.error)
+    //         }
+    //         else {
+    //             setError('Сделка совершена')
+    //         }
+            
+    //         // handleClose()
+    //     })
+    // }
 

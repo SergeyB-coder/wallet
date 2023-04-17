@@ -4,8 +4,13 @@ export const CURRENCY_LIST = [
 ]
 
 export const CURRENCY_FIAT_LIST = [
-    'RUB',
-    'USD'
+    'RUB', 
+    'USD',
+    'IDR',
+    'EUR',
+    'UAH',
+    'BYN',
+    'KZT'
 ]
 
 export const PRICE_TYPES = [
