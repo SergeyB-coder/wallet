@@ -72,8 +72,9 @@ export function Deal () {
     const handleClickAccept = () => {
         sendAcceptDeal({deal_id: deal_screen_info.deal_id}, () => {
             handleGetDealInfo()
+            handleSendMessage('pay')
         })
-        handleSendMessage('pay')
+        
     }
 
     const hanldeConfirm = () => {
@@ -85,12 +86,10 @@ export function Deal () {
             }, (data) => {
                 console.log(data)
                 handleGetDealInfo()
-
-                // setShowConfirmPay(false)
-                // setShowWait(true)
+                handleSendMessage('confirm')
             }
         )
-        handleSendMessage('confirm')
+        
     }
 
     const handleEndDeal = () => {
@@ -101,7 +100,8 @@ export function Deal () {
                 deal_id: deal_screen_info.deal_id, 
             }, (data) => {
                 handleGetDealInfo()
-                // setShowLoader(false)
+                handleSendMessage('enddeal')
+
                 if (data.error) {
                     setError(data.error)
                 }
@@ -111,7 +111,6 @@ export function Deal () {
             
             // handleClose()
         })
-        handleSendMessage('enddeal')
     }
 
     const handleSocketOn = (data) => {

@@ -83,7 +83,14 @@ export function Home() {
 						</div>
 						
 						<div className='d-flex justify-content-center position-relative'>
-							{isLoadData && <div className={`balance-load ${isHide ? 'hide-balace-load': 'gradient-back'}`}></div>}
+							{
+							isLoadData && 
+							// <div className={`balance-load ${isHide ? 'hide-balace-load': 'gradient-back'}`}></div>
+							<>
+								<div className={`wallet-item-load-1 ${isHide ? 'hide-balace-load': 'anim-load'}`}></div>
+								<div className={`wallet-item-load-2 ${isHide ? 'hide-balace-load': 'anim-load-inv'}`}></div>
+							</>
+							}
 							{/* <div className={`balance-load hide-balace-load ${isLoadData ? '': 'hide-balace-load'}`}></div> */}
 							{isHide  && <div className='balance-main'><span className='balance-main-sign'>$</span>{Math.round(parseFloat(balance + balance_trx + balance_trx_v)*1000)/1000}</div>}
 						</div>
@@ -100,26 +107,35 @@ export function Home() {
 
 					<div className='wallet-item-container mt-21'>
 						<div className='wallet-item row' onClick={handleClickBep}>
-							<div className='wallet-item-svg-container'>
-								{svg_bep1}
-								<div style={{position: 'absolute', left: '55%', top: '40%'}}>
-									{svg_binance}
-								</div>
-							</div>
-							<div className='wallet-item-info ps-0'>
-								<div className='token-text text-nowrap' style={{textAlign: 'left'}}>Tether BEP</div>
-								<div className='token-balance-text mt-2 text-nowrap'>{Math.round((parseFloat(balance))*100)/100} USDT</div>
-							</div>
-							<div className='wallet-item-info2'>
-								<div className='token-text text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance))*100*1.1)/100}</div>
-								<div className='bottom-info text-nowrap mt-2'>+23%</div>
-							</div>
+							{isHide && 
+								<>
+									<div className='wallet-item-svg-container'>
+										{svg_bep1}
+										<div style={{position: 'absolute', left: '55%', top: '40%'}}>
+											{svg_binance}
+										</div>
+									</div>
+									<div className='wallet-item-info ps-0'>
+										<div className='token-text text-nowrap' style={{textAlign: 'left'}}>Tether BEP</div>
+										<div className='token-balance-text mt-2 text-nowrap'>{Math.round((parseFloat(balance))*100)/100} USDT</div>
+									</div>
+									<div className='wallet-item-info2'>
+										<div className='token-text text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance))*100*1.1)/100}</div>
+										<div className='bottom-info text-nowrap mt-2'>+23%</div>
+									</div>
+								</>
+							}
 						</div>
 
 						{	isLoadData &&
-							<div className={`wallet-item-load ${isHide ? 'hide-balace-load': 'gradient'}`}>
+							// <div className={`wallet-item-load ${isHide ? 'hide-balace-load': 'gradient'}`}>
 
-							</div>
+							// </div>
+							<>
+								<div className={`wallet-item-load-1 ${isHide ? 'hide-balace-load': 'anim-load'}`}></div>
+								<div className={`wallet-item-load-2 ${isHide ? 'hide-balace-load': 'anim-load-inv'}`}></div>
+							</>
+							
 						}
 					</div>
 
@@ -127,52 +143,65 @@ export function Home() {
 
 					<div className='wallet-item-container mt-16'>
 						<div className='wallet-item row' onClick={handleClickTrc}>
-							<div className='wallet-item-svg-container'>
-								{svg_bep1}
-								<div style={{position: 'absolute', left: '55%', top: '40%'}}>
-									{svg_tron1}
+							{	isHide &&
+								<>
+								<div className='wallet-item-svg-container'>
+									{svg_bep1}
+									<div style={{position: 'absolute', left: '55%', top: '40%'}}>
+										{svg_tron1}
+									</div>
 								</div>
-							</div>
-							<div className='wallet-item-info ps-0'>
-								<div className='token-text text-nowrap' style={{textAlign: 'left'}}>Tether TRC</div>
-								<div className='token-balance-text mt-2'>{Math.round((parseFloat(balance_trx + balance_trx_v))*100)/100} USDT</div>
-							</div>
-							<div className='wallet-item-info2'>
-								<div className='token-balance-text2 text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance_trx))*100*1.1)/100}</div>
-								<div className='bottom-info text-nowrap mt-2'>+23%</div>
-							</div>
+								<div className='wallet-item-info ps-0'>
+									<div className='token-text text-nowrap' style={{textAlign: 'left'}}>Tether TRC</div>
+									<div className='token-balance-text mt-2'>{Math.round((parseFloat(balance_trx + balance_trx_v))*100)/100} USDT</div>
+								</div>
+								<div className='wallet-item-info2'>
+									<div className='token-balance-text2 text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance_trx))*100*1.1)/100}</div>
+									<div className='bottom-info text-nowrap mt-2'>+23%</div>
+								</div>
+								</>
+							}
 						</div>
 
 						{	isLoadData &&
-							<div className={`wallet-item-load ${isHide ? 'hide-balace-load': 'gradient-back'}`}>
+							// <div className={`wallet-item-load ${isHide ? 'hide-balace-load': 'gradient-back'}`}>
 
-							</div>
+							// </div>
+							<>
+								<div className={`wallet-item-load-2 ${isHide ? 'hide-balace-load': 'anim-load-inv'}`}></div>
+								<div className={`wallet-item-load-1 ${isHide ? 'hide-balace-load': 'anim-load'}`}></div>
+							</>
 						}
 					</div>
 
 
 					<div className='wallet-item-container mt-16'>
 						<div className='wallet-item row' onClick={handleClickTrc}>
-							<div className='wallet-item-svg-container'>
-								{svg_btc}
-								{/* <div style={{position: 'absolute', left: '55%', top: '40%'}}>
-									{svg_tron1}
-								</div> */}
-							</div>
-							<div className='wallet-item-info ps-0'>
-								<div className='token-text text-nowrap' style={{textAlign: 'left'}}>Bitcoin</div>
-								<div className='token-balance-text mt-2'>1 BTC</div>
-							</div>
-							<div className='wallet-item-info2'>
-								<div className='token-text text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance_trx))*100*1.1)/100}</div>
-								<div className='bottom-info text-nowrap mt-2'>+23%</div>
-							</div>
+							{	isHide &&
+								<>
+									<div className='wallet-item-svg-container'>
+										{svg_btc}
+									</div>
+									<div className='wallet-item-info ps-0'>
+										<div className='token-text text-nowrap' style={{textAlign: 'left'}}>Bitcoin</div>
+										<div className='token-balance-text mt-2'>1 BTC</div>
+									</div>
+									<div className='wallet-item-info2'>
+										<div className='token-text text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance_trx))*100*1.1)/100}</div>
+										<div className='bottom-info text-nowrap mt-2'>+23%</div>
+									</div>
+								</>
+							}
 						</div>
 
 						{	isLoadData &&
-							<div className={`wallet-item-load ${isHide ? 'hide-balace-load': 'gradient'}`}>
+							// <div className={`wallet-item-load ${isHide ? 'hide-balace-load': 'gradient'}`}>
 
-							</div>
+							// </div>
+							<>
+								<div className={`wallet-item-load-1 ${isHide ? 'hide-balace-load': 'anim-load'}`}></div>
+								<div className={`wallet-item-load-2 ${isHide ? 'hide-balace-load': 'anim-load-inv'}`}></div>
+							</>
 						}
 					</div>
 
