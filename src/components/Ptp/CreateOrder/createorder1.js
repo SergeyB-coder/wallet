@@ -72,6 +72,10 @@ export function CreateOrder1(props) {
         else return parseFloat(balance)
     }
 
+    function isInputData () {
+        return price !== '' && quantity_order !== '' && limit_order !== ''
+    }
+
     function isCorrectLimit () {
         return limit_order <= quantity_order*price
     }
@@ -385,13 +389,14 @@ export function CreateOrder1(props) {
 
             <div 
                 onClick={() => {
-                    if (isCorrectQuantity() && isCorrectLimit()) props.setScreen('createorder2')
+                    if (isCorrectQuantity() && isCorrectLimit() && isInputData()) props.setScreen('createorder2')
                 }} 
-                className={`button-send-box ${isCorrectQuantity() && isCorrectLimit() ? 'button-active-send-bg active-text': 'button-send-bg disable-text'} mt-20`}
+                className={`button-send-box ${isCorrectQuantity() && isCorrectLimit() && isInputData() ? 'button-active-send-bg active-text': 'button-send-bg disable-text'} mt-20`}
             >
                 {
                     !isCorrectQuantity() ? 'Сумма превышает баланс': 
                     !isCorrectLimit() ? 'Неверный лимит':
+                    !isInputData() ? 'Введите данные':
                     'Далее'
                      
                 }
