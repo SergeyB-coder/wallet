@@ -58,7 +58,7 @@ export function Home() {
 
 	useEffect(() => {
         tg.MainButton.hide()
-		tg.BackButton.hide()
+		// tg.BackButton.hide()
     }, );
 
 	useEffect(() => {
