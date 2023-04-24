@@ -53,6 +53,10 @@
     border-radius: 10px;
 }
 
+.cntr-row {
+    display: flex;
+}
+
 .method-input {
     background: rgba(255, 255, 255, 0.1);
     /* shadow/sm */

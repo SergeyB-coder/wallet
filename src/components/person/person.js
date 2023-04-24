@@ -3,12 +3,19 @@ import { useTelegram } from '../../hooks/useTelegram';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { getOrders } from '../Ptp/market/marketApi';
+import { svg_share } from '../../const/svgs';
+import { getUserQDeals } from '../Ptp/ptpApi';
+
+const commission = 0.05
 
 export function Person (props) {
-    const { tg, first_name } = useTelegram()
+    const { user_id, tg, first_name } = useTelegram()
     const navigate = useNavigate()
 
     const [allOrderActive, setAllOrderActive] = useState(true);
+    const [orders, setOrders] = useState([]);
+    const [qDeals, setQDeals] = useState(0);
 
     const handleClickCreateOrder = () => {
         navigate('/createorder', {replace: true})
@@ -19,9 +26,23 @@ export function Person (props) {
     }
 
     const backScreen = () => {
-        navigate('/', {replace: true})
+        navigate('/ptp', {replace: true})
         // navigate('/home', {replace: true})
     }
+    
+    useEffect(() => {
+        getUserQDeals({user_id: user_id}, (data) => {
+            if (data.res) setQDeals((data.q_deals.q_taker || 0)+(data.q_deals.q_maker || 0))
+        })
+    }, [user_id]);
+
+    useEffect(() => {
+
+        getOrders({user_id: user_id}, (data) => {
+            console.log('getOrders person', data)
+            setOrders(data.orders)
+        })
+    }, [user_id]);
 
     useEffect(() => {
         tg.MainButton.hide()
@@ -53,7 +74,7 @@ export function Person (props) {
                 <div className='row-2 mt-10'>
                     <div className='cntr-2 color-bg-cntr-person'>
                         <div className='num-text'>
-                            6
+                            {qDeals}
                         </div>
                         <div className='mini-text'>
                             Количество сделок
@@ -124,6 +145,110 @@ export function Person (props) {
                         </div>
                     </div>
                 </div>
+
+
+                {
+                    orders.slice(0, 5).map((order, index) => {
+                        return (
+                                <div 
+                                    // style={
+                                    //     (indexMethod !== 0 && companies_pay[indexMethod].id !== order.company_pay_id) || listFilterOrders[index] !== 1 || order.type !== typeOrderFilter ? {display: 'none'}: {}
+                                    // } 
+                                    className='order-item-user mt-3' key={order.id}
+                                >
+                                    <div className='order-header a-c'>
+                                        <div className='order-price'>
+                                            <div className='mt-2'>{order.price}
+                                                {order.currency_fiat_id === 1 ? 'RUB': 'USD'}
+                                            </div>
+                                            <div className={order.type === 's' ? 'order-label':'mini-text-r'}>Цена за 1 {order.currency_id === 1 ? 'USDT BEP20': 'USDT TRC20'}</div>
+                                        </div>
+                                        
+                                        <div className='container-center a-c'>
+                                            {svg_share}
+                                            <div className={order.type === 'b' ? 'order-sale ml-12': 'order-buy ml-12'} 
+                                                onClick={() => {}}
+                                            >
+                                                    {order.type === 's' ? 'Купить': 'Продать'}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {/* {divider} */}
+
+                                    <div className='order-row-1'>
+                                        <div className='order-user-name'>
+                                            {order.first_name}
+                                        </div>
+                                        
+                                        <div className='order-info-2'>
+                                        <span className='order-info-1'>
+                                            3 сделки
+                                        </span>
+                                            67%
+                                        </div>
+                                    </div>
+
+                                    <div className='order-line-container'>
+                                        <div className='order-line'></div>
+                                    </div>
+
+                                    <div className='order-row-1'>
+                                        <div className='order-label-2'>
+                                            Доступно
+                                        </div>
+                                        <div className='order-info-3'>
+                                            {order.quantity} USDT
+                                        </div>
+                                    </div>
+
+                                    <div className='order-line-container'>
+                                        <div className='order-line'></div>
+                                    </div>
+
+                                    <div className='order-row-1'>
+                                        <div className='order-label-2'>
+                                            Лимиты
+                                        </div>
+                                        <div className='order-info-3'>
+                                        {`${ Math.round(1000*order.limit_order/order.price)/1000} - ${order.quantity - commission} USDT`}<br></br>
+                                        {`${order.limit_order} - ${ Math.round((order.quantity - commission)*order.price*1000)/1000 } ${order.currency_fiat_id === 1 ? 'Руб': '$'}`}
+                                        </div>
+                                    </div>
+
+                                    <div className='order-line-container'>
+                                        <div className='order-line'></div>
+                                    </div>
+
+                                    <div className='order-row-1'>
+                                        <div className='order-label-2'>
+                                            Сумма
+                                        </div>
+                                        <div className='order-info-3'>
+                                            {'0.13 USDT'}
+                                        </div>
+                                    </div>
+
+                                    <div className='order-line-container'>
+                                        <div className='order-line'></div>
+                                    </div>
+                                    
+                                    <div className='order-row-1'>
+                                        <div className='order-label-2 t-a-l'>
+                                            Методы оплаты
+                                        </div>
+                                        <div className='order-info-3'>
+                                            {order.company}
+                                        </div>
+                                    </div>
+
+                                    <div style={{display: 'flex', position: 'absolute', bottom: 0, alignItems: 'flex-end'}}>
+                                        <div className='btn-edit'>Редактировать</div>
+                                        <div className='btn-run'>Запустить</div>
+                                    </div>
+                                </div>
+                        )
+                    })
+                }
             </div>
         </div>
       );

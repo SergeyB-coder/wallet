@@ -4,11 +4,18 @@ import { getTransactions } from './homeApi';
 import { useTelegram } from '../../hooks/useTelegram';
 import { useState } from 'react';
 import { dateConvert } from '../Common/funcs';
+import { useNavigate } from 'react-router-dom';
 
 export function Transactions () {
-    const { user_id } = useTelegram()
+    const navigate = useNavigate()
+    const { user_id, tg } = useTelegram()
 
     const [transactions, setTransactions] = useState([]);
+
+    const backScreen = () => {
+        navigate('/', {replace: true})
+        // navigate('/home', {replace: true})
+    }
 
     const svg_deal_send = 
         <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -20,12 +27,25 @@ export function Transactions () {
             <path d="M4.94626 9.16664H9.09989C9.33929 9.16664 9.53327 9.36062 9.53327 9.60001C9.53327 9.83926 9.33929 10.0332 9.09989 10.0332H3.89995C3.66071 10.0332 3.46673 9.83926 3.46673 9.60001V4.40013C3.46673 4.16074 3.66071 3.96676 3.89995 3.96676C4.13935 3.96676 4.33333 4.16074 4.33333 4.40013V8.55372L12.2603 0.626878C12.4294 0.457707 12.7038 0.457707 12.8731 0.626878C13.0423 0.796194 13.0423 1.07054 12.8731 1.23972L4.94626 9.16664ZM12.1333 12.6332V5.26681C12.1333 5.02756 12.3273 4.83343 12.5667 4.83343C12.8059 4.83343 12.9999 5.02756 12.9999 5.26681V13.0666C12.9999 13.3059 12.8059 13.5 12.5667 13.5H0.433378C0.194129 13.5 0 13.3059 0 13.0666V0.933448C0 0.694202 0.194129 0.500224 0.433378 0.500224H8.23329C8.47254 0.500224 8.66667 0.694205 8.66667 0.933448C8.66667 1.17284 8.47254 1.36682 8.23329 1.36682H0.86683V12.6331L12.1333 12.6332Z" fill="#86EFAC"/>
         </svg>
 
+
+
     
     useEffect(() => {
         getTransactions({user_id: user_id}, (data) => {
             setTransactions(data.transactions)
         })
     }, [user_id]);
+
+    useEffect(() => {
+        tg.MainButton.hide()
+        tg.BackButton.show()
+    }, [tg.BackButton, tg.MainButton]);
+
+    useEffect(() => {
+        tg.onEvent('backButtonClicked', backScreen)
+            return () => {tg.offEvent('backButtonClicked', backScreen)}
+        }, )
+
     return (
         <div className='container-center'>
             <div className='w-cntr'>

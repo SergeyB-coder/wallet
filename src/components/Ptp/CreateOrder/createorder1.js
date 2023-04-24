@@ -77,7 +77,7 @@ export function CreateOrder1(props) {
     }
 
     function isCorrectLimit () {
-        return limit_order <= quantity_order*price
+        return limit_order <= quantity_order*(type_order === 1 ? price: price_market*rub_dollar)
     }
 
     function isCorrectQuantity() {
@@ -223,6 +223,14 @@ export function CreateOrder1(props) {
                     {Math.round((price_market * (currencyFiat === 1 ? rub_dollar: 1))*1000)/1000} {CURRENCY_FIAT_LIST[currencyFiat - 1]}
                 </div>
             </div>
+            <div className='container-balance'>
+                <div className='your-balance-text'>
+                    Ваша цена
+                </div>
+                <div className='your-balance-q'>
+                    {Math.round((price_market * (currencyFiat === 1 ? rub_dollar: 1))*10*percent_price)/1000} {CURRENCY_FIAT_LIST[currencyFiat - 1]}
+                </div>
+            </div>
         </div>
 
     const render_fix_price =
@@ -299,7 +307,7 @@ export function CreateOrder1(props) {
     const render_limit_order_max = 
             <div className='limit-order-container'>
                     <input className='address-to-input-2 w-order' type='number' placeholder='Макс.' onChange={handleChangeLimitOrder} 
-                        value={ parseFloat(quantity_order) * price }
+                        value={ Math.round((parseFloat(quantity_order) * (type_price === 1 ? price: price_market*rub_dollar))*1000)/1000 }
                     />
                 <div className='currency-fiat-label'>
                     {CURRENCY_FIAT_LIST[currencyFiat - 1]}

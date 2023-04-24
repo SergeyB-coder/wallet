@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTelegram } from '../../../hooks/useTelegram';
-import { setMethodPay } from '../ptpSlice';
-import { getCompaniesPay, getUserMethodsPay, newMethodPay } from '../settings_pay/settingsPayApi';
-import { selectCard, selectCompaniesPay, selectMethodsPay, setCard, setCompaniesPay, setMethodsPay } from '../settings_pay/settingsPaySlice';
+import { selectCurrencyFiat, setMethodPay } from '../ptpSlice';
+import { getCompaniesPay, getUserMethodsPay } from '../settings_pay/settingsPayApi';
+import { selectMethodsPay, setCompaniesPay, setMethodsPay } from '../settings_pay/settingsPaySlice';
 // import { ButtonNext } from '../../Common/buttonNext';
 import { useState } from 'react';
+import { NewMethodPay } from '../settings_pay/NewMethodPay';
 
 export function CreateOrder2(props) {
     const {user_id} = useTelegram()
@@ -15,13 +16,11 @@ export function CreateOrder2(props) {
     const setListCheckedMethods = props.setListCheckedMethods
     
     const [showNewMethod, setShowNewMethod] = useState(false);
-    const [indexSelectedCompany] = useState(0)
 
     // const method_pay = useSelector(selectMethodPay)
-    const companies_pay = useSelector(selectCompaniesPay)
+    const currencyFiat = useSelector(selectCurrencyFiat)
 
     const list_methods = useSelector(selectMethodsPay)
-    const card = useSelector(selectCard)
 
     const divider = 
         <div className='container-center'>
@@ -98,33 +97,14 @@ export function CreateOrder2(props) {
         )
     })
 
-    const handleChangeCard = (e) => {
-        dispatch(setCard(e.target.value))
-    }
 
-    const handleGetUserMethodsPay = () => {
-        getUserMethodsPay({user_id: user_id}, (data) => {
-            dispatch(setMethodsPay(data.methods))
-        })
-    }
 
-    const handleSaveMethod = () => {
-        console.log('handleSaveMethod')
-        newMethodPay({
-            user_id: user_id, 
-            name: '', 
-            // bank: bank, 
-            bank: '',
-            card: card, 
-            info: '',
-            company_pay_id: companies_pay[indexSelectedCompany].id
 
-        }, (data) => {
 
-            console.log(data)
-            setShowNewMethod(false)
-            handleGetUserMethodsPay()
-        })
+
+
+    const handleClickAddMethodPay = () => {
+        setShowNewMethod(true)
     }
     
 
@@ -139,76 +119,78 @@ export function CreateOrder2(props) {
     }, [dispatch, setListCheckedMethods, user_id]);
     
     useEffect(() => {
-        getCompaniesPay({}, (data) => {
+        getCompaniesPay({fiat_id: currencyFiat}, (data) => {
             console.log('getCompaniesPay', data)
             dispatch(setCompaniesPay(data.companies_pay))
         })
-    }, [dispatch]);
+    }, [currencyFiat, dispatch]);
 
     return (
         <>
-        {   showNewMethod ?
-            <div>
-                <div className='container-new-method'>
-                            <div className='method-pay-title'>Добавить метод оплаты</div>
 
-                            <div className='container-method-info mt-2 p-3'>
-                                <div className='method-pay-label mt-3'>Метод</div>
-                                <div className='method-input mt-2'>
-                                    <div className='method_pay-text' onClick={() => setShowNewMethod(false)}>{companies_pay[indexSelectedCompany].name || ' '}</div>
-                                </div>
-                                <input className='method-input mt-2 mb-4' onChange={handleChangeCard} value={card} placeholder='Аккаунт, карта/телефон'/>
-                            </div>
-
-                            <div className='method-text-button button-new-method mt-3' onClick={handleSaveMethod}>Сохранить</div>
-                       
-                </div>
-            </div>:
-
+            {   showNewMethod &&
             <div className='container-create-order mt-20'>
-                <div className='container-title'>
-                    <div className='title-text'>Добавить методы оплаты</div>
-                    <div className='page-number'>2/4</div>
-                </div>
+                <NewMethodPay 
+                    setShowNewMethod={setShowNewMethod} 
+                    is_new={true} 
+                    setIsNew={(e)=>{}} 
+                    methodId={0}
+                    setMethodId={()=>{}}
+                />
+            </div>
+            }
 
-                {/* <div className='currency-settings-container mt-2'>
-                    {render_method_pay}
-                </div> */}
 
-                
-                <div className='methods-pay-container mt-20'>
-                    {renderListMethods}
-                </div>
+            {!showNewMethod &&
 
-                {/* <div style={{height: '43vh', borderBottomRightRadius: 0, borderBottomLeftRadius: 0}} className='container-list-companies overflow-auto mb-3'>
-                    {companies_pay.map ((company, index) => {
-                        return (
-                                <div key={company.id} className='container-company row d-flex align-items-center' onClick={() => {handleClickCompany(index)}}>
-                                    <div className='text-company'>{company.name}</div>
-                                    {arrow_right}
-                                </div>
-                        )
-                    })}
-                </div> */}
-                <div className='container-center mt-20'>
-                    <div className='btn-add-method-pay'>
-                        <div className='svg-add-method'>
-                            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M15 30C23.2843 30 30 23.2843 30 15C30 6.71573 23.2843 0 15 0C6.71573 0 0 6.71573 0 15C0 23.2843 6.71573 30 15 30ZM22 17.9251V13.0749H17.2752V8H11.7248V13.0749H7V17.9251H11.7248V23H17.2752V17.9251H22Z" fill="#86EFAC"/>
-                            </svg>
+                <div className='container-create-order mt-20'>
+                    <div className='container-title'>
+                        <div className='title-text'>Добавить методы оплаты</div>
+                        <div className='page-number'>2/4</div>
+                    </div>
+
+                    {/* <div className='currency-settings-container mt-2'>
+                        {render_method_pay}
+                    </div> */}
+
+                    
+                    <div className='methods-pay-container mt-20'>
+                        {renderListMethods}
+                    </div>
+
+                    {/* <div style={{height: '43vh', borderBottomRightRadius: 0, borderBottomLeftRadius: 0}} className='container-list-companies overflow-auto mb-3'>
+                        {companies_pay.map ((company, index) => {
+                            return (
+                                    <div key={company.id} className='container-company row d-flex align-items-center' onClick={() => {handleClickCompany(index)}}>
+                                        <div className='text-company'>{company.name}</div>
+                                        {arrow_right}
+                                    </div>
+                            )
+                        })}
+                    </div> */}
+                    <div className='container-center mt-20'>
+                        <div className='btn-add-method-pay'
+                            onClick={handleClickAddMethodPay}
+                        >
+                            <div className='svg-add-method'>
+                                <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M15 30C23.2843 30 30 23.2843 30 15C30 6.71573 23.2843 0 15 0C6.71573 0 0 6.71573 0 15C0 23.2843 6.71573 30 15 30ZM22 17.9251V13.0749H17.2752V8H11.7248V13.0749H7V17.9251H11.7248V23H17.2752V17.9251H22Z" fill="#86EFAC"/>
+                                </svg>
+                            </div>
+                            <div className='btn-add-method-text'>Добавить метод оплаты</div>
                         </div>
-                        <div className='btn-add-method-text'>Добавить метод оплаты</div>
+                    </div>
+                    
+                    
+                    {/* <ButtonNext onClick={() => {props.setScreen('createorder3')}}/> */}
+
+                    <div onClick={() => { if (listCheckedMethods.indexOf(true) !== -1) props.setScreen('createorder3') }} 
+                        className={`button-send-box ${listCheckedMethods.indexOf(true) !== -1 ? 'button-active-send-bg active-text': 'button-send-bg disable-text'} mt-20`}
+                    >
+                        {listCheckedMethods.indexOf(true) !== -1 ? 'Далее': 'Выберите метод оплаты'}
                     </div>
                 </div>
-                
-                
-                {/* <ButtonNext onClick={() => {props.setScreen('createorder3')}}/> */}
-
-                <div onClick={() => {props.setScreen('createorder3')}} className='button-send-box button-active-send-bg active-text mt-20'>
-                    Далее
-                </div>
-            </div>
-        }
+            }
         </>
     );
 }

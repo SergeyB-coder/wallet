@@ -36,3 +36,22 @@ export function parsePrice(pars, callback) {
         });
 }
 
+
+export function getUserQDeals(pars, callback) {
+    fetch(url + '/getuserqdeals', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            //   mode: 'no-cors',
+            body: JSON.stringify(pars)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('data getuserqdeals', data)
+            
+            return callback(data)
+        });
+}
+

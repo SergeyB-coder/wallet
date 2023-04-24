@@ -15,6 +15,7 @@ import { svg_share } from '../../../const/svgs';
 
 
 export function Market() {
+    const commission = 0.05
     const {tg} = useTelegram()
 
     const navigate = useNavigate()
@@ -73,11 +74,11 @@ export function Market() {
 
     const handleChangeFilterQuantity = (e) => {
         setFilter_quantity(e.target.value)
-
+        const q_filter = parseFloat(e.target.value)
         let newListFilterOrders = listFilterOrders.slice()
         orders.forEach((order, i) => {
-            console.log(order.quantity, parseFloat(e.target.value))
-            if (order.quantity <= parseFloat(e.target.value) ) newListFilterOrders[i] = 1
+            console.log(order.quantity, q_filter)
+            if ( order.limit_order/order.price <= q_filter &&  q_filter <= order.quantity - commission) newListFilterOrders[i] = 1
             else newListFilterOrders[i] = 0
         });
         setListFilterOrders(newListFilterOrders)
@@ -239,7 +240,7 @@ export function Market() {
                                         
                                         <div className='order-info-2'>
                                         <span className='order-info-1'>
-                                            3 сделки
+                                            {(order.q_deals_maker || 0)+(order.q_deals_taker || 0)} сделок
                                         </span>
                                             67%
                                         </div>
@@ -262,12 +263,13 @@ export function Market() {
                                         <div className='order-line'></div>
                                     </div>
 
-                                    <div className='order-row-1'>
+                                    <div className='order-row-1 h-30'>
                                         <div className='order-label-2'>
                                             Лимиты
                                         </div>
                                         <div className='order-info-3'>
-                                            {order.limit_order} {order.currency_fiat_id === 1 ? 'RUB': 'USD'}
+                                        {`${ Math.round(1000*order.limit_order/order.price)/1000} - ${order.quantity - commission} USDT`}<br></br>
+                                        {`${order.limit_order} - ${ Math.round((order.quantity - commission)*order.price*1000)/1000 } ${order.currency_fiat_id === 1 ? 'Руб': '$'}`}
                                         </div>
                                     </div>
 

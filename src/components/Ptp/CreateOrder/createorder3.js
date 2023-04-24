@@ -23,8 +23,11 @@ export function CreateOrder3(props) {
                 <div className='page-number'>3/4</div>
             </div>
 
-            <div className='container-comment-input mt-20'>
-                <TextareaAutosize placeholder='Коментарий'  className='comment-input' type='text' onChange={handleChangeComment} value={comment}/>
+            <div className='container-comment-input mt-20' onClick={()=>{
+                const el = document.getElementById('5')
+                el.focus()
+            }}>
+                <TextareaAutosize id='5' placeholder='Коментарий'  className='comment-input' type='text' onChange={handleChangeComment} value={comment}/>
             </div>
             
             {/* <div className='px-17 mt-20'>

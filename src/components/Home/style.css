@@ -124,7 +124,7 @@
     text-align: center;
 
     animation-name: show;
-    animation-duration: 1s;
+    animation-duration: 0.4s;
     animation-iteration-count: 1;
     animation-timing-function: ease;
 
@@ -134,7 +134,7 @@
 .hide-balace-load {
     /* animation: hide 1s ease  */
     animation-name: hide;
-    animation-duration: 1s;
+    animation-duration: 0.4s;
     animation-iteration-count: 1;
     animation-timing-function: ease;
     /* opacity: 0; */
@@ -180,14 +180,14 @@
 
 .grow {
     animation-name: grow;
-    animation-duration: 1s;
+    animation-duration: 0.4s;
     animation-iteration-count: 1;
     animation-timing-function: ease;
 }
 
 .grow-hide {
     animation-name: growhide;
-    animation-duration: 1s;
+    animation-duration: 0.4s;
     animation-iteration-count: 1;
     animation-timing-function: ease;
 }
@@ -795,6 +795,10 @@
     height: 34px;
 }
 
+.h-30 {
+    height: 30px;
+}
+
 .item-text {
     font-family: 'Raleway';
     font-style: normal;
@@ -1041,6 +1045,10 @@
     height: 82px;
 }
 
+.t-a-l {
+    text-align: left;
+}
+
 .cntr-center {
     display: flex;
     justify-content: center;
@@ -1136,6 +1144,46 @@
     text-align: center;
 
     color: #FF8F8F;
+}
+
+.btn-edit {
+    width: 184px;
+    height: 35px;
+    background: #333333;
+    border-radius: 5px 5px 0px 10px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    /* or 114% */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #86EFAC;
+}
+
+.btn-run {
+    background: #86EFAC;
+    border-radius: 5px 5px 10px 0px;
+
+    width: 151px;
+    height: 41px;
+
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    /* or 114% */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #272728;
 }
 
 

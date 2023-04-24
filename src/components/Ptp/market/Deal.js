@@ -29,6 +29,7 @@ export function Deal () {
     // const [showWait, setShowWait] = useState(false)
     // const [showLoader, setShowLoader] = useState(false)
     const [error, setError] = useState('')
+    const [showCardCopyCheck, setShowCardCopyCheck] = useState(false);
 
     // const [timer, setTimer] = useState(60);
     // let t = 60
@@ -116,7 +117,13 @@ export function Deal () {
     const handleSocketOn = (data) => {
         console.log('message from server', data);
         if (data.status !== deal_screen_info?.status) handleGetDealInfo()
-}
+    }   
+
+    const handleClickCopyCard = () => {
+        navigator.clipboard.writeText(deal_screen_info?.card_number)
+        setShowCardCopyCheck(true)
+        setTimeout(() => {setShowCardCopyCheck(false)}, 1000)
+    }
 
     const backScreen = (() => {
         navigate('/ptp', {replace: true})
@@ -188,14 +195,31 @@ export function Deal () {
                     <div className='deal-label-2 w-130'>
                         Аккаунт, номер карты или телефон
                     </div>
-                    <div className='order-info-3'>
+                    {/* <div className='order-info-3'>
                         {deal_screen_info?.card_number}
                         <span style={{marginLeft: '9.33px'}}>
                             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M1.66659 0.333252C0.929919 0.333252 0.333252 0.929919 0.333252 1.66659V10.9999H1.66659V1.66659H10.9999V0.333252H1.66659ZM4.33325 2.99992C3.59659 2.99992 2.99992 3.59659 2.99992 4.33325V12.3333C2.99992 13.0699 3.59659 13.6666 4.33325 13.6666H12.3333C13.0699 13.6666 13.6666 13.0699 13.6666 12.3333V4.33325C13.6666 3.59659 13.0699 2.99992 12.3333 2.99992H4.33325ZM4.33325 4.33325H12.3333V12.3333H4.33325V4.33325Z" fill="#86EFAC"/>
                             </svg>
                         </span>
+                    </div> */}
+
+                    <div className='order-info-3'
+                        onClick={handleClickCopyCard}
+                    >
+                        {deal_screen_info?.card_number}
+                        <span style={{marginLeft: '9.33px'}}>
+                            {   showCardCopyCheck ?
+                                <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.2197 0.5L4.75 8.96973L1.53027 5.75L0.469727 6.81055L4.75 11.0908L14.2803 1.56055L13.2197 0.5Z" fill="#86EFAC"/>
+                                </svg>:                                
+                                <svg width="15" height="15" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.66659 0.333252C0.929919 0.333252 0.333252 0.929919 0.333252 1.66659V10.9999H1.66659V1.66659H10.9999V0.333252H1.66659ZM4.33325 2.99992C3.59659 2.99992 2.99992 3.59659 2.99992 4.33325V12.3333C2.99992 13.0699 3.59659 13.6666 4.33325 13.6666H12.3333C13.0699 13.6666 13.6666 13.0699 13.6666 12.3333V4.33325C13.6666 3.59659 13.0699 2.99992 12.3333 2.99992H4.33325ZM4.33325 4.33325H12.3333V12.3333H4.33325V4.33325Z" fill="#86EFAC"/>
+                                </svg>
+                            }
+                        </span>
                     </div>
+
                 </div>
 
                 
@@ -276,11 +300,38 @@ export function Deal () {
                     <div className='deal-label-2 w-130'>
                         Аккаунт, номер карты или телефон
                     </div>
-                    <div className='order-info-3'>
+                    <div className='order-info-3'
+                        onClick={handleClickCopyCard}
+                    >
                         {deal_screen_info?.card_number}
                         <span style={{marginLeft: '9.33px'}}>
-                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M1.66659 0.333252C0.929919 0.333252 0.333252 0.929919 0.333252 1.66659V10.9999H1.66659V1.66659H10.9999V0.333252H1.66659ZM4.33325 2.99992C3.59659 2.99992 2.99992 3.59659 2.99992 4.33325V12.3333C2.99992 13.0699 3.59659 13.6666 4.33325 13.6666H12.3333C13.0699 13.6666 13.6666 13.0699 13.6666 12.3333V4.33325C13.6666 3.59659 13.0699 2.99992 12.3333 2.99992H4.33325ZM4.33325 4.33325H12.3333V12.3333H4.33325V4.33325Z" fill="#86EFAC"/>
+                            {   showCardCopyCheck ?
+                                <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.2197 0.5L4.75 8.96973L1.53027 5.75L0.469727 6.81055L4.75 11.0908L14.2803 1.56055L13.2197 0.5Z" fill="#86EFAC"/>
+                                </svg>:                                
+                                <svg width="15" height="15" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.66659 0.333252C0.929919 0.333252 0.333252 0.929919 0.333252 1.66659V10.9999H1.66659V1.66659H10.9999V0.333252H1.66659ZM4.33325 2.99992C3.59659 2.99992 2.99992 3.59659 2.99992 4.33325V12.3333C2.99992 13.0699 3.59659 13.6666 4.33325 13.6666H12.3333C13.0699 13.6666 13.6666 13.0699 13.6666 12.3333V4.33325C13.6666 3.59659 13.0699 2.99992 12.3333 2.99992H4.33325ZM4.33325 4.33325H12.3333V12.3333H4.33325V4.33325Z" fill="#86EFAC"/>
+                                </svg>
+                            }
+                        </span>
+                    </div>
+                </div>
+
+                <div className='order-line-container'>
+                    <div className='order-line'></div>
+                </div>
+
+                <div className='order-row-1 mb-12'>
+                    <div className='deal-label-2 w-130'>
+                        ФИО
+                    </div>
+                    <div className='order-info-3'
+                        onClick={handleClickCopyCard}
+                    >
+                        {deal_screen_info?.info}
+                        <span style={{marginLeft: '9.33px'}}>
+                            <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M13.2197 0.5L4.75 8.96973L1.53027 5.75L0.469727 6.81055L4.75 11.0908L14.2803 1.56055L13.2197 0.5Z" fill="#86EFAC"/>
                             </svg>
                         </span>
                     </div>

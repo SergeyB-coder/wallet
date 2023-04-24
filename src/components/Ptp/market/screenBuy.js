@@ -6,12 +6,17 @@ import { useTelegram } from '../../../hooks/useTelegram';
 // import { ButtonNext } from '../../Common/buttonNext';
 import { getOrderMethods, sendBuy } from './marketApi';
 import { selectQuantityBuy, setQuantityBuy } from './marketSlice';
+import { selectBalance, selectBalanceTRX, selectBalanceTRXv } from '../../Home/homeSlice';
 
 export function ScreenBuy (props) {
     const navigate = useNavigate()
     const {tg, user_id, first_name} = useTelegram()
     const dispatch = useDispatch()
     const quantity_buy = useSelector(selectQuantityBuy)
+
+    const balance = useSelector(selectBalance)
+    const balance_trx = useSelector(selectBalanceTRX)
+    const balance_trx_v = useSelector(selectBalanceTRXv)
 
     const [showMethodsPay, setShowMethodsPay] = useState(false);
     const [listMethodsPay, setListMethodsPay] = useState([]);
@@ -20,43 +25,29 @@ export function ScreenBuy (props) {
     const is_buy = props.buyOrder.type === 'b'
 
     const handleChangeQuantity = (e) => {
+        console.log('e.target.value', e.target.value)
         let inp = document.getElementById('q_buy')
         inp.style.width = (11 + e.target.value.length * 11) + 'px'
         dispatch(setQuantityBuy(e.target.value))
     }
 
     const handleClickBuy = (e) => {
-        sendBuy({
-            user_id: user_id, 
-            first_name: first_name,
-            order_id: props.buyOrder.id, 
-            quantity: quantity_buy, 
-            price: props?.buyOrder?.price, 
-            fiat: props?.buyOrder.currency_fiat_id,
-            company: props?.buyOrder.company,
-            card_number: props?.buyOrder.card_number,
-            type_order: props?.buyOrder.type,
-            method_pay_id: listMethodsPay[indexMethodPay].method_pay_id
-        }, (data) => {
-            // dispatch(setDealScreenInfo(
-            //     {
-            //         deal_id: data.deal_id,
-            //         quantity: quantity_buy,
-            //         price: props?.buyOrder?.price,
-            //         fiat: props.buyOrder.currency_fiat_id,
-            //         currency: props.buyOrder.currency_id,
-            //         status: 'request',
-            //         saler_id: props.buyOrder.user_id,
-            //         buyer_id: user_id, 
-            //         saler: props?.buyOrder?.first_name, 
-            //         buyer: first_name,
-            //         type_order: props?.buyOrder.type,
-            //         id_from: user_id,
-            //         company: props?.buyOrder.company
-            //     }
-            // ))
-            navigate('/deal/' + data.deal_id.toString(), {replace: true})
-        })
+        if (isCorrectQuantity()) {
+            sendBuy({
+                user_id: user_id, 
+                first_name: first_name,
+                order_id: props.buyOrder.id, 
+                quantity: quantity_buy, 
+                price: props?.buyOrder?.price, 
+                fiat: props?.buyOrder.currency_fiat_id,
+                company: props?.buyOrder.company,
+                card_number: props?.buyOrder.card_number,
+                type_order: props?.buyOrder.type,
+                method_pay_id: listMethodsPay[indexMethodPay].method_pay_id
+            }, (data) => {
+                navigate('/deal/' + data.deal_id.toString(), {replace: true})
+            })
+        }
     }
 
     const handleClickMethodsPay = () => {
@@ -74,6 +65,23 @@ export function ScreenBuy (props) {
 
     const backScreen = () => {
         if (showMethodsPay) setShowMethodsPay(false)
+    }
+
+    function isCorrectQuantity() {
+        return !is_buy || 
+        (
+            is_buy && (
+                    (props.buyOrder.currency_id === 1 && quantity_buy <= balance) ||
+                    (props.buyOrder.currency_id === 2 && quantity_buy <= balance_trx+balance_trx_v)
+                )
+        )
+    }
+
+    function isQuantityInLimit() {
+        return (
+            props.buyOrder.quantity >= quantity_buy && 
+            props.buyOrder.limit_order/props.buyOrder.price <= quantity_buy
+        )
     }
 
     useEffect(() => {
@@ -124,13 +132,21 @@ export function ScreenBuy (props) {
                     <div className='title-buy'>{is_buy ? 'Вы продаете ': 'Вы покупаете у '} {props.buyOrder.first_name}</div>
 
                     <div className='container-buy-input mt-20'>
-                        <input id='q_buy' className='buy-input text-buy' type='number' placeholder='0' onChange={handleChangeQuantity} value={quantity_buy}/>
+                        <input id='q_buy' className='buy-input text-buy' type='number' placeholder='0' 
+                            onChange={handleChangeQuantity} value={quantity_buy}
+                        />
                         <span className='text-buy '>USDT</span>
                     </div>
 
                     <div className='container-center mt-20'>
-                        <div className='price-info-buy'>Цена за 1 USDT {props.buyOrder.currency_id === 1 ? 'BEP20': 'TRC20'} = {props?.buyOrder?.price}</div>
+                        <div className='price-info-buy'>Цена за 1 USDT {props.buyOrder.currency_id === 1 ? 'BEP20': 'TRC20'} = {props?.buyOrder?.price} { props.buyOrder.currency_fiat_id === 1 ? ' руб': ' USD'}</div>
                     </div>
+
+                    {/* <div className='container-center mt-20'>
+                        <div className='price-info-buy'>
+                            Ваш баланс: {props.buyOrder.currency_id === 1 ? balance: balance_trx+balance_trx_v} = {props?.buyOrder?.price}
+                        </div>
+                    </div> */}
                     
                     <div className='container-center mt-20'>
                         <div className='w-100'>
@@ -172,7 +188,12 @@ export function ScreenBuy (props) {
                                     Лимиты
                                 </div>
                                 <div className='order-info-3'>
-                                    { props.buyOrder.limit_order} USDT
+                                    {Math.round(100*props.buyOrder.limit_order/props.buyOrder.price)/100} {' - '}
+                                    { props.buyOrder.quantity} USDT 
+                                    { props.buyOrder.currency_id === 1 ? ' BEP20': ' TRC20'}<br></br>
+                                    { props.buyOrder.limit_order}  {' - '}
+                                    { props.buyOrder.quantity * props.buyOrder.price}
+                                    { props.buyOrder.currency_fiat_id === 1 ? ' руб': ' USD'}
                                 </div>
                             </div>
 
@@ -217,8 +238,20 @@ export function ScreenBuy (props) {
                     {/* <div className='m-2 mt-5'>
                         <ButtonNext text='Начать сделку' onClick={handleClickBuy}/>
                     </div> */}
-                    <div onClick={handleClickBuy} className='button-send-box button-active-send-bg active-text mt-20'>
-                        Начать сделку
+                    <div onClick={handleClickBuy} 
+                        className={
+                            `button-send-box ${
+                                isCorrectQuantity() && isQuantityInLimit() ? 
+                                'button-active-send-bg active-text': 
+                                'button-send-bg disable-text'
+                            } mt-20`
+                        }
+                    >
+                        {
+                            !isCorrectQuantity() ? 'Сумма превышает баланс': 
+                            !isQuantityInLimit() ? 'Сумма не в лимитах':
+                            'Начать сделку'
+                        }
                     </div>
                 
                 </div>

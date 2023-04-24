@@ -36,10 +36,14 @@ export function CreateOrder4(props) {
         </div>
     
     useEffect(() => {
-        const ind = listCheckedMethods.findIndex(e => e)
-        if (ind !== -1) {
-            setMethodPay(methods_pay[ind].company_name)
+        // const ind = listCheckedMethods.findIndex(e => e)
+        // if (ind !== -1) {
+        let methods_pay_text = ''
+        for (let i in listCheckedMethods) {
+            if (listCheckedMethods[i]) methods_pay_text = methods_pay_text + methods_pay[i].company_name + ' '
         }
+        setMethodPay(methods_pay_text)
+        // }
     }, [listCheckedMethods, methods_pay]);
     
     return (
