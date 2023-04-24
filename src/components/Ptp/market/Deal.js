@@ -708,7 +708,7 @@ export function Deal () {
                                         <img style={{width: '131.4px', height: '132px'}} src={salute_gif} alt=''/>:
                                     </div>
                                     <div className='wait-text'>
-                                        Вам начислено {deal_screen_info?.quantity} USDT
+                                        Вы продали {deal_screen_info?.quantity} USDT
                                     </div>  
                                     <div className='wait-text-1 mt-20'>
                                         Сделка совершена
