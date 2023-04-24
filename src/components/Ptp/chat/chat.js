@@ -154,6 +154,10 @@ export function Chat () {
             return () => {tg.offEvent('backButtonClicked', backScreen)}
         }, )
 
+    useEffect(() => {
+        tg.expand()
+    }, [tg]);
+
     return (
             <div className='chat-container'>
                 <div className='w-cntr color-bg-cntr-person mt-20'>
@@ -186,7 +190,7 @@ export function Chat () {
                             list_messages.map((message, index) => {
                                 return (
                                     first_name === message.first_name ?
-                                    <div style={{ display: 'flex', justifyContent: 'left'}}  key={index}>
+                                    <div style={{ display: 'flex', justifyContent: 'left', marginBottom: '10px'}}  key={index}>
                                         <div className='container-message-item'>
                                             <div className='msg-chat'>{message.text}</div>
                                             {message.url && 
@@ -201,7 +205,7 @@ export function Chat () {
 
                                         </div>
                                     </div>:
-                                    <div style={{display: 'flex', justifyContent: 'right'}} key={index}>
+                                    <div style={{display: 'flex', justifyContent: 'right', marginBottom: '10px'}} key={index}>
                                         <div className='container-my-message-item'>
                                             <div className='msg-chat'>{message.text}</div>
                                             {message.url && 
