@@ -38,7 +38,8 @@ export function Market() {
     const [currentSelecter, setCurrentSelecter] = useState(''); //currency, fiat
 
     const backScreen = (() => {
-        navigate('/ptp', {replace: true})
+        if (marketScreen === 'select_method') setMarketScreen('orders')
+        else navigate('/ptp', {replace: true})
     })
 
     function handleClickBuy (order) {
