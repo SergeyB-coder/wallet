@@ -1,8 +1,10 @@
 import  client  from "socket.io-client";
 import { url } from "../const/urls";
 
+const socket = client(url);
+
 export function useSocket () {
-    const socket = client(url);
+    
     return {
         socket
     }

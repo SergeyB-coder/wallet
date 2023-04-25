@@ -83,7 +83,7 @@ export function CreateOrder1(props) {
     }
 
     function isCorrectQuantity() {
-        return parseFloat(quantity_order || 0) <= getCurrentBalance()
+        return parseFloat(quantity_order || 0) <= getCurrentBalance() || typeOrder === 'b'
     }
 
     // const divider = 

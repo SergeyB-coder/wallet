@@ -13,6 +13,8 @@ export function useTelegram () {
         // first_name: 'Srg',
         // user_id: '1234567',
         // first_name: 'Super'
+        // user_id: 671690853,
+        // first_name: 'Tradeex'
     }
 }
 

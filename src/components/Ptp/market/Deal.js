@@ -17,6 +17,8 @@ import salute_gif from '../../../static/animations/salute.gif'
 import { useSocket } from '../../../hooks/useSocket';
 import { Timer } from '../../Common/timerDeal';
 
+// import { socket } from '../../../socket';
+
 export function Deal () {
     const {tg, user_id} = useTelegram()
     const { deal_id } = useParams();
@@ -44,7 +46,7 @@ export function Deal () {
 
     const handleSendMessage = (status) => {
         console.log('emit', status)
-        socket.emit("new_message", {type: 'deal', deal_id: deal_screen_info.deal_id, status: status});
+        // socket.emit("new_message", {type: 'deal', deal_id: deal_screen_info.deal_id, status: status});
     }
 
     function handleGetDealInfo() {
@@ -129,7 +131,7 @@ export function Deal () {
 
     const handleSocketOn = (data) => {
         console.log('message from server', data);
-        if (data.status !== deal_screen_info?.status) handleGetDealInfo()
+        // if (data.status !== deal_screen_info?.status) handleGetDealInfo()
     }   
 
     const handleClickCopyCard = () => {
@@ -373,13 +375,14 @@ export function Deal () {
             setTimeOut(time_out)
         }
         else setTimeDeal(0)
-    }, [timeDeal, showTimer, timeOut]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [showTimer, timeDeal]);
 
     useEffect(() => {
         console.log(9)
         socket.on(deal_id !== '0' ? `deal${deal_id}`: `{deal${deal_screen_info.deal_id}}`, handleSocketOn);
         return () => {
-            socket.removeAllListeners(deal_id !== '0' ? deal_id: deal_screen_info.deal_id);
+            socket.off(deal_id !== '0' ? `deal${deal_id}`: `{deal${deal_screen_info.deal_id}}`);
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -805,7 +808,7 @@ export function Deal () {
                         {   deal_screen_info?.status === 'request' &&
                             <>  
                                 <div className='container-title mt-20'>
-                                    <div className='title-text'><span className='title-text-g'>SRG</span> хочет продать вам</div>
+                                    <div className='title-text'><span className='title-text-g'>{}</span>{deal_screen_info.buyer} хочет продать вам</div>
                                 </div>
                                 {quantity_deal}
                                 <div className='container-center mt-20'>

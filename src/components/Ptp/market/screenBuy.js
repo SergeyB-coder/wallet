@@ -48,7 +48,7 @@ export function ScreenBuy (props) {
                 company: props?.buyOrder.company,
                 card_number: props?.buyOrder.card_number,
                 type_order: props?.buyOrder.type,
-                method_pay_id: listMethodsPay[indexMethodPay].method_pay_id
+                method_pay_id: is_buy ? listMethodsPay[indexMethodPay].method_pay_id_taker: listMethodsPay[indexMethodPay].method_pay_id
             }, (data) => {
                 navigate('/deal/' + data.deal_id.toString(), {replace: true})
             })
@@ -90,11 +90,11 @@ export function ScreenBuy (props) {
     }
 
     useEffect(() => {
-        getOrderMethods({order_id: props.buyOrder.id}, (data) => {
+        getOrderMethods({order_id: props.buyOrder.id, taker_id: user_id}, (data) => {
             setListMethodsPay(data.order_methods)
             console.log('getOrderMethods', data)
         })
-    }, [props.buyOrder.id]);
+    }, [props.buyOrder.id, user_id]);
 
     // useEffect(() => {
     //     let inp = document.getElementById('quantity')
