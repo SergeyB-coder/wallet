@@ -37,6 +37,7 @@ export function ScreenBuy (props) {
     }
 
     const handleClickBuy = (e) => {
+        console.log(isCorrectQuantity())
         if (isCorrectQuantity()) {
             sendBuy({
                 user_id: user_id, 

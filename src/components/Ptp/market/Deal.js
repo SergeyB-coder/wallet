@@ -38,6 +38,7 @@ export function Deal () {
     const [showTimer, setShowTimer] = useState(false);
 
     const [timeOut, setTimeOut] = useState(null);
+    const [waitTransaction, setWaitTransaction] = useState(false);
 
     // const [timer, setTimer] = useState(60);
     // let t = 60
@@ -46,7 +47,7 @@ export function Deal () {
 
     const handleSendMessage = (status) => {
         console.log('emit', status)
-        // socket.emit("new_message", {type: 'deal', deal_id: deal_screen_info.deal_id, status: status});
+        socket.emit("new_message", {type: 'deal', deal_id: deal_screen_info.deal_id, status: status});
     }
 
     function handleGetDealInfo() {
@@ -109,12 +110,13 @@ export function Deal () {
     }
 
     const handleEndDeal = () => {
-        // setShowLoader(true)
+        setWaitTransaction(true)
         console.log('end deal', deal_screen_info.deal_id)
         setEndDeal(
             {
                 deal_id: deal_screen_info.deal_id, 
             }, (data) => {
+                setWaitTransaction(false)
                 handleGetDealInfo()
                 handleSendMessage('enddeal')
 
@@ -131,7 +133,7 @@ export function Deal () {
 
     const handleSocketOn = (data) => {
         console.log('message from server', data);
-        // if (data.status !== deal_screen_info?.status) handleGetDealInfo()
+        if (data.status !== deal_screen_info?.status) handleGetDealInfo()
     }   
 
     const handleClickCopyCard = () => {
@@ -154,7 +156,7 @@ export function Deal () {
         <div className='title-buy-mini mt-13'># {deal_screen_info?.deal_id}</div>
         <div className='cntr-left'>
             <div className='open-chat-btn mt-13' onClick={()=>{navigate(`/chat/${deal_screen_info.deal_id}`, {replace: true})}}>
-                {!error && 'Чат с покупателем'}
+                {!error && (deal_screen_info?.type_order === 's' ? 'Чат с покупателем': 'Чат с продавцом')}
             </div>
         </div>
 
@@ -364,7 +366,7 @@ export function Deal () {
         
 
         <div onClick={handleEndDeal} className='button-send-box button-active-send-bg active-text mt-20'>
-            Подтвердить оплату
+            {waitTransaction ? 'Транзакция выполняется..': 'Подтвердить оплату'}
         </div>
     </>
 
