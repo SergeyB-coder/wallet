@@ -124,7 +124,7 @@
     text-align: center;
 
     animation-name: show;
-    animation-duration: 0.4s;
+    animation-duration: 0.5s;
     animation-iteration-count: 1;
     animation-timing-function: ease;
 
@@ -134,7 +134,7 @@
 .hide-balace-load {
     /* animation: hide 1s ease  */
     animation-name: hide;
-    animation-duration: 0.4s;
+    animation-duration: 0.5s;
     animation-iteration-count: 1;
     animation-timing-function: ease;
     /* opacity: 0; */
@@ -180,14 +180,14 @@
 
 .grow {
     animation-name: grow;
-    animation-duration: 0.4s;
+    animation-duration: 0.5s;
     animation-iteration-count: 1;
     animation-timing-function: ease;
 }
 
 .grow-hide {
     animation-name: growhide;
-    animation-duration: 0.4s;
+    animation-duration: 0.5s;
     animation-iteration-count: 1;
     animation-timing-function: ease;
 }

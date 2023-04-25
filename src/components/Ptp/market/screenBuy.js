@@ -7,6 +7,7 @@ import { useTelegram } from '../../../hooks/useTelegram';
 import { getOrderMethods, sendBuy } from './marketApi';
 import { selectQuantityBuy, setQuantityBuy } from './marketSlice';
 import { selectBalance, selectBalanceTRX, selectBalanceTRXv } from '../../Home/homeSlice';
+import {  selectPriceMarket, selectRubDollar } from '../ptpSlice';
 
 export function ScreenBuy (props) {
     const navigate = useNavigate()
@@ -17,6 +18,10 @@ export function ScreenBuy (props) {
     const balance = useSelector(selectBalance)
     const balance_trx = useSelector(selectBalanceTRX)
     const balance_trx_v = useSelector(selectBalanceTRXv)
+
+    
+    const price_market = useSelector(selectPriceMarket)
+    const rub_dollar = useSelector(selectRubDollar)
 
     const [showMethodsPay, setShowMethodsPay] = useState(false);
     const [listMethodsPay, setListMethodsPay] = useState([]);
@@ -80,7 +85,7 @@ export function ScreenBuy (props) {
     function isQuantityInLimit() {
         return (
             props.buyOrder.quantity >= quantity_buy && 
-            props.buyOrder.limit_order/props.buyOrder.price <= quantity_buy
+            props.buyOrder.limit_order/(props.buyOrder.type_price_id === 1 ? props.buyOrder.price: price_market * (props.buyOrder.currency_fiat_id === 1 ? rub_dollar: 1) * props.buyOrder.percent_price/100) <= quantity_buy
         )
     }
 
@@ -188,7 +193,7 @@ export function ScreenBuy (props) {
                                     Лимиты
                                 </div>
                                 <div className='order-info-3'>
-                                    {Math.round(100*props.buyOrder.limit_order/props.buyOrder.price)/100} {' - '}
+                                    {Math.round(100*props.buyOrder.limit_order/(props.buyOrder.type_price_id === 1 ? props.buyOrder.price: price_market * (props.buyOrder.currency_fiat_id === 1 ? rub_dollar: 1) * props.buyOrder.percent_price/100))/100} {' - '}
                                     { props.buyOrder.quantity} USDT 
                                     { props.buyOrder.currency_id === 1 ? ' BEP20': ' TRC20'}<br></br>
                                     { props.buyOrder.limit_order}  {' - '}

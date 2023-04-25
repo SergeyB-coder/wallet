@@ -15,6 +15,7 @@ import clock_gif from '../../../static/animations/clock.gif'
 // import hands_gif from '../../../static/animations/hands.gif'
 import salute_gif from '../../../static/animations/salute.gif'
 import { useSocket } from '../../../hooks/useSocket';
+import { Timer } from '../../Common/timerDeal';
 
 export function Deal () {
     const {tg, user_id} = useTelegram()
@@ -31,6 +32,11 @@ export function Deal () {
     const [error, setError] = useState('')
     const [showCardCopyCheck, setShowCardCopyCheck] = useState(false);
 
+    const [timeDeal, setTimeDeal] = useState(0);
+    const [showTimer, setShowTimer] = useState(false);
+
+    const [timeOut, setTimeOut] = useState(null);
+
     // const [timer, setTimer] = useState(60);
     // let t = 60
 
@@ -42,9 +48,13 @@ export function Deal () {
     }
 
     function handleGetDealInfo() {
+        clearTimeout(timeOut)
         console.log('handleGetDealInfo', deal_id)
         getDealInfo( {deal_id: deal_id === '0' ? deal_screen_info?.deal_id: deal_id}, (data) => {
-            console.log('handleGetDealInfo deal', data)
+            console.log('handleGetDealInfo deal', data, data.delta_time/1000)
+            
+            setTimeDeal(data.delta_time/1000)
+            setShowTimer(true)
             dispatch(setDealScreenInfo(data.deal))  
 
             // if (data.deal.saler_id.toString() === user_id.toString()) {
@@ -71,6 +81,7 @@ export function Deal () {
     }
 
     const handleClickAccept = () => {
+        clearTimeout(timeOut)
         sendAcceptDeal({deal_id: deal_screen_info.deal_id}, () => {
             handleGetDealInfo()
             handleSendMessage('pay')
@@ -79,6 +90,8 @@ export function Deal () {
     }
 
     const hanldeConfirm = () => {
+        setShowTimer(false)
+        setTimeDeal(0)
         sendConfirm(
             {
                 deal_id: deal_screen_info.deal_id, 
@@ -122,6 +135,7 @@ export function Deal () {
     const handleClickCopyCard = () => {
         navigator.clipboard.writeText(deal_screen_info?.card_number)
         setShowCardCopyCheck(true)
+
         setTimeout(() => {setShowCardCopyCheck(false)}, 1000)
     }
 
@@ -229,7 +243,11 @@ export function Deal () {
         <div className='container-center mt-20 color-bg-cntr h-82'>
             <div className='w-100'>
                     <div className='deal-text-3 mt-17'>Переведите оплату в течение</div>
-                    <div className='timer-text h-34' style={{display: 'flex', alignItems: 'flex-end', justifyContent: 'center'}}>14:56</div>
+                    <div className='timer-text h-34' 
+                        style={{display: 'flex', alignItems: 'flex-end', justifyContent: 'center'}}
+                    >
+                        {showTimer && <Timer time={timeDeal}/>}
+                    </div>
             </div>
         </div>
 
@@ -349,6 +367,15 @@ export function Deal () {
     </>
 
     useEffect(() => {
+        if (showTimer) {
+            const time_out = setTimeout(() => {if (showTimer) setTimeDeal(timeDeal + 1)}, 1000)
+            clearTimeout(timeOut)
+            setTimeOut(time_out)
+        }
+        else setTimeDeal(0)
+    }, [timeDeal, showTimer, timeOut]);
+
+    useEffect(() => {
         console.log(9)
         socket.on(deal_id !== '0' ? `deal${deal_id}`: `{deal${deal_screen_info.deal_id}}`, handleSocketOn);
         return () => {
@@ -372,6 +399,7 @@ export function Deal () {
         <div className='container-center'>
             <div style={{width: '335px'}}>
 
+{/* YOU TAKER SALE-ORDER */}
                 {  deal_screen_info?.type_order === 's' && deal_screen_info.maker_id.toString() !== user_id.toString() &&
 
                     <>
@@ -448,7 +476,7 @@ export function Deal () {
                                     </div>
 
                                 </div>
-
+                                {showTimer && <Timer time={timeDeal}/>}
                                 <div onClick={()=>handleGetDealInfo()} className='button-send-box button-active-send-bg active-text mt-20'>
                                     Обновить статус
                                 </div>
@@ -534,7 +562,7 @@ export function Deal () {
                         }
                     </>
                 }
-
+{/* YOU MAKER SALE-ORDER */}
                 {  deal_screen_info?.type_order === 's' && deal_screen_info.maker_id.toString() === user_id.toString() &&
 
                     <>
@@ -605,6 +633,8 @@ export function Deal () {
 
                                 </div>
 
+                                {showTimer && <Timer time={timeDeal}/>}
+
                                 <div onClick={()=>handleGetDealInfo()} className='button-send-box button-active-send-bg active-text mt-20'>
                                     Обновить статус
                                 </div>
@@ -668,7 +698,7 @@ export function Deal () {
                                     <div className='line-green'></div>
                                 </div>
 
-                                
+                                {showTimer && <Timer time={timeDeal}/>}
 
                                 <div className='row-2 mt-20'>
                                     <div className='btn-disable-deal' 

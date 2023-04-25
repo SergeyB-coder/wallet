@@ -12,6 +12,8 @@ import { ScreenBuy } from './screenBuy';
 
 import './style.css'
 import { svg_share } from '../../../const/svgs';
+import { parsePrice } from '../ptpApi';
+import { selectPriceMarket, selectRubDollar, setPriceMarket, setPriceMarketTRX, setRubDollar } from '../ptpSlice';
 
 
 export function Market() {
@@ -23,6 +25,9 @@ export function Market() {
 
     const orders = useSelector(selectOrders)
     const companies_pay = useSelector(selectCompaniesPay)
+
+    const price_market = useSelector(selectPriceMarket)
+    const rub_dollar = useSelector(selectRubDollar)
 
     const [marketScreen, setMarketScreen] = useState('orders') // buy //select_method_pay
     const [buyOrder, setBuyOrder] = useState(null)
@@ -91,6 +96,14 @@ export function Market() {
 
     const divider = 
         <div className='divider-order-market'></div>
+
+    useEffect(() => {
+        parsePrice({}, (data) => {
+            dispatch(setPriceMarket(data.price_market))
+            dispatch(setPriceMarketTRX(data.price_market_trx))
+            dispatch(setRubDollar(data.rub_dollar))            
+        })
+    }, [dispatch]);
 
     useEffect(() => {
         getCompaniesPay({fiat_id: currencyFiat}, (data) => {
@@ -217,7 +230,8 @@ export function Market() {
                                 >
                                     <div className='order-header a-c'>
                                         <div className='order-price'>
-                                            <div className='mt-2'>{order.price}
+                                            <div className='mt-2'>
+                                                {order.type_price_id === 1 ? order.price: Math.round(price_market*(order.currency_fiat_id === 1 ? rub_dollar: 1) * order.percent_price)/100}
                                                 {order.currency_fiat_id === 1 ? 'RUB': 'USD'}
                                             </div>
                                             <div className={order.type === 's' ? 'order-label':'mini-text-r'}>Цена за 1 {order.currency_id === 1 ? 'USDT BEP20': 'USDT TRC20'}</div>
@@ -269,7 +283,7 @@ export function Market() {
                                             Лимиты
                                         </div>
                                         <div className='order-info-3'>
-                                        {`${ Math.round(1000*order.limit_order/order.price)/1000} - ${order.quantity - commission} USDT`}<br></br>
+                                        {`${ Math.round(1000*order.limit_order/(order.type_price_id === 1 ? order.price: price_market * (order.currency_fiat_id === 1 ? rub_dollar: 1) * order.percent_price/100))/1000} - ${order.quantity - commission} USDT`}<br></br>
                                         {`${order.limit_order} - ${ Math.round((order.quantity - commission)*order.price*1000)/1000 } ${order.currency_fiat_id === 1 ? 'Руб': '$'}`}
                                         </div>
                                     </div>

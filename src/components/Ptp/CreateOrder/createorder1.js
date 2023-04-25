@@ -13,7 +13,7 @@ export function CreateOrder1(props) {
     const dispatch = useDispatch()
     // const setScreen = props.setScreen
 
-    const percent_price = useSelector(selectPercentPrice)
+    
     const quantity_order = useSelector(selectQuantityOrder)
     const limit_order = useSelector(selectLimitOrder)
     const time_limit_order = useSelector(selectTimeLimit)
@@ -21,6 +21,7 @@ export function CreateOrder1(props) {
     const type_price = useSelector(selectPriceType)
     // const timeLimit = useSelector(selectTimeLimit)
 
+    const percent_price = useSelector(selectPercentPrice)
     const price_market = useSelector(selectPriceMarket)
     const rub_dollar = useSelector(selectRubDollar)
 
@@ -29,7 +30,7 @@ export function CreateOrder1(props) {
     const balance_trx_v = useSelector(selectBalanceTRXv)
 
     const currency_order = useSelector(selectCurrencyOrder)
-    const currencyType = useSelector(selectPriceType)
+    // const priceType = useSelector(selectPriceType)
     const currencyFiat = useSelector(selectCurrencyFiat)
     const typeOrder = useSelector(selectTypeOrder)
 
@@ -73,7 +74,8 @@ export function CreateOrder1(props) {
     }
 
     function isInputData () {
-        return price !== '' && quantity_order !== '' && limit_order !== ''
+        return  (price !== '' && quantity_order !== '' && limit_order !== '') || 
+                (type_price === 2 && percent_price !== '' && quantity_order !== '' && limit_order !== '')
     }
 
     function isCorrectLimit () {
@@ -205,7 +207,9 @@ export function CreateOrder1(props) {
                 {render_fix_price}
             </div> */}
             <div className='send-address'>
-                <input className='address-to-input-2' type='number' placeholder='30 ~ 170' onChange={handleChangePercPrice} value={percent_price}/>
+                <input className='address-to-input-2' type='number' placeholder='30 ~ 170' 
+                onChange={handleChangePercPrice} value={percent_price}
+            />
                     
                 <div className='address-item-col2'>
                     <div style={{color: 'var(--text-mini)'}}>
@@ -307,7 +311,7 @@ export function CreateOrder1(props) {
     const render_limit_order_max = 
             <div className='limit-order-container'>
                     <input className='address-to-input-2 w-order' type='number' placeholder='Макс.' onChange={handleChangeLimitOrder} 
-                        value={ Math.round((parseFloat(quantity_order) * (type_price === 1 ? price: price_market*rub_dollar))*1000)/1000 }
+                        value={ Math.round((parseFloat(quantity_order) * (type_price === 1 ? price: percent_price*price_market*(currencyFiat === 1 ? rub_dollar: 1)/100))*1000)/1000 }
                     />
                 <div className='currency-fiat-label'>
                     {CURRENCY_FIAT_LIST[currencyFiat - 1]}
@@ -359,7 +363,7 @@ export function CreateOrder1(props) {
             </div>
 
             
-            {currencyType === 1 ?
+            {type_price === 1 ?
                 (
                     <>
                         

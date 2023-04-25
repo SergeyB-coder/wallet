@@ -7,6 +7,7 @@ import { useTelegram } from '../../hooks/useTelegram';
 import { svg_bep1, svg_binance, svg_btc, svg_tron1 } from '../../const/svgs';
 import { useState } from 'react';
 import { Transactions } from './transactions';
+// import { Timer } from '../Common/timerDeal';
 // import { useNavigate } from 'react-router-dom';
 
 
