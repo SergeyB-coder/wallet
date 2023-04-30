@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserData } from './homeApi';
-import { selectBalance, selectBalanceTRX, selectBalanceTRXv, setAddress, setAddressTRX, setBalance, setBalanceTRX, setBalanceTRXv } from './homeSlice';
+import { selectBalance, selectBalanceTRX, selectBalanceTRXv, selectNameUser, setAddress, setAddressTRX, setBalance, setBalanceTRX, setBalanceTRXv, setNameUser } from './homeSlice';
 import { MenuButtons } from './menubuttons';
 import { useTelegram } from '../../hooks/useTelegram';
 import { svg_bep1, svg_binance, svg_btc, svg_tron1 } from '../../const/svgs';
@@ -22,6 +22,7 @@ export function Home() {
 	const balance = useSelector(selectBalance)
 	const balance_trx = useSelector(selectBalanceTRX)
 	const balance_trx_v = useSelector(selectBalanceTRXv)
+	const name_user = useSelector(selectNameUser)
 
 	const [isLoadData, setIsLoadData] = useState(true);
 	const [showTransactions, setShowTransactions] = useState(false);
@@ -51,7 +52,7 @@ export function Home() {
 			dispatch(setBalance(data.balance))
 			dispatch(setBalanceTRX(data.balance_trx))
 			dispatch(setBalanceTRXv(data.balance_trx_v))
-			
+			dispatch(setNameUser(data.name_user))
 			setTimeout(() => {setIsLoadData(false)}, 400)
 			
 		})
@@ -77,8 +78,8 @@ export function Home() {
 							<div className='row d-flex justify-content-between align-items-center mt-30 title-balance' >
 								<div className='balance-label'>Ваш баланс</div>
 								<div className='bottom-balance'>
-									+$400
-									<span className='bottom-balance-percent'>+32%</span>
+									{name_user}
+									{/* <span className='bottom-balance-percent'>+32%</span> */}
 								</div>
 							</div>
 						</div>
@@ -93,7 +94,7 @@ export function Home() {
 							</>
 							}
 							{/* <div className={`balance-load hide-balace-load ${isLoadData ? '': 'hide-balace-load'}`}></div> */}
-							{isHide  && <div className='balance-main'><span className='balance-main-sign'>$</span>{Math.round(parseFloat(((balance + balance_trx + balance_trx_v) || 0))*1000)/1000}</div>}
+							{!isLoadData  && <div className='balance-main'><span className='balance-main-sign'>$</span>{Math.round(parseFloat(((balance + balance_trx + balance_trx_v) || 0))*1000)/1000}</div>}
 						</div>
 						
 						{isLoadData && <div className={`home-container-balance-load ${isHide ? 'grow-hide': ''}`}></div>}
@@ -157,7 +158,7 @@ export function Home() {
 									<div className='token-balance-text mt-2'>{Math.round((parseFloat(balance_trx + balance_trx_v))*100)/100} USDT</div>
 								</div>
 								<div className='wallet-item-info2'>
-									<div className='token-balance-text2 text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance_trx || 0))*100*1.1)/100}</div>
+									<div className='token-balance-text2 text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance_trx + balance_trx_v || 0))*100*1.1)/100}</div>
 									<div className='bottom-info text-nowrap mt-2'>+23%</div>
 								</div>
 								</>

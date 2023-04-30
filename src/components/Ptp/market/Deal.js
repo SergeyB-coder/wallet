@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTelegram } from '../../../hooks/useTelegram';
 // import { ButtonNext } from '../../Common/buttonNext';
-import { getDealInfo, sendAcceptDeal, sendConfirm, setEndDeal } from './marketApi';
+import { getDealInfo, sendAcceptDeal, sendCancelDeal, sendConfirm, setEndDeal } from './marketApi';
 import { selectDealScreenInfo, setDealScreenInfo } from './marketSlice';
 // import { svg_hands, svg_salute } from '../../../const/svgs';
 // import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +16,8 @@ import clock_gif from '../../../static/animations/clock.gif'
 import salute_gif from '../../../static/animations/salute.gif'
 import { useSocket } from '../../../hooks/useSocket';
 import { Timer } from '../../Common/timerDeal';
+import { selectPriceMarket, selectRubDollar, setPriceMarket, setPriceMarketTRX, setRubDollar } from '../ptpSlice';
+import { parsePrice } from '../ptpApi';
 
 // import { socket } from '../../../socket';
 
@@ -40,6 +42,9 @@ export function Deal () {
     const [timeOut, setTimeOut] = useState(null);
     const [waitTransaction, setWaitTransaction] = useState(false);
 
+    const price_market = useSelector(selectPriceMarket)
+    const rub_dollar = useSelector(selectRubDollar)
+
     // const [timer, setTimer] = useState(60);
     // let t = 60
 
@@ -56,7 +61,7 @@ export function Deal () {
         getDealInfo( {deal_id: deal_id === '0' ? deal_screen_info?.deal_id: deal_id}, (data) => {
             console.log('handleGetDealInfo deal', data, data.delta_time/1000)
             
-            setTimeDeal(data.delta_time/1000)
+            setTimeDeal(600 - data.delta_time/1000)
             setShowTimer(true)
             dispatch(setDealScreenInfo(data.deal))  
 
@@ -88,6 +93,17 @@ export function Deal () {
         sendAcceptDeal({deal_id: deal_screen_info.deal_id}, () => {
             handleGetDealInfo()
             handleSendMessage('pay')
+        })
+        
+    }
+
+    
+    const handleClickCancelDeal = () => {
+        clearTimeout(timeOut)
+        sendCancelDeal({deal_id: deal_screen_info.deal_id}, () => {
+            // handleGetDealInfo()
+            navigate('/ptp', {replace: true})
+            handleSendMessage('cancel')
         })
         
     }
@@ -371,8 +387,16 @@ export function Deal () {
     </>
 
     useEffect(() => {
+        parsePrice({}, (data) => {
+            dispatch(setPriceMarket(data.price_market))
+            dispatch(setPriceMarketTRX(data.price_market_trx))
+            dispatch(setRubDollar(data.rub_dollar))            
+        })
+    }, [dispatch]);
+
+    useEffect(() => {
         if (showTimer) {
-            const time_out = setTimeout(() => {if (showTimer) setTimeDeal(timeDeal + 1)}, 1000)
+            const time_out = setTimeout(() => {if (showTimer) setTimeDeal(timeDeal - 1)}, 1000)
             clearTimeout(timeOut)
             setTimeOut(time_out)
         }
@@ -682,7 +706,11 @@ export function Deal () {
                                                 Сумма
                                             </div>
                                             <div className='order-info-3'>
-                                                {deal_screen_info?.price * deal_screen_info?.quantity} {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
+                                                
+                                                {   deal_screen_info.type_price_id === 1 ?
+                                                    deal_screen_info?.price * deal_screen_info?.quantity:
+                                                    Math.round(deal_screen_info.percent_price*price_market*(deal_screen_info.currency_fiat_id === 1 ? rub_dollar: 1))/100
+                                                } {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
                                             </div>
                                         </div>
 
@@ -707,7 +735,7 @@ export function Deal () {
 
                                 <div className='row-2 mt-20'>
                                     <div className='btn-disable-deal' 
-                                    // onClick={handleClickCancelDeal}
+                                        onClick={handleClickCancelDeal}
                                     >
                                         Отказаться
                                     </div>
@@ -860,11 +888,11 @@ export function Deal () {
                                     <div className='line-green'></div>
                                 </div>
 
-                                
+                                {showTimer && <Timer time={timeDeal}/>}
 
                                 <div className='row-2 mt-20'>
                                     <div className='btn-disable-deal' 
-                                    // onClick={handleClickCancelDeal}
+                                        onClick={handleClickCancelDeal}
                                     >
                                         Отказаться
                                     </div>

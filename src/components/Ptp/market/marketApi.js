@@ -145,7 +145,7 @@ export function sendCancelDeal(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data enddeal', data)
+            console.log('data canceldeal', data)
             
             return callback(data)
         });

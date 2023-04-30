@@ -79,7 +79,7 @@ export function CreateOrder1(props) {
     }
 
     function isCorrectLimit () {
-        return limit_order <= quantity_order*(type_order === 1 ? price: price_market*rub_dollar)
+        return limit_order <= quantity_order*(type_price === 1 ? price: price_market*(currencyFiat === 1 ? rub_dollar: 1))
     }
 
     function isCorrectQuantity() {

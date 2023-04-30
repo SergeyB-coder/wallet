@@ -70,7 +70,7 @@ export function Transactions () {
                                         <div className= 'text-deal-quantity color-q-text'>-{transaction.q} USDT</div>:
                                         <div className='text-deal-quantity color-deal-r-text'>+{transaction.q} USDT</div>
                                     }
-                                    <div className='deal-text-3 text-nowrap'>$45.3</div>
+                                    <div className='deal-text-3 text-nowrap'>${Math.round(transaction.q * 1.1 * 100)/100}</div>
                                 </div>
                             </div>
                         )

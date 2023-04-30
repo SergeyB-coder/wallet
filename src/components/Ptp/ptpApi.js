@@ -55,3 +55,21 @@ export function getUserQDeals(pars, callback) {
         });
 }
 
+
+export function setActiveOrder(pars, callback) {
+    fetch(url + '/setactiveorder', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(pars)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('data setactiveorder', data)
+            
+            return callback(data)
+        });
+}
+

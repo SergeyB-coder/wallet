@@ -10,6 +10,7 @@ import { createOrder, parsePrice } from '../ptpApi';
 import { selectComment, selectCurrencyFiat, selectCurrencyOrder, selectLimitOrder, selectMethodPay, selectPercentPrice, selectPrice, selectPriceType, selectQuantityOrder, selectTypeOrder, setPriceMarket, setPriceMarketTRX, setRubDollar } from '../ptpSlice';
 import { CreateOrder3 } from './createorder3';
 import { selectMethodsPay } from '../settings_pay/settingsPaySlice';
+import { selectBackStepCreateOrder } from '../market/marketSlice';
 
 
 export function CreateOrder() {
@@ -28,6 +29,8 @@ export function CreateOrder() {
     const price_type = useSelector(selectPriceType)
     const comment = useSelector(selectComment)
     const list_methods = useSelector(selectMethodsPay)
+
+    const back_screen = useSelector(selectBackStepCreateOrder)
 
     const [screen, setScreen] = useState('createorder1') 
     const [listCheckedMethods, setListCheckedMethods] = useState([]);
@@ -63,25 +66,30 @@ export function CreateOrder() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const backScreen = () => {
-        switch (screen) {
-            case 'createorder1':
-                navigate('/ptp', {replace: true})
-                break;
-
-            case 'createorder2':
-                setScreen('createorder1')
-                break;
-
-            case 'createorder3':
-                setScreen('createorder2')
-                break;
-
-            case 'createorder4':
-                setScreen('createorder3')
-                break;
-            
-            default:
-                break;
+        if (back_screen === 'person') {
+            navigate('/person', {replace: true})
+        }
+        else {
+            switch (screen) {
+                case 'createorder1':
+                    navigate('/ptp', {replace: true})
+                    break;
+    
+                case 'createorder2':
+                    setScreen('createorder1')
+                    break;
+    
+                case 'createorder3':
+                    setScreen('createorder2')
+                    break;
+    
+                case 'createorder4':
+                    setScreen('createorder3')
+                    break;
+                
+                default:
+                    break;
+            }
         }
     }
 

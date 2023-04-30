@@ -5,21 +5,32 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { getOrders } from '../Ptp/market/marketApi';
 import { svg_share } from '../../const/svgs';
-import { getUserQDeals } from '../Ptp/ptpApi';
+import { getUserQDeals, parsePrice, setActiveOrder } from '../Ptp/ptpApi';
+import { useDispatch, useSelector } from 'react-redux';
+import { setBackStepCreateOrder } from '../Ptp/market/marketSlice';
+import { selectPriceMarket, selectRubDollar, setComment, setCurrencyFiat, setCurrencyOrder, setLimitOrder, setMethodPay, setPercentPrice, setPrice, setPriceMarket, setPriceMarketTRX, setPriceType, setQuantityOrder, setRubDollar, setTypeOrder } from '../Ptp/ptpSlice';
+import { setMethodsPay } from '../Ptp/settings_pay/settingsPaySlice';
 
 const commission = 0.05
 
 export function Person (props) {
     const { user_id, tg, first_name } = useTelegram()
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const [allOrderActive, setAllOrderActive] = useState(true);
     const [orders, setOrders] = useState([]);
     const [qDeals, setQDeals] = useState(0);
 
+    const price_market = useSelector(selectPriceMarket)
+    const rub_dollar = useSelector(selectRubDollar)
+
     const handleClickCreateOrder = () => {
+        dispatch(setBackStepCreateOrder('person'))
         navigate('/createorder', {replace: true})
     }
+
+    
 
     const handleClickSettingsPay = () => {
         navigate('/settingspay', {replace: true})
@@ -29,6 +40,66 @@ export function Person (props) {
         navigate('/ptp', {replace: true})
         // navigate('/home', {replace: true})
     }
+
+    function handleClickEditOrder (index) {
+        dispatch(setPercentPrice(orders[index].percent_price))
+        dispatch(setQuantityOrder(orders[index].quantity))
+        dispatch(setLimitOrder(orders[index].limit_order))
+        dispatch(setCurrencyFiat(orders[index].currency_fiat_id))
+        dispatch(setCurrencyOrder(orders[index].currency_order))
+        dispatch(setPrice(orders[index].price))
+        // dispatch(setMethodPay(orders[index].method_pay))
+        
+        // const method_pay = useSelector(selectMethodPay)
+
+        dispatch(setTypeOrder(orders[index].type))
+        dispatch(setPriceType(orders[index].type_price_id))
+        dispatch(setComment(orders[index].comment))
+        // dispatch(setMethodsPay(orders[index].meth))
+        navigate('/createorder', {replace: true})
+        
+    }
+
+    const handleClickAllOrderActive = () => {
+        setActiveOrder({user_id: user_id, value: !allOrderActive}, (data) => {
+            console.log(data)
+            getOrders({user_id: user_id}, (data) => {
+                console.log('getOrders person', data)
+                setOrders(data.orders)
+            })
+        })
+
+        setAllOrderActive(!allOrderActive)
+    }
+
+    function handleClickRunOrder (index) {
+        setActiveOrder({order_id: orders[index].id, value: true}, (data) => {
+            console.log(data)
+            getOrders({user_id: user_id}, (data) => {
+                console.log('getOrders person', data)
+                setOrders(data.orders)
+            })
+        })
+    }
+
+    
+    function handleClickStopOrder (index) {
+        setActiveOrder({order_id: orders[index].id, value: false}, (data) => {
+            console.log(data)
+            getOrders({user_id: user_id}, (data) => {
+                console.log('getOrders person', data)
+                setOrders(data.orders)
+            })
+        })
+    }
+
+    useEffect(() => {
+        parsePrice({}, (data) => {
+            dispatch(setPriceMarket(data.price_market))
+            dispatch(setPriceMarketTRX(data.price_market_trx))
+            dispatch(setRubDollar(data.rub_dollar))            
+        })
+    }, [dispatch]);
     
     useEffect(() => {
         getUserQDeals({user_id: user_id}, (data) => {
@@ -121,7 +192,7 @@ export function Person (props) {
 
                         <div className=''>
                             <div className={allOrderActive ? 'method-switch anim-switch': 'method-switch-off anim-switch-off'}
-                                onClick={() => {setAllOrderActive(!allOrderActive)}}
+                                onClick={handleClickAllOrderActive}
                             >
                                 <div className={allOrderActive ? 'method-switch-circle anim-circle':'method-switch-off-circle anim-circle-b'}></div>
                             </div>
@@ -210,7 +281,7 @@ export function Person (props) {
                                             Лимиты
                                         </div>
                                         <div className='order-info-3'>
-                                        {`${ Math.round(1000*order.limit_order/order.price)/1000} - ${order.quantity - commission} USDT`}<br></br>
+                                        {`${ Math.round(1000*order.limit_order/(order.type_price_id === 1 ? order.price: price_market * (order.currency_fiat_id === 1 ? rub_dollar: 1) * order.percent_price/100))/1000} - ${order.quantity - commission} USDT`}<br></br>
                                         {`${order.limit_order} - ${ Math.round((order.quantity - commission)*order.price*1000)/1000 } ${order.currency_fiat_id === 1 ? 'Руб': '$'}`}
                                         </div>
                                     </div>
@@ -242,8 +313,23 @@ export function Person (props) {
                                     </div>
 
                                     <div style={{display: 'flex', position: 'absolute', bottom: 0, alignItems: 'flex-end'}}>
-                                        <div className='btn-edit'>Редактировать</div>
-                                        <div className='btn-run'>Запустить</div>
+                                        <div className='btn-edit'
+                                            onClick={()=>handleClickEditOrder(index)}
+                                        >
+                                            Редактировать
+                                        </div>
+                                        {   order.active ?
+                                            <div className='btn-run'
+                                                onClick={()=>handleClickStopOrder(index)}
+                                            >
+                                                Остановить
+                                            </div>:
+                                            <div className='btn-run'
+                                                onClick={()=>handleClickRunOrder(index)}
+                                            >
+                                                Запустить
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                         )
