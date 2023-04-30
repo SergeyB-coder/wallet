@@ -8,8 +8,8 @@ import { svg_share } from '../../const/svgs';
 import { getUserQDeals, parsePrice, setActiveOrder } from '../Ptp/ptpApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBackStepCreateOrder } from '../Ptp/market/marketSlice';
-import { selectPriceMarket, selectRubDollar, setComment, setCurrencyFiat, setCurrencyOrder, setLimitOrder, setMethodPay, setPercentPrice, setPrice, setPriceMarket, setPriceMarketTRX, setPriceType, setQuantityOrder, setRubDollar, setTypeOrder } from '../Ptp/ptpSlice';
-import { setMethodsPay } from '../Ptp/settings_pay/settingsPaySlice';
+import { selectPriceMarket, selectRubDollar, setComment, setCurrencyFiat, setCurrencyOrder, setLimitOrder, setPercentPrice, setPrice, setPriceMarket, setPriceMarketTRX, setPriceType, setQuantityOrder, setRubDollar, setTypeOrder } from '../Ptp/ptpSlice';
+// import { setMethodsPay } from '../Ptp/settings_pay/settingsPaySlice';
 
 const commission = 0.05
 
