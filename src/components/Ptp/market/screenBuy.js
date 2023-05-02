@@ -73,6 +73,10 @@ export function ScreenBuy (props) {
         if (showMethodsPay) setShowMethodsPay(false)
     }
 
+    const handleClickAddMethod = () => {
+        navigate('/settingspay', {replace: true})
+    }
+
     function isCorrectQuantity() {
         return !is_buy || 
         (
@@ -92,6 +96,16 @@ export function ScreenBuy (props) {
 
     useEffect(() => {
         getOrderMethods({order_id: props.buyOrder.id, taker_id: user_id}, (data) => {
+            let index = -1
+            const methods = data.order_methods
+            for (let i in methods) {
+                if (methods[i].method_pay_id_taker) {
+                    index = i
+                    setIndexMethodPay(index)
+                    break
+                }
+            }
+            if (index === -1) setIndexMethodPay(-1)
             setListMethodsPay(data.order_methods)
             console.log('getOrderMethods', data)
         })
@@ -126,7 +140,17 @@ export function ScreenBuy (props) {
                                 <div key={method.id} className='container-company row d-flex align-items-center'
                                     onClick={()=>handleClickMethodPay(index)}
                                 >
-                                    <div className='text-company'>{method.company_name}</div>
+                                    <div style={{width: '45%'}}>
+                                        <div className='text-company'>{method.company_name}</div>
+                                    </div>
+                                    {
+                                        !method.method_pay_id_taker && 
+                                        <div className='text-nowrap' style={{width: '50%', color: '#86EFAC', marginRight: '10px'}}
+                                            onClick={handleClickAddMethod}
+                                        >
+                                            Добавить реквизиты
+                                        </div>
+                                    }
                                 </div>
                         )
                     })}
@@ -161,7 +185,7 @@ export function ScreenBuy (props) {
                                     Методы оплаты
                                 </div>
                                 <div className='order-info-3'>
-                                    {listMethodsPay[indexMethodPay]?.company_name || ''}
+                                    {listMethodsPay[indexMethodPay]?.company_name || 'Добавить'}
                                 </div>
                             </div>
 
@@ -247,7 +271,7 @@ export function ScreenBuy (props) {
                     <div onClick={handleClickBuy} 
                         className={
                             `button-send-box ${
-                                isCorrectQuantity() && isQuantityInLimit() ? 
+                                isCorrectQuantity() && isQuantityInLimit() && listMethodsPay[indexMethodPay]?.company_name ? 
                                 'button-active-send-bg active-text': 
                                 'button-send-bg disable-text'
                             } mt-20`
@@ -256,6 +280,7 @@ export function ScreenBuy (props) {
                         {
                             !isCorrectQuantity() ? 'Сумма превышает баланс': 
                             !isQuantityInLimit() ? 'Сумма не в лимитах':
+                            !listMethodsPay[indexMethodPay]?.company_name ? 'Добавьте метод оплаты':
                             'Начать сделку'
                         }
                     </div>
