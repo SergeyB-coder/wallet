@@ -44,6 +44,7 @@ export function Market() {
 
     const backScreen = (() => {
         if (marketScreen === 'select_method') dispatch(setMarketScreen('orders'))
+        else if (marketScreen === 'buy') dispatch(setMarketScreen('orders'))
         else navigate('/ptp', {replace: true})
     })
 
