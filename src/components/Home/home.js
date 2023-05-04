@@ -122,7 +122,7 @@ export function Home() {
 										<div className='token-balance-text mt-2 text-nowrap'>{Math.round((parseFloat(balance))*100)/100} USDT</div>
 									</div>
 									<div className='wallet-item-info2'>
-										<div className='token-text text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance || 0))*100*1.1)/100}</div>
+										<div className='token-balance-text2 text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance || 0))*100*1.1)/100}</div>
 										<div className='bottom-info text-nowrap mt-2'>+23%</div>
 									</div>
 								</>
@@ -189,7 +189,7 @@ export function Home() {
 										<div className='token-balance-text mt-2'>1 BTC</div>
 									</div>
 									<div className='wallet-item-info2'>
-										<div className='token-text text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance_trx || 0))*100*1.1)/100}</div>
+										<div className='token-balance-text2 text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance_trx || 0))*100*1.1)/100}</div>
 										<div className='bottom-info text-nowrap mt-2'>+23%</div>
 									</div>
 								</>

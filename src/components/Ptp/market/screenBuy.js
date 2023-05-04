@@ -8,6 +8,7 @@ import { getOrderMethods, sendBuy } from './marketApi';
 import { selectQuantityBuy, setQuantityBuy } from './marketSlice';
 import { selectBalance, selectBalanceTRX, selectBalanceTRXv } from '../../Home/homeSlice';
 import {  selectPriceMarket, selectRubDollar } from '../ptpSlice';
+import { setBackScreen, setNewMethod, setSelectedCompanyIndex } from '../settings_pay/settingsPaySlice';
 
 export function ScreenBuy (props) {
     const navigate = useNavigate()
@@ -73,7 +74,11 @@ export function ScreenBuy (props) {
         if (showMethodsPay) setShowMethodsPay(false)
     }
 
-    const handleClickAddMethod = () => {
+    const handleClickAddMethod = (company_id) => {
+        console.log('company_id', company_id)
+        dispatch(setSelectedCompanyIndex(company_id))
+        dispatch(setBackScreen('screenbuy'))
+        dispatch(setNewMethod(true))
         navigate('/settingspay', {replace: true})
     }
 
@@ -146,7 +151,7 @@ export function ScreenBuy (props) {
                                     {
                                         !method.method_pay_id_taker && 
                                         <div className='text-nowrap' style={{width: '50%', color: '#86EFAC', marginRight: '10px'}}
-                                            onClick={handleClickAddMethod}
+                                            onClick={() => handleClickAddMethod(method.company_id)}
                                         >
                                             Добавить реквизиты
                                         </div>

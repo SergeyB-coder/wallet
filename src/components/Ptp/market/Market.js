@@ -5,9 +5,8 @@ import { CURRENCY_FIAT_LIST, CURRENCY_LIST } from '../../../const/devdata';
 import { useTelegram } from '../../../hooks/useTelegram';
 import { Selecter } from '../../Common/selecter';
 import { getCompaniesPay } from '../settings_pay/settingsPayApi';
-import { selectCompaniesPay, setCompaniesPay } from '../settings_pay/settingsPaySlice';
 import { getOrders } from './marketApi';
-import { selectOrders, setOrders } from './marketSlice';
+import { selectBuyOrder, selectCompaniesPay, selectMarketScreen, selectOrders, setBuyOrder, setCompaniesPay, setMarketScreen, setOrders } from './marketSlice';
 import { ScreenBuy } from './screenBuy';
 
 import './style.css'
@@ -29,8 +28,9 @@ export function Market() {
     const price_market = useSelector(selectPriceMarket)
     const rub_dollar = useSelector(selectRubDollar)
 
-    const [marketScreen, setMarketScreen] = useState('orders') // buy //select_method_pay
-    const [buyOrder, setBuyOrder] = useState(null)
+    const marketScreen = useSelector(selectMarketScreen)
+    // const [buyOrder, setBuyOrder] = useState(null)
+    const buyOrder = useSelector(selectBuyOrder)
     const [currencyFiat, setCurrencyFiat] = useState(1)
     const [currencyNum, setCurrencyNum] = useState(1)
     const [typeOrderFilter, setTypeOrderFilter] = useState('s')
@@ -43,13 +43,13 @@ export function Market() {
     const [currentSelecter, setCurrentSelecter] = useState(''); //currency, fiat
 
     const backScreen = (() => {
-        if (marketScreen === 'select_method') setMarketScreen('orders')
+        if (marketScreen === 'select_method') dispatch(setMarketScreen('orders'))
         else navigate('/ptp', {replace: true})
     })
 
     function handleClickBuy (order) {
-        setBuyOrder(order)
-        setMarketScreen('buy')
+        dispatch(setBuyOrder(order))
+        dispatch(setMarketScreen('buy'))
     }
 
     function handleChangeCurrency(index) {
@@ -91,7 +91,7 @@ export function Market() {
     }
 
     const handleClickSelectMethod = () => {
-        setMarketScreen('select_method')
+        dispatch(setMarketScreen('select_method'))
     }
 
     const divider = 
@@ -318,7 +318,7 @@ export function Market() {
                     })
                 }
 
-                {marketScreen === 'buy' && <ScreenBuy buyOrder={buyOrder} setMarketScreen={setMarketScreen}/>}
+                {marketScreen === 'buy' && <ScreenBuy buyOrder={buyOrder}/>}
 
                 {marketScreen === 'select_method' && 
                     <div>
@@ -330,7 +330,7 @@ export function Market() {
                                         <div className='row button-trade-menu' 
                                             onClick={()=>{
                                                 setIndexMethod(index)
-                                                setMarketScreen('orders')
+                                                dispatch(setMarketScreen('orders'))
                                             }}
                                         >
                                             <div className='method-name-col'>

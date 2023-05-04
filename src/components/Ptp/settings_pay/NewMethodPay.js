@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './style.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCard, selectCompaniesPay, selectInfo, selectNameMethod, setCard, setCompaniesPay, setInfo, setMethodsPay } from './settingsPaySlice';
+import { selectCard, selectCompaniesPay, selectInfo, selectNameMethod, setCard, setCompaniesPay, setInfo, setMethodsPay, setNewMethod } from './settingsPaySlice';
 import { useState } from 'react';
 import { Selecter } from '../../Common/selecter';
 import { CURRENCY_FIAT_LIST } from '../../../const/devdata';
@@ -13,12 +13,15 @@ export function NewMethodPay( props ) {
     const methodId = props.methodId
     const setIsNew = props.setIsNew
     const is_new = props.is_new
-    const setShowNewMethod = props.setShowNewMethod
     const { user_id } = useTelegram()
     const dispatch = useDispatch()
     const [showListCompaniesPay, setShowListCompaniesPay] = useState(false);
     const [currencyFiat, setCurrencyFiat] = useState(1)
-    const [selectedCompanyIndex, setSelectedCompanyIndex] = useState(0);
+    
+    const selectedCompanyIndex = props.selectedCompanyIndex
+    const setSelectedCompanyIndex = props.setSelectedCompanyIndex
+
+    // const companyIndex = useSelector(selectSelectdCompanyIndex)
     
 
     const companies_pay = useSelector(selectCompaniesPay)
@@ -60,7 +63,7 @@ export function NewMethodPay( props ) {
         }, (data) => {
 
             console.log(data)
-            setShowNewMethod(false)
+            dispatch(setNewMethod(false))
             handleGetUserMethodsPay()
         })
     }
@@ -76,7 +79,7 @@ export function NewMethodPay( props ) {
         }, (data) => {
 
             console.log(data)
-            setShowNewMethod(false)
+            dispatch(setNewMethod(false))
             handleGetUserMethodsPay()
             setIsNew(true)
             setMethodId(0)
@@ -88,7 +91,7 @@ export function NewMethodPay( props ) {
         
         getCompaniesPay({fiat_id: index+1}, (data) => {
             console.log('getCompaniesPay', data)
-            dispatch(setCompaniesPay([{name: 'Все'}, ...data.companies_pay]))
+            dispatch(setCompaniesPay(data.companies_pay))
         })
     }
 
@@ -103,6 +106,10 @@ export function NewMethodPay( props ) {
                 <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
             </svg>
         </div>
+
+    useEffect(() => {
+        
+    }, []);
 
     return (
         <>
@@ -129,7 +136,7 @@ export function NewMethodPay( props ) {
                                 <div className='cntr-row mt-10'>
                                     
                                     <div className='method-input'>
-                                        <div className='method_pay-text' onClick={handleSelectMethodClick}>{companies_pay[selectedCompanyIndex].name || ' '}</div>
+                                        <div className='method-pay-text' onClick={handleSelectMethodClick}>{companies_pay[selectedCompanyIndex]?.name || ' '}</div>
                                     </div>
 
                                     <div className='filter-item-fiat position-relative ml-7'>

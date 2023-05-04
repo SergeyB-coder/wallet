@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../../hooks/useTelegram';
 import { getCompaniesPay, getMethodInfo, getUserMethodsPay } from './settingsPayApi';
-import {   selectMethodsPay, setBank, setCard, setCompaniesPay, setInfo, setMethodsPay, setNameMethod } from './settingsPaySlice';
+import {   selectBackScreen, selectMethodsPay, selectNewMethod, selectSelectdCompanyIndex, setBank, setCard, setCompaniesPay, setInfo, setMethodsPay, setNameMethod, setNewMethod } from './settingsPaySlice';
 
 import './style.css'
 import { NewMethodPay } from './NewMethodPay';
@@ -14,17 +14,14 @@ export function SettingsPay() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const [showNewMethod, setShowNewMethod] = useState(false)
+    const showNewMethod = useSelector(selectNewMethod)
     const [is_new, setIsNew] = useState(true)
     const [methodId, setMethodId] = useState(0)
-
-
-
-    
-
-    
+    const [selectedCompanyIndex, setSelectedCompanyIndex] = useState(0);
 
     const list_methods = useSelector(selectMethodsPay)
+    const backscreen = useSelector(selectBackScreen)
+    const companyIndex = useSelector(selectSelectdCompanyIndex)
 
     function handleClickMethod (method_id) {
         setMethodId(method_id)
@@ -35,14 +32,18 @@ export function SettingsPay() {
             dispatch(setCard(data.method_info.card_number))
             dispatch(setInfo(data.method_info.info))
         })
-        setShowNewMethod(true)
+        dispatch(setNewMethod(true))
     }
 
 
 
     const backScreen = () => {
+        if (backscreen === 'screenbuy') {
+            navigate('/market', {replace: true})
+            return
+        }
         if (showNewMethod) {
-            setShowNewMethod(false)
+            dispatch(setNewMethod(false))
         }
         else navigate('/person', {replace: true})
     }
@@ -55,8 +56,15 @@ export function SettingsPay() {
         getCompaniesPay({fiat_id: 1}, (data) => {
             console.log('getCompaniesPay', data)
             dispatch(setCompaniesPay(data.companies_pay))
+
+            if (companyIndex) {
+                console.log('companyIndex', companyIndex, data.companies_pay)
+                let ind = data.companies_pay.findIndex(e => e.id === companyIndex)
+                setSelectedCompanyIndex(ind)
+                console.log('ind', ind)
+            }
         })
-    }, [dispatch]);
+    }, [companyIndex, dispatch]);
 
     useEffect(() => {
         getUserMethodsPay({user_id: user_id}, (data) => {
@@ -79,7 +87,7 @@ export function SettingsPay() {
         <div className='container-settings-pay p-4'>
             {   !showNewMethod &&
                 <div>
-                    <div className='method-text-button button-new-method' onClick={() => setShowNewMethod(true)}>Добавить</div>
+                    <div className='method-text-button button-new-method' onClick={() => dispatch(setNewMethod(true))}>Добавить</div>
 
                     <div className='method-text mt-4 mb-2'>Методы оплаты</div>
 
@@ -98,11 +106,12 @@ export function SettingsPay() {
 
             {   showNewMethod &&
                 <NewMethodPay 
-                    setShowNewMethod={setShowNewMethod} 
                     is_new={is_new} 
                     setIsNew={setIsNew} 
                     methodId={methodId}
                     setMethodId={setMethodId}
+                    selectedCompanyIndex={selectedCompanyIndex}
+                    setSelectedCompanyIndex={setSelectedCompanyIndex}
                 />
             }
             
