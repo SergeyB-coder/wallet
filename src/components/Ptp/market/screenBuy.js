@@ -140,7 +140,7 @@ export function ScreenBuy (props) {
         <>
         {   showMethodsPay ?
             <div>
-                <div style={{height: '43vh', borderBottomRightRadius: 0, borderBottomLeftRadius: 0}} className='container-list-companies overflow-auto mb-3'>
+                <div style={{height: '43vh'}} className='container-list-companies overflow-auto mb-3'>
                     {listMethodsPay.map ((method, index) => {
                         return (
                                 <div key={method.id} className='container-company row d-flex align-items-center'
@@ -228,7 +228,7 @@ export function ScreenBuy (props) {
                                     { props.buyOrder.quantity} USDT 
                                     { props.buyOrder.currency_id === 1 ? ' BEP20': ' TRC20'}<br></br>
                                     { props.buyOrder.limit_order}  {' - '}
-                                    { props.buyOrder.quantity * props.buyOrder.price}
+                                    { Math.round(props.buyOrder.quantity * (props.buyOrder.type_price_id === 1 ? props.buyOrder.price: price_market * (props.buyOrder.currency_fiat_id === 1 ? rub_dollar: 1) * props.buyOrder.percent_price))/100}
                                     { props.buyOrder.currency_fiat_id === 1 ? ' руб': ' USD'}
                                 </div>
                             </div>

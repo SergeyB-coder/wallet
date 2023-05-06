@@ -104,8 +104,8 @@ export function Home() {
 							isLoadData && 
 							// <div className={`balance-load ${isHide ? 'hide-balace-load': 'gradient-back'}`}></div>
 							<>
-								<div className={`wallet-item-load-1 ${isHide ? 'hide-balace-load': 'anim-load'}`}></div>
-								<div className={`wallet-item-load-2 ${isHide ? 'hide-balace-load': 'anim-load-inv'}`}></div>
+								<div className={`wallet-item-load-1 ${isHide ? 'hide-balace-load': 'anim-load-inv'}`}></div>
+								<div className={`wallet-item-load-2 ${isHide ? 'hide-balace-load': 'anim-load'}`}></div>
 							</>
 							}
 							{/* <div className={`balance-load hide-balace-load ${isLoadData ? '': 'hide-balace-load'}`}></div> */}
@@ -185,8 +185,8 @@ export function Home() {
 
 							// </div>
 							<>
-								<div className={`wallet-item-load-2 ${isHide ? 'hide-balace-load': 'anim-load-inv'}`}></div>
-								<div className={`wallet-item-load-1 ${isHide ? 'hide-balace-load': 'anim-load'}`}></div>
+								<div className={`wallet-item-load-1 ${isHide ? 'hide-balace-load': 'anim-load-inv'}`}></div>
+								<div className={`wallet-item-load-2 ${isHide ? 'hide-balace-load': 'anim-load'}`}></div>
 							</>
 						}
 					</div>

@@ -14,6 +14,8 @@ import { selectDealScreenInfo, setDealScreenInfo } from './marketSlice';
 import clock_gif from '../../../static/animations/clock.gif'
 // import hands_gif from '../../../static/animations/hands.gif'
 import salute_gif from '../../../static/animations/salute.gif'
+import cancel_gif from '../../../static/animations/cancel.gif'
+
 import { useSocket } from '../../../hooks/useSocket';
 import { Timer } from '../../Common/timerDeal';
 import { selectPriceMarket, selectRubDollar, setPriceMarket, setPriceMarketTRX, setRubDollar } from '../ptpSlice';
@@ -42,6 +44,8 @@ export function Deal () {
     const [timeOut, setTimeOut] = useState(null);
     const [waitTransaction, setWaitTransaction] = useState(false);
 
+    const [isCancelDeal, setIsCancelDeal] = useState(false);
+
     const price_market = useSelector(selectPriceMarket)
     const rub_dollar = useSelector(selectRubDollar)
 
@@ -60,8 +64,12 @@ export function Deal () {
         console.log('handleGetDealInfo', deal_id)
         getDealInfo( {deal_id: deal_id === '0' ? deal_screen_info?.deal_id: deal_id}, (data) => {
             console.log('handleGetDealInfo deal', data, data.delta_time/1000)
-            
-            setTimeDeal(600 - data.delta_time/1000)
+            if (!data?.res && data?.info === 'end') {
+                setIsCancelDeal(true) 
+                dispatch(setDealScreenInfo({type_order: ''}))  
+                return
+            }
+            setTimeDeal(data.deal.time_limit_order*60 - data.delta_time/1000)
             setShowTimer(true)
             dispatch(setDealScreenInfo(data.deal))  
 
@@ -115,7 +123,12 @@ export function Deal () {
             {
                 deal_id: deal_screen_info.deal_id, 
                 saler_id: deal_screen_info?.type_order === 's' ? deal_screen_info.maker_id:  deal_screen_info.buyer_id,
-                sum_deal: Math.round(deal_screen_info?.price * deal_screen_info?.quantity*1000)/1000
+                sum_deal: (
+                    deal_screen_info?.type_price_id === 1 ?
+                    deal_screen_info?.price * deal_screen_info?.quantity:
+                    Math.round(deal_screen_info?.percent_price*price_market*(deal_screen_info?.fiat === 1 ? rub_dollar: 1)* deal_screen_info?.quantity)/100
+                ),
+                
             }, (data) => {
                 console.log(data)
                 handleGetDealInfo()
@@ -163,6 +176,22 @@ export function Deal () {
         navigate('/ptp', {replace: true})
     })
 
+    const renderPrice = 
+    <>
+        {   deal_screen_info?.type_price_id === 1 ?
+            deal_screen_info?.price:
+            Math.round(deal_screen_info?.percent_price*price_market*(deal_screen_info?.fiat === 1 ? rub_dollar: 1))/100
+        }
+    </>
+
+    const renderSumm = 
+    <>
+        {   deal_screen_info?.type_price_id === 1 ?
+            deal_screen_info?.price * deal_screen_info?.quantity:
+            Math.round(deal_screen_info?.percent_price*price_market*(deal_screen_info?.fiat === 1 ? rub_dollar: 1)* deal_screen_info?.quantity)/100
+        }
+    </>
+
     const quantity_deal = 
     <div className='title-buy-2 mt-20'>{deal_screen_info?.quantity} USDT {deal_screen_info?.currency === 1 ? 'BEP20': 'TRC20'}</div>
 
@@ -196,12 +225,11 @@ export function Deal () {
         <div className='order-row-1'>
             <div className='alert-text'>Внимание</div>
             <div className='allert-text-2 w-182 mr-17'>
-                {
-                    `
-                    Вы должны отправить ${Math.round(deal_screen_info?.price * deal_screen_info?.quantity*1000)/1000} 
-                    ${deal_screen_info?.fiat === 1 ? 'RUB': 'USD'} в течение 15 минут
-                    `
-                }
+                    Вы должны отправить 
+                    {renderSumm} 
+                    {deal_screen_info?.fiat === 1 ? ' RUB': ' USD'} 
+                    в течение 15 минут
+                    
             </div>
         </div>
 
@@ -386,6 +414,41 @@ export function Deal () {
         </div>
     </>
 
+    const render_cancel_deal = 
+    <>
+        
+
+        <div className='color-bg-cntr h-cntr-deal w-cntr mt-20'>
+            <div className='container-center'>
+                {/* {
+                    showConfirmPay ? 
+                        <img style={{width: '131.4px', height: '132px'}} src={hands_gif} alt=''/>: 
+                    deal_screen_info?.status === 'end' ? 
+                        <img style={{width: '131.4px', height: '132px'}} src={salute_gif} alt=''/>:
+                        <img style={{width: '131.4px', height: '132px'}} src={clock_gif} alt=''/>
+                } */}
+                <img style={{width: '131.4px', height: '132px'}} src={cancel_gif} alt=''/>:
+            </div>
+            <div className='wait-text'>
+                {/* Вам начислено {deal_screen_info?.quantity} USDT */}
+            </div>  
+            <div className='wait-text-1 mt-20'>
+                Сделка отменена
+            </div> 
+        </div>
+        
+        <div className='cntr-between mt-20'>
+            <div onClick={()=>{}} className='button-send-box button-send-bg deal-end-text-1 w-161'>
+                Аппеляция
+            </div>
+            <div onClick={()=>navigate('/person', {replace: true})} className='button-send-box button-active-send-bg active-text w-161'>
+                Личный кабинет
+            </div>
+        </div>
+    </>
+
+    
+
     useEffect(() => {
         parsePrice({}, (data) => {
             dispatch(setPriceMarket(data.price_market))
@@ -395,12 +458,17 @@ export function Deal () {
     }, [dispatch]);
 
     useEffect(() => {
-        if (showTimer) {
+        if (showTimer && timeDeal > 0) {
             const time_out = setTimeout(() => {if (showTimer) setTimeDeal(timeDeal - 1)}, 1000)
             clearTimeout(timeOut)
             setTimeOut(time_out)
         }
-        else setTimeDeal(0)
+        else {
+            setShowTimer(false)
+            setTimeDeal(0)
+            clearTimeout(timeOut)
+            handleGetDealInfo()
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showTimer, timeDeal]);
 
@@ -427,6 +495,8 @@ export function Deal () {
     return (
         <div className='container-center'>
             <div style={{width: '335px'}}>
+
+            {isCancelDeal && render_cancel_deal}
 
 {/* YOU TAKER SALE-ORDER */}
                 {  deal_screen_info?.type_order === 's' && deal_screen_info.maker_id.toString() !== user_id.toString() &&
@@ -487,7 +557,9 @@ export function Deal () {
                                             Цена
                                         </div>
                                         <div className='order-info-3'>
-                                            {deal_screen_info?.price} {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
+                                            {/* {deal_screen_info?.price}  */}
+                                            {renderPrice}
+                                            {deal_screen_info?.fiat === 1 ? ' RUB': ' USD'}
                                         </div>
                                     </div>
 
@@ -500,12 +572,22 @@ export function Deal () {
                                             Cумма покупки
                                         </div>
                                         <div className='order-info-3'>
-                                            {Math.round(deal_screen_info?.price * deal_screen_info?.quantity*1000)/1000} {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
+                                            {renderSumm}
+                                            {deal_screen_info?.fiat === 1 ? ' RUB': ' USD'}
                                         </div>
                                     </div>
 
                                 </div>
-                                {showTimer && <Timer time={timeDeal}/>}
+                                <div className='container-center mt-20 color-bg-cntr h-82'>
+            <div className='w-100'>
+                    <div className='deal-text-3 mt-17'>Переведите оплату в течение</div>
+                    <div className='timer-text h-34' 
+                        style={{display: 'flex', alignItems: 'flex-end', justifyContent: 'center'}}
+                    >
+                        {showTimer && <Timer time={timeDeal}/>}
+                    </div>
+            </div>
+        </div>
                                 <div onClick={()=>handleGetDealInfo()} className='button-send-box button-active-send-bg active-text mt-20'>
                                     Обновить статус
                                 </div>
@@ -560,7 +642,9 @@ export function Deal () {
                                             Цена
                                         </div>
                                         <div className='order-info-3'>
-                                            {deal_screen_info?.price} {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
+                                            {renderPrice}
+                                            
+                                            {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
                                         </div>
                                     </div>
 
@@ -573,7 +657,7 @@ export function Deal () {
                                             Cумма покупки
                                         </div>
                                         <div className='order-info-3'>
-                                            {Math.round(deal_screen_info?.price * deal_screen_info?.quantity*1000)/1000} {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
+                                            {renderSumm} {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
                                         </div>
                                     </div>
 
@@ -643,7 +727,10 @@ export function Deal () {
                                             Цена
                                         </div>
                                         <div className='order-info-3'>
-                                            {deal_screen_info?.price} {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
+                                            {/* {deal_screen_info?.price}  */}
+                                            {renderPrice}
+                                            
+                                            {deal_screen_info?.fiat === 1 ? ' RUB': ' USD'}
                                         </div>
                                     </div>
 
@@ -656,13 +743,25 @@ export function Deal () {
                                             Cумма покупки
                                         </div>
                                         <div className='order-info-3'>
-                                            {Math.round(deal_screen_info?.price * deal_screen_info?.quantity*1000)/1000} {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
+                                            {/* {Math.round(deal_screen_info?.price * deal_screen_info?.quantity*1000)/1000}  */}
+
+                                            {renderPrice}
+                                            {deal_screen_info?.fiat === 1 ? ' RUB': ' USD'}
                                         </div>
                                     </div>
 
                                 </div>
 
-                                {showTimer && <Timer time={timeDeal}/>}
+                                <div className='container-center mt-20 color-bg-cntr h-82'>
+                                    <div className='w-100'>
+                                            <div className='deal-text-3 mt-17'>Переведите оплату в течение</div>
+                                            <div className='timer-text h-34' 
+                                                style={{display: 'flex', alignItems: 'flex-end', justifyContent: 'center'}}
+                                            >
+                                                {showTimer && <Timer time={timeDeal}/>}
+                                            </div>
+                                    </div>
+                                </div>
 
                                 <div onClick={()=>handleGetDealInfo()} className='button-send-box button-active-send-bg active-text mt-20'>
                                     Обновить статус
@@ -682,7 +781,7 @@ export function Deal () {
                                 {quantity_deal}
                                 <div className='container-center mt-20'>
                                     <div className='price-info-buy'>
-                                        Цена за 1 USDT {deal_screen_info.currency === 1 ? 'BEP20': 'TRC20'} = {deal_screen_info?.price}
+                                        Цена за 1 USDT {deal_screen_info.currency === 1 ? 'BEP20': 'TRC20'} = {renderPrice}
                                     </div>
                                 </div>
 
@@ -731,7 +830,16 @@ export function Deal () {
                                     <div className='line-green'></div>
                                 </div>
 
-                                {showTimer && <Timer time={timeDeal}/>}
+                                <div className='container-center mt-20 color-bg-cntr h-82'>
+                                    <div className='w-100'>
+                                            <div className='deal-text-3 mt-17'>Время на принятие запроса</div>
+                                            <div className='timer-text h-34' 
+                                                style={{display: 'flex', alignItems: 'flex-end', justifyContent: 'center'}}
+                                            >
+                                                {showTimer && <Timer time={timeDeal}/>}
+                                            </div>
+                                    </div>
+                                </div>
 
                                 <div className='row-2 mt-20'>
                                     <div className='btn-disable-deal' 
@@ -797,7 +905,8 @@ export function Deal () {
                                             Цена
                                         </div>
                                         <div className='order-info-3'>
-                                            {deal_screen_info?.price} {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
+                                            {renderPrice} 
+                                            {deal_screen_info?.fiat === 1 ? ' RUB': ' USD'}
                                         </div>
                                     </div>
 
@@ -810,7 +919,8 @@ export function Deal () {
                                             Cумма покупки
                                         </div>
                                         <div className='order-info-3'>
-                                            {Math.round(deal_screen_info?.price * deal_screen_info?.quantity*1000)/1000} {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
+                                            {renderSumm} 
+                                            {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
                                         </div>
                                     </div>
 
@@ -843,7 +953,8 @@ export function Deal () {
                                 {quantity_deal}
                                 <div className='container-center mt-20'>
                                     <div className='price-info-buy'>
-                                        Цена за 1 USDT {deal_screen_info.currency === 1 ? 'BEP20': 'TRC20'} = {deal_screen_info?.price}
+                                        Цена за 1 USDT {deal_screen_info.currency === 1 ? 'BEP20': 'TRC20'} = 
+                                        {renderPrice}
                                     </div>
                                 </div>
 
@@ -867,7 +978,8 @@ export function Deal () {
                                                 Сумма
                                             </div>
                                             <div className='order-info-3'>
-                                                {deal_screen_info?.price * deal_screen_info?.quantity} {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
+                                                {renderSumm} 
+                                                {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
                                             </div>
                                         </div>
 
@@ -888,7 +1000,16 @@ export function Deal () {
                                     <div className='line-green'></div>
                                 </div>
 
-                                {showTimer && <Timer time={timeDeal}/>}
+                                <div className='container-center mt-20 color-bg-cntr h-82'>
+                                    <div className='w-100'>
+                                            <div className='deal-text-3 mt-17'>Переведите оплату в течение</div>
+                                            <div className='timer-text h-34' 
+                                                style={{display: 'flex', alignItems: 'flex-end', justifyContent: 'center'}}
+                                            >
+                                                {showTimer && <Timer time={timeDeal}/>}
+                                            </div>
+                                    </div>
+                                </div>
 
                                 <div className='row-2 mt-20'>
                                     <div className='btn-disable-deal' 
@@ -961,7 +1082,8 @@ export function Deal () {
                                             Цена
                                         </div>
                                         <div className='order-info-3'>
-                                            {deal_screen_info?.price} {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
+                                            {renderPrice} 
+                                            {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
                                         </div>
                                     </div>
 
@@ -974,7 +1096,8 @@ export function Deal () {
                                             Cумма покупки
                                         </div>
                                         <div className='order-info-3'>
-                                            {Math.round(deal_screen_info?.price * deal_screen_info?.quantity*1000)/1000} {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
+                                            {renderSumm} 
+                                            {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
                                         </div>
                                     </div>
 
@@ -1034,7 +1157,8 @@ export function Deal () {
                                             Цена
                                         </div>
                                         <div className='order-info-3'>
-                                            {deal_screen_info?.price} {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
+                                            {renderPrice} 
+                                            {deal_screen_info?.fiat === 1 ? ' RUB': ' USD'}
                                         </div>
                                     </div>
 
@@ -1047,7 +1171,8 @@ export function Deal () {
                                             Cумма покупки
                                         </div>
                                         <div className='order-info-3'>
-                                            {Math.round(deal_screen_info?.price * deal_screen_info?.quantity*1000)/1000} {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
+                                            {renderSumm} 
+                                            {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
                                         </div>
                                     </div>
 
@@ -1119,7 +1244,8 @@ export function Deal () {
                                             Цена
                                         </div>
                                         <div className='order-info-3'>
-                                            {deal_screen_info?.price} {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
+                                            {renderPrice} 
+                                            {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
                                         </div>
                                     </div>
 
@@ -1132,7 +1258,8 @@ export function Deal () {
                                             Cумма покупки
                                         </div>
                                         <div className='order-info-3'>
-                                            {Math.round(deal_screen_info?.price * deal_screen_info?.quantity*1000)/1000} {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
+                                            {renderSumm} 
+                                            {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
                                         </div>
                                     </div>
 
@@ -1196,7 +1323,8 @@ export function Deal () {
                                             Цена
                                         </div>
                                         <div className='order-info-3'>
-                                            {deal_screen_info?.price} {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
+                                            {renderPrice} 
+                                            {deal_screen_info?.fiat === 1 ? ' RUB': ' USD'}
                                         </div>
                                     </div>
 
@@ -1209,7 +1337,8 @@ export function Deal () {
                                             Cумма покупки
                                         </div>
                                         <div className='order-info-3'>
-                                            {Math.round(deal_screen_info?.price * deal_screen_info?.quantity*1000)/1000} {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
+                                            {renderSumm} 
+                                            {deal_screen_info?.fiat === 1 ? ' RUB': ' USD'}
                                         </div>
                                     </div>
 

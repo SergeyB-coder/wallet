@@ -7,7 +7,7 @@ import {  TIME_LIMITS } from '../../../const/devdata';
 import { selectQuantityOrder,  selectLimitOrder, selectTimeLimit, selectPrice, selectCurrencyFiat, selectPriceType, selectPriceMarket, selectRubDollar, selectPercentPrice } from '../ptpSlice';
 import { selectMethodsPay } from '../settings_pay/settingsPaySlice';
 
-const commission = 0.25
+const commission = 0.0025
 
 export function CreateOrder4(props) {
     const listCheckedMethods = props.listCheckedMethods
@@ -76,7 +76,7 @@ export function CreateOrder4(props) {
                     </div>
 
                     <div className='check-order-text'>
-                        {`${ Math.round(1000*limit_order/(type_price === 1 ? price: price_market * (currencyFiat === 1 ? rub_dollar: 1) * percent_price/100))/1000} - ${Math.round(100* quantity_order * (1 - commission))/100} USDT`}<br></br>
+                        {`${ Math.round(1000*limit_order/(type_price === 1 ? price: price_market * (currencyFiat === 1 ? rub_dollar: 1) * percent_price/100))/1000} - ${Math.round(1000* quantity_order * (1 - commission))/1000} USDT`}<br></br>
                         {`${limit_order} - ${ Math.round((quantity_order * (1-commission))*(type_price === 1 ? price: price_market * (currencyFiat === 1 ? rub_dollar: 1) * percent_price/100)*1000)/1000 } ${currencyFiat === 1 ? 'Руб': '$'}`}
                     </div>
                 </div>

@@ -282,7 +282,7 @@ export function Person (props) {
                                         </div>
                                         <div className='order-info-3'>
                                         {`${ Math.round(1000*order.limit_order/(order.type_price_id === 1 ? order.price: price_market * (order.currency_fiat_id === 1 ? rub_dollar: 1) * order.percent_price/100))/1000} - ${order.quantity - commission} USDT`}<br></br>
-                                        {`${order.limit_order} - ${ Math.round((order.quantity - commission)*order.price*1000)/1000 } ${order.currency_fiat_id === 1 ? 'Руб': '$'}`}
+                                        {`${order.limit_order} - ${ Math.round((order.quantity - commission)*(order.type_price_id === 1 ? order.price: price_market * (order.currency_fiat_id === 1 ? rub_dollar: 1) * order.percent_price/100)*1000)/1000 } ${order.currency_fiat_id === 1 ? 'Руб': '$'}`}
                                         </div>
                                     </div>
 

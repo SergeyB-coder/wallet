@@ -7,7 +7,7 @@ import { CreateOrder2 } from './createorder2';
 import { CreateOrder4 } from './createorder4';
 import { CreateOrder5 } from './createorder5';
 import { createOrder, parsePrice } from '../ptpApi';
-import { selectComment, selectCurrencyFiat, selectCurrencyOrder, selectLimitOrder, selectMethodPay, selectPercentPrice, selectPrice, selectPriceType, selectQuantityOrder, selectTypeOrder, setPriceMarket, setPriceMarketTRX, setRubDollar } from '../ptpSlice';
+import { selectComment, selectCurrencyFiat, selectCurrencyOrder, selectLimitOrder, selectMethodPay, selectPercentPrice, selectPrice, selectPriceType, selectQuantityOrder, selectTimeLimit, selectTypeOrder, setPriceMarket, setPriceMarketTRX, setRubDollar } from '../ptpSlice';
 import { CreateOrder3 } from './createorder3';
 import { selectMethodsPay } from '../settings_pay/settingsPaySlice';
 import { selectBackStepCreateOrder } from '../market/marketSlice';
@@ -29,6 +29,7 @@ export function CreateOrder() {
     const price_type = useSelector(selectPriceType)
     const comment = useSelector(selectComment)
     const list_methods = useSelector(selectMethodsPay)
+    const time_limit_order = useSelector(selectTimeLimit)
 
     const back_screen = useSelector(selectBackStepCreateOrder)
 
@@ -115,6 +116,7 @@ export function CreateOrder() {
             type_price_id: price_type,
             comment: comment,
             list_method_id: list_method_id,
+            time_limit_order: time_limit_order === 1 ? 15: time_limit_order === 2 ? 60: 360,
         }, () => {
             setScreen('createorder5')
         })
