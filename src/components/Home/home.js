@@ -28,7 +28,7 @@ export function Home() {
 
 	const price_market = useSelector(selectPriceMarket)
 	const price_market_trx = useSelector(selectPriceMarketTRX)
-    const rub_dollar = useSelector(selectRubDollar)
+    // const rub_dollar = useSelector(selectRubDollar)
 
 	const [isLoadData, setIsLoadData] = useState(true);
 	const [showTransactions, setShowTransactions] = useState(false);
