@@ -7,6 +7,8 @@ import { useTelegram } from '../../hooks/useTelegram';
 import { svg_bep1, svg_binance, svg_btc, svg_tron1 } from '../../const/svgs';
 import { useState } from 'react';
 import { Transactions } from './transactions';
+import { parsePrice } from '../Ptp/ptpApi';
+import { selectPriceMarket, selectPriceMarketTRX, selectRubDollar, setPriceMarket, setPriceMarketTRX, setRubDollar } from '../Ptp/ptpSlice';
 // import { Timer } from '../Common/timerDeal';
 // import { useNavigate } from 'react-router-dom';
 
@@ -23,6 +25,10 @@ export function Home() {
 	const balance_trx = useSelector(selectBalanceTRX)
 	const balance_trx_v = useSelector(selectBalanceTRXv)
 	const name_user = useSelector(selectNameUser)
+
+	const price_market = useSelector(selectPriceMarket)
+	const price_market_trx = useSelector(selectPriceMarketTRX)
+    const rub_dollar = useSelector(selectRubDollar)
 
 	const [isLoadData, setIsLoadData] = useState(true);
 	const [showTransactions, setShowTransactions] = useState(false);
@@ -57,6 +63,15 @@ export function Home() {
 			
 		})
 	}, [chat_id, dispatch, first_name, user_id]);
+
+
+	useEffect(() => {
+        parsePrice({}, (data) => {
+            dispatch(setPriceMarket(data.price_market))
+            dispatch(setPriceMarketTRX(data.price_market_trx))
+            dispatch(setRubDollar(data.rub_dollar))            
+        })
+    }, [dispatch]);
 
 	useEffect(() => {
         tg.MainButton.hide()
@@ -122,7 +137,7 @@ export function Home() {
 										<div className='token-balance-text mt-2 text-nowrap'>{Math.round((parseFloat(balance))*100)/100} USDT</div>
 									</div>
 									<div className='wallet-item-info2'>
-										<div className='token-balance-text2 text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance || 0))*100*1.1)/100}</div>
+										<div className='token-balance-text2 text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance || 0))*100*price_market)/100}</div>
 										<div className='bottom-info text-nowrap mt-2'>+23%</div>
 									</div>
 								</>
@@ -158,7 +173,7 @@ export function Home() {
 									<div className='token-balance-text mt-2'>{Math.round((parseFloat(balance_trx + balance_trx_v))*100)/100} USDT</div>
 								</div>
 								<div className='wallet-item-info2'>
-									<div className='token-balance-text2 text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance_trx + balance_trx_v || 0))*100*1.1)/100}</div>
+									<div className='token-balance-text2 text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance_trx + balance_trx_v || 0))*100*price_market_trx)/100}</div>
 									<div className='bottom-info text-nowrap mt-2'>+23%</div>
 								</div>
 								</>
