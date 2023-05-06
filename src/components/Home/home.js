@@ -8,7 +8,7 @@ import { svg_bep1, svg_binance, svg_btc, svg_tron1 } from '../../const/svgs';
 import { useState } from 'react';
 import { Transactions } from './transactions';
 import { parsePrice } from '../Ptp/ptpApi';
-import { selectPriceMarket, selectPriceMarketTRX, selectRubDollar, setPriceMarket, setPriceMarketTRX, setRubDollar } from '../Ptp/ptpSlice';
+import { selectPriceMarket, selectPriceMarketTRX, setPriceMarket, setPriceMarketTRX, setRubDollar } from '../Ptp/ptpSlice';
 // import { Timer } from '../Common/timerDeal';
 // import { useNavigate } from 'react-router-dom';
 
