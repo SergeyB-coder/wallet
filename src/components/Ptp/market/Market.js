@@ -85,7 +85,7 @@ export function Market() {
         let newListFilterOrders = listFilterOrders.slice()
         orders.forEach((order, i) => {
             console.log(order.quantity, q_filter)
-            if ( order.limit_order/order.price <= q_filter &&  q_filter <= order.quantity - commission) newListFilterOrders[i] = 1
+            if ( order.limit_order/(order.type_price_id === 1 ? order.price: Math.round(price_market*(order.currency_fiat_id === 1 ? rub_dollar: 1) * order.percent_price)/100) <= q_filter &&  q_filter <= order.quantity - commission) newListFilterOrders[i] = 1
             else newListFilterOrders[i] = 0
         });
         setListFilterOrders(newListFilterOrders)

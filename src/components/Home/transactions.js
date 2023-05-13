@@ -5,9 +5,14 @@ import { useTelegram } from '../../hooks/useTelegram';
 import { useState } from 'react';
 import { dateConvert } from '../Common/funcs';
 import { useNavigate } from 'react-router-dom';
+import { parsePrice } from '../Ptp/ptpApi';
+import { useDispatch } from 'react-redux';
+import { setPriceMarket, setPriceMarketTRX, setRubDollar } from '../Ptp/ptpSlice';
 
 export function Transactions () {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+
     const { user_id, tg } = useTelegram()
 
     const [transactions, setTransactions] = useState([]);
@@ -45,6 +50,14 @@ export function Transactions () {
         tg.onEvent('backButtonClicked', backScreen)
             return () => {tg.offEvent('backButtonClicked', backScreen)}
         }, )
+    
+    useEffect(() => {
+        parsePrice({}, (data) => {
+            dispatch(setPriceMarket(data.price_market))
+            dispatch(setPriceMarketTRX(data.price_market_trx))
+            dispatch(setRubDollar(data.rub_dollar))            
+        })
+    }, [dispatch]);
 
     return (
         <div className='container-center'>

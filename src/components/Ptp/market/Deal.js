@@ -225,9 +225,9 @@ export function Deal () {
         <div className='order-row-1'>
             <div className='alert-text'>Внимание</div>
             <div className='allert-text-2 w-182 mr-17'>
-                    Вы должны отправить 
+                    Вы должны отправить{' '} 
                     {renderSumm} 
-                    {deal_screen_info?.fiat === 1 ? ' RUB': ' USD'} 
+                    {deal_screen_info?.fiat === 1 ? ' RUB ': ' USD '} 
                     в течение 15 минут
                     
             </div>
@@ -459,6 +459,7 @@ export function Deal () {
 
     useEffect(() => {
         if (showTimer && timeDeal > 0) {
+            console.log('timeDeal', timeDeal)
             const time_out = setTimeout(() => {if (showTimer) setTimeDeal(timeDeal - 1)}, 1000)
             clearTimeout(timeOut)
             setTimeOut(time_out)
@@ -745,7 +746,7 @@ export function Deal () {
                                         <div className='order-info-3'>
                                             {/* {Math.round(deal_screen_info?.price * deal_screen_info?.quantity*1000)/1000}  */}
 
-                                            {renderPrice}
+                                            {renderSumm}
                                             {deal_screen_info?.fiat === 1 ? ' RUB': ' USD'}
                                         </div>
                                     </div>
@@ -754,7 +755,7 @@ export function Deal () {
 
                                 <div className='container-center mt-20 color-bg-cntr h-82'>
                                     <div className='w-100'>
-                                            <div className='deal-text-3 mt-17'>Переведите оплату в течение</div>
+                                            <div className='deal-text-3 mt-17'></div>
                                             <div className='timer-text h-34' 
                                                 style={{display: 'flex', alignItems: 'flex-end', justifyContent: 'center'}}
                                             >
