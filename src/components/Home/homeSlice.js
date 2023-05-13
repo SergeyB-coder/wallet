@@ -7,7 +7,8 @@ const initialState = {
   balance_trx: 0,
   balance_trx_v: 0,
   user_deals: [1, 1, 1],
-  name_user: ''
+  name_user: '',
+  first_run: true
 };
 
 
@@ -15,6 +16,9 @@ export const homeSlice = createSlice({
   name: 'home',
   initialState,
   reducers: {
+    setFirstRun: (state, action) => {
+      state.first_run = action.payload;
+    },
     setNameUser: (state, action) => {
       state.name_user = action.payload;
     },
@@ -39,7 +43,7 @@ export const homeSlice = createSlice({
   },
 });
 
-export const { setNameUser, setAddress, setAddressTRX, setBalance, setBalanceTRX, setBalanceTRXv, setUserDeals } = homeSlice.actions;
+export const {setFirstRun, setNameUser, setAddress, setAddressTRX, setBalance, setBalanceTRX, setBalanceTRXv, setUserDeals } = homeSlice.actions;
 
 export const selectAddress = (state) => state.home.address;
 export const selectAddressTRX = (state) => state.home.address_trx;
@@ -48,6 +52,7 @@ export const selectBalanceTRX = (state) => state.home.balance_trx;
 export const selectBalanceTRXv = (state) => state.home.balance_trx_v;
 export const selectUserDeals = (state) => state.home.user_deals;
 export const selectNameUser = (state) => state.home.name_user;
+export const selectFirstRun = (state) => state.home.first_run;
 
 
 export default homeSlice.reducer;

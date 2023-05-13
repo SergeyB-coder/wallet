@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserData } from './homeApi';
-import { selectBalance, selectBalanceTRX, selectBalanceTRXv, selectNameUser, setAddress, setAddressTRX, setBalance, setBalanceTRX, setBalanceTRXv, setNameUser } from './homeSlice';
+import { selectBalance, selectBalanceTRX, selectBalanceTRXv, selectFirstRun, selectNameUser, setAddress, setAddressTRX, setBalance, setBalanceTRX, setBalanceTRXv, setFirstRun, setNameUser } from './homeSlice';
 import { MenuButtons } from './menubuttons';
 import { useTelegram } from '../../hooks/useTelegram';
 import { svg_bep1, svg_binance, svg_btc, svg_tron1 } from '../../const/svgs';
@@ -29,10 +29,11 @@ export function Home() {
 	const price_market = useSelector(selectPriceMarket)
 	const price_market_trx = useSelector(selectPriceMarketTRX)
     // const rub_dollar = useSelector(selectRubDollar)
+	const first_run = useSelector(selectFirstRun)
 
-	const [isLoadData, setIsLoadData] = useState(true);
+	const [isLoadData, setIsLoadData] = useState(first_run);
 	const [showTransactions, setShowTransactions] = useState(false);
-	const [isHide, setIsHide] = useState(false);
+	const [isHide, setIsHide] = useState(!first_run);
 
 	const handleClickBep = () => {
 		setShowTransactions(true)
@@ -53,6 +54,7 @@ export function Home() {
 		getUserData({user_id: user_id, first_name: first_name, chat_id: chat_id}, (data) => {
 			setIsHide(true)
 			console.log('get user data', data)
+			dispatch(setFirstRun(false))
 			dispatch(setAddress(data.address))
 			dispatch(setAddressTRX(data.address_trx))
 			dispatch(setBalance(data.balance))

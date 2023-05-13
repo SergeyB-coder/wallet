@@ -220,11 +220,8 @@ export function Ptp (props) {
                     {faq}
                     <div className='d-flex justify-content-center'>{divider}</div>
                     {support}
-                </div>
-                
-                
+                </div>                
             </div>
-
             <div className='d-flex justify-content-center'>
                 <div className='container-menu'>
                     < div className='title-last-deals'>Последние сделки</div>
