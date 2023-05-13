@@ -178,7 +178,7 @@ export function Address (props) {
                         onClick={() => {
                             const copy_address = fromLabel1 !== 'USDT TRC20' ? address: address_trx
                             navigator.clipboard.writeText(copy_address)
-                            navigator.vibrate(1000)
+                            window.navigator.vibrate(1000)
                             setShowMessage(true)
                             setTimeout(() => {setShowMessage(false)}, 1000)
                         }}
