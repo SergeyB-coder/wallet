@@ -201,7 +201,8 @@ export function Address (props) {
                             onClick={() => {
                                 const copy_address = fromLabel1 !== 'USDT TRC20' ? address: address_trx
                                 navigator.clipboard.writeText(copy_address)
-                                window.navigator.vibrate(200)
+                                const canVibrate = window.navigator.vibrate
+                                if (canVibrate) window.navigator.vibrate(200)
                                 setShowMessage(true)
                                 setTimeout(() => {setShowMessage(false)}, 1000)
                             }}

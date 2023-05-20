@@ -9,21 +9,25 @@ import { getUserQDeals, parsePrice, setActiveOrder } from '../Ptp/ptpApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBackStepCreateOrder } from '../Ptp/market/marketSlice';
 import { selectPriceMarket, selectRubDollar, setComment, setCurrencyFiat, setCurrencyOrder, setLimitOrder, setPercentPrice, setPrice, setPriceMarket, setPriceMarketTRX, setPriceType, setQuantityOrder, setRubDollar, setTypeOrder } from '../Ptp/ptpSlice';
+import { selectNameUser } from '../Home/homeSlice';
 // import { setMethodsPay } from '../Ptp/settings_pay/settingsPaySlice';
-
+import './style.css'
 const commission = 0.05
 
 export function Person (props) {
-    const { user_id, tg, first_name } = useTelegram()
+    const { user_id, tg } = useTelegram()
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const [allOrderActive, setAllOrderActive] = useState(true);
     const [orders, setOrders] = useState([]);
     const [qDeals, setQDeals] = useState(0);
+    const [showPopUp, setShowPopUp] = useState(false);
 
     const price_market = useSelector(selectPriceMarket)
     const rub_dollar = useSelector(selectRubDollar)
+
+    const name_user = useSelector(selectNameUser)
 
     const handleClickCreateOrder = () => {
         dispatch(setBackStepCreateOrder('person'))
@@ -69,6 +73,10 @@ export function Person (props) {
             })
         })
 
+        setShowPopUp(true)
+
+        setTimeout(() => {setShowPopUp(false)}, 2000)
+
         setAllOrderActive(!allOrderActive)
     }
 
@@ -92,6 +100,12 @@ export function Person (props) {
             })
         })
     }
+
+    const pop_up = 
+    <div className='pop_up'>
+        <div className='pop_up_text' >Объявления активированы</div>
+        <div className='pop_up_text_cancel'>Отмена</div>
+    </div>
 
     useEffect(() => {
         parsePrice({}, (data) => {
@@ -127,13 +141,14 @@ export function Person (props) {
 
     return (
         <div className='container-center'>
+            {showPopUp && pop_up}
             <div className='w-cntr'>
                 <div className='container-title mt-20'>
                     <div className='title-text'>Личный кабинет</div>
                 </div>
 
                 <div className='h-cntr-person color-bg-cntr-person pt-26 mt-20'>
-                    <div className='name-text'>{first_name}</div>
+                    <div className='name-text'>{name_user}</div>
 
                     <div className='container-center'>
                         <div className='mini-text w-227'>

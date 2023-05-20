@@ -1,0 +1,65 @@
+.pop_up_text {
+    height: 20px;
+    margin-left: 22px;
+
+    font-family: 'Roboto Flex';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 18px;
+    /* or 138% */
+
+    display: flex;
+    align-items: center;
+    text-align: right;
+
+    color: #FFFFFF;
+}
+
+.pop_up_text_cancel {
+    height: 20px;
+    margin-left: 17px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    text-align: right;
+
+    color: #86EFAC;
+}
+
+
+.pop_up {
+    width: 335px;
+    height: 80px;
+    background: radial-gradient(101.38% 2292.84% at 100% 64.79%, #232323 0%, #5EA177 74.25%, #86EFAC 100%);
+    mix-blend-mode: normal;
+    opacity: 0.99;
+    border-radius: 10px;
+
+    position:fixed;
+    bottom: 10px;
+    /* left: 20px; */
+    z-index: 12;
+
+    animation-duration: 0.5s;
+    animation-name: slidein;
+
+    display: flex;
+    align-items: center;
+}
+
+@keyframes slidein {
+    from {
+        /* height: 0px; */
+        bottom: -30px;
+    }
+
+    to {
+        /* height: 80px; */
+        bottom: 10px;
+    }
+}

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { svg_address_to, svg_bep, svg_tron } from '../../const/svgs';
 import { useTelegram } from '../../hooks/useTelegram';
-import { selectAddress, selectAddressTRX, selectBalance, selectBalanceTRX } from '../Home/homeSlice';
+import { selectAddress, selectAddressTRX, selectBalance, selectBalanceTRX, selectBalanceTRXv } from '../Home/homeSlice';
 import { sendTo } from './sendApi';
 
 import gear_gif from '../../static/animations/gear.gif'
@@ -22,6 +22,7 @@ export function Send (props) {
 
     const balance = useSelector(selectBalance)
 	const balance_trx = useSelector(selectBalanceTRX)
+    const balance_trx_v = useSelector(selectBalanceTRXv)
 
     const [stepSend, setStepSend] = useState('address') // address, confirm, wait, finish 
     // const [showLoader, setShowLoader] = useState(false)
@@ -298,7 +299,7 @@ export function Send (props) {
                                         Ваш баланс
                                     </div>
                                     <div className='your-balance-q'>
-                                        {fromLabel1 === 'USDT TRC20' ? balance_trx: balance} USDT
+                                        {fromLabel1 === 'USDT TRC20' ? (balance_trx+balance_trx_v): balance} USDT
                                     </div>
                                 </div>
 
