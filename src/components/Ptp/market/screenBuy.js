@@ -175,7 +175,7 @@ export function ScreenBuy (props) {
                     </div>
 
                     <div className='container-center mt-20'>
-                        <div className='price-info-buy'>Цена за 1 USDT {props.buyOrder.currency_id === 1 ? 'BEP20': 'TRC20'} = {props?.buyOrder?.price} { props.buyOrder.currency_fiat_id === 1 ? ' руб': ' USD'}</div>
+                        <div className='price-info-buy'>Цена за 1 USDT {props.buyOrder.currency_id === 1 ? 'BEP20': 'TRC20'} = {(props.buyOrder.type_price_id === 1 ? props.buyOrder.price: Math.round(price_market * (props.buyOrder.currency_fiat_id === 1 ? rub_dollar: 1) * props.buyOrder.percent_price)/100)} { props.buyOrder.currency_fiat_id === 1 ? ' руб': ' USD'}</div>
                     </div>
 
                     {/* <div className='container-center mt-20'>
