@@ -65,7 +65,7 @@ export function Ptp (props) {
 						{/* <div className='text-deal'><span className='label-deal'>From:</span> {deal.user_from}</div>
 						<div className='text-deal'><span className='label-deal'>To:</span> {deal.user_to}</div> */}
                         <div className='text-deal-date'> {deal?.datetime?.slice(0, 10)}</div>
-						<div className='text-deal-request-from text-nowrap'>{`Запрос от ${deal.user_to}`}</div>
+						<div className='text-deal-request-from text-nowrap'>{`${deal.type_order === 'b' ? 'Покупка': 'Продажа'}`}</div>
 					</div>
 					<div className='deal-col-2'>
 						<div className='text-deal-quantity mr-17'>{deal.quantity} USDT</div>

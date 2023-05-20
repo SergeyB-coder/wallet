@@ -249,7 +249,7 @@ export function ScreenBuy (props) {
                                 </div> */}
                             {/* </div> */}
 
-                            <div className='order-row-1'>
+                            {/* <div className='order-row-1'>
                                 <div className='order-label-2'>
                                     Детали объявления
                                 </div>
@@ -258,7 +258,7 @@ export function ScreenBuy (props) {
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4C5 4.26522 4.89464 4.51957 4.70711 4.70711L1.70711 7.70711C1.31658 8.09763 0.683416 8.09763 0.292892 7.70711C-0.0976318 7.31658 -0.0976317 6.68342 0.292893 6.29289L2.58579 4L0.292893 1.70711C-0.097631 1.31658 -0.0976315 0.683417 0.292893 0.292893C0.683417 -0.0976313 1.31658 -0.0976312 1.70711 0.292893L4.70711 3.29289C4.89464 3.48043 5 3.73478 5 4Z" fill="white"/>
                                     </svg>
                                 </div>
-                            </div>
+                            </div> */}
 
                             
 

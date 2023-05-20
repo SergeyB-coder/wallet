@@ -5,7 +5,7 @@ import { selectCard, selectCompaniesPay, selectInfo, selectNameMethod, setCard, 
 import { useState } from 'react';
 import { Selecter } from '../../Common/selecter';
 import { CURRENCY_FIAT_LIST } from '../../../const/devdata';
-import { getCompaniesPay, getUserMethodsPay, newMethodPay, updateMethodPay } from './settingsPayApi';
+import { deleteMethodPay, getCompaniesPay, getUserMethodsPay, newMethodPay, updateMethodPay } from './settingsPayApi';
 import { useTelegram } from '../../../hooks/useTelegram';
 
 export function NewMethodPay( props ) {
@@ -76,6 +76,20 @@ export function NewMethodPay( props ) {
             bank: '',
             card: card, 
             info: info
+        }, (data) => {
+
+            console.log(data)
+            dispatch(setNewMethod(false))
+            handleGetUserMethodsPay()
+            setIsNew(true)
+            setMethodId(0)
+        })
+    }
+
+    
+    const handleDeleteMethod = () => {
+        deleteMethodPay({
+            method_id: methodId
         }, (data) => {
 
             console.log(data)
@@ -173,7 +187,18 @@ export function NewMethodPay( props ) {
                             <label style={{textAlign: 'left', width: '100%'}}>Комментарий</label>
                             <input className='method-input' type='text' onChange={handleChangeInfo} value={info}/> */}
 
-                            <div className='method-text-button button-new-method mt-3' onClick={is_new ? handleSaveMethod: handleUpdateMethod}>Сохранить</div>
+                            <div className='method-text-button button-new-method mt-3' 
+                                onClick={is_new ? handleSaveMethod: handleUpdateMethod}
+                            >
+                                Сохранить
+                            </div>
+                            {!is_new &&
+                                <div className='method-text-button button-new-method mt-3' 
+                                    onClick={handleDeleteMethod}
+                                >
+                                    Удалить
+                                </div>
+                            }
                         </>
                     }
                 </div>
