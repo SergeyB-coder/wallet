@@ -244,7 +244,8 @@ export function Person (props) {
                                 >
                                     <div className='order-header a-c'>
                                         <div className='order-price'>
-                                            <div className='mt-2'>{order.price}
+                                            <div className='mt-2'>
+                                                {order.type_price_id !== 2 ? order.price: Math.round(price_market*(order.currency_fiat_id === 1 ? rub_dollar: 1) * order.percent_price)/100}
                                                 {order.currency_fiat_id === 1 ? 'RUB': 'USD'}
                                             </div>
                                             <div className={order.type === 's' ? 'order-label':'mini-text-r'}>Цена за 1 {order.currency_id === 1 ? 'USDT BEP20': 'USDT TRC20'}</div>
@@ -305,18 +306,18 @@ export function Person (props) {
                                         <div className='order-line'></div>
                                     </div>
 
-                                    <div className='order-row-1'>
+                                    {/* <div className='order-row-1'>
                                         <div className='order-label-2'>
                                             Сумма
                                         </div>
                                         <div className='order-info-3'>
                                             {'0.13 USDT'}
                                         </div>
-                                    </div>
+                                    </div> */}
 
-                                    <div className='order-line-container'>
+                                    {/* <div className='order-line-container'>
                                         <div className='order-line'></div>
-                                    </div>
+                                    </div> */}
                                     
                                     <div className='order-row-1'>
                                         <div className='order-label-2 t-a-l'>

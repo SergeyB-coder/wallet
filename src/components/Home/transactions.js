@@ -6,14 +6,16 @@ import { useState } from 'react';
 import { dateConvert } from '../Common/funcs';
 import { useNavigate } from 'react-router-dom';
 import { parsePrice } from '../Ptp/ptpApi';
-import { useDispatch } from 'react-redux';
-import { setPriceMarket, setPriceMarketTRX, setRubDollar } from '../Ptp/ptpSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectPriceMarket, selectRubDollar, setPriceMarket, setPriceMarketTRX, setRubDollar } from '../Ptp/ptpSlice';
 
 export function Transactions () {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const { user_id, tg } = useTelegram()
+
+    const price_market = useSelector(selectPriceMarket)
 
     const [transactions, setTransactions] = useState([]);
 
@@ -83,7 +85,7 @@ export function Transactions () {
                                         <div className= 'text-deal-quantity color-q-text'>-{transaction.q} USDT</div>:
                                         <div className='text-deal-quantity color-deal-r-text'>+{transaction.q} USDT</div>
                                     }
-                                    <div className='deal-text-3 text-nowrap'>${Math.round(transaction.q * 1.1 * 100)/100}</div>
+                                    <div className='deal-text-3 text-nowrap'>${Math.round(transaction.q * price_market * 100)/100}</div>
                                 </div>
                             </div>
                         )

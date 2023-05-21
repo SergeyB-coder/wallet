@@ -98,7 +98,7 @@ export function Deal () {
 
     const handleClickAccept = () => {
         clearTimeout(timeOut)
-        sendAcceptDeal({deal_id: deal_screen_info.deal_id}, () => {
+        sendAcceptDeal({deal_id: deal_screen_info.deal_id, price: getPrice()}, () => {
             handleGetDealInfo()
             handleSendMessage('pay')
         })
@@ -175,6 +175,14 @@ export function Deal () {
     const backScreen = (() => {
         navigate('/ptp', {replace: true})
     })
+
+    function getPrice () {
+        return (
+            deal_screen_info?.type_price_id === 1 ?
+            deal_screen_info?.price:
+            Math.round(deal_screen_info?.percent_price*price_market*(deal_screen_info?.fiat === 1 ? rub_dollar: 1))/100
+        )
+    }
 
     const renderPrice = 
     <>
@@ -809,7 +817,7 @@ export function Deal () {
                                                 
                                                 {   deal_screen_info.type_price_id === 1 ?
                                                     deal_screen_info?.price * deal_screen_info?.quantity:
-                                                    Math.round(deal_screen_info.percent_price*price_market*(deal_screen_info.currency_fiat_id === 1 ? rub_dollar: 1))/100
+                                                    Math.round(deal_screen_info.percent_price*price_market*(deal_screen_info.fiat === 1 ? rub_dollar: 1))/100
                                                 } {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
                                             </div>
                                         </div>

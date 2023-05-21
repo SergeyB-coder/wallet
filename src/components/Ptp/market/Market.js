@@ -95,6 +95,26 @@ export function Market() {
         dispatch(setMarketScreen('select_method'))
     }
 
+    function getSortedOrders( orders ) {
+        let arr = orders.slice()
+        let price1 = 0
+        let price2 = 0
+        for (let i=0; i<arr.length-1; i++) {
+            for (let j=i+1; j<arr.length; j++) {
+                price1 = (arr[i].type_price_id !== 2 ? arr[i].price / (arr[i].currency_fiat_id === 1 ? rub_dollar: 1): price_market*arr[i].percent_price/100 )
+                price2 = (arr[j].type_price_id !== 2 ? arr[j].price / (arr[j].currency_fiat_id === 1 ? rub_dollar: 1): price_market*arr[j].percent_price/100 )
+                
+                
+                if (price2 < price1) {
+                    const obj = arr[i]
+                    arr[i] = arr[j]
+                    arr[j] = obj
+                }
+            }
+        }
+        return arr
+    }
+
     const divider = 
         <div className='divider-order-market'></div>
 
@@ -102,8 +122,15 @@ export function Market() {
         parsePrice({}, (data) => {
             dispatch(setPriceMarket(data.price_market))
             dispatch(setPriceMarketTRX(data.price_market_trx))
-            dispatch(setRubDollar(data.rub_dollar))            
+            dispatch(setRubDollar(data.rub_dollar)) 
+            getOrders({user_id: ''}, (data) => {
+                const sorted_orders = getSortedOrders(data.orders)
+                dispatch(setOrders(sorted_orders))
+                const filter_orders = new Array(data.orders.length).fill(1)
+                setListFilterOrders(filter_orders)
+            })           
         })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch]);
 
     useEffect(() => {
@@ -113,13 +140,9 @@ export function Market() {
         })
     }, [currencyFiat, dispatch]);
     
-    useEffect(() => {
-        getOrders({user_id: ''}, (data) => {
-            dispatch(setOrders(data.orders))
-            const filter_orders = new Array(data.orders.length).fill(1)
-            setListFilterOrders(filter_orders)
-        })
-    }, [dispatch]);
+    // useEffect(() => {
+        
+    // }, [dispatch]);
 
     useEffect(() => {
         tg.MainButton.hide()

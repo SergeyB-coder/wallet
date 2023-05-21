@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../hooks/useTelegram';
@@ -9,24 +9,24 @@ import { selectUserDeals, setUserDeals } from '../Home/homeSlice';
 // import { OrderItem } from './market/orderItem';
 import './style.css'
 
-export function Ptp (props) {
-    const {tg} = useTelegram()
-    const {user_id} = useTelegram()
+export function Ptp(props) {
+    const { tg } = useTelegram()
+    const { user_id } = useTelegram()
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     // const [content, setContent] = useState('orders') // orders, deals, complete_deal
 
     const handleClickCreateOrder = () => {
-        navigate('/createorder', {replace: true})
+        navigate('/createorder', { replace: true })
     }
 
     const handleClickMarket = () => {
-        navigate('/market', {replace: true})
+        navigate('/market', { replace: true })
     }
 
     const handleClickPerson = () => {
-        navigate('/person', {replace: true})
+        navigate('/person', { replace: true })
     }
 
     // const handleClickSettingsPay = () => {
@@ -38,14 +38,14 @@ export function Ptp (props) {
     // }
 
     const backScreen = () => {
-        navigate('/', {replace: true})
+        navigate('/', { replace: true })
         // navigate('/home', {replace: true})
     }
 
     const user_deals = useSelector(selectUserDeals)
 
-	function handleClickDeal(deal) {
-		console.log(deal.id_to, user_id)
+    function handleClickDeal(deal) {
+        console.log(deal.id_to, user_id)
         // if (deal.id_to.toString() === user_id.toString()) {
         //     navigate(`/deal/${deal.deal_id}`, {replace: true, state: {deal: deal}})
         // }
@@ -54,23 +54,31 @@ export function Ptp (props) {
         //     navigate('/completedeal', {replace: true, state: {deal: deal}})
         // }
 
-        navigate(`/deal/${deal.deal_id}`, {replace: true})
-		
-	}
+        navigate(`/deal/${deal.deal_id}`, { replace: true })
 
-	const renderlistLastDeals = user_deals.slice(0, 3).map((deal, index) => {
-		return (
-				<div key={index} className='container-deal' onClick={() => {handleClickDeal(deal)}}>
-					<div className='deal-col-1'>
-						{/* <div className='text-deal'><span className='label-deal'>From:</span> {deal.user_from}</div>
+    }
+
+    const renderlistLastDeals = user_deals.slice(0, 3).map((deal, index) => {
+        return (
+            <div key={index} className='container-deal' onClick={() => { handleClickDeal(deal) }}>
+                <div className='deal-col-1'>
+                    {/* <div className='text-deal'><span className='label-deal'>From:</span> {deal.user_from}</div>
 						<div className='text-deal'><span className='label-deal'>To:</span> {deal.user_to}</div> */}
-                        <div className='text-deal-date'> {deal?.datetime?.slice(0, 10)}</div>
-						<div className='text-deal-request-from text-nowrap'>{`${deal.type_order === 'b' ? 'Покупка': 'Продажа'}`}</div>
-					</div>
-					<div className='deal-col-2'>
-						<div className='text-deal-quantity mr-17'>{deal.quantity} USDT</div>
-                        <div className='text-deal-q-fiat'>${deal.quantity}</div>
-						{/* <div className='text-deal text-nowrap'><span className='label-deal'>Статус: </span> 
+                    <div className='text-deal-date'> {deal?.datetime?.slice(0, 10)}</div>
+                    {
+                        deal.type_order === 'b' ?
+                            <div className='text-deal-request-from-b text-nowrap'>
+                                Покупка
+                            </div> :
+                            <div className='text-deal-request-from text-nowrap'>
+                                Продажа
+                            </div>
+                    }
+                </div>
+                <div className='deal-col-2'>
+                    <div className='text-deal-quantity mr-17'>{deal.quantity} USDT</div>
+                    <div className='text-deal-q-fiat'>${deal.quantity}</div>
+                    {/* <div className='text-deal text-nowrap'><span className='label-deal'>Статус: </span> 
 							{
 								deal.status === 'request' ? 'Запрос':
 								deal.status === 'pay' ? 'Ожидание оплаты':
@@ -78,13 +86,13 @@ export function Ptp (props) {
 								'Завершена'
 							}
 						</div> */}
-					</div>
-				</div>
-		)
-	})
+                </div>
+            </div>
+        )
+    })
 
-        
-    
+
+
     // function handleClickOrder(order_id) {
     //     dispatch(setCurrentOrderId(order_id))
     //     setContent('deals')
@@ -106,38 +114,38 @@ export function Ptp (props) {
     //     </div>
 
 
-    const create_order = 
+    const create_order =
         <div className='row button-trade-menu'>
             <div className='trade-menu-text-col' onClick={handleClickCreateOrder}>
                 Создать объявление
             </div>
             <div className='trade-menu-text-col-2'>
-                
+
             </div>
         </div>
 
-    const faq = 
+    const faq =
         <div className='row button-trade-menu'>
-            <div className='trade-menu-text-col' onClick={() => {}}>
+            <div className='trade-menu-text-col' onClick={() => { }}>
                 FAQ
             </div>
             <div className='trade-menu-text-col-2'>
-                
+
             </div>
         </div>
 
-    const support = 
+    const support =
         <div className='row button-trade-menu'>
-            <div className='trade-menu-text-col' onClick={() => {}}>
+            <div className='trade-menu-text-col' onClick={() => { }}>
                 Поддержка
             </div>
             <div className='trade-menu-text-col-2'>
-                
+
             </div>
         </div>
 
 
-    const menu_market = 
+    const menu_market =
         <div className='row button-trade-menu'>
             {/* <div className='trade-menu-user-col'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person-fill" viewBox="0 0 16 16">
@@ -153,7 +161,7 @@ export function Ptp (props) {
             </div>
         </div>
 
-    const person = 
+    const person =
         <div className='row button-trade-menu'>
             {/* <div className='trade-menu-user-col'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person-fill" viewBox="0 0 16 16">
@@ -165,7 +173,7 @@ export function Ptp (props) {
             </div>
             {/* {arrow_right} */}
             <div className='trade-menu-text-col-2'>
-                
+
             </div>
         </div>
 
@@ -184,18 +192,18 @@ export function Ptp (props) {
     //         {arrow_right}
     //     </div>
 
-    const divider = 
+    const divider =
         <div className='divider'></div>
 
-    
 
-    
+
+
 
     useEffect(() => {
-		getUserDeals({user_id: user_id}, (data) => {
-			dispatch(setUserDeals(data.deals))
-		})
-	}, [dispatch, user_id]);
+        getUserDeals({ user_id: user_id }, (data) => {
+            dispatch(setUserDeals(data.deals))
+        })
+    }, [dispatch, user_id]);
 
     useEffect(() => {
         tg.MainButton.hide()
@@ -204,11 +212,11 @@ export function Ptp (props) {
 
     useEffect(() => {
         tg.onEvent('backButtonClicked', backScreen)
-            return () => {tg.offEvent('backButtonClicked', backScreen)}
-        }, )
+        return () => { tg.offEvent('backButtonClicked', backScreen) }
+    },)
     return (
         <>
-        
+
             <div className='d-flex justify-content-center'>
                 <div className='trade-menu-container mt-20'>
                     {menu_market}
@@ -220,7 +228,7 @@ export function Ptp (props) {
                     {faq}
                     <div className='d-flex justify-content-center'>{divider}</div>
                     {support}
-                </div>                
+                </div>
             </div>
             <div className='d-flex justify-content-center'>
                 <div className='container-menu'>
@@ -234,5 +242,5 @@ export function Ptp (props) {
                 </div>
             </div>
         </>
-      );
+    );
 }
