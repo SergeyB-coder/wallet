@@ -96,7 +96,7 @@ export function Send (props) {
      }
 
     function getCurrentBalance() {
-        if (fromLabel1 === 'USDT TRC20') return parseFloat(balance_trx)
+        if (fromLabel1 === 'USDT TRC20') return parseFloat(balance_trx+balance_trx_v)
         else return parseFloat(balance)
     }
 
@@ -286,7 +286,7 @@ export function Send (props) {
                                         
                                     <div className='address-item-col2'>
                                         <div style={{color: 'var(--text-mini)'}}
-                                            onClick={() => {fromLabel1 === 'USDT TRC20' ? setQuantity(balance_trx): setQuantity(balance)}}
+                                            onClick={() => {fromLabel1 === 'USDT TRC20' ? setQuantity(balance_trx+balance_trx_v): setQuantity(balance)}}
                                         >
                                             Max
                                         </div>
