@@ -7,7 +7,7 @@ import { dateConvert } from '../Common/funcs';
 import { useNavigate } from 'react-router-dom';
 import { parsePrice } from '../Ptp/ptpApi';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectPriceMarket, selectRubDollar, setPriceMarket, setPriceMarketTRX, setRubDollar } from '../Ptp/ptpSlice';
+import { selectPriceMarket, setPriceMarket, setPriceMarketTRX, setRubDollar } from '../Ptp/ptpSlice';
 
 export function Transactions () {
     const navigate = useNavigate()
