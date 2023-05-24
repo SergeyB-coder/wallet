@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { svg_address_to, svg_bep, svg_tron } from '../../const/svgs';
 import { useTelegram } from '../../hooks/useTelegram';
-import { selectAddress, selectAddressTRX, selectBalance, selectBalanceTRX, selectBalanceTRXv } from '../Home/homeSlice';
+import { selectAddress, selectAddressTRX, selectBalance, selectBalanceTRX, selectBalanceTRXv, selectSumOrders, setSumOrders } from '../Home/homeSlice';
 import { sendTo } from './sendApi';
 
 import gear_gif from '../../static/animations/gear.gif'
@@ -11,9 +11,10 @@ import success_gif from '../../static/animations/success.gif'
 
 import './style.css'
 import { QrReader } from './qrscanner';
+import { getUserSumOrders } from '../Home/homeApi';
 
 export function Send (props) {
-
+    const dispatch = useDispatch()
     const [date, setDate] = useState(new Date())
     const {tg, user_id} = useTelegram()
     const navigate = useNavigate()
@@ -23,6 +24,8 @@ export function Send (props) {
     const balance = useSelector(selectBalance)
 	const balance_trx = useSelector(selectBalanceTRX)
     const balance_trx_v = useSelector(selectBalanceTRXv)
+
+    const sum_orders = useSelector(selectSumOrders)
 
     const [stepSend, setStepSend] = useState('address') // address, confirm, wait, finish 
     // const [showLoader, setShowLoader] = useState(false)
@@ -80,6 +83,11 @@ export function Send (props) {
         setAddress1(a2)
         setAddress2(a1)
         setShowListAddresses(false)
+
+        getUserSumOrders({user_id: user_id, currency_id: (fromLabel1 === 'USDT TRC20' ? 2: 1)}, (data) => {
+            console.log('sum_orders', data.sum_orders)
+            dispatch(setSumOrders(data.sum_orders))
+        })
     }
 
     
@@ -106,7 +114,7 @@ export function Send (props) {
     }
 
     function isCorrectQuantity() {
-        return parseFloat(quantity || 0) <= getCurrentBalance()
+        return (parseFloat(quantity || 0) + sum_orders) <= getCurrentBalance()
     }
 
     const handleClickSend = () => {
@@ -173,6 +181,12 @@ export function Send (props) {
             <div className='line-2'></div>
         </div>
 
+    useEffect(() => {
+        getUserSumOrders({user_id: user_id, currency_id: (fromLabel1 === 'USDT TRC20' ? 2: 1)}, (data) => {
+            console.log('sum_orders', data.sum_orders)
+            dispatch(setSumOrders(data.sum_orders))
+        })
+    }, [dispatch, fromLabel1, user_id]);
     
     useEffect(() => {
         // const inp = document.getElementById('q-send')
@@ -300,6 +314,14 @@ export function Send (props) {
                                     </div>
                                     <div className='your-balance-q'>
                                         {fromLabel1 === 'USDT TRC20' ? (balance_trx+balance_trx_v): balance} USDT
+                                    </div>
+                                </div>
+                                <div className='container-balance'>
+                                    <div className='your-balance-text'>
+                                        Сумма объявлений
+                                    </div>
+                                    <div className='your-balance-q'>
+                                        {Math.round(sum_orders*100)/100} USDT
                                     </div>
                                 </div>
 

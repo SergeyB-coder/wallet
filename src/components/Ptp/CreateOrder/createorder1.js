@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CURRENCY_FIAT_LIST, CURRENCY_LIST, PRICE_TYPES } from '../../../const/devdata';
 import { Selecter } from '../../Common/selecter';
-import { selectBalance, selectBalanceTRX, selectBalanceTRXv } from '../../Home/homeSlice';
+import { selectBalance, selectBalanceTRX, selectBalanceTRXv, selectSumOrders } from '../../Home/homeSlice';
 // import { ButtonNext } from '../../Common/buttonNext';
 import './style.css'
 
@@ -13,7 +13,7 @@ export function CreateOrder1(props) {
     const dispatch = useDispatch()
     // const setScreen = props.setScreen
 
-    
+    const sum_orders = useSelector(selectSumOrders)
     const quantity_order = useSelector(selectQuantityOrder)
     const limit_order = useSelector(selectLimitOrder)
     const time_limit_order = useSelector(selectTimeLimit)
@@ -83,7 +83,7 @@ export function CreateOrder1(props) {
     }
 
     function isCorrectQuantity() {
-        return parseFloat(quantity_order || 0) <= getCurrentBalance() || typeOrder === 'b'
+        return (parseFloat(quantity_order || 0) + sum_orders) <= getCurrentBalance() || typeOrder === 'b'
     }
 
     // const divider = 
@@ -295,6 +295,14 @@ export function CreateOrder1(props) {
                 </div>
                 <div className='your-balance-q'>
                     {currency_order === 1 ? balance: balance_trx + balance_trx_v} USDT
+                </div>
+            </div>
+            <div className='container-balance'>
+                <div className='your-balance-text'>
+                    Сумма объявлений
+                </div>
+                <div className='your-balance-q'>
+                    {Math.round(sum_orders * 100)/100} USDT 
                 </div>
             </div>
         </div>  

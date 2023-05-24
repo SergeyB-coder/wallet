@@ -103,3 +103,21 @@ export function getTransactions(pars, callback) {
         return callback(data)
     });
 }
+
+
+export function getUserSumOrders(pars, callback) {
+    fetch(url + '/getusersumorders', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(pars)
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        console.log('data getusersumorders', data)
+        
+        return callback(data)
+    });
+}

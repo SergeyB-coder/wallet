@@ -11,6 +11,8 @@ import { selectComment, selectCurrencyFiat, selectCurrencyOrder, selectLimitOrde
 import { CreateOrder3 } from './createorder3';
 import { selectMethodsPay } from '../settings_pay/settingsPaySlice';
 import { selectBackStepCreateOrder } from '../market/marketSlice';
+import { getUserSumOrders } from '../../Home/homeApi';
+import { setSumOrders } from '../../Home/homeSlice';
 
 
 export function CreateOrder() {
@@ -121,6 +123,13 @@ export function CreateOrder() {
             setScreen('createorder5')
         })
     }
+
+    useEffect(() => {
+        getUserSumOrders({user_id: user_id, currency_id: currency_order}, (data) => {
+            console.log('sum_orders', data.sum_orders)
+            dispatch(setSumOrders(data.sum_orders))
+        })
+    }, [currency_order, dispatch, user_id]);
 
     useEffect(() => {
         parsePrice({}, (data) => {
