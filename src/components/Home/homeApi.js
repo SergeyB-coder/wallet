@@ -121,3 +121,21 @@ export function getUserSumOrders(pars, callback) {
         return callback(data)
     });
 }
+
+
+export function fromBank(pars, callback) {
+    fetch(url + '/frombank', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(pars)
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        console.log('data frombank', data)
+        
+        return callback(data)
+    });
+}

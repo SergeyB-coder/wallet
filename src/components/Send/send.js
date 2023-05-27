@@ -114,7 +114,7 @@ export function Send (props) {
     }
 
     function isCorrectQuantity() {
-        return (parseFloat(quantity || 0) + sum_orders) <= getCurrentBalance()
+        return ( (parseFloat(quantity || 0) + sum_orders) <= getCurrentBalance()) && (parseFloat(quantity || 0) >= (fromLabel1 === 'USDT TRC20' ? 3: 0.5))
     }
 
     const handleClickSend = () => {
@@ -138,7 +138,7 @@ export function Send (props) {
                 user_id: user_id,
                 address_from: address1,
                 address_to: addressTo,
-                quantity: quantity
+                quantity: net === 'b' ? quantity-0.5 : quantity - 3
             }, (data) => {
                 // console.log('sendTo', data)
                 // setShowLoader(false)
@@ -322,6 +322,14 @@ export function Send (props) {
                                     </div>
                                     <div className='your-balance-q'>
                                         {Math.round(sum_orders*100)/100} USDT
+                                    </div>
+                                </div>
+                                <div className='container-balance'>
+                                    <div className='your-balance-text'>
+                                        Сумма вывода / комиссия 
+                                    </div>
+                                    <div className='your-balance-q'>
+                                        {fromLabel1 === 'USDT TRC20' ? (quantity-3): (quantity-0.5)} / {fromLabel1 === 'USDT TRC20' ? 3: 0.5} USDT
                                     </div>
                                 </div>
 
