@@ -12,7 +12,6 @@ import { selectPriceMarket, selectRubDollar, setComment, setCurrencyFiat, setCur
 import { selectNameUser } from '../Home/homeSlice';
 // import { setMethodsPay } from '../Ptp/settings_pay/settingsPaySlice';
 import './style.css'
-import { applyRef } from '../Home/homeApi';
 const commission = 0.05
 
 export function Person (props) {
@@ -24,7 +23,6 @@ export function Person (props) {
     const [orders, setOrders] = useState([]);
     const [qDeals, setQDeals] = useState(0);
     const [showPopUp, setShowPopUp] = useState(false);
-    const [refer, setRefer] = useState('')
 
     const price_market = useSelector(selectPriceMarket)
     const rub_dollar = useSelector(selectRubDollar)
@@ -42,9 +40,7 @@ export function Person (props) {
         navigate('/settingspay', {replace: true})
     }
 
-    const handleChangeRefer = (e) => {
-        setRefer(e.target.value)
-    }
+    
 
     const backScreen = () => {
         navigate('/ptp', {replace: true})
@@ -84,12 +80,6 @@ export function Person (props) {
         setTimeout(() => {setShowPopUp(false)}, 2000)
 
         setAllOrderActive(!allOrderActive)
-    }
-
-    const handleApplyReferal = () => {
-        applyRef({user_id: user_id, ref: refer}, (data) => {
-            
-        })
     }
 
     function handleClickRunOrder (index) {
