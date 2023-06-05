@@ -645,7 +645,7 @@
     /* width: 104px; */
     height: 18px;
 
-    background: #333333;
+    background: #FF8F8F;
     border-radius: 10px;
 
     font-family: 'Roboto Flex';
@@ -659,7 +659,7 @@
     align-items: center;
     letter-spacing: -0.01em;
 
-    color: #FF8F8F;
+    color: #333333;
 
     margin-top: 4px;
 }
@@ -799,6 +799,10 @@
 
 .h-198 {
     height: 198px;
+}
+
+.h-177 {
+    height: 177px;
 }
 
 .h-162 {

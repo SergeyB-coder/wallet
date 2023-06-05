@@ -208,8 +208,8 @@ export function CreateOrder1(props) {
             </div> */}
             <div className='send-address'>
                 <input className='address-to-input-2' type='number' placeholder='30 ~ 170' 
-                onChange={handleChangePercPrice} value={percent_price}
-            />
+                    onChange={handleChangePercPrice} value={percent_price}
+                />
                     
                 <div className='address-item-col2'>
                     <div style={{color: 'var(--text-mini)'}}>

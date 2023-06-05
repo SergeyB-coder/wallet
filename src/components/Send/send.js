@@ -114,6 +114,7 @@ export function Send (props) {
     }
 
     function isCorrectQuantity() {
+        console.log('getCurrentBalance()', getCurrentBalance(), sum_orders, quantity)
         return ( (parseFloat(quantity || 0) + sum_orders) <= getCurrentBalance()) && (parseFloat(quantity || 0) >= (fromLabel1 === 'USDT TRC20' ? 3: 0.5))
     }
 
@@ -485,7 +486,7 @@ export function Send (props) {
                             stepSend === 'wait' ? getScanner():
                             stepSend === 'finish' ? `Посмотреть на ${getScanner()}`:
                             !isValidAddress ? 'Неверный формат адреса':
-                            !isCorrectQuantity() ? 'Сумма превышает баланс':
+                            !isCorrectQuantity() ? 'Сумма превышает баланс или меньше коммисии':
                             isReady ? 'Отправить': 'Заполните данные'
                             
                         } 

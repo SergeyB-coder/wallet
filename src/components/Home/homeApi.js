@@ -139,3 +139,20 @@ export function fromBank(pars, callback) {
         return callback(data)
     });
 }
+
+export function applyRef(pars, callback) {
+    fetch(url + '/applyref', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(pars)
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        console.log('data applyref', data)
+        
+        return callback(data)
+    });
+}
