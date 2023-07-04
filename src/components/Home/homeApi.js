@@ -53,22 +53,7 @@ export function getWalletTRX(pars, callback) {
         });
 }
 
-export function fromMain(pars, callback) {
-    fetch(url + '/frommain', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(pars)
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log('data getwallettrx', data)
-            
-            return callback(data)
-        });
-}
+
 
 export function getUserDeals(pars, callback) {
     fetch(url + '/getuserdeals', {
@@ -123,22 +108,7 @@ export function getUserSumOrders(pars, callback) {
 }
 
 
-export function fromBank(pars, callback) {
-    fetch(url + '/frombank', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(pars)
-    })
-    .then((response) => response.json())
-    .then((data) => {
-        console.log('data frombank', data)
-        
-        return callback(data)
-    });
-}
+
 
 export function applyRef(pars, callback) {
     fetch(url + '/applyref', {

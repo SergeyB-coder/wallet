@@ -48,6 +48,7 @@ export function Send (props) {
     const success_anim = <img style={{width: '131.4px', height: '132px'}} src={success_gif} alt=''/>
 
     function checkValidAddress(adderss) {
+        console.log(adderss[0] === 'T')
         if      (fromLabel1 === 'USDT TRC20' && adderss.length > 0) return adderss[0] === 'T'
         else if (fromLabel1 === 'USDT BEP20' && adderss.length > 1) return adderss.slice(0, 2) === '0x'
         if (adderss.length === 0) return true

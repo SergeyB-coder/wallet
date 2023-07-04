@@ -103,7 +103,8 @@ export function MyOrders (props) {
                         return (
                             <OrderItem onClick={handleClickOrder} order={order} key={order.id}/>
                         )
-                    })}
+                    })
+                }
             </div>           
         </>
       );

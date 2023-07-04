@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTelegram } from '../../../hooks/useTelegram';
 // import { ButtonNext } from '../../Common/buttonNext';
-import { getDealInfo, sendAcceptDeal, sendCancelDeal, sendConfirm, setEndDeal } from './marketApi';
+import { getDealInfo, newAppilate, sendAcceptDeal, sendCancelDeal, sendConfirm, setEndDeal } from './marketApi';
 import { selectDealScreenInfo, setDealScreenInfo } from './marketSlice';
 // import { svg_hands, svg_salute } from '../../../const/svgs';
 // import { useDispatch, useSelector } from 'react-redux';
@@ -175,6 +175,16 @@ export function Deal () {
     const backScreen = (() => {
         navigate('/ptp', {replace: true})
     })
+
+    const handleAppilate = () => {
+        console.log('handleAppilate')
+        newAppilate( {
+            deal_id: deal_id
+        }, (data) => {
+            console.log('handleAppilate', data)
+            tg.openTelegramLink('https://t.me/WalletExpBot')
+        })
+    }
 
     function getPrice () {
         return (
@@ -446,8 +456,8 @@ export function Deal () {
         </div>
         
         <div className='cntr-between mt-20'>
-            <div onClick={()=>{}} className='button-send-box button-send-bg deal-end-text-1 w-161'>
-                Аппеляция
+            <div onClick={handleAppilate} className='button-send-box button-send-bg deal-end-text-1 w-161'>
+                Апелляция
             </div>
             <div onClick={()=>navigate('/person', {replace: true})} className='button-send-box button-active-send-bg active-text w-161'>
                 Личный кабинет
@@ -673,8 +683,8 @@ export function Deal () {
                                 </div>
                                 
                                 <div className='cntr-between mt-20'>
-                                    <div onClick={()=>{}} className='button-send-box button-send-bg deal-end-text-1 w-161'>
-                                        Аппеляция
+                                    <div onClick={handleAppilate} className='button-send-box button-send-bg deal-end-text-1 w-161'>
+                                        Апелляция
                                     </div>
                                     <div onClick={()=>navigate('/person', {replace: true})} className='button-send-box button-active-send-bg active-text w-161'>
                                         Личный кабинет
@@ -936,8 +946,8 @@ export function Deal () {
                                 </div>
                                 
                                 <div className='cntr-between mt-20'>
-                                    <div onClick={()=>{}} className='button-send-box button-send-bg deal-end-text-1 w-161'>
-                                        Аппеляция
+                                    <div onClick={handleAppilate} className='button-send-box button-send-bg deal-end-text-1 w-161'>
+                                        Апелляция
                                     </div>
                                     <div onClick={()=>navigate('/person', {replace: true})} className='button-send-box button-active-send-bg active-text w-161'>
                                         Личный кабинет
@@ -1188,8 +1198,8 @@ export function Deal () {
                                 </div>
                                 
                                 <div className='cntr-between mt-20'>
-                                    <div onClick={()=>{}} className='button-send-box button-send-bg deal-end-text-1 w-161'>
-                                        Аппеляция
+                                    <div onClick={handleAppilate} className='button-send-box button-send-bg deal-end-text-1 w-161'>
+                                        Апелляция
                                     </div>
                                     <div onClick={()=>navigate('/person', {replace: true})} className='button-send-box button-active-send-bg active-text w-161'>
                                         Личный кабинет
@@ -1354,8 +1364,8 @@ export function Deal () {
                                 </div>
                                 
                                 <div className='cntr-between mt-20'>
-                                    <div onClick={()=>{}} className='button-send-box button-send-bg deal-end-text-1 w-161'>
-                                        Аппеляция
+                                    <div onClick={handleAppilate} className='button-send-box button-send-bg deal-end-text-1 w-161'>
+                                        Апелляция
                                     </div>
                                     <div onClick={()=>navigate('/person', {replace: true})} className='button-send-box button-active-send-bg active-text w-161'>
                                         Личный кабинет
