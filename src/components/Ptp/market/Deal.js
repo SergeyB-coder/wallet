@@ -46,6 +46,8 @@ export function Deal () {
 
     const [isCancelDeal, setIsCancelDeal] = useState(false);
 
+    const [showErrorAppilate, setShowErrorAppilate] = useState(false);
+
     const price_market = useSelector(selectPriceMarket)
     const rub_dollar = useSelector(selectRubDollar)
 
@@ -179,10 +181,16 @@ export function Deal () {
     const handleAppilate = () => {
         console.log('handleAppilate')
         newAppilate( {
-            deal_id: deal_id
+            deal_id: deal_id,
+            user_id: user_id
         }, (data) => {
             console.log('handleAppilate', data)
-            tg.openTelegramLink('https://t.me/WalletExpBot')
+            if (data.res) tg.openTelegramLink('https://t.me/WalletExpBot')
+            else {
+                console.log('setShowErrorAppilate')
+                setShowErrorAppilate(true)
+                setTimeout(() => setShowErrorAppilate(false), 2000)
+            }
         })
     }
 
@@ -463,6 +471,7 @@ export function Deal () {
                 Личный кабинет
             </div>
         </div>
+        {showErrorAppilate && <div className='text_error_appilate'>У вас есть действующая апелляция</div>}
     </>
 
     
@@ -690,6 +699,7 @@ export function Deal () {
                                         Личный кабинет
                                     </div>
                                 </div>
+                                {showErrorAppilate && <div className='text_error_appilate'>У вас есть действующая апелляция</div>}
                             </>
                         }
                     </>
@@ -953,6 +963,7 @@ export function Deal () {
                                         Личный кабинет
                                     </div>
                                 </div>
+                                {showErrorAppilate && <div className='text_error_appilate'>У вас есть действующая апелляция</div>}
                             </>
                         }
                     </>
@@ -1205,6 +1216,7 @@ export function Deal () {
                                         Личный кабинет
                                     </div>
                                 </div>
+                                {showErrorAppilate && <div className='text_error_appilate'>У вас есть действующая апелляция</div>}
                             </>
                         }
                     </>
@@ -1371,6 +1383,7 @@ export function Deal () {
                                         Личный кабинет
                                     </div>
                                 </div>
+                                {showErrorAppilate && <div className='text_error_appilate'>У вас есть действующая апелляция</div>}
                             </>
                         }
                     </>
