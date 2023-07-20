@@ -107,6 +107,25 @@ export function getUserSumOrders(pars, callback) {
     });
 }
 
+export function getUserSumBlocks(pars, callback) {
+    fetch(url + '/getusersumblocks', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(pars)
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        console.log('data getusersumblocks', data)
+        
+        return callback(data)
+    });
+}
+
+
+
 
 
 

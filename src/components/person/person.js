@@ -14,7 +14,7 @@ import { selectNameUser } from '../Home/homeSlice';
 import './style.css'
 const commission = 0.05
 
-export function Person (props) {
+export function Person(props) {
     const { user_id, tg } = useTelegram()
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -31,23 +31,23 @@ export function Person (props) {
 
     const handleClickCreateOrder = () => {
         dispatch(setBackStepCreateOrder('person'))
-        navigate('/createorder', {replace: true})
+        navigate('/createorder', { replace: true })
     }
 
-    
+
 
     const handleClickSettingsPay = () => {
-        navigate('/settingspay', {replace: true})
+        navigate('/settingspay', { replace: true })
     }
 
-    
+
 
     const backScreen = () => {
-        navigate('/ptp', {replace: true})
+        navigate('/ptp', { replace: true })
         // navigate('/home', {replace: true})
     }
 
-    function handleClickEditOrder (index) {
+    function handleClickEditOrder(index) {
         dispatch(setPercentPrice(orders[index].percent_price))
         dispatch(setQuantityOrder(orders[index].quantity))
         dispatch(setLimitOrder(orders[index].limit_order))
@@ -55,21 +55,21 @@ export function Person (props) {
         dispatch(setCurrencyOrder(orders[index].currency_order))
         dispatch(setPrice(orders[index].price))
         // dispatch(setMethodPay(orders[index].method_pay))
-        
+
         // const method_pay = useSelector(selectMethodPay)
 
         dispatch(setTypeOrder(orders[index].type))
         dispatch(setPriceType(orders[index].type_price_id))
         dispatch(setComment(orders[index].comment))
         // dispatch(setMethodsPay(orders[index].meth))
-        navigate('/createorder', {replace: true})
-        
+        navigate('/createorder', { replace: true })
+
     }
 
     const handleClickAllOrderActive = () => {
-        setActiveOrder({user_id: user_id, value: !allOrderActive}, (data) => {
+        setActiveOrder({ user_id: user_id, value: !allOrderActive }, (data) => {
             console.log(data)
-            getOrders({user_id: user_id}, (data) => {
+            getOrders({ user_id: user_id }, (data) => {
                 console.log('getOrders person', data)
                 setOrders(data.orders)
             })
@@ -77,57 +77,68 @@ export function Person (props) {
 
         setShowPopUp(true)
 
-        setTimeout(() => {setShowPopUp(false)}, 2000)
+        setTimeout(() => { setShowPopUp(false) }, 2000)
 
         setAllOrderActive(!allOrderActive)
     }
 
-    function handleClickRunOrder (index) {
-        setActiveOrder({order_id: orders[index].id, value: true}, (data) => {
+    function handleClickRunOrder(index) {
+        setActiveOrder({ order_id: orders[index].id, value: true }, (data) => {
             console.log(data)
-            getOrders({user_id: user_id}, (data) => {
+            getOrders({ user_id: user_id }, (data) => {
                 console.log('getOrders person', data)
                 setOrders(data.orders)
             })
         })
     }
 
-    
-    function handleClickStopOrder (index) {
-        setActiveOrder({order_id: orders[index].id, value: false}, (data) => {
+
+    function handleClickStopOrder(index) {
+        setActiveOrder({ order_id: orders[index].id, value: false }, (data) => {
             console.log(data)
-            getOrders({user_id: user_id}, (data) => {
+            getOrders({ user_id: user_id }, (data) => {
                 console.log('getOrders person', data)
                 setOrders(data.orders)
             })
         })
     }
 
-    const pop_up = 
-    <div className='pop_up'>
-        <div className='pop_up_text' >Объявления активированы</div>
-        <div className='pop_up_text_cancel'>Отмена</div>
-    </div>
+    const pop_up =
+        <div className='pop_up'>
+            <div className='pop_up_text' >Объявления активированы</div>
+            <div className='pop_up_text_cancel'>Отмена</div>
+        </div>
 
     useEffect(() => {
         parsePrice({}, (data) => {
             dispatch(setPriceMarket(data.price_market))
             dispatch(setPriceMarketTRX(data.price_market_trx))
-            dispatch(setRubDollar(data.rub_dollar))            
+            dispatch(setRubDollar(data.rub_dollar))
         })
     }, [dispatch]);
-    
+
     useEffect(() => {
-        getUserQDeals({user_id: user_id}, (data) => {
-            if (data.res) setQDeals((data.q_deals.q_taker || 0)+(data.q_deals.q_maker || 0))
+        getUserQDeals({ user_id: user_id }, (data) => {
+            if (data.res) setQDeals((data.q_deals.q_taker || 0) + (data.q_deals.q_maker || 0))
         })
     }, [user_id]);
 
     useEffect(() => {
 
-        getOrders({user_id: user_id}, (data) => {
+        getOrders({ user_id: user_id }, (data) => {
             console.log('getOrders person', data)
             setOrders(data.orders)
+
+            const initialValue = 0;
+            const quantity_active_orders = data.orders.reduce(
+                (accumulator, currentValue) => accumulator + currentValue.active*1,
+                initialValue
+            );
+
+            console.log('quantity_active_orders', quantity_active_orders)
+            if (quantity_active_orders === 0) {
+                setAllOrderActive(false)
+            }
         })
     }, [user_id]);
 
@@ -138,8 +149,8 @@ export function Person (props) {
 
     useEffect(() => {
         tg.onEvent('backButtonClicked', backScreen)
-            return () => {tg.offEvent('backButtonClicked', backScreen)}
-        }, )
+        return () => { tg.offEvent('backButtonClicked', backScreen) }
+    },)
 
     return (
         <div className='container-center'>
@@ -186,7 +197,7 @@ export function Person (props) {
                         </div>
                         <div>
                             <svg width="5" height="9" viewBox="0 0 5 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4.5C5 4.76522 4.89464 5.01957 4.70711 5.20711L1.70711 8.20711C1.31658 8.59763 0.683416 8.59763 0.292892 8.20711C-0.0976318 7.81658 -0.0976317 7.18342 0.292893 6.79289L2.58579 4.5L0.292893 2.20711C-0.097631 1.81658 -0.0976315 1.18342 0.292893 0.792893C0.683417 0.402369 1.31658 0.402369 1.70711 0.792893L4.70711 3.79289C4.89464 3.98043 5 4.23478 5 4.5Z" fill="white"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4.5C5 4.76522 4.89464 5.01957 4.70711 5.20711L1.70711 8.20711C1.31658 8.59763 0.683416 8.59763 0.292892 8.20711C-0.0976318 7.81658 -0.0976317 7.18342 0.292893 6.79289L2.58579 4.5L0.292893 2.20711C-0.097631 1.81658 -0.0976315 1.18342 0.292893 0.792893C0.683417 0.402369 1.31658 0.402369 1.70711 0.792893L4.70711 3.79289C4.89464 3.98043 5 4.23478 5 4.5Z" fill="white" />
                             </svg>
                         </div>
                     </div>
@@ -208,10 +219,10 @@ export function Person (props) {
                         </div> */}
 
                         <div className=''>
-                            <div className={allOrderActive ? 'method-switch anim-switch': 'method-switch-off anim-switch-off'}
+                            <div className={allOrderActive ? 'method-switch anim-switch' : 'method-switch-off anim-switch-off'}
                                 onClick={handleClickAllOrderActive}
                             >
-                                <div className={allOrderActive ? 'method-switch-circle anim-circle':'method-switch-off-circle anim-circle-b'}></div>
+                                <div className={allOrderActive ? 'method-switch-circle anim-circle' : 'method-switch-off-circle anim-circle-b'}></div>
                             </div>
                         </div>
                     </div>
@@ -226,7 +237,7 @@ export function Person (props) {
                     <div className='btn-add-method-pay'>
                         <div className='svg-add-method'>
                             <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M15 30C23.2843 30 30 23.2843 30 15C30 6.71573 23.2843 0 15 0C6.71573 0 0 6.71573 0 15C0 23.2843 6.71573 30 15 30ZM22 17.9251V13.0749H17.2752V8H11.7248V13.0749H7V17.9251H11.7248V23H17.2752V17.9251H22Z" fill="#86EFAC"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M15 30C23.2843 30 30 23.2843 30 15C30 6.71573 23.2843 0 15 0C6.71573 0 0 6.71573 0 15C0 23.2843 6.71573 30 15 30ZM22 17.9251V13.0749H17.2752V8H11.7248V13.0749H7V17.9251H11.7248V23H17.2752V17.9251H22Z" fill="#86EFAC" />
                             </svg>
                         </div>
                         <div className='btn-add-method-text' onClick={handleClickCreateOrder}>
@@ -239,77 +250,77 @@ export function Person (props) {
                 {
                     orders.slice(0, 5).map((order, index) => {
                         return (
-                                <div 
-                                    // style={
-                                    //     (indexMethod !== 0 && companies_pay[indexMethod].id !== order.company_pay_id) || listFilterOrders[index] !== 1 || order.type !== typeOrderFilter ? {display: 'none'}: {}
-                                    // } 
-                                    className='order-item-user mt-3' key={order.id}
-                                >
-                                    <div className='order-header a-c'>
-                                        <div className='order-price'>
-                                            <div className='mt-2'>
-                                                {order.type_price_id !== 2 ? order.price: Math.round(price_market*(order.currency_fiat_id === 1 ? rub_dollar: 1) * order.percent_price)/100}
-                                                {order.currency_fiat_id === 1 ? 'RUB': 'USD'}
-                                            </div>
-                                            <div className={order.type === 's' ? 'order-label':'mini-text-r'}>Цена за 1 {order.currency_id === 1 ? 'USDT BEP20': 'USDT TRC20'}</div>
+                            <div
+                                // style={
+                                //     (indexMethod !== 0 && companies_pay[indexMethod].id !== order.company_pay_id) || listFilterOrders[index] !== 1 || order.type !== typeOrderFilter ? {display: 'none'}: {}
+                                // } 
+                                className='order-item-user mt-3' key={order.id}
+                            >
+                                <div className='order-header a-c'>
+                                    <div className='order-price'>
+                                        <div className='mt-2'>
+                                            {order.type_price_id !== 2 ? order.price : Math.round(price_market * (order.currency_fiat_id === 1 ? rub_dollar : 1) * order.percent_price) / 100}
+                                            {order.currency_fiat_id === 1 ? 'RUB' : 'USD'}
                                         </div>
-                                        
-                                        <div className='container-center a-c'>
-                                            {svg_share}
-                                            <div className={order.type === 'b' ? 'order-sale ml-12': 'order-buy ml-12'} 
-                                                onClick={() => {}}
-                                            >
-                                                    {order.type === 's' ? 'Купить': 'Продать'}
-                                            </div>
+                                        <div className={order.type === 's' ? 'order-label' : 'mini-text-r'}>Цена за 1 {order.currency_id === 1 ? 'USDT BEP20' : 'USDT TRC20'}</div>
+                                    </div>
+
+                                    <div className='container-center a-c'>
+                                        {svg_share}
+                                        <div className={order.type === 'b' ? 'order-sale ml-12' : 'order-buy ml-12'}
+                                            onClick={() => { }}
+                                        >
+                                            {order.type === 's' ? 'Купить' : 'Продать'}
                                         </div>
                                     </div>
-                                    {/* {divider} */}
+                                </div>
+                                {/* {divider} */}
 
-                                    <div className='order-row-1'>
-                                        <div className='order-user-name'>
-                                            {order.first_name}
-                                        </div>
-                                        
-                                        <div className='order-info-2'>
+                                <div className='order-row-1'>
+                                    <div className='order-user-name'>
+                                        {order.first_name}
+                                    </div>
+
+                                    <div className='order-info-2'>
                                         <span className='order-info-1'>
                                             3 сделки
                                         </span>
-                                            67%
-                                        </div>
+                                        67%
                                     </div>
+                                </div>
 
-                                    <div className='order-line-container'>
-                                        <div className='order-line'></div>
+                                <div className='order-line-container'>
+                                    <div className='order-line'></div>
+                                </div>
+
+                                <div className='order-row-1'>
+                                    <div className='order-label-2'>
+                                        Доступно
                                     </div>
-
-                                    <div className='order-row-1'>
-                                        <div className='order-label-2'>
-                                            Доступно
-                                        </div>
-                                        <div className='order-info-3'>
-                                            {order.quantity} USDT
-                                        </div>
+                                    <div className='order-info-3'>
+                                        {order.quantity} USDT
                                     </div>
+                                </div>
 
-                                    <div className='order-line-container'>
-                                        <div className='order-line'></div>
+                                <div className='order-line-container'>
+                                    <div className='order-line'></div>
+                                </div>
+
+                                <div className='order-row-1'>
+                                    <div className='order-label-2'>
+                                        Лимиты
                                     </div>
-
-                                    <div className='order-row-1'>
-                                        <div className='order-label-2'>
-                                            Лимиты
-                                        </div>
-                                        <div className='order-info-3'>
-                                        {`${ Math.round(1000*order.limit_order/(order.type_price_id === 1 ? order.price: price_market * (order.currency_fiat_id === 1 ? rub_dollar: 1) * order.percent_price/100))/1000} - ${order.quantity - commission} USDT`}<br></br>
-                                        {`${order.limit_order} - ${ Math.round((order.quantity - commission)*(order.type_price_id === 1 ? order.price: price_market * (order.currency_fiat_id === 1 ? rub_dollar: 1) * order.percent_price/100)*1000)/1000 } ${order.currency_fiat_id === 1 ? 'Руб': '$'}`}
-                                        </div>
+                                    <div className='order-info-3'>
+                                        {`${Math.round(1000 * order.limit_order / (order.type_price_id === 1 ? order.price : price_market * (order.currency_fiat_id === 1 ? rub_dollar : 1) * order.percent_price / 100)) / 1000} - ${order.quantity - commission} USDT`}<br></br>
+                                        {`${order.limit_order} - ${Math.round((order.quantity - commission) * (order.type_price_id === 1 ? order.price : price_market * (order.currency_fiat_id === 1 ? rub_dollar : 1) * order.percent_price / 100) * 1000) / 1000} ${order.currency_fiat_id === 1 ? 'Руб' : '$'}`}
                                     </div>
+                                </div>
 
-                                    <div className='order-line-container'>
-                                        <div className='order-line'></div>
-                                    </div>
+                                <div className='order-line-container'>
+                                    <div className='order-line'></div>
+                                </div>
 
-                                    {/* <div className='order-row-1'>
+                                {/* <div className='order-row-1'>
                                         <div className='order-label-2'>
                                             Сумма
                                         </div>
@@ -318,44 +329,44 @@ export function Person (props) {
                                         </div>
                                     </div> */}
 
-                                    {/* <div className='order-line-container'>
+                                {/* <div className='order-line-container'>
                                         <div className='order-line'></div>
                                     </div> */}
-                                    
-                                    <div className='order-row-1'>
-                                        <div className='order-label-2 t-a-l'>
-                                            Методы оплаты
-                                        </div>
-                                        <div className='order-info-3'>
-                                            {order.company}
-                                        </div>
-                                    </div>
 
-                                    <div style={{display: 'flex', position: 'absolute', bottom: 0, alignItems: 'flex-end'}}>
-                                        <div className='btn-edit'
-                                            onClick={()=>handleClickEditOrder(index)}
-                                        >
-                                            Редактировать
-                                        </div>
-                                        {   order.active ?
-                                            <div className='btn-run'
-                                                onClick={()=>handleClickStopOrder(index)}
-                                            >
-                                                Остановить
-                                            </div>:
-                                            <div className='btn-run'
-                                                onClick={()=>handleClickRunOrder(index)}
-                                            >
-                                                Запустить
-                                            </div>
-                                        }
+                                <div className='order-row-1'>
+                                    <div className='order-label-2 t-a-l'>
+                                        Методы оплаты
+                                    </div>
+                                    <div className='order-info-3'>
+                                        {order.company}
                                     </div>
                                 </div>
+
+                                <div style={{ display: 'flex', position: 'absolute', bottom: 0, alignItems: 'flex-end' }}>
+                                    <div className='btn-edit'
+                                        onClick={() => handleClickEditOrder(index)}
+                                    >
+                                        Редактировать
+                                    </div>
+                                    {order.active ?
+                                        <div className='btn-run'
+                                            onClick={() => handleClickStopOrder(index)}
+                                        >
+                                            Остановить
+                                        </div> :
+                                        <div className='btn-run'
+                                            onClick={() => handleClickRunOrder(index)}
+                                        >
+                                            Запустить
+                                        </div>
+                                    }
+                                </div>
+                            </div>
                         )
                     })
                 }
             </div>
         </div>
-      );
+    );
 }
 

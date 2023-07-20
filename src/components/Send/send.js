@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { svg_address_to, svg_bep, svg_tron } from '../../const/svgs';
 import { useTelegram } from '../../hooks/useTelegram';
-import { selectAddress, selectAddressTRX, selectBalance, selectBalanceTRX, selectBalanceTRXv, selectSumOrders, setSumOrders } from '../Home/homeSlice';
+import { selectAddress, selectAddressTRX, selectBalance, selectBalanceTRX, selectBalanceTRXv, selectSumOrders, setSumBlocks, setSumOrders } from '../Home/homeSlice';
 import { sendTo } from './sendApi';
 
 import gear_gif from '../../static/animations/gear.gif'
@@ -11,7 +11,7 @@ import success_gif from '../../static/animations/success.gif'
 
 import './style.css'
 import { QrReader } from './qrscanner';
-import { getUserSumOrders } from '../Home/homeApi';
+import { getUserSumBlocks, getUserSumOrders } from '../Home/homeApi';
 
 export function Send (props) {
     const dispatch = useDispatch()
@@ -182,6 +182,13 @@ export function Send (props) {
         <div className='container-center'>
             <div className='line-2'></div>
         </div>
+
+    useEffect(() => {
+        getUserSumBlocks({user_id: user_id, currency_id: (fromLabel1 === 'USDT TRC20' ? 2: 1)}, (data) => {
+            console.log('sum_blocks', data.sum_blocks)
+            dispatch(setSumBlocks(data.sum_blocks))
+        })
+    }, [dispatch, fromLabel1, user_id]);
 
     useEffect(() => {
         getUserSumOrders({user_id: user_id, currency_id: (fromLabel1 === 'USDT TRC20' ? 2: 1)}, (data) => {
@@ -359,7 +366,7 @@ export function Send (props) {
 
                         <div className='row-2 p-17 h-29'>
                             <div className='send-text-1'>Сетевой сбор</div>
-                            <div className='send-text-2'>{fromLabel1 === 'USDT TRC20' ? '10 USDT': '0.1 USDT'}</div>
+                            <div className='send-text-2'>{fromLabel1 === 'USDT TRC20' ? '3 USDT': '0.1 USDT'}</div>
                         </div>
 
                         {divider}
@@ -408,7 +415,7 @@ export function Send (props) {
 
                             <div className='row-2 p-17 h-29'>
                                 <div className='send-text-1'>Сетевой сбор</div>
-                                <div className='send-text-2'>{fromLabel1 === 'USDT TRC20' ? '10 USDT': '0.1 USDT'}</div>
+                                <div className='send-text-2'>{fromLabel1 === 'USDT TRC20' ? '3 USDT': '0.1 USDT'}</div>
                             </div>
 
                             {divider}

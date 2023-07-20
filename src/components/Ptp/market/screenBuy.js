@@ -47,7 +47,8 @@ export function ScreenBuy (props) {
                 quantity: quantity_buy, 
                 price: props?.buyOrder?.price, 
                 fiat: props?.buyOrder.currency_fiat_id,
-                company: props?.buyOrder.company,
+                // company: props?.buyOrder.company,
+                company: listMethodsPay[indexMethodPay]?.company_name,
                 card_number: props?.buyOrder.card_number,
                 type_order: props?.buyOrder.type,
                 method_pay_id: is_buy ? listMethodsPay[indexMethodPay].method_pay_id_taker: listMethodsPay[indexMethodPay].method_pay_id

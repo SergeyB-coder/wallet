@@ -105,11 +105,33 @@ export function Market() {
                 price2 = (arr[j].type_price_id !== 2 ? arr[j].price / (arr[j].currency_fiat_id === 1 ? rub_dollar: 1): price_market*arr[j].percent_price/100 )
                 
                 
-                if (price2 < price1) {
+                if (price2 < price1 ) {
                     const obj = arr[i]
                     arr[i] = arr[j]
                     arr[j] = obj
                 }
+                
+            }
+        }
+        return arr
+    }
+
+    function getSortedOrdersD( orders ) {
+        let arr = orders.slice()
+        let price1 = 0
+        let price2 = 0
+        for (let i=0; i<arr.length-1; i++) {
+            for (let j=i+1; j<arr.length; j++) {
+                price1 = (arr[i].type_price_id !== 2 ? arr[i].price / (arr[i].currency_fiat_id === 1 ? rub_dollar: 1): price_market*arr[i].percent_price/100 )
+                price2 = (arr[j].type_price_id !== 2 ? arr[j].price / (arr[j].currency_fiat_id === 1 ? rub_dollar: 1): price_market*arr[j].percent_price/100 )
+                
+                
+                if (price2 > price1 ) {
+                    const obj = arr[i]
+                    arr[i] = arr[j]
+                    arr[j] = obj
+                }
+                
             }
         }
         return arr
@@ -124,6 +146,7 @@ export function Market() {
             dispatch(setPriceMarketTRX(data.price_market_trx))
             dispatch(setRubDollar(data.rub_dollar)) 
             getOrders({user_id: ''}, (data) => {
+                console.log('useEffect')
                 const sorted_orders = getSortedOrders(data.orders)
                 dispatch(setOrders(sorted_orders))
                 const filter_orders = new Array(data.orders.length).fill(1)
@@ -167,12 +190,18 @@ export function Market() {
 
                             <div className='container-buy-sale'>
                                 <div className='filter-sale-buy-item'
-                                    onClick={() => setTypeOrderFilter('s')}
+                                    onClick={() => {
+                                        dispatch(setOrders(getSortedOrders(orders)))
+                                        setTypeOrderFilter('s')
+                                    }}
                                 >
                                     <div className={`selected-item-buy buy-sale-text ${typeOrderFilter === 's' && 'is_active'}`}>Купить</div>
                                 </div>
                                 <div className='filter-sale-buy-item'
-                                    onClick={() => setTypeOrderFilter('b')}
+                                    onClick={() => {
+                                        dispatch(setOrders(getSortedOrdersD(orders)))
+                                        setTypeOrderFilter('b')
+                                    }}
                                 >
                                     <div className={`selected-item-sale buy-sale-text ${typeOrderFilter === 'b' && 'is_active'}`}>Продать</div>
                                 </div>

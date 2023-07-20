@@ -9,7 +9,8 @@ const initialState = {
   user_deals: [1, 1, 1],
   name_user: '',
   first_run: true,
-  sum_orders: 0
+  sum_orders: 0,
+  sum_blocks: 0,
 };
 
 
@@ -17,6 +18,9 @@ export const homeSlice = createSlice({
   name: 'home',
   initialState,
   reducers: {
+    setSumBlocks: (state, action) => {
+      state.sum_blocks = action.payload;
+    },
     setSumOrders: (state, action) => {
       state.sum_orders = action.payload;
     },
@@ -47,7 +51,7 @@ export const homeSlice = createSlice({
   },
 });
 
-export const {setSumOrders, setFirstRun, setNameUser, setAddress, setAddressTRX, setBalance, setBalanceTRX, setBalanceTRXv, setUserDeals } = homeSlice.actions;
+export const {setSumBlocks, setSumOrders, setFirstRun, setNameUser, setAddress, setAddressTRX, setBalance, setBalanceTRX, setBalanceTRXv, setUserDeals } = homeSlice.actions;
 
 export const selectAddress = (state) => state.home.address;
 export const selectAddressTRX = (state) => state.home.address_trx;
@@ -58,6 +62,7 @@ export const selectUserDeals = (state) => state.home.user_deals;
 export const selectNameUser = (state) => state.home.name_user;
 export const selectFirstRun = (state) => state.home.first_run;
 export const selectSumOrders = (state) => state.home.sum_orders;
+export const selectSumBlocks = (state) => state.home.sum_blocks;
 
 
 export default homeSlice.reducer;
