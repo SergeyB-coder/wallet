@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserData } from './homeApi';
-import { selectBalance, selectBalanceTRX, selectBalanceTRXv, selectFirstRun, selectNameUser, setAddress, setAddressTRX, setBalance, setBalanceTRX, setBalanceTRXv, setFirstRun, setNameUser } from './homeSlice';
+import { selectBalance, selectBalanceTRX, selectBalanceTRXv, selectBalanceV, selectFirstRun, selectNameUser, setAddress, setAddressTRX, setBalance, setBalanceTRX, setBalanceTRXv, setBalanceV, setFirstRun, setNameUser } from './homeSlice';
 import { MenuButtons } from './menubuttons';
 import { useTelegram } from '../../hooks/useTelegram';
 import { svg_bep1, svg_binance, svg_btc, svg_tron1 } from '../../const/svgs';
@@ -22,6 +22,7 @@ export function Home() {
 	const {tg} = useTelegram()
 
 	const balance = useSelector(selectBalance)
+	const balance_v = useSelector(selectBalanceV)
 	const balance_trx = useSelector(selectBalanceTRX)
 	const balance_trx_v = useSelector(selectBalanceTRXv)
 	const name_user = useSelector(selectNameUser)
@@ -58,6 +59,7 @@ export function Home() {
 			dispatch(setAddress(data.address))
 			dispatch(setAddressTRX(data.address_trx))
 			dispatch(setBalance(data.balance))
+			dispatch(setBalanceV(data.balance_v))
 			dispatch(setBalanceTRX(data.balance_trx))
 			dispatch(setBalanceTRXv(data.balance_trx_v))
 			dispatch(setNameUser(data.name_user))
@@ -136,10 +138,10 @@ export function Home() {
 									</div>
 									<div className='wallet-item-info ps-0'>
 										<div className='token-text text-nowrap' style={{textAlign: 'left'}}>Tether BEP</div>
-										<div className='token-balance-text mt-2 text-nowrap'>{Math.round((parseFloat(balance))*100)/100} USDT</div>
+										<div className='token-balance-text mt-2 text-nowrap'>{Math.round((parseFloat(balance + balance_v))*100)/100} USDT</div>
 									</div>
 									<div className='wallet-item-info2'>
-										<div className='token-balance-text2 text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance || 0))*100*price_market)/100}</div>
+										<div className='token-balance-text2 text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat((balance || 0) + balance_v))*100*price_market)/100}</div>
 										<div className='bottom-info text-nowrap mt-2'>+23%</div>
 									</div>
 								</>

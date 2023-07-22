@@ -74,14 +74,14 @@ export function Transactions () {
                             <div key={index} className={`row-2 a-c ${transaction.type === 'send' ? 'color-bg-deal': 'color-bg-deal-r'} h-77 p-17 mt-20`}>
                                 <div className='h-100'>
                                     <div className='deal-text mt-18'>{dateConvert(transaction.datetime)}</div>
-                                    <div className={transaction.type === 'send' ? 'deal-text-2 color-deal-text mt-10': 'mt-10 deal-text-2 color-deal-r-text'}>
-                                        {transaction.type === 'send' ? <span>{svg_deal_send}</span>: <span>{svg_deal_recieve}</span>}
+                                    <div className={transaction.type === 'send' || transaction.to_id === 0 ? 'deal-text-2 color-deal-text mt-10': 'mt-10 deal-text-2 color-deal-r-text'}>
+                                        {transaction.type === 'send' || transaction.to_id === 0 ? <span>{svg_deal_send}</span>: <span>{svg_deal_recieve}</span>}
 
-                                        {transaction.type === 'send' ? ' Отправлено': ' Доставлено'}
+                                        {transaction.type === 'send' || transaction.to_id === 0 ? ' Отправлено': ' Доставлено'}
                                     </div>
                                 </div>
                                 <div className='h-100'>
-                                    {transaction.type === 'send' ?
+                                    {transaction.type === 'send' || transaction.to_id === 0 ?
                                         <div className= 'text-deal-quantity color-q-text'>-{transaction.q} USDT</div>:
                                         <div className='text-deal-quantity color-deal-r-text'>+{transaction.q} USDT</div>
                                     }

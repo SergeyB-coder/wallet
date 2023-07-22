@@ -9,12 +9,14 @@ import { getUserQDeals, parsePrice, setActiveOrder } from '../Ptp/ptpApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBackStepCreateOrder } from '../Ptp/market/marketSlice';
 import { selectPriceMarket, selectRubDollar, setComment, setCurrencyFiat, setCurrencyOrder, setLimitOrder, setPercentPrice, setPrice, setPriceMarket, setPriceMarketTRX, setPriceType, setQuantityOrder, setRubDollar, setTypeOrder } from '../Ptp/ptpSlice';
-import { selectNameUser } from '../Home/homeSlice';
+import { selectBalance, selectBalanceTRX, selectBalanceTRXv, selectNameUser } from '../Home/homeSlice';
 // import { setMethodsPay } from '../Ptp/settings_pay/settingsPaySlice';
 import './style.css'
 const commission = 0.05
-
+let summ_orders_bep = 0
+let summ_orders_trc = 0
 export function Person(props) {
+    
     const { user_id, tg } = useTelegram()
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -24,10 +26,16 @@ export function Person(props) {
     const [qDeals, setQDeals] = useState(0);
     const [showPopUp, setShowPopUp] = useState(false);
 
+    const [popUpText, setPopUpText] = useState('');
+
     const price_market = useSelector(selectPriceMarket)
     const rub_dollar = useSelector(selectRubDollar)
 
     const name_user = useSelector(selectNameUser)
+
+    const balace = useSelector(selectBalance)
+    const balance_trx = useSelector(selectBalanceTRX)
+    const balance_trx_v = useSelector(selectBalanceTRXv)
 
     const handleClickCreateOrder = () => {
         dispatch(setBackStepCreateOrder('person'))
@@ -67,19 +75,30 @@ export function Person(props) {
     }
 
     const handleClickAllOrderActive = () => {
-        setActiveOrder({ user_id: user_id, value: !allOrderActive }, (data) => {
-            console.log(data)
-            getOrders({ user_id: user_id }, (data) => {
-                console.log('getOrders person', data)
-                setOrders(data.orders)
+        console.log('handleClickAllOrderActive', summ_orders_bep, summ_orders_trc, balace, balance_trx, balance_trx_v)
+
+        if ((summ_orders_bep > balace || summ_orders_trc > balance_trx+balance_trx_v) && !allOrderActive) {
+            setPopUpText('Недостаточный баланс')
+            setShowPopUp(true)
+
+            setTimeout(() => { setShowPopUp(false) }, 2000)
+        }
+        else {
+            setActiveOrder({ user_id: user_id, value: !allOrderActive }, (data) => {
+                console.log(data)
+                getOrders({ user_id: user_id }, (data) => {
+                    console.log('getOrders person', data)
+                    setOrders(data.orders)
+                })
             })
-        })
 
-        setShowPopUp(true)
+            setPopUpText(allOrderActive ? 'Объявления активированы': 'Объявления деактивированы')
+            setShowPopUp(true)
 
-        setTimeout(() => { setShowPopUp(false) }, 2000)
+            setTimeout(() => { setShowPopUp(false) }, 2000)
 
-        setAllOrderActive(!allOrderActive)
+            setAllOrderActive(!allOrderActive)
+        }
     }
 
     function handleClickRunOrder(index) {
@@ -103,9 +122,17 @@ export function Person(props) {
         })
     }
 
+    function setSumms (orders) {
+        summ_orders_bep = orders.reduce( 
+            ( accumulator, current_value) => accumulator + current_value.price*current_value.quantity*(current_value.currency_id === 1), 0)
+        
+        summ_orders_trc = orders.reduce( 
+            ( accumulator, current_value) => accumulator + current_value.price*current_value.quantity*(current_value.currency_id === 2), 0)
+    }
+
     const pop_up =
         <div className='pop_up'>
-            <div className='pop_up_text' >Объявления активированы</div>
+            <div className='pop_up_text' >{popUpText}</div>
             <div className='pop_up_text_cancel'>Отмена</div>
         </div>
 
@@ -129,7 +156,9 @@ export function Person(props) {
             console.log('getOrders person', data)
             setOrders(data.orders)
 
+            setSumms(data.orders)
             const initialValue = 0;
+            console.log('summ_orders', summ_orders_bep, summ_orders_trc)
             const quantity_active_orders = data.orders.reduce(
                 (accumulator, currentValue) => accumulator + currentValue.active*1,
                 initialValue

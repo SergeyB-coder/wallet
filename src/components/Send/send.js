@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { svg_address_to, svg_bep, svg_tron } from '../../const/svgs';
 import { useTelegram } from '../../hooks/useTelegram';
-import { selectAddress, selectAddressTRX, selectBalance, selectBalanceTRX, selectBalanceTRXv, selectSumOrders, setSumBlocks, setSumOrders } from '../Home/homeSlice';
+import { selectAddress, selectAddressTRX, selectBalance, selectBalanceTRX, selectBalanceTRXv, selectBalanceV, selectSumOrders, setSumBlocks, setSumOrders } from '../Home/homeSlice';
 import { sendTo } from './sendApi';
 
 import gear_gif from '../../static/animations/gear.gif'
@@ -22,6 +22,7 @@ export function Send (props) {
     const address_trx = useSelector(selectAddressTRX)
 
     const balance = useSelector(selectBalance)
+    const balance_v = useSelector(selectBalanceV)
 	const balance_trx = useSelector(selectBalanceTRX)
     const balance_trx_v = useSelector(selectBalanceTRXv)
 
@@ -101,12 +102,12 @@ export function Send (props) {
     }
 
     function commission() {
-        return fromLabel1 === 'USDT TRC20' ? 10: 0.1
+        return fromLabel1 === 'USDT TRC20' ? 3: 0.1
      }
 
     function getCurrentBalance() {
         if (fromLabel1 === 'USDT TRC20') return parseFloat(balance_trx+balance_trx_v)
-        else return parseFloat(balance)
+        else return parseFloat(balance + balance_v)
     }
 
     function getScanner() {
@@ -116,7 +117,7 @@ export function Send (props) {
 
     function isCorrectQuantity() {
         console.log('getCurrentBalance()', getCurrentBalance(), sum_orders, quantity)
-        return ( (parseFloat(quantity || 0) + sum_orders) <= getCurrentBalance()) && (parseFloat(quantity || 0) >= (fromLabel1 === 'USDT TRC20' ? 3: 0.5))
+        return ( (parseFloat(quantity || 0) + sum_orders + (fromLabel1 === 'USDT TRC20' ? 3: 0.5)) <= getCurrentBalance() )
     }
 
     const handleClickSend = () => {
@@ -140,7 +141,7 @@ export function Send (props) {
                 user_id: user_id,
                 address_from: address1,
                 address_to: addressTo,
-                quantity: net === 'b' ? quantity-0.5 : quantity - 3
+                quantity: quantity
             }, (data) => {
                 // console.log('sendTo', data)
                 // setShowLoader(false)
@@ -322,7 +323,7 @@ export function Send (props) {
                                         Ваш баланс
                                     </div>
                                     <div className='your-balance-q'>
-                                        {fromLabel1 === 'USDT TRC20' ? (balance_trx+balance_trx_v): balance} USDT
+                                        {fromLabel1 === 'USDT TRC20' ? (balance_trx+balance_trx_v): (balance+balance_v)} USDT
                                     </div>
                                 </div>
                                 <div className='container-balance'>
