@@ -48,6 +48,8 @@ export function Send (props) {
     const gear_anim = <img style={{width: '131.4px', height: '132px'}} src={gear_gif} alt=''/>
     const success_anim = <img style={{width: '131.4px', height: '132px'}} src={success_gif} alt=''/>
 
+    const [hash, sethash] = useState('');
+
     function checkValidAddress(adderss) {
         console.log(adderss[0] === 'T')
         if      (fromLabel1 === 'USDT TRC20' && adderss.length > 0) return adderss[0] === 'T'
@@ -143,6 +145,7 @@ export function Send (props) {
                 address_to: addressTo,
                 quantity: quantity
             }, (data) => {
+                sethash(data.hash)
                 // console.log('sendTo', data)
                 // setShowLoader(false)
                 // navigate('/home', {replace: true})
@@ -151,7 +154,8 @@ export function Send (props) {
         }
 
         else if (stepSend === 'finish') {
-            navigate('/', {replace: true})
+            window.open('https://tronscan.io/#/transaction/' + hash, "_blank")
+            // navigate('/', {replace: true})
             // navigate('/home', {replace: true})
         }
         
