@@ -154,7 +154,8 @@ export function Send (props) {
         }
 
         else if (stepSend === 'finish') {
-            window.open('https://tronscan.io/#/transaction/' + hash, "_blank")
+            if (fromLabel1 === 'USDT TRC20') window.open('https://tronscan.io/#/transaction/' + hash, "_blank")
+            else window.open('https://bscscan.com/tx/' + hash, "_blank")
             // navigate('/', {replace: true})
             // navigate('/home', {replace: true})
         }

@@ -142,7 +142,7 @@ export function Home() {
 									</div>
 									<div className='wallet-item-info2'>
 										<div className='token-balance-text2 text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat((balance || 0) + balance_v))*100*price_market)/100}</div>
-										<div className='bottom-info text-nowrap mt-2'>+23%</div>
+										{/* <div className='bottom-info text-nowrap mt-2'>+23%</div> */}
 									</div>
 								</>
 							}
@@ -178,7 +178,7 @@ export function Home() {
 								</div>
 								<div className='wallet-item-info2'>
 									<div className='token-balance-text2 text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance_trx + balance_trx_v || 0))*100*price_market_trx)/100}</div>
-									<div className='bottom-info text-nowrap mt-2'>+23%</div>
+									{/* <div className='bottom-info text-nowrap mt-2'>+23%</div> */}
 								</div>
 								</>
 							}
@@ -209,7 +209,7 @@ export function Home() {
 									</div>
 									<div className='wallet-item-info2'>
 										<div className='token-balance-text2 text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance_trx || 0))*100*1.1)/100}</div>
-										<div className='bottom-info text-nowrap mt-2'>+23%</div>
+										{/* <div className='bottom-info text-nowrap mt-2'>+23%</div> */}
 									</div>
 								</>
 							}

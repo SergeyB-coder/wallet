@@ -210,7 +210,7 @@ export function Person(props) {
                     </div>
                     <div className='cntr-2 color-bg-cntr-person'>
                         <div className='num-text'>
-                            84%
+                            0%
                         </div>
                         <div className='mini-text'>
                             Завершенные сделки
