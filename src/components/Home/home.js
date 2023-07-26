@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserData } from './homeApi';
+import { getBalance, getUserData } from './homeApi';
 import { selectBalance, selectBalanceTRX, selectBalanceTRXv, selectBalanceV, selectFirstRun, selectNameUser, setAddress, setAddressTRX, setBalance, setBalanceTRX, setBalanceTRXv, setBalanceV, setFirstRun, setNameUser } from './homeSlice';
 import { MenuButtons } from './menubuttons';
 import { useTelegram } from '../../hooks/useTelegram';
@@ -52,6 +52,13 @@ export function Home() {
 	}
 
 	useEffect(() => {
+		getBalance({user_id: user_id}, (data) => {
+			console.log('getBalance', data)
+			setIsHide(true)
+			dispatch(setBalance(data.balance_bep))
+			dispatch(setBalanceTRX(data.balance_trx))
+			setTimeout(() => {setIsLoadData(false)}, 400)
+		})
 		getUserData({user_id: user_id, first_name: first_name, chat_id: chat_id}, (data) => {
 			setIsHide(true)
 			console.log('get user data', data)
@@ -197,18 +204,18 @@ export function Home() {
 
 
 					<div className='wallet-item-container mt-16'>
-						<div className='wallet-item row' onClick={handleClickTrc}>
+						<div className='wallet-item row' onClick={()=>{}}>
 							{	isHide &&
 								<>
 									<div className='wallet-item-svg-container'>
 										{svg_btc}
 									</div>
 									<div className='wallet-item-info ps-0'>
-										<div className='token-text text-nowrap' style={{textAlign: 'left'}}>Bitcoin</div>
-										<div className='token-balance-text mt-2'>1 BTC</div>
+										<div className='token-text text-nowrap' style={{textAlign: 'left', color: '#A8A196'}}>Bitcoin</div>
+										<div className='token-balance-text mt-2' style={{color: '#A8A196'}}>0 BTC</div>
 									</div>
 									<div className='wallet-item-info2'>
-										<div className='token-balance-text2 text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance_trx || 0))*100*1.1)/100}</div>
+										<div className='token-balance-text2 text-nowrap' style={{textAlign: 'right', color: '#A8A196'}}>$0</div>
 										{/* <div className='bottom-info text-nowrap mt-2'>+23%</div> */}
 									</div>
 								</>

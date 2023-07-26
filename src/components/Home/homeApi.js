@@ -15,6 +15,26 @@ export function getUserData(pars, callback) {
             
             return callback(data)
         });
+
+}
+
+
+export function getBalance(pars, callback) {
+    fetch(url + '/getbalance', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(pars)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('data getbalance', data)
+            
+            return callback(data)
+        });
+
 }
 
 export function getWallet(pars, callback) {

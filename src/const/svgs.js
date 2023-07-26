@@ -118,7 +118,7 @@ export const svg_ok =
 
 
 export const svg_btc = 
-    <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" xmlnsxodm="http://www.corel.com/coreldraw/odm/2003" xmlSpace="preserve" width="100%" height="100%" version="1.1" shapeRendering="geometricPrecision" textRendering="geometricPrecision" imageRendering="optimizeQuality" fillRule="evenodd" clipRule="evenodd" viewBox="0 0 4091.27 4091.73">
+    <svg color='#A8A196' xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" xmlnsxodm="http://www.corel.com/coreldraw/odm/2003" xmlSpace="preserve" width="100%" height="100%" version="1.1" shapeRendering="geometricPrecision" textRendering="geometricPrecision" imageRendering="optimizeQuality" fillRule="evenodd" clipRule="evenodd" viewBox="0 0 4091.27 4091.73">
         <g id="Layer_x0020_1">
         <metadata id="CorelCorpID_0Corel-Layer"/>
         <g id="_1421344023328">

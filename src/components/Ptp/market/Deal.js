@@ -608,7 +608,7 @@ export function Deal () {
                                 </div>
                                 <div className='container-center mt-20 color-bg-cntr h-82'>
             <div className='w-100'>
-                    <div className='deal-text-3 mt-17'>Переведите оплату в течение</div>
+                    <div className='deal-text-3 mt-17'>Ожидание подтверждения оплаты от продавца</div>
                     <div className='timer-text h-34' 
                         style={{display: 'flex', alignItems: 'flex-end', justifyContent: 'center'}}
                     >
