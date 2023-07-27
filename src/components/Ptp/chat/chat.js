@@ -191,7 +191,7 @@ export function Chat () {
                         {
                             list_messages.map((message, index) => {
                                 return (
-                                    first_name === message.first_name ?
+                                    name_user === message.first_name ?
                                     <div style={{ display: 'flex', justifyContent: 'left', marginBottom: '10px'}}  key={index}>
                                         <div className='container-message-item'>
                                             <div className='msg-chat'>{message.text}</div>
