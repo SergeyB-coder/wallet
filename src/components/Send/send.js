@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { svg_address_to, svg_bep, svg_tron } from '../../const/svgs';
 import { useTelegram } from '../../hooks/useTelegram';
-import { selectAddress, selectAddressTRX, selectBalance, selectBalanceTRX, selectBalanceTRXv, selectBalanceV, selectSumOrders, setSumBlocks, setSumOrders } from '../Home/homeSlice';
+import { selectAddress, selectAddressTRX, selectBalance, selectBalanceTRX, selectBalanceTRXv, selectBalanceV, selectSumOrders, setAddress, setAddressTRX, setSumBlocks, setSumOrders } from '../Home/homeSlice';
 import { sendTo } from './sendApi';
 
 import gear_gif from '../../static/animations/gear.gif'
@@ -11,12 +11,12 @@ import success_gif from '../../static/animations/success.gif'
 
 import './style.css'
 import { QrReader } from './qrscanner';
-import { getUserSumBlocks, getUserSumOrders } from '../Home/homeApi';
+import { getUserData, getUserSumBlocks, getUserSumOrders } from '../Home/homeApi';
 
 export function Send (props) {
     const dispatch = useDispatch()
     const [date, setDate] = useState(new Date())
-    const {tg, user_id} = useTelegram()
+    const {tg, user_id, first_name, chat_id} = useTelegram()
     const navigate = useNavigate()
     const address = useSelector(selectAddress)
     const address_trx = useSelector(selectAddressTRX)
@@ -139,10 +139,34 @@ export function Send (props) {
             let net = ''
             if (address1 === address) net = 'b'
             else if (address1 === address_trx) net = 't'
+            let address_from = ''
+            if (net === '' || address1 === '') {
+                getUserData({user_id: user_id, first_name: first_name, chat_id: chat_id}, (data) => {
+                    console.log('get user data', data)
+                    // dispatch(setAddress(data.address))
+                    // dispatch(setAddressTRX(data.address_trx))
+                    // dispatch(setBalance(data.balance))
+                    // dispatch(setBalanceV(data.balance_v))
+                    // dispatch(setBalanceTRX(data.balance_trx))
+                    // dispatch(setBalanceTRXv(data.balance_trx_v))
+                    // dispatch(setNameUser(data.name_user))
+                    // setTimeout(() => {setIsLoadData(false)}, 400)
+                    if (fromLabel1 === 'USDT TRC20') {
+                        net = 't'
+                        address_from = data.address_trx
+                    }
+                    else {
+                        net = 'b'
+                        address_from = data.address
+                    }
+                    
+                })
+            }
+            else address_from = address1
             sendTo({
                 net: net,
                 user_id: user_id,
-                address_from: address1,
+                address_from: address_from,
                 address_to: addressTo,
                 quantity: quantity
             }, (data) => {
