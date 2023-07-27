@@ -12,6 +12,7 @@ import { selectDealScreenInfo, setDealScreenInfo } from '../market/marketSlice';
 import { getDealMessages } from './chatApi';
 import { selectMessages, setMessages } from './chatSlice';
 import './style.css'
+import { selectNameUser } from '../../Home/homeSlice';
 
 
 export function Chat () {
@@ -26,6 +27,7 @@ export function Chat () {
     const deal_screen_info = useSelector(selectDealScreenInfo)
 
     const list_messages = useSelector(selectMessages)
+    const name_user = useSelector(selectNameUser)
 
     const [message, setMessage] = useState('')
     const [files, setFiles] = useState([])
@@ -40,7 +42,7 @@ export function Chat () {
     const handleClickSendMessage = () => {
         if (message.trim() === '') return
         setMessage('')
-        socket.emit("new_message", {deal_id: deal_screen_info.deal_id, message: message, user_id: user_id, first_name: first_name});
+        socket.emit("new_message", {deal_id: deal_screen_info.deal_id, message: message, user_id: user_id, name_user: name_user});
         addMsgToChat({text: message, first_name: first_name})
     }
 

@@ -108,6 +108,7 @@ export function Send (props) {
      }
 
     function getCurrentBalance() {
+        console.log('balance + balance_v', balance + balance_v)
         if (fromLabel1 === 'USDT TRC20') return parseFloat(balance_trx+balance_trx_v)
         else return parseFloat(balance + balance_v)
     }
@@ -328,7 +329,7 @@ export function Send (props) {
                                         Ваш баланс
                                     </div>
                                     <div className='your-balance-q'>
-                                        {fromLabel1 === 'USDT TRC20' ? (balance_trx+balance_trx_v): (balance+balance_v)} USDT
+                                        {fromLabel1 === 'USDT TRC20' ? Math.round((balance_trx+balance_trx_v)*100)/100: Math.round((balance+balance_v)*100)/100} USDT
                                     </div>
                                 </div>
                                 <div className='container-balance'>
@@ -344,7 +345,7 @@ export function Send (props) {
                                         Сумма вывода / комиссия 
                                     </div>
                                     <div className='your-balance-q'>
-                                        {fromLabel1 === 'USDT TRC20' ? (quantity-3): (quantity-0.5)} / {fromLabel1 === 'USDT TRC20' ? 3: 0.5} USDT
+                                        {fromLabel1 === 'USDT TRC20' ? (quantity): (quantity)} / {fromLabel1 === 'USDT TRC20' ? 3: 0.5} USDT
                                     </div>
                                 </div>
 
