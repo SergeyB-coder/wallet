@@ -24,6 +24,8 @@ export function Person(props) {
     const [allOrderActive, setAllOrderActive] = useState(true);
     const [orders, setOrders] = useState([]);
     const [qDeals, setQDeals] = useState(0);
+    const [qMDeals, setQMDeals] = useState(0);
+    const [qMDealsEnd, setQMDealsEnd] = useState(0);
     const [showPopUp, setShowPopUp] = useState(false);
 
     const [popUpText, setPopUpText] = useState('');
@@ -146,7 +148,11 @@ export function Person(props) {
 
     useEffect(() => {
         getUserQDeals({ user_id: user_id }, (data) => {
-            if (data.res) setQDeals((data.q_deals.q_taker || 0) + (data.q_deals.q_maker || 0))
+            if (data.res) {
+                setQDeals((data.q_deals.q_taker || 0) + (data.q_deals.q_maker || 0))
+                setQMDeals(data.q_deals.q_maker)
+                setQMDealsEnd(data.q_deals.q_maker_end)
+            }
         })
     }, [user_id]);
 
@@ -210,7 +216,7 @@ export function Person(props) {
                     </div>
                     <div className='cntr-2 color-bg-cntr-person'>
                         <div className='num-text'>
-                            0%
+                            {qMDeals !== 0 && Math.round(qMDealsEnd*100/qMDeals)}%
                         </div>
                         <div className='mini-text'>
                             Завершенные сделки
