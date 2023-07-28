@@ -249,7 +249,7 @@ export function Send (props) {
         <div className='d-flex justify-content-center'>
             <div className='send-container'>
                 <div className='container-title mt-20'>
-                    <div className='title-send'>
+                    <div className='title-send' onClick={backScreen}>
                         {
                             stepSend === 'address' ? 'Отправить': 
                             stepSend === 'confirm' ? 'Подтвердите перевод':
