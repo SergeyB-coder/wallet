@@ -181,7 +181,7 @@ export function Home() {
 									</div>
 								</div>
 								<div className='wallet-item-info ps-0'>
-									<div className='token-text text-nowrap' style={{textAlign: 'left'}}>{balance_trx}Tether TRC{balance_trx_v}</div>
+									<div className='token-text text-nowrap' style={{textAlign: 'left'}}>Tether TRC</div>
 									<div className='token-balance-text mt-2'>{Math.round((parseFloat(balance_trx + balance_trx_v))*100)/100} USDT</div>
 								</div>
 								<div className='wallet-item-info2'>
