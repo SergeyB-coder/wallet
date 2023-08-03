@@ -356,27 +356,27 @@ export function Market() {
                                         Лимиты
                                     </div>
                                     <div className='order-info-3'>
-                                        {`${Math.round(1000 * order.limit_order / (order.type_price_id !== 2 ? order.price : price_market * (order.currency_fiat_id === 1 ? rub_dollar : 1) * order.percent_price / 100)) / 1000} - ${order.quantity - commission} USDT`}<br></br>
-                                        {`${order.limit_order} - ${Math.round((order.quantity - commission) * order.price * 1000) / 1000} ${order.currency_fiat_id === 1 ? 'Руб' : '$'}`}
+                                        {`${Math.round(1000 * order.limit_order / (order.type_price_id !== 2 ? order.price : price_market * (order.currency_fiat_id === 1 ? rub_dollar : 1) * order.percent_price / 100)) / 1000} - ${ Math.round(100*(order.quantity - commission))/100 } USDT`}<br></br>
+                                        {`${order.limit_order} - ${ Math.round((order.quantity - commission) * ( order.type_price_id !== 2 ? order.price: price_market * (order.currency_fiat_id === 1 ? rub_dollar : 1) * order.percent_price / 100) * 1000) / 1000} ${order.currency_fiat_id === 1 ? 'Руб' : '$'}`}
                                     </div>
                                 </div>
 
-                                <div className='order-line-container'>
+                                <div style={{marginTop: '5px'}} className='order-line-container'>
                                     <div className='order-line'></div>
                                 </div>
 
-                                <div className='order-row-1'>
+                                {/* <div className='order-row-1'>
                                     <div className='order-label-2'>
                                         Сумма
                                     </div>
                                     <div className='order-info-3'>
                                         {'0.13 USDT'}
                                     </div>
-                                </div>
+                                </div> */}
 
-                                <div className='order-line-container'>
+                                {/* <div className='order-line-container'>
                                     <div className='order-line'></div>
-                                </div>
+                                </div> */}
 
                                 <div className='order-row-1'>
                                     <div className='order-label-2'>

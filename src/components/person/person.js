@@ -150,8 +150,8 @@ export function Person(props) {
         getUserQDeals({ user_id: user_id }, (data) => {
             if (data.res) {
                 setQDeals((data.q_deals.q_taker || 0) + (data.q_deals.q_maker || 0))
-                setQMDeals(data.q_deals.q_maker)
-                setQMDealsEnd(data.q_deals.q_maker_end)
+                setQMDeals(data.q_deals.q_maker || 0)
+                setQMDealsEnd(data.q_deals.q_maker_end || 0)
             }
         })
     }, [user_id]);
@@ -216,7 +216,7 @@ export function Person(props) {
                     </div>
                     <div className='cntr-2 color-bg-cntr-person'>
                         <div className='num-text'>
-                            {qMDeals !== 0 && Math.round(qMDealsEnd*100/qMDeals)}%
+                            {(qMDeals !== 0 && Math.round(qMDealsEnd*100/qMDeals)) || 0}%
                         </div>
                         <div className='mini-text'>
                             Завершенные сделки

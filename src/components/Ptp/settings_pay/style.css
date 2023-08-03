@@ -48,6 +48,21 @@
     color: #FFFFFF;
 }
 
+.text-card {
+    text-align: left;
+    width: 90%;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    /* identical to box height */
+
+    letter-spacing: 0.05em;
+
+    color: #86EFAC;
+}
+
 .container-list-companies {
     background-color: var(--bg-container-color);
     border-radius: 10px;

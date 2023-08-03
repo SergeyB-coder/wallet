@@ -110,7 +110,7 @@ export function Deal () {
     
     const handleClickCancelDeal = () => {
         clearTimeout(timeOut)
-        sendCancelDeal({deal_id: deal_screen_info.deal_id}, () => {
+        sendCancelDeal({deal_id: deal_screen_info.deal_id, buyer_id: deal_screen_info.buyer_id, saler_id: deal_screen_info.saler_id}, () => {
             // handleGetDealInfo()
             navigate('/ptp', {replace: true})
             handleSendMessage('cancel')

@@ -26,7 +26,7 @@ export function ScreenBuy (props) {
 
     const [showMethodsPay, setShowMethodsPay] = useState(false);
     const [listMethodsPay, setListMethodsPay] = useState([]);
-    const [indexMethodPay, setIndexMethodPay] = useState(0);
+    const [indexMethodPay, setIndexMethodPay] = useState(9);
 
     const is_buy = props.buyOrder.type === 'b'
 
@@ -45,7 +45,7 @@ export function ScreenBuy (props) {
                 first_name: first_name,
                 order_id: props.buyOrder.id, 
                 quantity: quantity_buy, 
-                price: props?.buyOrder?.price, 
+                price: props?.buyOrder?.type_price_id !== 2 ? props?.buyOrder?.price: price_market * (props?.buyOrder?.currency_fiat_id !== 1 ? 1: rub_dollar * props?.buyOrder?.percent_price/100) , 
                 fiat: props?.buyOrder.currency_fiat_id,
                 // company: props?.buyOrder.company,
                 company: listMethodsPay[indexMethodPay]?.company_name,
@@ -112,7 +112,8 @@ export function ScreenBuy (props) {
                     break
                 }
             }
-            if (index === -1) setIndexMethodPay(-1)
+            // if (index === -1) setIndexMethodPay(-1)
+            setIndexMethodPay(-1)
             setListMethodsPay(data.order_methods)
             console.log('getOrderMethods', data)
         })
@@ -149,6 +150,7 @@ export function ScreenBuy (props) {
                                 >
                                     <div style={{width: '45%'}}>
                                         <div className='text-company'>{method.company_name}</div>
+                                        <div className='text-card'>{method.card_number}</div>
                                     </div>
                                     {
                                         !method.method_pay_id_taker && 
@@ -191,8 +193,8 @@ export function ScreenBuy (props) {
                                 <div className='order-label-2'>
                                     Методы оплаты
                                 </div>
-                                <div className='order-info-3'>
-                                    {listMethodsPay[indexMethodPay]?.company_name || 'Добавить'}
+                                <div className='order-buy_text'>
+                                    {listMethodsPay[indexMethodPay]?.company_name || 'Выбрать'}
                                 </div>
                             </div>
 

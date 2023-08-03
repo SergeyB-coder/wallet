@@ -121,7 +121,7 @@ export function Home() {
 							</>
 							}
 							{/* <div className={`balance-load hide-balace-load ${isLoadData ? '': 'hide-balace-load'}`}></div> */}
-							{!isLoadData  && <div className='balance-main'><span className='balance-main-sign'>$</span>{Math.round(parseFloat(((balance + balance_trx + balance_trx_v) || 0))*1000)/1000}</div>}
+							{!isLoadData  && <div className='balance-main'><span className='balance-main-sign'>$</span>{Math.round(parseFloat(((balance + balance_v + balance_trx + balance_trx_v) || 0))*1000)/1000}</div>}
 						</div>
 						
 						{isLoadData && <div className={`home-container-balance-load ${isHide ? 'grow-hide': ''}`}></div>}
