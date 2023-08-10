@@ -43,7 +43,7 @@ export function Chat () {
         if (message.trim() === '') return
         setMessage('')
         socket.emit("new_message", {deal_id: deal_screen_info.deal_id, message: message, user_id: user_id, name_user: name_user});
-        addMsgToChat({text: message, first_name: first_name})
+        addMsgToChat({text: message, first_name: name_user})
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

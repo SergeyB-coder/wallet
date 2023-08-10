@@ -9,7 +9,7 @@ import { getUserQDeals, parsePrice, setActiveOrder } from '../Ptp/ptpApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBackStepCreateOrder } from '../Ptp/market/marketSlice';
 import { selectPriceMarket, selectRubDollar, setComment, setCurrencyFiat, setCurrencyOrder, setLimitOrder, setPercentPrice, setPrice, setPriceMarket, setPriceMarketTRX, setPriceType, setQuantityOrder, setRubDollar, setTypeOrder } from '../Ptp/ptpSlice';
-import { selectBalance, selectBalanceTRX, selectBalanceTRXv, selectNameUser } from '../Home/homeSlice';
+import { selectBalance, selectBalanceTRX, selectBalanceTRXv, selectBalanceV, selectNameUser } from '../Home/homeSlice';
 // import { setMethodsPay } from '../Ptp/settings_pay/settingsPaySlice';
 import './style.css'
 const commission = 0.05
@@ -35,7 +35,8 @@ export function Person(props) {
 
     const name_user = useSelector(selectNameUser)
 
-    const balace = useSelector(selectBalance)
+    const balance = useSelector(selectBalance)
+    const balance_v = useSelector(selectBalanceV)
     const balance_trx = useSelector(selectBalanceTRX)
     const balance_trx_v = useSelector(selectBalanceTRXv)
 
@@ -77,9 +78,9 @@ export function Person(props) {
     }
 
     const handleClickAllOrderActive = () => {
-        console.log('handleClickAllOrderActive', summ_orders_bep, summ_orders_trc, balace, balance_trx, balance_trx_v)
+        console.log('handleClickAllOrderActive', summ_orders_bep, summ_orders_trc, balance, balance_v, balance_trx, balance_trx_v)
 
-        if ((summ_orders_bep > balace || summ_orders_trc > balance_trx+balance_trx_v) && !allOrderActive) {
+        if ((summ_orders_bep > balance+balance_v || summ_orders_trc > balance_trx+balance_trx_v) && !allOrderActive) {
             setPopUpText('Недостаточный баланс')
             setShowPopUp(true)
 
@@ -94,7 +95,7 @@ export function Person(props) {
                 })
             })
 
-            setPopUpText(allOrderActive ? 'Объявления активированы': 'Объявления деактивированы')
+            setPopUpText(allOrderActive ? 'Объявления деактивированы': 'Объявления активированы')
             setShowPopUp(true)
 
             setTimeout(() => { setShowPopUp(false) }, 2000)

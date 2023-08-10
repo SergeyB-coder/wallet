@@ -9,6 +9,7 @@ import { selectDealInfo, setDealInfo } from './market/marketSlice';
 
 import clock_gif from '../../static/animations/clock.gif'
 import hands_gif from '../../static/animations/hands.gif'
+import { selectNameUser } from '../Home/homeSlice';
 
 export function CompleteDeal (props) {
     const dispatch = useDispatch()
@@ -18,6 +19,7 @@ export function CompleteDeal (props) {
     const navigate = useNavigate()
     const deal_info = useSelector(selectDealInfo)
     // const order_id = useSelector(selectCurrentOrderId)
+    const name_user = useSelector(selectNameUser)
 
     // const [showLoader, setShowLoader] = useState(false)
     const [showWait, setShowWait] = useState(false)
@@ -45,7 +47,7 @@ export function CompleteDeal (props) {
                 deal_id: deal_info.deal_id, 
                 order_id: deal_info.order_id, 
                 user_to_id: deal_info.id_to ? deal_info.id_to: deal_info.buyer_id,
-                user_from: first_name,
+                user_from: name_user,
                 user_from_id: user_id,
                 type_order: deal_info.type_order
             }, (data) => {

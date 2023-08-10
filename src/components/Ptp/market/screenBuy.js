@@ -6,14 +6,19 @@ import { useTelegram } from '../../../hooks/useTelegram';
 // import { ButtonNext } from '../../Common/buttonNext';
 import { getOrderMethods, sendBuy } from './marketApi';
 import { selectQuantityBuy, setMarketScreen, setQuantityBuy } from './marketSlice';
-import { selectBalance, selectBalanceTRX, selectBalanceTRXv } from '../../Home/homeSlice';
+import { selectBalance, selectBalanceTRX, selectBalanceTRXv, selectNameUser } from '../../Home/homeSlice';
 import {  selectPriceMarket, selectRubDollar } from '../ptpSlice';
 import { setBackScreen, setNewMethod, setSelectedCompanyIndex } from '../settings_pay/settingsPaySlice';
 
 export function ScreenBuy (props) {
+    const showMethodsPay = props.showMethodsPay
+    const setShowMethodsPay = props.setShowMethodsPay
     const navigate = useNavigate()
     const {tg, user_id, first_name} = useTelegram()
     const dispatch = useDispatch()
+
+    const name_user = useSelector(selectNameUser)
+
     const quantity_buy = useSelector(selectQuantityBuy)
 
     const balance = useSelector(selectBalance)
@@ -24,7 +29,7 @@ export function ScreenBuy (props) {
     const price_market = useSelector(selectPriceMarket)
     const rub_dollar = useSelector(selectRubDollar)
 
-    const [showMethodsPay, setShowMethodsPay] = useState(false);
+    // const [showMethodsPay, setShowMethodsPay] = useState(false);
     const [listMethodsPay, setListMethodsPay] = useState([]);
     const [indexMethodPay, setIndexMethodPay] = useState(9);
 
@@ -42,7 +47,7 @@ export function ScreenBuy (props) {
         if (isCorrectQuantity()) {
             sendBuy({
                 user_id: user_id, 
-                first_name: first_name,
+                first_name: name_user,
                 order_id: props.buyOrder.id, 
                 quantity: quantity_buy, 
                 price: props?.buyOrder?.type_price_id !== 2 ? props?.buyOrder?.price: price_market * (props?.buyOrder?.currency_fiat_id !== 1 ? 1: rub_dollar * props?.buyOrder?.percent_price/100) , 
@@ -58,7 +63,7 @@ export function ScreenBuy (props) {
         }
     }
 
-    const handleClickMethodsPay = () => {
+    const handleClickSelectMethodPay = () => {
         setShowMethodsPay(true)
     }
 
@@ -72,6 +77,7 @@ export function ScreenBuy (props) {
     // }
 
     const backScreen = () => {
+        console.log('backScreen', showMethodsPay)
         if (showMethodsPay) setShowMethodsPay(false)
         else dispatch(setMarketScreen('orders'))
     }
@@ -102,7 +108,12 @@ export function ScreenBuy (props) {
     }
 
     useEffect(() => {
-        getOrderMethods({order_id: props.buyOrder.id, taker_id: user_id}, (data) => {
+        getOrderMethods({
+            order_id: props.buyOrder.id, 
+            taker_id: user_id, 
+            maker_id: props.buyOrder.user_id,
+            order_type: props.buyOrder.type
+        }, (data) => {
             let index = -1
             const methods = data.order_methods
             for (let i in methods) {
@@ -128,10 +139,10 @@ export function ScreenBuy (props) {
     //         return () => {tg.offEvent('mainButtonClicked', nextScreen)}
     //     }, )
 
-    useEffect(() => {
-        tg.onEvent('backButtonClicked', backScreen)
-            return () => {tg.offEvent('backButtonClicked', backScreen)}
-        }, )
+    // useEffect(() => {
+    //     tg.onEvent('backButtonClicked', backScreen)
+    //         return () => {tg.offEvent('backButtonClicked', backScreen)}
+    //     }, )
 
     // useEffect(() => {
     //     tg.MainButton.show()
@@ -142,6 +153,7 @@ export function ScreenBuy (props) {
         <>
         {   showMethodsPay ?
             <div>
+                <div onClick={backScreen}>hhh</div>
                 <div style={{height: '43vh'}} className='container-list-companies overflow-auto mb-3'>
                     {listMethodsPay.map ((method, index) => {
                         return (
@@ -150,7 +162,7 @@ export function ScreenBuy (props) {
                                 >
                                     <div style={{width: '45%'}}>
                                         <div className='text-company'>{method.company_name}</div>
-                                        <div className='text-card'>{method.card_number}</div>
+                                        <div className='text-card'>{props.buyOrder.type === 'b' ? method.card_number: ''}</div>
                                     </div>
                                     {
                                         !method.method_pay_id_taker && 
@@ -189,7 +201,7 @@ export function ScreenBuy (props) {
                     
                     <div className='container-center mt-20'>
                         <div className='w-100'>
-                            <div className='order-row-1' onClick={handleClickMethodsPay}>
+                            <div className='order-row-1' onClick={handleClickSelectMethodPay}>
                                 <div className='order-label-2'>
                                     Методы оплаты
                                 </div>
@@ -202,7 +214,7 @@ export function ScreenBuy (props) {
                                 <div className='order-line'></div>
                             </div>
 
-                            {/* <div className='row mb-3' onClick={handleClickMethodsPay}>
+                            {/* <div className='row mb-3' onClick={handleClickSelectMethodPay}>
                                 <div className='buy-label'>
                                     Методы оплаты
                                 </div>

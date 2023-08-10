@@ -42,9 +42,14 @@ export function Market() {
 
     const [currentSelecter, setCurrentSelecter] = useState(''); //currency, fiat
 
+    const [showMethodsPay, setShowMethodsPay] = useState(false);
+
     const backScreen = (() => {
         if (marketScreen === 'select_method') dispatch(setMarketScreen('orders'))
-        else if (marketScreen === 'buy') dispatch(setMarketScreen('orders'))
+        else if (marketScreen === 'buy') {
+            if (showMethodsPay) setShowMethodsPay(false)
+            else dispatch(setMarketScreen('orders'))
+        }
         else navigate('/ptp', { replace: true })
     })
 
@@ -391,7 +396,7 @@ export function Market() {
                     })
                 }
 
-                {marketScreen === 'buy' && <ScreenBuy buyOrder={buyOrder} />}
+                {marketScreen === 'buy' && <ScreenBuy buyOrder={buyOrder} showMethodsPay={showMethodsPay} setShowMethodsPay={setShowMethodsPay}/>}
 
                 {marketScreen === 'select_method' &&
                     <div>
