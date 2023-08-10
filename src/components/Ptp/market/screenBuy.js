@@ -14,7 +14,7 @@ export function ScreenBuy (props) {
     const showMethodsPay = props.showMethodsPay
     const setShowMethodsPay = props.setShowMethodsPay
     const navigate = useNavigate()
-    const {tg, user_id, first_name} = useTelegram()
+    const { user_id} = useTelegram()
     const dispatch = useDispatch()
 
     const name_user = useSelector(selectNameUser)
@@ -128,7 +128,7 @@ export function ScreenBuy (props) {
             setListMethodsPay(data.order_methods)
             console.log('getOrderMethods', data)
         })
-    }, [props.buyOrder.id, user_id]);
+    }, [props.buyOrder.id, props.buyOrder.type, props.buyOrder.user_id, user_id]);
 
     // useEffect(() => {
     //     let inp = document.getElementById('quantity')

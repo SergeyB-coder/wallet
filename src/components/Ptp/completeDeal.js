@@ -11,10 +11,10 @@ import clock_gif from '../../static/animations/clock.gif'
 import hands_gif from '../../static/animations/hands.gif'
 import { selectNameUser } from '../Home/homeSlice';
 
-export function CompleteDeal (props) {
+export function CompleteDeal () {
     const dispatch = useDispatch()
 
-    const {tg, first_name, user_id} = useTelegram()
+    const {tg,  user_id} = useTelegram()
 
     const navigate = useNavigate()
     const deal_info = useSelector(selectDealInfo)
