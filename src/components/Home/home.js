@@ -56,6 +56,7 @@ export function Home() {
 			console.log('getBalance', data)
 			setIsHide(true)
 			dispatch(setBalance(data.balance_bep))
+			dispatch(setBalanceV(data.balance_bep_v))
 			dispatch(setBalanceTRX(data.balance_trx))
 			dispatch(setBalanceTRXv(data.balance_trx_v))
 			setTimeout(() => {setIsLoadData(false)}, 400)
