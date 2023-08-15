@@ -59,6 +59,7 @@ export function Home() {
 			dispatch(setBalanceV(data.balance_bep_v))
 			dispatch(setBalanceTRX(data.balance_trx))
 			dispatch(setBalanceTRXv(data.balance_trx_v))
+			dispatch(setNameUser(data.name_user))
 			setTimeout(() => {setIsLoadData(false)}, 400)
 		})
 		getUserData({user_id: user_id, first_name: first_name, chat_id: chat_id}, (data) => {
