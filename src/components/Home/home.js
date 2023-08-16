@@ -19,7 +19,7 @@ export function Home() {
 	const dispatch = useDispatch()
 	// const navigate = useNavigate()
 
-	const {tg} = useTelegram()
+	const { tg } = useTelegram()
 
 	const balance = useSelector(selectBalance)
 	const balance_v = useSelector(selectBalanceV)
@@ -29,7 +29,7 @@ export function Home() {
 
 	const price_market = useSelector(selectPriceMarket)
 	const price_market_trx = useSelector(selectPriceMarketTRX)
-    // const rub_dollar = useSelector(selectRubDollar)
+	// const rub_dollar = useSelector(selectRubDollar)
 	const first_run = useSelector(selectFirstRun)
 
 	const [isLoadData, setIsLoadData] = useState(first_run);
@@ -52,17 +52,29 @@ export function Home() {
 	}
 
 	useEffect(() => {
-		getBalance({user_id: user_id}, (data) => {
-			console.log('getBalance', data)
-			setIsHide(true)
-			dispatch(setBalance(data.balance_bep))
-			dispatch(setBalanceV(data.balance_bep_v))
-			dispatch(setBalanceTRX(data.balance_trx))
-			dispatch(setBalanceTRXv(data.balance_trx_v))
-			dispatch(setNameUser(data.name_user))
-			setTimeout(() => {setIsLoadData(false)}, 400)
-		})
-		getUserData({user_id: user_id, first_name: first_name, chat_id: chat_id}, (data) => {
+		const local_balance = localStorage.getItem('balance')
+		const local_balance_v = localStorage.getItem('balance_v')
+		const local_balance_trx = localStorage.getItem('balance_trx')
+		const local_balance_trx_v = localStorage.getItem('balance_trx_v')
+		dispatch(setBalance(local_balance))
+		dispatch(setBalanceV(local_balance_v))
+		dispatch(setBalanceTRX(local_balance_trx))
+		dispatch(setBalanceTRXv(local_balance_trx_v))
+
+		if (local_balance)
+			getBalance({ user_id: user_id }, (data) => {
+				console.log('getBalance', data)
+				setIsHide(true)
+				dispatch(setBalance(data.balance_bep))
+				dispatch(setBalanceV(data.balance_bep_v))
+				dispatch(setBalanceTRX(data.balance_trx))
+				dispatch(setBalanceTRXv(data.balance_trx_v))
+				dispatch(setNameUser(data.name_user))
+				setIsLoadData(false)
+
+				// setTimeout(() => {setIsLoadData(false)}, 400)
+			})
+		getUserData({ user_id: user_id, first_name: first_name, chat_id: chat_id }, (data) => {
 			setIsHide(true)
 			console.log('get user data', data)
 			dispatch(setFirstRun(false))
@@ -73,36 +85,41 @@ export function Home() {
 			dispatch(setBalanceTRX(data.balance_trx))
 			dispatch(setBalanceTRXv(data.balance_trx_v))
 			dispatch(setNameUser(data.name_user))
-			setTimeout(() => {setIsLoadData(false)}, 400)
-			
+
+			localStorage.setItem('balance', data.balance)
+			localStorage.setItem('balance_v', data.balance_v)
+			localStorage.setItem('balance_trx', data.balance_trx)
+			localStorage.setItem('balance_trx_v', data.balance_trx_v)
+			setTimeout(() => { setIsLoadData(false) }, 400)
+
 		})
 	}, [chat_id, dispatch, first_name, user_id]);
 
 
 	useEffect(() => {
-        parsePrice({}, (data) => {
-            dispatch(setPriceMarket(data.price_market))
-            dispatch(setPriceMarketTRX(data.price_market_trx))
-            dispatch(setRubDollar(data.rub_dollar))            
-        })
-    }, [dispatch]);
+		parsePrice({}, (data) => {
+			dispatch(setPriceMarket(data.price_market))
+			dispatch(setPriceMarketTRX(data.price_market_trx))
+			dispatch(setRubDollar(data.rub_dollar))
+		})
+	}, [dispatch]);
 
 	useEffect(() => {
-        tg.MainButton.hide()
+		tg.MainButton.hide()
 		// tg.BackButton.hide()
-    }, );
+	},);
 
 	useEffect(() => {
-        tg.onEvent('backButtonClicked', backScreen)
-            return () => {tg.offEvent('backButtonClicked', backScreen)}
-        }, )
+		tg.onEvent('backButtonClicked', backScreen)
+		return () => { tg.offEvent('backButtonClicked', backScreen) }
+	},)
 
 	return (
 		<>
-			{	!showTransactions &&
+			{!showTransactions &&
 				<div>
 					{/* <h3>Hello!</h3> */}
-					<div className={`home-container-balance ${isHide && 'grow'} ${isLoadData ? 'h-205': 'h-230'}`}>
+					<div className={`home-container-balance ${isHide && 'grow'} ${isLoadData ? 'h-205' : 'h-230'}`}>
 						<div className='d-flex justify-content-center '>
 							<div className='row d-flex justify-content-between align-items-center mt-30 title-balance' >
 								<div className='balance-label'>Ваш баланс</div>
@@ -112,138 +129,139 @@ export function Home() {
 								</div>
 							</div>
 						</div>
-						
+
 						<div className='d-flex justify-content-center position-relative'>
 							{
-							isLoadData && 
-							// <div className={`balance-load ${isHide ? 'hide-balace-load': 'gradient-back'}`}></div>
-							<>
-								<div className={`wallet-item-load-1 ${isHide ? 'hide-balace-load': 'anim-load-inv'}`}></div>
-								<div className={`wallet-item-load-2 ${isHide ? 'hide-balace-load': 'anim-load'}`}></div>
-							</>
+								isLoadData &&
+								// <div className={`balance-load ${isHide ? 'hide-balace-load': 'gradient-back'}`}></div>
+								<>
+									<div className={`wallet-item-load-1 ${isHide ? 'hide-balace-load' : 'anim-load-inv'}`}></div>
+									<div className={`wallet-item-load-2 ${isHide ? 'hide-balace-load' : 'anim-load'}`}></div>
+								</>
 							}
-							{/* <div className={`balance-load hide-balace-load ${isLoadData ? '': 'hide-balace-load'}`}></div> */}
-							{!isLoadData  && <div className='balance-main'><span className='balance-main-sign'>$</span>{Math.round(parseFloat(((balance + balance_v + balance_trx + balance_trx_v) || 0))*1000)/1000}</div>}
+							
+							{/* {!isLoadData && <div className='balance-main'><span className='balance-main-sign'>$</span>{Math.round(parseFloat(((balance + balance_v + balance_trx + balance_trx_v) || 0)) * 1000) / 1000}</div>} */}
+							{<div className='balance-main'><span className='balance-main-sign'>$</span>{Math.round(parseFloat(((balance + balance_v + balance_trx + balance_trx_v) || 0)) * 1000) / 1000}</div>}
 						</div>
-						
-						{isLoadData && <div className={`home-container-balance-load ${isHide ? 'grow-hide': ''}`}></div>}
+
+						{isLoadData && <div className={`home-container-balance-load ${isHide ? 'grow-hide' : ''}`}></div>}
 					</div>
-					
-					<MenuButtons/>	
+
+					<MenuButtons />
 
 					<div className='d-flex justify-content-center'>
 						<div className='text-token-manage'>Управление токенами</div>
 					</div>
-					
+
 
 					<div className='wallet-item-container mt-21'>
 						<div className='wallet-item row' onClick={handleClickBep}>
-							{isHide && 
+							{isHide &&
 								<>
 									<div className='wallet-item-svg-container'>
 										{svg_bep1}
-										<div style={{position: 'absolute', left: '55%', top: '40%'}}>
+										<div style={{ position: 'absolute', left: '55%', top: '40%' }}>
 											{svg_binance}
 										</div>
 									</div>
 									<div className='wallet-item-info ps-0'>
-										<div className='token-text text-nowrap' style={{textAlign: 'left'}}>Tether BEP</div>
-										<div className='token-balance-text mt-2 text-nowrap'>{Math.round((parseFloat(balance + balance_v))*100)/100} USDT</div>
+										<div className='token-text text-nowrap' style={{ textAlign: 'left' }}>Tether BEP</div>
+										<div className='token-balance-text mt-2 text-nowrap'>{Math.round((parseFloat(balance + balance_v)) * 100) / 100} USDT</div>
 									</div>
 									<div className='wallet-item-info2'>
-										<div className='token-balance-text2 text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat((balance || 0) + balance_v))*100*price_market)/100}</div>
+										<div className='token-balance-text2 text-nowrap' style={{ textAlign: 'right' }}>${Math.round((parseFloat((balance || 0) + balance_v)) * 100 * price_market) / 100}</div>
 										{/* <div className='bottom-info text-nowrap mt-2'>+23%</div> */}
 									</div>
 								</>
 							}
 						</div>
 
-						{	isLoadData &&
+						{isLoadData &&
 							// <div className={`wallet-item-load ${isHide ? 'hide-balace-load': 'gradient'}`}>
 
 							// </div>
 							<>
-								<div className={`wallet-item-load-1 ${isHide ? 'hide-balace-load': 'anim-load'}`}></div>
-								<div className={`wallet-item-load-2 ${isHide ? 'hide-balace-load': 'anim-load-inv'}`}></div>
+								<div className={`wallet-item-load-1 ${isHide ? 'hide-balace-load' : 'anim-load'}`}></div>
+								<div className={`wallet-item-load-2 ${isHide ? 'hide-balace-load' : 'anim-load-inv'}`}></div>
 							</>
-							
+
 						}
 					</div>
 
-					
+
 
 					<div className='wallet-item-container mt-16'>
 						<div className='wallet-item row' onClick={handleClickTrc}>
-							{	isHide &&
+							{isHide &&
 								<>
-								<div className='wallet-item-svg-container'>
-									{svg_bep1}
-									<div style={{position: 'absolute', left: '55%', top: '40%'}}>
-										{svg_tron1}
+									<div className='wallet-item-svg-container'>
+										{svg_bep1}
+										<div style={{ position: 'absolute', left: '55%', top: '40%' }}>
+											{svg_tron1}
+										</div>
 									</div>
-								</div>
-								<div className='wallet-item-info ps-0'>
-									<div className='token-text text-nowrap' style={{textAlign: 'left'}}>Tether TRC</div>
-									<div className='token-balance-text mt-2'>{Math.round((parseFloat(balance_trx + balance_trx_v))*100)/100} USDT</div>
-								</div>
-								<div className='wallet-item-info2'>
-									<div className='token-balance-text2 text-nowrap' style={{textAlign: 'right'}}>${Math.round((parseFloat(balance_trx + balance_trx_v || 0))*100*price_market_trx)/100}</div>
-									{/* <div className='bottom-info text-nowrap mt-2'>+23%</div> */}
-								</div>
+									<div className='wallet-item-info ps-0'>
+										<div className='token-text text-nowrap' style={{ textAlign: 'left' }}>Tether TRC</div>
+										<div className='token-balance-text mt-2'>{Math.round((parseFloat(balance_trx + balance_trx_v)) * 100) / 100} USDT</div>
+									</div>
+									<div className='wallet-item-info2'>
+										<div className='token-balance-text2 text-nowrap' style={{ textAlign: 'right' }}>${Math.round((parseFloat(balance_trx + balance_trx_v || 0)) * 100 * price_market_trx) / 100}</div>
+										{/* <div className='bottom-info text-nowrap mt-2'>+23%</div> */}
+									</div>
 								</>
 							}
 						</div>
 
-						{	isLoadData &&
+						{isLoadData &&
 							// <div className={`wallet-item-load ${isHide ? 'hide-balace-load': 'gradient-back'}`}>
 
 							// </div>
 							<>
-								<div className={`wallet-item-load-1 ${isHide ? 'hide-balace-load': 'anim-load-inv'}`}></div>
-								<div className={`wallet-item-load-2 ${isHide ? 'hide-balace-load': 'anim-load'}`}></div>
+								<div className={`wallet-item-load-1 ${isHide ? 'hide-balace-load' : 'anim-load-inv'}`}></div>
+								<div className={`wallet-item-load-2 ${isHide ? 'hide-balace-load' : 'anim-load'}`}></div>
 							</>
 						}
 					</div>
 
 
 					<div className='wallet-item-container mt-16'>
-						<div className='wallet-item row' onClick={()=>{}}>
-							{	isHide &&
+						<div className='wallet-item row' onClick={() => { }}>
+							{isHide &&
 								<>
 									<div className='wallet-item-svg-container'>
 										{svg_btc}
 									</div>
 									<div className='wallet-item-info ps-0'>
-										<div className='token-text text-nowrap' style={{textAlign: 'left', color: '#A8A196'}}>Bitcoin</div>
-										<div className='token-balance-text mt-2' style={{color: '#A8A196'}}>0 BTC</div>
+										<div className='token-text text-nowrap' style={{ textAlign: 'left', color: '#A8A196' }}>Bitcoin</div>
+										<div className='token-balance-text mt-2' style={{ color: '#A8A196' }}>0 BTC</div>
 									</div>
 									<div className='wallet-item-info2'>
-										<div className='token-balance-text2 text-nowrap' style={{textAlign: 'right', color: '#A8A196'}}>$0</div>
+										<div className='token-balance-text2 text-nowrap' style={{ textAlign: 'right', color: '#A8A196' }}>$0</div>
 										{/* <div className='bottom-info text-nowrap mt-2'>+23%</div> */}
 									</div>
 								</>
 							}
 						</div>
 
-						{	isLoadData &&
+						{isLoadData &&
 							// <div className={`wallet-item-load ${isHide ? 'hide-balace-load': 'gradient'}`}>
 
 							// </div>
 							<>
-								<div className={`wallet-item-load-1 ${isHide ? 'hide-balace-load': 'anim-load'}`}></div>
-								<div className={`wallet-item-load-2 ${isHide ? 'hide-balace-load': 'anim-load-inv'}`}></div>
+								<div className={`wallet-item-load-1 ${isHide ? 'hide-balace-load' : 'anim-load'}`}></div>
+								<div className={`wallet-item-load-2 ${isHide ? 'hide-balace-load' : 'anim-load-inv'}`}></div>
 							</>
 						}
 					</div>
 
-					
+
 				</div>
 			}
 
-			{	showTransactions &&
+			{showTransactions &&
 
 				<div className='p-2'>
-					<Transactions/>
+					<Transactions />
 				</div>
 			}
 		</>
