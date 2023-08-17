@@ -56,6 +56,9 @@ export function Home() {
 		const local_balance_v = localStorage.getItem('balance_v')
 		const local_balance_trx = localStorage.getItem('balance_trx')
 		const local_balance_trx_v = localStorage.getItem('balance_trx_v')
+		const local_name_user = localStorage.getItem('name_user')
+		dispatch(setNameUser(local_name_user))
+
 		dispatch(setBalance(local_balance))
 		dispatch(setBalanceV(local_balance_v))
 		dispatch(setBalanceTRX(local_balance_trx))
@@ -68,19 +71,19 @@ export function Home() {
 		dispatch(setPriceMarketTRX(price_market_trx || 0))
 		dispatch(setRubDollar(rub_dollar || 0))
 
-		if (local_balance)
-			getBalance({ user_id: user_id }, (data) => {
-				console.log('getBalance', data)
-				setIsHide(true)
-				dispatch(setBalance(data.balance_bep))
-				dispatch(setBalanceV(data.balance_bep_v))
-				dispatch(setBalanceTRX(data.balance_trx))
-				dispatch(setBalanceTRXv(data.balance_trx_v))
-				dispatch(setNameUser(data.name_user))
-				setIsLoadData(false)
 
-				// setTimeout(() => {setIsLoadData(false)}, 400)
-			})
+		getBalance({ user_id: user_id }, (data) => {
+			console.log('getBalance', data)
+			setIsHide(true)
+			dispatch(setBalance(data.balance_bep))
+			dispatch(setBalanceV(data.balance_bep_v))
+			dispatch(setBalanceTRX(data.balance_trx))
+			dispatch(setBalanceTRXv(data.balance_trx_v))
+			dispatch(setNameUser(data.name_user))
+			setIsLoadData(false)
+
+			// setTimeout(() => {setIsLoadData(false)}, 400)
+		})
 		getUserData({ user_id: user_id, first_name: first_name, chat_id: chat_id }, (data) => {
 			setIsHide(true)
 			console.log('get user data', data)
@@ -92,6 +95,7 @@ export function Home() {
 			dispatch(setBalanceTRX(data.balance_trx))
 			dispatch(setBalanceTRXv(data.balance_trx_v))
 			dispatch(setNameUser(data.name_user))
+			localStorage.setItem('name_user', data.name_user)
 
 			localStorage.setItem('balance', data.balance)
 			localStorage.setItem('balance_v', data.balance_v)
@@ -130,7 +134,8 @@ export function Home() {
 			{!showTransactions &&
 				<div>
 					{/* <h3>Hello!</h3> */}
-					<div className={`home-container-balance ${isHide && 'grow'} ${isLoadData ? 'h-205' : 'h-230'}`}>
+					{/* <div className={`home-container-balance ${isHide && 'grow'} ${isLoadData ? 'h-205' : 'h-230'}`}> */}
+					<div className='home-container-balance h-230'>
 						<div className='d-flex justify-content-center '>
 							<div className='row d-flex justify-content-between align-items-center mt-30 title-balance' >
 								<div className='balance-label'>Ваш баланс</div>
@@ -142,20 +147,20 @@ export function Home() {
 						</div>
 
 						<div className='d-flex justify-content-center position-relative'>
-							{
+							{/* {
 								isLoadData &&
-								// <div className={`balance-load ${isHide ? 'hide-balace-load': 'gradient-back'}`}></div>
+								
 								<>
 									<div className={`wallet-item-load-1 ${isHide ? 'hide-balace-load' : 'anim-load-inv'}`}></div>
 									<div className={`wallet-item-load-2 ${isHide ? 'hide-balace-load' : 'anim-load'}`}></div>
 								</>
-							}
+							} */}
 
 							{/* {!isLoadData && <div className='balance-main'><span className='balance-main-sign'>$</span>{Math.round(parseFloat(((balance + balance_v + balance_trx + balance_trx_v) || 0)) * 1000) / 1000}</div>} */}
-							{<div className='balance-main'><span className='balance-main-sign'>$</span>{Math.round(parseFloat(((balance + balance_v + balance_trx + balance_trx_v) || 0)) * 1000) / 1000}</div>}
+							<div className='balance-main'><span className='balance-main-sign'>$</span>{Math.round((parseFloat(balance || 0) + parseFloat(balance_v || 0) + parseFloat(balance_trx || 0) + parseFloat(balance_trx_v || 0)) * 1000) / 1000}</div>
 						</div>
 
-						{isLoadData && <div className={`home-container-balance-load ${isHide ? 'grow-hide' : ''}`}></div>}
+						{/* {isLoadData && <div className={`home-container-balance-load ${isHide ? 'grow-hide' : ''}`}></div>} */}
 					</div>
 
 					<MenuButtons />
