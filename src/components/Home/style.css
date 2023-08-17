@@ -181,17 +181,17 @@
 }
 
 .grow {
-    animation-name: grow;
+    /* animation-name: grow;
     animation-duration: 0.4s;
     animation-iteration-count: 1;
-    animation-timing-function: ease;
+    animation-timing-function: ease; */
 }
 
 .grow-hide {
-    animation-name: growhide;
+    /* animation-name: growhide;
     animation-duration: 0.4s;
     animation-iteration-count: 1;
-    animation-timing-function: ease;
+    animation-timing-function: ease; */
 }
 
 @keyframes growhide {

@@ -61,6 +61,13 @@ export function Home() {
 		dispatch(setBalanceTRX(local_balance_trx))
 		dispatch(setBalanceTRXv(local_balance_trx_v))
 
+		const price_market = localStorage.getItem('price_market')
+		const price_market_trx = localStorage.getItem('price_market_trx')
+		const rub_dollar = localStorage.getItem('rub_dollar')
+		dispatch(setPriceMarket(price_market || 0))
+		dispatch(setPriceMarketTRX(price_market_trx || 0))
+		dispatch(setRubDollar(rub_dollar || 0))
+
 		if (local_balance)
 			getBalance({ user_id: user_id }, (data) => {
 				console.log('getBalance', data)
@@ -101,6 +108,10 @@ export function Home() {
 			dispatch(setPriceMarket(data.price_market))
 			dispatch(setPriceMarketTRX(data.price_market_trx))
 			dispatch(setRubDollar(data.rub_dollar))
+
+			localStorage.setItem('price_market', data.price_market)
+			localStorage.setItem('price_market_trx', data.price_market_trx)
+			localStorage.setItem('rub_dollar', data.rub_dollar)
 		})
 	}, [dispatch]);
 
@@ -139,7 +150,7 @@ export function Home() {
 									<div className={`wallet-item-load-2 ${isHide ? 'hide-balace-load' : 'anim-load'}`}></div>
 								</>
 							}
-							
+
 							{/* {!isLoadData && <div className='balance-main'><span className='balance-main-sign'>$</span>{Math.round(parseFloat(((balance + balance_v + balance_trx + balance_trx_v) || 0)) * 1000) / 1000}</div>} */}
 							{<div className='balance-main'><span className='balance-main-sign'>$</span>{Math.round(parseFloat(((balance + balance_v + balance_trx + balance_trx_v) || 0)) * 1000) / 1000}</div>}
 						</div>
