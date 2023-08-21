@@ -60,34 +60,55 @@ export function Ptp(props) {
 
     const renderlistLastDeals = user_deals.slice(0, 3).map((deal, index) => {
         return (
-            <div key={index} className='container-deal' onClick={() => { handleClickDeal(deal) }}>
-                <div className='deal-col-1'>
-                    {/* <div className='text-deal'><span className='label-deal'>From:</span> {deal.user_from}</div>
-						<div className='text-deal'><span className='label-deal'>To:</span> {deal.user_to}</div> */}
-                    <div className='text-deal-date'> {deal?.datetime?.slice(0, 10)}</div>
-                    {
-                        deal.type_order === 'b' ?
-                            <div className='text-deal-request-from-b text-nowrap'>
-                                Покупка
-                            </div> :
-                            <div className='text-deal-request-from text-nowrap'>
-                                Продажа
-                            </div>
-                    }
+            // <div key={index} className='container-deal' onClick={() => { handleClickDeal(deal) }}>
+            //     <div className='deal-col-1'>
+            //         {/* <div className='text-deal'><span className='label-deal'>From:</span> {deal.user_from}</div>
+            // 			<div className='text-deal'><span className='label-deal'>To:</span> {deal.user_to}</div> */}
+            //         <div className='text-deal-date'> {deal?.datetime?.slice(0, 10)}</div>
+            //         {
+            //             deal.type_order === 'b' ?
+            //                 <div className='text-deal-request-from-b text-nowrap'>
+            //                     Покупка
+            //                 </div> :
+            //                 <div className='text-deal-request-from text-nowrap'>
+            //                     Продажа
+            //                 </div>
+            //         }
+            //     </div>
+            //     <div className='deal-col-2'>
+            //         <div className='text-deal-quantity mr-17'>{deal.quantity} USDT</div>
+            //         <div className='text-deal-q-fiat'>${deal.quantity}</div>
+            //         {/* <div className='text-deal text-nowrap'><span className='label-deal'>Статус: </span> 
+            // 				{
+            // 					deal.status === 'request' ? 'Запрос':
+            // 					deal.status === 'pay' ? 'Ожидание оплаты':
+            //                     deal.status === 'cancel' ? 'Отменена':
+            // 					'Завершена'
+            // 				}
+            // 			</div> */}
+            //     </div>
+            // </div>
+
+            <div key={index} className={`row-2 a-c ${true ? 'color-bg-deal' : 'color-bg-deal-r'} h-77 p-17 mt-20`}>
+                <div className='h-100'>
+                    <div className='deal-text mt-18'>{deal?.datetime?.slice(0, 10)}</div>
+                    <div className={true ? 'deal-text-2 color-deal-text mt-10' : 'mt-10 deal-text-2 color-deal-r-text'}>
+                        {deal.type_order === 'b' ? 'Покупка' : 'Продажа'}
+                    </div>
                 </div>
-                <div className='deal-col-2'>
-                    <div className='text-deal-quantity mr-17'>{deal.quantity} USDT</div>
-                    <div className='text-deal-q-fiat'>${deal.quantity}</div>
-                    {/* <div className='text-deal text-nowrap'><span className='label-deal'>Статус: </span> 
-							{
-								deal.status === 'request' ? 'Запрос':
-								deal.status === 'pay' ? 'Ожидание оплаты':
-                                deal.status === 'cancel' ? 'Отменена':
-								'Завершена'
-							}
-						</div> */}
+                <div className='h-100'>
+                    <div className='text-deal-quantity color-q-text'>{deal.quantity} USDT</div>
+                    <div className='deal-text-3 text-nowrap'>
+                        {
+                            deal.status === 'request' ? 'Запрос' :
+                                deal.status === 'pay' ? 'Ожидание оплаты' :
+                                    deal.status === 'cancel' ? 'Отменена' :
+                                        'Завершена'
+                        }
+                    </div>
                 </div>
             </div>
+
         )
     })
 
