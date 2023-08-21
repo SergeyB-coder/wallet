@@ -74,7 +74,7 @@ export function Home() {
 		dispatch(setRubDollar(rub_dollar || 0))
 
 
-		getBalance({ user_id: user_id }, (data) => {
+		getBalance({ user_id: user_id, init_data: init_data }, (data) => {
 			console.log('getBalance', data)
 			setIsHide(true)
 			dispatch(setBalance(data.balance_bep))
