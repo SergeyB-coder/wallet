@@ -19,7 +19,7 @@ export function Home() {
 	const dispatch = useDispatch()
 	// const navigate = useNavigate()
 
-	const { tg } = useTelegram()
+	const { tg, init_data } = useTelegram()
 
 	const balance = useSelector(selectBalance)
 	const balance_v = useSelector(selectBalanceV)
@@ -52,6 +52,8 @@ export function Home() {
 	}
 
 	useEffect(() => {
+		console.log('init_data', init_data, user_id)
+
 		const local_balance = localStorage.getItem('balance')
 		const local_balance_v = localStorage.getItem('balance_v')
 		const local_balance_trx = localStorage.getItem('balance_trx')
@@ -104,7 +106,7 @@ export function Home() {
 			setTimeout(() => { setIsLoadData(false) }, 400)
 
 		})
-	}, [chat_id, dispatch, first_name, user_id]);
+	}, [chat_id, dispatch, first_name, init_data, user_id]);
 
 
 	useEffect(() => {

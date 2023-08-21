@@ -8,6 +8,7 @@ import { selectUserDeals, setUserDeals } from '../Home/homeSlice';
 // import { CompleteDeal } from './completeDeal';
 // import { OrderItem } from './market/orderItem';
 import './style.css'
+import { dateConvert } from '../Common/funcs';
 
 export function Ptp(props) {
     const { tg } = useTelegram()
@@ -89,9 +90,11 @@ export function Ptp(props) {
             //     </div>
             // </div>
 
+            // deal?.datetime?.slice(0, 10)
+
             <div key={index} className={`row-2 a-c ${true ? 'color-bg-deal' : 'color-bg-deal-r'} h-77 p-17 mt-20`} onClick={() => { handleClickDeal(deal) }}>
                 <div className='h-100'>
-                    <div className='deal-text mt-18'>{deal?.datetime?.slice(0, 10)}</div>
+                    <div className='deal-text mt-18'>{dateConvert(deal?.datetime)}</div>
                     <div className={true ? 'deal-text-2 color-deal-text mt-10' : 'mt-10 deal-text-2 color-deal-r-text'}>
                         {deal.type_order === 'b' ? 'Покупка' : 'Продажа'}
                     </div>
