@@ -14,7 +14,7 @@ export function ScreenBuy (props) {
     const showMethodsPay = props.showMethodsPay
     const setShowMethodsPay = props.setShowMethodsPay
     const navigate = useNavigate()
-    const { user_id} = useTelegram()
+    const { user_id, init_data} = useTelegram()
     const dispatch = useDispatch()
 
     const name_user = useSelector(selectNameUser)
@@ -46,6 +46,7 @@ export function ScreenBuy (props) {
         console.log(isCorrectQuantity())
         if (isCorrectQuantity()) {
             sendBuy({
+                init_data: init_data,
                 user_id: user_id, 
                 first_name: name_user,
                 order_id: props.buyOrder.id, 

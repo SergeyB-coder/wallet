@@ -2,17 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTelegram } from '../../../hooks/useTelegram';
-// import { ButtonNext } from '../../Common/buttonNext';
 import { getDealInfo, newAppilate, sendAcceptDeal, sendCancelDeal, sendConfirm, setEndDeal } from './marketApi';
 import { selectDealScreenInfo, setDealScreenInfo } from './marketSlice';
-// import { svg_hands, svg_salute } from '../../../const/svgs';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { useTelegram } from '../../../hooks/useTelegram';
-// import { ButtonNext } from '../buttonNext';
-// import { sendBuy } from './marketApi';
-// import { selectQuantityBuy, setQuantityBuy } from './marketSlice';
 import clock_gif from '../../../static/animations/clock.gif'
-// import hands_gif from '../../../static/animations/hands.gif'
 import salute_gif from '../../../static/animations/salute.gif'
 import cancel_gif from '../../../static/animations/cancel.gif'
 
@@ -21,10 +13,8 @@ import { Timer } from '../../Common/timerDeal';
 import { selectPriceMarket, selectRubDollar, setPriceMarket, setPriceMarketTRX, setRubDollar } from '../ptpSlice';
 import { parsePrice } from '../ptpApi';
 
-// import { socket } from '../../../socket';
-
 export function Deal () {
-    const {tg, user_id} = useTelegram()
+    const {tg, user_id, init_data} = useTelegram()
     const { deal_id } = useParams();
     const navigate = useNavigate()
     const {socket} = useSocket()
@@ -146,6 +136,7 @@ export function Deal () {
         setEndDeal(
             {
                 deal_id: deal_screen_info.deal_id, 
+                init_data: init_data
             }, (data) => {
                 setWaitTransaction(false)
                 handleGetDealInfo()

@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { svg_address_to, svg_bep, svg_tron } from '../../const/svgs';
 import { useTelegram } from '../../hooks/useTelegram';
-import { selectAddress, selectAddressTRX, selectBalance, selectBalanceTRX, selectBalanceTRXv, selectBalanceV, selectSumOrders, setSumBlocks, setSumOrders } from '../Home/homeSlice';
-import { sendTo } from './sendApi';
+import { selectAddress, selectAddressTRX, selectBalance, selectBalanceTRX, selectBalanceTRXv, selectBalanceV, selectSumOrders, setBalance, setBalanceTRX, setSumBlocks, setSumOrders } from '../Home/homeSlice';
+import { balanceTransfer, sendTo } from './sendApi';
 
 import gear_gif from '../../static/animations/gear.gif'
 import success_gif from '../../static/animations/success.gif'
@@ -213,6 +213,21 @@ export function Send (props) {
         <div className='container-center'>
             <div className='line-2'></div>
         </div>
+
+    useEffect(() => {
+        balanceTransfer({user_id: user_id}, (data) => {
+            
+        })
+        getUserData({ user_id: user_id, first_name: first_name, chat_id: chat_id }, (data) => {
+			
+			dispatch(setBalance(data.balance))
+			dispatch(setBalanceTRX(data.balance_trx))
+
+			localStorage.setItem('balance', data.balance)
+			localStorage.setItem('balance_trx', data.balance_trx)
+
+		})
+    }, []);
 
     useEffect(() => {
         getUserSumBlocks({user_id: user_id, currency_id: (fromLabel1 === 'USDT TRC20' ? 2: 1)}, (data) => {

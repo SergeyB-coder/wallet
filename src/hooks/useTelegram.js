@@ -9,6 +9,7 @@ export function useTelegram () {
         // user_id: 638484379,
         // first_name: 'Sash',
         init_data: tg.initData,
+        // init_data: 'tg',
         // user_id: '2125428302',
         // user_id: 652065848,
         // first_name: 'Srg',

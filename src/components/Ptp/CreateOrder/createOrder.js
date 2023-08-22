@@ -16,7 +16,7 @@ import { setSumOrders } from '../../Home/homeSlice';
 
 
 export function CreateOrder() {
-    const {tg, user_id} = useTelegram()
+    const {tg, user_id, init_data} = useTelegram()
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -106,6 +106,7 @@ export function CreateOrder() {
         }
 
         createOrder({
+            init_data: init_data,
             user_id: user_id,
             percent_price: percent_price,
             price: price,
