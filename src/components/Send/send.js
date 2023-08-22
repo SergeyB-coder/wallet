@@ -163,6 +163,8 @@ export function Send (props) {
                 })
             }
             else address_from = address1
+
+            console.log('send to', init_data)
             sendTo({
                 net: net,
                 user_id: user_id,
