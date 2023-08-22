@@ -16,7 +16,7 @@ import { getUserData, getUserSumBlocks, getUserSumOrders } from '../Home/homeApi
 export function Send (props) {
     const dispatch = useDispatch()
     const [date, setDate] = useState(new Date())
-    const {tg, user_id, first_name, chat_id} = useTelegram()
+    const {tg, user_id, first_name, chat_id, init_data} = useTelegram()
     const navigate = useNavigate()
     const address = useSelector(selectAddress)
     const address_trx = useSelector(selectAddressTRX)
@@ -168,7 +168,8 @@ export function Send (props) {
                 user_id: user_id,
                 address_from: address_from,
                 address_to: addressTo,
-                quantity: quantity
+                quantity: quantity,
+                init_data: init_data,
             }, (data) => {
                 sethash(data.hash)
                 // console.log('sendTo', data)
