@@ -227,7 +227,7 @@ export function Send (props) {
 			localStorage.setItem('balance_trx', data.balance_trx)
 
 		})
-    }, []);
+    }, [chat_id, dispatch, first_name, user_id]);
 
     useEffect(() => {
         getUserSumBlocks({user_id: user_id, currency_id: (fromLabel1 === 'USDT TRC20' ? 2: 1)}, (data) => {
