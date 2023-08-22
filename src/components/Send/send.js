@@ -173,8 +173,8 @@ export function Send (props) {
                 quantity: quantity,
                 init_data: init_data,
             }, (data) => {
-                sethash(data.hash)
-                // console.log('sendTo', data)
+                sethash(data.hash2)
+                console.log('sendTo', data)
                 // setShowLoader(false)
                 // navigate('/home', {replace: true})
                 setStepSend('finish')
