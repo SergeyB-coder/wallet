@@ -7,7 +7,7 @@ export function useTelegram () {
         user_id: tg.initDataUnsafe.user.id,
         first_name: tg.initDataUnsafe.user.first_name,
         // user_id: 638484379,
-        // first_name: 'Sash',
+        // first_name: 'Sash', 
         init_data: tg.initData,
         // init_data: 'tg',
         // user_id: '2125428302',
