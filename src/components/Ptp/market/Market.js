@@ -335,7 +335,7 @@ export function Market() {
                                         <span className='order-info-1'>
                                             {(order.q_deals_maker || 0) + (order.q_deals_taker || 0)} сделок
                                         </span>
-                                        67%
+                                        { Math.round(100 * (order.q_deals_maker || 0 + order.q_deals_taker || 0 - (order.q_deals_cancel_maker || 0) - (order.q_deals_cancel_taker || 0) ) / (order.q_deals_maker || 0 + order.q_deals_taker || 0)) || 0 } %
                                     </div>
                                 </div>
 

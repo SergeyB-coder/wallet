@@ -312,7 +312,8 @@
     padding-top: 17px;
     background: #272728;
     border-radius: 10px;
-    height: 165px;
+    /* height: 165px; */
+    padding-bottom: 15px;
 }
 
 .order-row-1 {
