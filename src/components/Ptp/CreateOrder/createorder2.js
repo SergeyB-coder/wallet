@@ -136,6 +136,7 @@ export function CreateOrder2(props) {
                     setIsNew={(e)=>{}} 
                     methodId={0}
                     setMethodId={()=>{}}
+                    selectedCompanyIndex={0}
                 />
             </div>
             }

@@ -17,11 +17,11 @@ export function SettingsPay() {
     const showNewMethod = useSelector(selectNewMethod)
     const [is_new, setIsNew] = useState(true)
     const [methodId, setMethodId] = useState(0)
-    const [selectedCompanyIndex, setSelectedCompanyIndex] = useState(0);
+    
 
     const list_methods = useSelector(selectMethodsPay)
     const backscreen = useSelector(selectBackScreen)
-    const companyIndex = useSelector(selectSelectdCompanyIndex)
+    
 
     function handleClickMethod (method_id) {
         setMethodId(method_id)
@@ -51,20 +51,6 @@ export function SettingsPay() {
 
 
 
-
-    useEffect(() => {
-        getCompaniesPay({fiat_id: 1}, (data) => {
-            console.log('getCompaniesPay', data)
-            dispatch(setCompaniesPay(data.companies_pay))
-
-            if (companyIndex) {
-                console.log('companyIndex', companyIndex, data.companies_pay)
-                let ind = data.companies_pay.findIndex(e => e.id === companyIndex)
-                setSelectedCompanyIndex(ind)
-                console.log('ind', ind)
-            }
-        })
-    }, [companyIndex, dispatch]);
 
     useEffect(() => {
         getUserMethodsPay({user_id: user_id}, (data) => {
@@ -110,8 +96,7 @@ export function SettingsPay() {
                     setIsNew={setIsNew} 
                     methodId={methodId}
                     setMethodId={setMethodId}
-                    selectedCompanyIndex={selectedCompanyIndex}
-                    setSelectedCompanyIndex={setSelectedCompanyIndex}
+                    setShowNewMethod={(e)=>{}} 
                 />
             }
             

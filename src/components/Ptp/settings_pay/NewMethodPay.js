@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import './style.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCard, selectCompaniesPay, selectInfo, selectNameMethod, setCard, setCompaniesPay, setInfo, setMethodsPay, setNewMethod } from './settingsPaySlice';
+import { selectCard, selectCompaniesPay, selectInfo, selectNameMethod, selectSelectdCompanyIndex, setCard, setCompaniesPay, setInfo, setMethodsPay, setNewMethod } from './settingsPaySlice';
 import { useState } from 'react';
 import { Selecter } from '../../Common/selecter';
 import { CURRENCY_FIAT_LIST } from '../../../const/devdata';
@@ -18,8 +18,7 @@ export function NewMethodPay( props ) {
     const [showListCompaniesPay, setShowListCompaniesPay] = useState(false);
     const [currencyFiat, setCurrencyFiat] = useState(1)
     
-    const selectedCompanyIndex = props.selectedCompanyIndex
-    const setSelectedCompanyIndex = props.setSelectedCompanyIndex
+    const [selectedCompanyIndex, setSelectedCompanyIndex] = useState(0);
 
     // const companyIndex = useSelector(selectSelectdCompanyIndex)
     
@@ -28,9 +27,12 @@ export function NewMethodPay( props ) {
     const card = useSelector(selectCard)
     const info = useSelector(selectInfo)
     const name_method = useSelector(selectNameMethod)
+
+    const companyIndex = useSelector(selectSelectdCompanyIndex)
     // const currencyFiat = useSelector(selectCurrencyFiat)
 
     const handleSelectMethodClick = () => {
+        console.log(9)
         setShowListCompaniesPay(true)
     }
 
@@ -64,6 +66,7 @@ export function NewMethodPay( props ) {
 
             console.log(data)
             dispatch(setNewMethod(false))
+            props.setShowNewMethod(false)
             handleGetUserMethodsPay()
         })
     }
@@ -102,7 +105,7 @@ export function NewMethodPay( props ) {
 
     function handleChangeCurrencyFiat(index) {
         setCurrencyFiat(index+1)
-        
+        console.log('handleChangeCurrencyFiat', index)
         getCompaniesPay({fiat_id: index+1}, (data) => {
             console.log('getCompaniesPay', data)
             dispatch(setCompaniesPay(data.companies_pay))
@@ -124,6 +127,20 @@ export function NewMethodPay( props ) {
     useEffect(() => {
         
     }, []);
+
+    useEffect(() => {
+        getCompaniesPay({fiat_id: 1}, (data) => {
+            console.log('getCompaniesPay', data)
+            dispatch(setCompaniesPay(data.companies_pay))
+
+            if (companyIndex) {
+                console.log('companyIndex', companyIndex, data.companies_pay)
+                let ind = data.companies_pay.findIndex(e => e.id === companyIndex)
+                setSelectedCompanyIndex(ind)
+                console.log('ind', ind)
+            }
+        })
+    }, [companyIndex, dispatch]);
 
     return (
         <>
