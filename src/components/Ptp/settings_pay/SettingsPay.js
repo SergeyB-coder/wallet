@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../../hooks/useTelegram';
-import { getCompaniesPay, getMethodInfo, getUserMethodsPay } from './settingsPayApi';
-import {   selectBackScreen, selectMethodsPay, selectNewMethod, selectSelectdCompanyIndex, setBank, setCard, setCompaniesPay, setInfo, setMethodsPay, setNameMethod, setNewMethod } from './settingsPaySlice';
+import { getMethodInfo, getUserMethodsPay } from './settingsPayApi';
+import {   selectBackScreen, selectMethodsPay, selectNewMethod, setBank, setCard, setInfo, setMethodsPay, setNameMethod, setNewMethod } from './settingsPaySlice';
 
 import './style.css'
 import { NewMethodPay } from './NewMethodPay';
