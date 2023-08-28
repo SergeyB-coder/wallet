@@ -168,9 +168,9 @@ export function Market() {
                 const sorted_orders = getSortedOrders(data.orders)
                 dispatch(setOrders(sorted_orders))
                 let filter_orders = new Array(data.orders.length).fill(1)
-                sorted_orders.forEach( (order, index) => {
-                    if (order.currency_id !== 1) filter_orders[index] = 0
-                })
+                // sorted_orders.forEach( (order, index) => {
+                //     if (order.currency_id !== 1) filter_orders[index] = 0
+                // })
                 setListFilterOrders(filter_orders)
             })
         })
@@ -310,7 +310,8 @@ export function Market() {
                                     <div className='order-price'>
                                         <div className='mt-2'>
                                             {order.type_price_id !== 2 ? order.price : Math.round(price_market * (order.currency_fiat_id === 1 ? rub_dollar : 1) * order.percent_price) / 100}
-                                            {order.currency_fiat_id === 1 ? 'RUB' : 'USD'}
+                                            {/* {order.currency_fiat_id === 1 ? 'RUB' : 'USD'} */}
+                                            {CURRENCY_FIAT_LIST[order.currency_fiat_id-1] || ''}
                                         </div>
                                         <div className={order.type === 's' ? 'order-label' : 'mini-text-r'}>Цена за 1 {order.currency_id === 1 ? 'USDT BEP20' : 'USDT TRC20'}</div>
                                     </div>
@@ -422,6 +423,7 @@ export function Market() {
                         </div>
                     </div>
                 }
+
             </div>
         </div>
     );

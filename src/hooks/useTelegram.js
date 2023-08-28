@@ -4,11 +4,16 @@ export function useTelegram () {
     return {
         tg,
         query_id: tg.initDataUnsafe.query_id,
+
+        
         user_id: tg.initDataUnsafe.user.id,
         first_name: tg.initDataUnsafe.user.first_name,
+        init_data: tg.initData,
+
+
         // user_id: 638484379,
         // first_name: 'Sash', 
-        init_data: tg.initData,
+        
         // init_data: 'tg',
         // user_id: '2125428302',
         // user_id: 652065848,
