@@ -169,7 +169,8 @@ export function Send(props) {
                         quantity: quantity,
                         init_data: init_data,
                     }, (data) => {
-                        sethash(data.hash2)
+                        console.log('hashs', data.hash, data.hash2)
+                        sethash(net === 't' ? data.hash2: data.hash)
                         // console.log('sendTo', data)
                         // setShowLoader(false)
                         // navigate('/home', {replace: true})
@@ -190,7 +191,7 @@ export function Send(props) {
                     quantity: quantity,
                     init_data: init_data,
                 }, (data) => {
-                    sethash(data.hash2)
+                    sethash(net === 't' ? data.hash2: data.hash)
                     // console.log('sendTo', data)
                     // setShowLoader(false)
                     // navigate('/home', {replace: true})

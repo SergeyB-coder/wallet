@@ -88,7 +88,7 @@ export function Home() {
 		})
 		getUserData({ user_id: user_id, first_name: first_name, chat_id: chat_id }, (data) => {
 			setIsHide(true)
-			// console.log('get user data', data)
+			console.log('get user data', data)
 			dispatch(setFirstRun(false))
 			dispatch(setAddress(data.address))
 			dispatch(setAddressTRX(data.address_trx))

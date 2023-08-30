@@ -12,7 +12,12 @@ export function useTelegram () {
 
 
         // user_id: 638484379,
-        // first_name: 'Sash', 
+        // first_name: 'Sash',
+        
+        // user_id: 745921856,
+        // first_name: 'Alex', 
+
+        
         
         // init_data: 'tg',
         // user_id: '2125428302',
