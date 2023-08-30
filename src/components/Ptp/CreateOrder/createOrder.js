@@ -97,7 +97,7 @@ export function CreateOrder() {
     }
 
     const handleClickCreateOrder = () => {
-        console.log('handleClickCreateOrder', list_methods, listCheckedMethods)
+        // console.log('handleClickCreateOrder', list_methods, listCheckedMethods)
         let list_method_id = []
         for (let ind in list_methods) {
             if (listCheckedMethods[ind]) {
@@ -127,7 +127,7 @@ export function CreateOrder() {
 
     useEffect(() => {
         getUserSumOrders({user_id: user_id, currency_id: currency_order}, (data) => {
-            console.log('sum_orders', data.sum_orders)
+            // console.log('sum_orders', data.sum_orders)
             dispatch(setSumOrders(data.sum_orders))
         })
     }, [currency_order, dispatch, user_id]);
@@ -154,7 +154,7 @@ export function CreateOrder() {
 
     useEffect(() => {
         // setTest(par)
-        console.log('uef')
+        // console.log('uef')
         tg.onEvent('backButtonClicked', backScreen)
             return () => {tg.offEvent('backButtonClicked', backScreen)}
         })

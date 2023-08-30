@@ -51,7 +51,7 @@ export function Send(props) {
     const [hash, sethash] = useState('');
 
     function checkValidAddress(adderss) {
-        console.log(adderss[0] === 'T')
+        // console.log(adderss[0] === 'T')
         if (fromLabel1 === 'USDT TRC20' && adderss.length > 0) return adderss[0] === 'T'
         else if (fromLabel1 === 'USDT BEP20' && adderss.length > 1) return adderss.slice(0, 2) === '0x'
         if (adderss.length === 0) return true
@@ -68,7 +68,7 @@ export function Send(props) {
     }
 
     const handleChangeQuantity = (e) => {
-        // console.log(e.target.value)
+        // // console.log(e.target.value)
         // let inp = document.getElementById('q-send')
         // inp.style.width = (30 + (e.target.value.toString().length + 1) * 15) + 'px'
         checkIsReady(addressTo, e.target.value)
@@ -83,13 +83,13 @@ export function Send(props) {
         setFromLabel2(from2)
         const a1 = address1
         const a2 = address2
-        console.log('a2', a2)
+        // console.log('a2', a2)
         setAddress1(a2)
         setAddress2(a1)
         setShowListAddresses(false)
 
         getUserSumOrders({ user_id: user_id, currency_id: (fromLabel1 === 'USDT TRC20' ? 2 : 1) }, (data) => {
-            console.log('sum_orders', data.sum_orders)
+            // console.log('sum_orders', data.sum_orders)
             dispatch(setSumOrders(data.sum_orders))
         })
     }
@@ -108,7 +108,7 @@ export function Send(props) {
     }
 
     function getCurrentBalance() {
-        console.log('balance + balance_v', balance + balance_v)
+        // console.log('balance + balance_v', balance + balance_v)
         if (fromLabel1 === 'USDT TRC20') return parseFloat(balance_trx + balance_trx_v)
         else return parseFloat(balance + balance_v)
     }
@@ -119,7 +119,7 @@ export function Send(props) {
     }
 
     function isCorrectQuantity() {
-        console.log('getCurrentBalance()', getCurrentBalance(), sum_orders, quantity)
+        // console.log('getCurrentBalance()', getCurrentBalance(), sum_orders, quantity)
         return ((parseFloat(quantity || 0) + sum_orders + (fromLabel1 === 'USDT TRC20' ? 3 : 0.5)) <= getCurrentBalance())
     }
 
@@ -142,7 +142,7 @@ export function Send(props) {
             let address_from = ''
             if (net === '' || address1 === '') {
                 getUserData({ user_id: user_id, first_name: first_name, chat_id: chat_id }, (data) => {
-                    console.log('get user data', data)
+                    // console.log('get user data', data)
                     // dispatch(setAddress(data.address))
                     // dispatch(setAddressTRX(data.address_trx))
                     // dispatch(setBalance(data.balance))
@@ -160,7 +160,7 @@ export function Send(props) {
                         address_from = data.address
                     }
 
-                    console.log('send to', init_data)
+                    // console.log('send to', init_data)
                     sendTo({
                         net: net,
                         user_id: user_id,
@@ -170,7 +170,7 @@ export function Send(props) {
                         init_data: init_data,
                     }, (data) => {
                         sethash(data.hash2)
-                        console.log('sendTo', data)
+                        // console.log('sendTo', data)
                         // setShowLoader(false)
                         // navigate('/home', {replace: true})
                         setStepSend('finish')
@@ -181,7 +181,7 @@ export function Send(props) {
             else {
                 address_from = address1
 
-                console.log('send to', init_data)
+                // console.log('send to', init_data)
                 sendTo({
                     net: net,
                     user_id: user_id,
@@ -191,7 +191,7 @@ export function Send(props) {
                     init_data: init_data,
                 }, (data) => {
                     sethash(data.hash2)
-                    console.log('sendTo', data)
+                    // console.log('sendTo', data)
                     // setShowLoader(false)
                     // navigate('/home', {replace: true})
                     setStepSend('finish')
@@ -255,14 +255,14 @@ export function Send(props) {
 
     useEffect(() => {
         getUserSumBlocks({ user_id: user_id, currency_id: (fromLabel1 === 'USDT TRC20' ? 2 : 1) }, (data) => {
-            console.log('sum_blocks', data.sum_blocks)
+            // console.log('sum_blocks', data.sum_blocks)
             dispatch(setSumBlocks(data.sum_blocks))
         })
     }, [dispatch, fromLabel1, user_id]);
 
     useEffect(() => {
         getUserSumOrders({ user_id: user_id, currency_id: (fromLabel1 === 'USDT TRC20' ? 2 : 1) }, (data) => {
-            console.log('sum_orders', data.sum_orders)
+            // console.log('sum_orders', data.sum_orders)
             dispatch(setSumOrders(data.sum_orders))
         })
     }, [dispatch, fromLabel1, user_id]);

@@ -17,7 +17,7 @@ export function Selecter (props) {
     }
 
     function handleClickCurrencyItem(index) {
-        console.log(index)
+        // console.log(index)
         setIndex(index)
         setShowListCurrency(false)
     }

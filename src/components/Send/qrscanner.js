@@ -9,7 +9,7 @@ export function QrReader (props) {
               props.setShowQrScanner(false)
             }
           }
-          onError={(error) => console.log(error?.message)}
+          onError={(error) => // console.log(error?.message)}
       />
   );
 }

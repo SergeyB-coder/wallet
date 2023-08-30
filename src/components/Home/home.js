@@ -52,7 +52,7 @@ export function Home() {
 	}
 
 	useEffect(() => {
-		console.log('init_data', init_data, user_id)
+		// console.log('init_data', init_data, user_id)
 
 		const local_balance = localStorage.getItem('balance')
 		const local_balance_v = localStorage.getItem('balance_v')
@@ -75,7 +75,7 @@ export function Home() {
 
 
 		getBalance({ user_id: user_id, init_data: init_data }, (data) => {
-			console.log('getBalance', data)
+			// console.log('getBalance', data)
 			setIsHide(true)
 			dispatch(setBalance(data.balance_bep))
 			dispatch(setBalanceV(data.balance_bep_v))
@@ -88,7 +88,7 @@ export function Home() {
 		})
 		getUserData({ user_id: user_id, first_name: first_name, chat_id: chat_id }, (data) => {
 			setIsHide(true)
-			console.log('get user data', data)
+			// console.log('get user data', data)
 			dispatch(setFirstRun(false))
 			dispatch(setAddress(data.address))
 			dispatch(setAddressTRX(data.address_trx))

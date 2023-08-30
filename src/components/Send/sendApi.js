@@ -11,7 +11,7 @@ export function sendTo(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data sendto', data)
+            // console.log('data sendto', data)
             
             return callback(data)
         });
@@ -28,7 +28,7 @@ export function balanceTransfer(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data balancetransfer', data)
+            // console.log('data balancetransfer', data)
             
             return callback(data)
         });

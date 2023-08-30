@@ -120,7 +120,7 @@ export function CreateOrder2(props) {
     
     useEffect(() => {
         getCompaniesPay({fiat_id: currencyFiat}, (data) => {
-            console.log('getCompaniesPay', data)
+            // console.log('getCompaniesPay', data)
             dispatch(setCompaniesPay(data.companies_pay))
         })
     }, [currencyFiat, dispatch]);

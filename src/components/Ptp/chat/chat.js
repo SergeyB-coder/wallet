@@ -49,9 +49,9 @@ export function Chat () {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     function handleGetDealInfo() {
         if (deal_id !== '0') {
-            console.log('handleGetDealInfo start', deal_id)
+            // console.log('handleGetDealInfo start', deal_id)
             getDealInfo( {deal_id: deal_id}, (data) => {
-                console.log('handleGetDealInfo chat', data)
+                // console.log('handleGetDealInfo chat', data)
                 dispatch(setDealScreenInfo(
                     {
                         deal_id: deal_id,
@@ -85,7 +85,7 @@ export function Chat () {
     }
 
     const handleSocketOn = (data) => {
-            console.log('message from server', data);
+            // console.log('message from server', data);
             if (data.first_name !== first_name) {
                 getDealMessages({deal_id: deal_id !== '0' ? deal_id: deal_screen_info.deal_id}, (data) => {
                     dispatch(setMessages(data.messages))
@@ -100,7 +100,7 @@ export function Chat () {
     const handleSendFileMessage = () => {
         setShowLoadFile(true)
         let formData = new FormData();
-        console.log('files', files.length)
+        // console.log('files', files.length)
 
         for (let i = 0; i < files.length; i++) {
             formData.append('avatar', files[i]);
@@ -117,7 +117,7 @@ export function Chat () {
         xhr.addEventListener('load', function(e) {
             // alert('Изменеия сохранены')
             
-            console.log('good', e)
+            // console.log('good', e)
             getDealMessages({deal_id: deal_id !== '0' ? deal_id: deal_screen_info.deal_id}, (data) => {
                 dispatch(setMessages(data.messages))
                 var objDiv = document.getElementById("messages");
@@ -138,7 +138,7 @@ export function Chat () {
     
 
     useEffect(() => {
-        console.log(9)
+        // console.log(9)
         socket.on(deal_id !== '0' ? deal_id: deal_screen_info.deal_id, handleSocketOn);
         return () => {
             socket.removeAllListeners(deal_id !== '0' ? deal_id: deal_screen_info.deal_id);
@@ -243,7 +243,7 @@ export function Chat () {
 
                                 <input id="file-input" name='file_input' type="file" 
                                     onChange={() => {
-                                        console.log('onchange')
+                                        // console.log('onchange')
                                         let file_input = document.getElementById("file-input")
                                         setFiles(file_input.files)     
                                         setShowPreSendFilesModal(true)                                       

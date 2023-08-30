@@ -37,7 +37,7 @@ export function CreateOrder1(props) {
     const [currentSelector, setCurrentSelector] = useState('');
 
     function handlesetPriceType(index) {
-        console.log('index', index)
+        // console.log('index', index)
         dispatch(setPriceType(index + 1))
     }
     
@@ -64,7 +64,7 @@ export function CreateOrder1(props) {
 
 
     function handleClickCurrencyItem(index) {
-        console.log(index)
+        // console.log(index)
         dispatch( setCurrencyOrder(index + 1) )
     }
 

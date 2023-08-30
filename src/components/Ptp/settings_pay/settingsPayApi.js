@@ -11,7 +11,7 @@ export function getUserMethodsPay(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data', data)
+            // console.log('data', data)
             
             return callback(data)
         });
@@ -28,7 +28,7 @@ export function newMethodPay(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('newmethodpay data', data)
+            // console.log('newmethodpay data', data)
             return callback(data)
         });
 }
@@ -44,7 +44,7 @@ export function getMethodInfo(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('methodinfo data', data)
+            // console.log('methodinfo data', data)
             return callback(data)
         });
 }
@@ -60,7 +60,7 @@ export function getCompaniesPay(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('methodinfo data', data)
+            // console.log('methodinfo data', data)
             return callback(data)
         });
 }
@@ -76,7 +76,7 @@ export function updateMethodPay(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('updatemethod data', data)
+            // console.log('updatemethod data', data)
             return callback(data)
         });
 }
@@ -92,7 +92,7 @@ export function deleteMethodPay(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('deletemethod data', data)
+            // console.log('deletemethod data', data)
             return callback(data)
         });
 }

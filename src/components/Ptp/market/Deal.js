@@ -47,15 +47,15 @@ export function Deal () {
     const str_type_deal = deal_screen_info?.type_order === 'b' ? 'Вы продаете': 'Вы покупаете'
 
     const handleSendMessage = (status) => {
-        console.log('emit', status)
+        // console.log('emit', status)
         socket.emit("new_message", {type: 'deal', deal_id: deal_screen_info.deal_id, status: status});
     }
 
     function handleGetDealInfo() {
         clearTimeout(timeOut)
-        console.log('handleGetDealInfo', deal_id)
+        // console.log('handleGetDealInfo', deal_id)
         getDealInfo( {deal_id: deal_id === '0' ? deal_screen_info?.deal_id: deal_id}, (data) => {
-            console.log('handleGetDealInfo deal', data, data.delta_time/1000)
+            // console.log('handleGetDealInfo deal', data, data.delta_time/1000)
             if (!data?.res && data?.info === 'end') {
                 setIsCancelDeal(true) 
                 dispatch(setDealScreenInfo({type_order: ''}))  
@@ -122,7 +122,7 @@ export function Deal () {
                 ),
                 
             }, (data) => {
-                console.log(data)
+                // console.log(data)
                 handleGetDealInfo()
                 handleSendMessage('confirm')
             }
@@ -132,7 +132,7 @@ export function Deal () {
 
     const handleEndDeal = () => {
         setWaitTransaction(true)
-        console.log('end deal', deal_screen_info.deal_id)
+        // console.log('end deal', deal_screen_info.deal_id)
         setEndDeal(
             {
                 deal_id: deal_screen_info.deal_id, 
@@ -154,7 +154,7 @@ export function Deal () {
     }
 
     const handleSocketOn = (data) => {
-        console.log('message from server', data);
+        // console.log('message from server', data);
         if (data.status !== deal_screen_info?.status) handleGetDealInfo()
     }   
 
@@ -170,15 +170,15 @@ export function Deal () {
     })
 
     const handleAppilate = () => {
-        console.log('handleAppilate')
+        // console.log('handleAppilate')
         newAppilate( {
             deal_id: deal_id,
             user_id: user_id
         }, (data) => {
-            console.log('handleAppilate', data)
+            // console.log('handleAppilate', data)
             if (data.res) tg.openTelegramLink('https://t.me/WalletExpBot')
             else {
-                console.log('setShowErrorAppilate')
+                // console.log('setShowErrorAppilate')
                 setShowErrorAppilate(true)
                 setTimeout(() => setShowErrorAppilate(false), 2000)
             }
@@ -477,7 +477,7 @@ export function Deal () {
 
     useEffect(() => {
         if (showTimer && timeDeal > 0) {
-            console.log('timeDeal', timeDeal)
+            // console.log('timeDeal', timeDeal)
             const time_out = setTimeout(() => {if (showTimer) setTimeDeal(timeDeal - 1)}, 1000)
             clearTimeout(timeOut)
             setTimeOut(time_out)
@@ -492,7 +492,7 @@ export function Deal () {
     }, [showTimer, timeDeal]);
 
     useEffect(() => {
-        console.log(9)
+        // console.log(9)
         socket.on(deal_id !== '0' ? `deal${deal_id}`: `{deal${deal_screen_info.deal_id}}`, handleSocketOn);
         return () => {
             socket.off(deal_id !== '0' ? `deal${deal_id}`: `{deal${deal_screen_info.deal_id}}`);
@@ -501,7 +501,7 @@ export function Deal () {
     }, []);
 
     useEffect(() => {
-            console.log('uef')
+            // console.log('uef')
             handleGetDealInfo()
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
@@ -1388,7 +1388,7 @@ export function Deal () {
 
 // const handleClickEndDeal = () => {
     //     setShowLoader(true)
-    //     console.log('deal_screen_info', deal_screen_info)
+    //     // console.log('deal_screen_info', deal_screen_info)
     //     sendEndDeal(
     //         {
     //             deal_id: deal_screen_info.deal_id, 

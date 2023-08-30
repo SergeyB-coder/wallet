@@ -78,7 +78,7 @@ export function Person(props) {
     }
 
     const handleClickAllOrderActive = () => {
-        console.log('handleClickAllOrderActive', summ_orders_bep, summ_orders_trc, balance, balance_v, balance_trx, balance_trx_v)
+        // console.log('handleClickAllOrderActive', summ_orders_bep, summ_orders_trc, balance, balance_v, balance_trx, balance_trx_v)
 
         if ((summ_orders_bep > balance+balance_v || summ_orders_trc > balance_trx+balance_trx_v) && !allOrderActive) {
             setPopUpText('Недостаточный баланс')
@@ -88,9 +88,9 @@ export function Person(props) {
         }
         else {
             setActiveOrder({ user_id: user_id, value: !allOrderActive }, (data) => {
-                console.log(data)
+                // console.log(data)
                 getOrders({ user_id: user_id }, (data) => {
-                    console.log('getOrders person', data)
+                    // console.log('getOrders person', data)
                     setOrders(data.orders)
                 })
             })
@@ -106,9 +106,9 @@ export function Person(props) {
 
     function handleClickRunOrder(index) {
         setActiveOrder({ order_id: orders[index].id, value: true }, (data) => {
-            console.log(data)
+            // console.log(data)
             getOrders({ user_id: user_id }, (data) => {
-                console.log('getOrders person', data)
+                // console.log('getOrders person', data)
                 setOrders(data.orders)
             })
         })
@@ -117,9 +117,9 @@ export function Person(props) {
 
     function handleClickStopOrder(index) {
         setActiveOrder({ order_id: orders[index].id, value: false }, (data) => {
-            console.log(data)
+            // console.log(data)
             getOrders({ user_id: user_id }, (data) => {
-                console.log('getOrders person', data)
+                // console.log('getOrders person', data)
                 setOrders(data.orders)
             })
         })
@@ -160,18 +160,18 @@ export function Person(props) {
     useEffect(() => {
 
         getOrders({ user_id: user_id }, (data) => {
-            console.log('getOrders person', data)
+            // console.log('getOrders person', data)
             setOrders(data.orders)
 
             setSumms(data.orders)
             const initialValue = 0;
-            console.log('summ_orders', summ_orders_bep, summ_orders_trc)
+            // console.log('summ_orders', summ_orders_bep, summ_orders_trc)
             const quantity_active_orders = data.orders.reduce(
                 (accumulator, currentValue) => accumulator + currentValue.active*1,
                 initialValue
             );
 
-            console.log('quantity_active_orders', quantity_active_orders)
+            // console.log('quantity_active_orders', quantity_active_orders)
             if (quantity_active_orders === 0) {
                 setAllOrderActive(false)
             }

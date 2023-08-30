@@ -12,7 +12,7 @@ export function createOrder(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data', data)
+            // console.log('data', data)
             
             return callback(data)
         });
@@ -30,7 +30,7 @@ export function parsePrice(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data parseprice', data)
+            // console.log('data parseprice', data)
             
             return callback(data)
         });
@@ -49,7 +49,7 @@ export function getUserQDeals(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data getuserqdeals', data)
+            // console.log('data getuserqdeals', data)
             
             return callback(data)
         });
@@ -67,7 +67,7 @@ export function setActiveOrder(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data setactiveorder', data)
+            // console.log('data setactiveorder', data)
             
             return callback(data)
         });

@@ -36,14 +36,14 @@ export function ScreenBuy (props) {
     const is_buy = props.buyOrder.type === 'b'
 
     const handleChangeQuantity = (e) => {
-        console.log('e.target.value', e.target.value)
+        // console.log('e.target.value', e.target.value)
         let inp = document.getElementById('q_buy')
         inp.style.width = (11 + e.target.value.length * 11) + 'px'
         dispatch(setQuantityBuy(e.target.value))
     }
 
     const handleClickBuy = (e) => {
-        console.log(isCorrectQuantity())
+        // console.log(isCorrectQuantity())
         if (isCorrectQuantity()) {
             sendBuy({
                 init_data: init_data,
@@ -78,13 +78,13 @@ export function ScreenBuy (props) {
     // }
 
     const backScreen = () => {
-        console.log('backScreen', showMethodsPay)
+        // console.log('backScreen', showMethodsPay)
         if (showMethodsPay) setShowMethodsPay(false)
         else dispatch(setMarketScreen('orders'))
     }
 
     const handleClickAddMethod = (company_id) => {
-        console.log('company_id', company_id)
+        // console.log('company_id', company_id)
         dispatch(setSelectedCompanyIndex(company_id))
         dispatch(setBackScreen('screenbuy'))
         dispatch(setNewMethod(true))
@@ -127,7 +127,7 @@ export function ScreenBuy (props) {
             // if (index === -1) setIndexMethodPay(-1)
             setIndexMethodPay(-1)
             setListMethodsPay(data.order_methods)
-            console.log('getOrderMethods', data)
+            // console.log('getOrderMethods', data)
         })
     }, [props.buyOrder.id, props.buyOrder.type, props.buyOrder.user_id, user_id]);
 

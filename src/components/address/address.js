@@ -47,7 +47,7 @@ export function Address (props) {
     // }
 
     // function handleClickCurrencyItem(index) {
-    //     console.log(index)
+    //     // console.log(index)
     //     setCurrencyBalance(CURRENCY_LIST[index])
     //     setShowListCurrency(false)
     // }

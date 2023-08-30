@@ -32,7 +32,7 @@ export function NewMethodPay( props ) {
     // const currencyFiat = useSelector(selectCurrencyFiat)
 
     const handleSelectMethodClick = () => {
-        console.log(9)
+        // console.log(9)
         setShowListCompaniesPay(true)
     }
 
@@ -51,7 +51,7 @@ export function NewMethodPay( props ) {
     }
 
     const handleSaveMethod = () => {
-        console.log('handleSaveMethod')
+        // console.log('handleSaveMethod')
         newMethodPay({
             user_id: user_id, 
             name: name_method, 
@@ -64,7 +64,7 @@ export function NewMethodPay( props ) {
 
         }, (data) => {
 
-            console.log(data)
+            // console.log(data)
             dispatch(setNewMethod(false))
             props.setShowNewMethod(false)
             handleGetUserMethodsPay()
@@ -81,7 +81,7 @@ export function NewMethodPay( props ) {
             info: info
         }, (data) => {
 
-            console.log(data)
+            // console.log(data)
             dispatch(setNewMethod(false))
             handleGetUserMethodsPay()
             setIsNew(true)
@@ -95,7 +95,7 @@ export function NewMethodPay( props ) {
             method_id: methodId
         }, (data) => {
 
-            console.log(data)
+            // console.log(data)
             dispatch(setNewMethod(false))
             handleGetUserMethodsPay()
             setIsNew(true)
@@ -105,9 +105,9 @@ export function NewMethodPay( props ) {
 
     function handleChangeCurrencyFiat(index) {
         setCurrencyFiat(index+1)
-        console.log('handleChangeCurrencyFiat', index)
+        // console.log('handleChangeCurrencyFiat', index)
         getCompaniesPay({fiat_id: index+1}, (data) => {
-            console.log('getCompaniesPay', data)
+            // console.log('getCompaniesPay', data)
             dispatch(setCompaniesPay(data.companies_pay))
         })
     }
@@ -130,14 +130,14 @@ export function NewMethodPay( props ) {
 
     useEffect(() => {
         getCompaniesPay({fiat_id: 1}, (data) => {
-            console.log('getCompaniesPay', data)
+            // console.log('getCompaniesPay', data)
             dispatch(setCompaniesPay(data.companies_pay))
 
             if (companyIndex) {
-                console.log('companyIndex', companyIndex, data.companies_pay)
+                // console.log('companyIndex', companyIndex, data.companies_pay)
                 let ind = data.companies_pay.findIndex(e => e.id === companyIndex)
                 setSelectedCompanyIndex(ind)
-                console.log('ind', ind)
+                // console.log('ind', ind)
             }
         })
     }, [companyIndex, dispatch]);

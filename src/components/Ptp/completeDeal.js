@@ -83,7 +83,7 @@ export function CompleteDeal () {
                 sum_deal: deal_info?.price * deal_info?.quantity
             }, 
             (data) => {
-                console.log(data)
+                // console.log(data)
                 // setShowConfirmPay(false)
                 setShowWait(true)
             }
@@ -93,7 +93,7 @@ export function CompleteDeal () {
     
     const handleClickCancelDeal = () => {
         sendCancelDeal({deal_id: deal_info.deal_id, saler_id: deal_info.buyer_id}, (data) => {
-            console.log(data)
+            // console.log(data)
         })
         setIsCancelDeal(true)
     }

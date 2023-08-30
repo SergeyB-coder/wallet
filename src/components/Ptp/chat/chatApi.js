@@ -12,7 +12,7 @@ export function getDealMessages(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data getdealmessages', data)
+            // console.log('data getdealmessages', data)
             
             return callback(data)
         });

@@ -15,7 +15,7 @@ export function StartScreen (props) {
 
     useEffect(() => {
 		getUserData({user_id: user_id, first_name: first_name, chat_id: chat_id}, (data) => {
-			console.log('get user data', data)
+			// console.log('get user data', data)
 			dispatch(setAddress(data.address))
 			dispatch(setAddressTRX(data.address_trx))
 			dispatch(setBalance(data.balance))

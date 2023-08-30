@@ -11,7 +11,7 @@ export function getUserData(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data', data)
+            // console.log('data', data)
             
             return callback(data)
         });
@@ -30,7 +30,7 @@ export function getBalance(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data getbalance', data)
+            // console.log('data getbalance', data)
             
             return callback(data)
         });
@@ -49,7 +49,7 @@ export function getWallet(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data getwallet', data)
+            // console.log('data getwallet', data)
             
             return callback(data)
         });
@@ -67,7 +67,7 @@ export function getWalletTRX(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data getwallettrx', data)
+            // console.log('data getwallettrx', data)
             
             return callback(data)
         });
@@ -86,7 +86,7 @@ export function getUserDeals(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data getUserDeals', data)
+            // console.log('data getUserDeals', data)
             
             return callback(data)
         });
@@ -103,7 +103,7 @@ export function getTransactions(pars, callback) {
     })
     .then((response) => response.json())
     .then((data) => {
-        console.log('data gettransactions', data)
+        // console.log('data gettransactions', data)
         
         return callback(data)
     });
@@ -121,7 +121,7 @@ export function getUserSumOrders(pars, callback) {
     })
     .then((response) => response.json())
     .then((data) => {
-        console.log('data getusersumorders', data)
+        // console.log('data getusersumorders', data)
         
         return callback(data)
     });
@@ -138,7 +138,7 @@ export function getUserSumBlocks(pars, callback) {
     })
     .then((response) => response.json())
     .then((data) => {
-        console.log('data getusersumblocks', data)
+        // console.log('data getusersumblocks', data)
         
         return callback(data)
     });
@@ -160,7 +160,7 @@ export function applyRef(pars, callback) {
     })
     .then((response) => response.json())
     .then((data) => {
-        console.log('data applyref', data)
+        // console.log('data applyref', data)
         
         return callback(data)
     });

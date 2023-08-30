@@ -79,13 +79,13 @@ export function Market() {
 
         setIndexMethod(0)
         getCompaniesPay({ fiat_id: index + 1 }, (data) => {
-            console.log('getCompaniesPay', data)
+            // console.log('getCompaniesPay', data)
             dispatch(setCompaniesPay([{ name: 'Все' }, ...data.companies_pay]))
         })
     }
 
     const handleChangeFilterQuantity = (e) => {
-        console.log('handleChangeFilterQuantity', e.target.value)
+        // console.log('handleChangeFilterQuantity', e.target.value)
         setFilter_quantity(e.target.value)
         let newListFilterOrders = listFilterOrders.fill(1)
 
@@ -93,7 +93,7 @@ export function Market() {
             const q_filter = parseFloat(e.target.value)
 
             orders.forEach((order, i) => {
-                console.log(order.quantity, q_filter)
+                // console.log(order.quantity, q_filter)
                 if ((
                     order.limit_order / (
                         order.type_price_id !== 2 ?
@@ -164,7 +164,7 @@ export function Market() {
             dispatch(setPriceMarketTRX(data.price_market_trx))
             dispatch(setRubDollar(data.rub_dollar))
             getOrders({ user_id: '' }, (data) => {
-                console.log('useEffect')
+                // console.log('useEffect')
                 const sorted_orders = getSortedOrders(data.orders)
                 dispatch(setOrders(sorted_orders))
                 let filter_orders = new Array(data.orders.length).fill(1)
@@ -179,7 +179,7 @@ export function Market() {
 
     useEffect(() => {
         getCompaniesPay({ fiat_id: currencyFiat }, (data) => {
-            console.log('getCompaniesPay', data)
+            // console.log('getCompaniesPay', data)
             dispatch(setCompaniesPay([{ name: 'Все' }, ...data.companies_pay]))
         })
     }, [currencyFiat, dispatch]);

@@ -46,7 +46,7 @@ export function Ptp(props) {
     const user_deals = useSelector(selectUserDeals)
 
     function handleClickDeal(deal) {
-        console.log(deal.id_to, user_id)
+        // console.log(deal.id_to, user_id)
         // if (deal.id_to.toString() === user_id.toString()) {
         //     navigate(`/deal/${deal.deal_id}`, {replace: true, state: {deal: deal}})
         // }

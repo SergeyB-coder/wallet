@@ -14,7 +14,7 @@ export function getOrders(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data', data)
+            // console.log('data', data)
             
             return callback(data)
         });
@@ -35,7 +35,7 @@ export function getMyOrders(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data', data)
+            // console.log('data', data)
             
             return callback(data)
         });
@@ -54,7 +54,7 @@ export function getOrderDeals(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data', data)
+            // console.log('data', data)
             
             return callback(data)
         });
@@ -73,7 +73,7 @@ export function getOrderMethods(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('getordermethods data', data)
+            // console.log('getordermethods data', data)
             
             return callback(data)
         });
@@ -91,7 +91,7 @@ export function sendBuy(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data', data)
+            // console.log('data', data)
             
             return callback(data)
         });
@@ -109,7 +109,7 @@ export function sendAcceptDeal(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data acceptdeal', data)
+            // console.log('data acceptdeal', data)
             
             return callback(data)
         });
@@ -127,7 +127,7 @@ export function sendEndDeal(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data enddeal', data)
+            // console.log('data enddeal', data)
             
             return callback(data)
         });
@@ -145,7 +145,7 @@ export function sendCancelDeal(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data canceldeal', data)
+            // console.log('data canceldeal', data)
             
             return callback(data)
         });
@@ -163,7 +163,7 @@ export function getDealInfo(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data', data)
+            // console.log('data', data)
             
             return callback(data)
         });
@@ -181,7 +181,7 @@ export function sendConfirm(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data', data)
+            // console.log('data', data)
             
             return callback(data)
         });
@@ -199,7 +199,7 @@ export function setEndDeal(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data', data)
+            // console.log('data', data)
             
             return callback(data)
         });
@@ -216,7 +216,7 @@ export function newAppilate(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log('data', data)
+            // console.log('data', data)
             
             return callback(data)
         });
