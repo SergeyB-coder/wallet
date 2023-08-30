@@ -89,7 +89,7 @@ export function Send(props) {
         setShowListAddresses(false)
 
         getUserSumOrders({ user_id: user_id, currency_id: (fromLabel1 === 'USDT TRC20' ? 2 : 1) }, (data) => {
-            // console.log('sum_orders', data.sum_orders)
+            console.log('sum_orders', data.sum_orders)
             dispatch(setSumOrders(data.sum_orders))
         })
     }
@@ -263,7 +263,7 @@ export function Send(props) {
 
     useEffect(() => {
         getUserSumOrders({ user_id: user_id, currency_id: (fromLabel1 === 'USDT TRC20' ? 2 : 1) }, (data) => {
-            // console.log('sum_orders', data.sum_orders)
+            console.log('sum_orders', data.sum_orders)
             dispatch(setSumOrders(data.sum_orders))
         })
     }, [dispatch, fromLabel1, user_id]);

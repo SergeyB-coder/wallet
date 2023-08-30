@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CURRENCY_FIAT_LIST, CURRENCY_LIST, PRICE_TYPES } from '../../../const/devdata';
 import { Selecter } from '../../Common/selecter';
-import { selectBalance, selectBalanceTRX, selectBalanceTRXv, selectSumOrders } from '../../Home/homeSlice';
+import { selectBalance, selectBalanceTRX, selectBalanceTRXv, selectBalanceV, selectSumOrders } from '../../Home/homeSlice';
 // import { ButtonNext } from '../../Common/buttonNext';
 import './style.css'
 
@@ -26,6 +26,7 @@ export function CreateOrder1(props) {
     const rub_dollar = useSelector(selectRubDollar)
 
     const balance = useSelector(selectBalance)
+    const balance_v = useSelector(selectBalanceV)
     const balance_trx = useSelector(selectBalanceTRX)
     const balance_trx_v = useSelector(selectBalanceTRXv)
 
@@ -70,7 +71,7 @@ export function CreateOrder1(props) {
 
     function getCurrentBalance() {
         if (currency_order === 2) return parseFloat(balance_trx+balance_trx_v)
-        else return parseFloat(balance)
+        else return parseFloat(balance + balance_v)
     }
 
     function isInputData () {
@@ -294,7 +295,7 @@ export function CreateOrder1(props) {
                     Ваш баланс
                 </div>
                 <div className='your-balance-q'>
-                    {currency_order === 1 ? balance: balance_trx + balance_trx_v} USDT
+                    {currency_order === 1 ? balance + balance_v: balance_trx + balance_trx_v} USDT
                 </div>
             </div>
             <div className='container-balance'>
