@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBalance, getUserData } from './homeApi';
+import { getBalance, getTransactions, getUserData } from './homeApi';
 import { selectBalance, selectBalanceTRX, selectBalanceTRXv, selectBalanceV, selectFirstRun, selectNameUser, setAddress, setAddressTRX, setBalance, setBalanceTRX, setBalanceTRXv, setBalanceV, setFirstRun, setNameUser } from './homeSlice';
 import { MenuButtons } from './menubuttons';
 import { useTelegram } from '../../hooks/useTelegram';
@@ -36,12 +36,20 @@ export function Home() {
 	const [showTransactions, setShowTransactions] = useState(false);
 	const [isHide, setIsHide] = useState(!first_run);
 
+	const [transactions, setTransactions] = useState([]);
+
 	const handleClickBep = () => {
+		getTransactions({user_id: user_id, token: 'bep'}, (data) => {
+            setTransactions(data.transactions)
+        })
 		setShowTransactions(true)
 		tg.BackButton.show()
 	}
 
 	const handleClickTrc = () => {
+		getTransactions({user_id: user_id, token: 'trx'}, (data) => {
+            setTransactions(data.transactions)
+        })
 		setShowTransactions(true)
 		tg.BackButton.show()
 	}
@@ -159,7 +167,7 @@ export function Home() {
 							} */}
 
 							{/* {!isLoadData && <div className='balance-main'><span className='balance-main-sign'>$</span>{Math.round(parseFloat(((balance + balance_v + balance_trx + balance_trx_v) || 0)) * 1000) / 1000}</div>} */}
-							<div className='balance-main'><span className='balance-main-sign'>$</span>{Math.round((parseFloat(balance || 0) + parseFloat(balance_v || 0) + parseFloat(balance_trx || 0) + parseFloat(balance_trx_v || 0)) * 1000) / 1000}</div>
+							<div className='balance-main'><span className='balance-main-sign'>$</span>{Math.round((parseFloat(balance || 0) + parseFloat(balance_v || 0) + parseFloat(balance_trx || 0) + parseFloat(balance_trx_v || 0)) * 100) / 100}</div>
 						</div>
 
 						{/* {isLoadData && <div className={`home-container-balance-load ${isHide ? 'grow-hide' : ''}`}></div>} */}
@@ -279,7 +287,7 @@ export function Home() {
 			{showTransactions &&
 
 				<div className='p-2'>
-					<Transactions />
+					<Transactions transactions={transactions}/>
 				</div>
 			}
 		</>

@@ -9,7 +9,7 @@ import { parsePrice } from '../Ptp/ptpApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectPriceMarket, setPriceMarket, setPriceMarketTRX, setRubDollar } from '../Ptp/ptpSlice';
 
-export function Transactions () {
+export function Transactions (props) {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -17,7 +17,7 @@ export function Transactions () {
 
     const price_market = useSelector(selectPriceMarket)
 
-    const [transactions, setTransactions] = useState([]);
+    // const [transactions, setTransactions] = useState([]);
 
     const backScreen = () => {
         navigate('/', {replace: true})
@@ -38,9 +38,9 @@ export function Transactions () {
 
     
     useEffect(() => {
-        getTransactions({user_id: user_id}, (data) => {
-            setTransactions(data.transactions)
-        })
+        // getTransactions({user_id: user_id}, (data) => {
+        //     setTransactions(data.transactions)
+        // })
     }, [user_id]);
 
     useEffect(() => {
@@ -69,7 +69,7 @@ export function Transactions () {
                 </div>
 
                 {
-                    transactions.map((transaction, index) => {
+                    props.transactions.map((transaction, index) => {
                         return (
                             <div key={index} className={`row-2 a-c ${transaction.type === 'send' ? 'color-bg-deal': 'color-bg-deal-r'} h-77 p-17 mt-20`}>
                                 <div className='h-100'>
@@ -83,7 +83,7 @@ export function Transactions () {
                                 <div className='h-100'>
                                     {transaction.type === 'send' || transaction.to_id === 0 ?
                                         <div className= 'text-deal-quantity color-q-text'>-{transaction.q} USDT</div>:
-                                        <div className='text-deal-quantity color-deal-r-text'>+{transaction.q} USDT</div>
+                                        <div className='text-deal-quantity color-deal-r-text'>+{Math.round(transaction.q*100)/100} USDT</div>
                                     }
                                     <div className='deal-text-3 text-nowrap'>${Math.round(transaction.q * price_market * 100)/100}</div>
                                 </div>
