@@ -6,9 +6,9 @@ export function useTelegram () {
         query_id: tg.initDataUnsafe.query_id,
 
         
-        // user_id: tg.initDataUnsafe.user.id,
-        // first_name: tg.initDataUnsafe.user.first_name,
-        // init_data: tg.initData,
+        user_id: tg.initDataUnsafe.user.id,
+        first_name: tg.initDataUnsafe.user.first_name,
+        init_data: tg.initData,
 
 
         // user_id: 638484379,
@@ -20,11 +20,11 @@ export function useTelegram () {
         
         
         // init_data: 'tg',
-        user_id: '2125428302',
+        // user_id: '2125428302',
         // user_id: 652065848,
         // first_name: 'Srg',
         // user_id: '1234567',
-        first_name: 'Super',
+        // first_name: 'Super',
         // user_id: 671690853,
         // first_name: 'Tradeex'
 

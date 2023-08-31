@@ -140,6 +140,7 @@ export function Send(props) {
             if (address1 === address) net = 'b'
             else if (address1 === address_trx) net = 't'
             let address_from = ''
+            setStepSend('finish')
             if (net === '' || address1 === '') {
                 getUserData({ user_id: user_id, first_name: first_name, chat_id: chat_id }, (data) => {
                     // console.log('get user data', data)
@@ -195,15 +196,16 @@ export function Send(props) {
                     // console.log('sendTo', data)
                     // setShowLoader(false)
                     // navigate('/home', {replace: true})
-                    setStepSend('finish')
+                    
                 })
 
             }
+            
 
 
         }
 
-        else if (stepSend === 'finish') {
+        else if (stepSend === 'finish' && hash) {
             if (fromLabel1 === 'USDT TRC20') window.open('https://tronscan.io/#/transaction/' + hash, "_blank")
             else window.open('https://bscscan.com/tx/' + hash, "_blank")
             // navigate('/', {replace: true})
@@ -563,7 +565,7 @@ export function Send(props) {
                         {
                             stepSend === 'confirm' ? 'Подтвердить' :
                                 stepSend === 'wait' ? getScanner() :
-                                    stepSend === 'finish' ? `Посмотреть на ${getScanner()}` :
+                                    stepSend === 'finish' ? hash === '' ? 'Ожидание..': `Посмотреть на ${getScanner()}` :
                                         !isValidAddress ? 'Неверный формат адреса' :
                                             !isCorrectQuantity() ? 'Сумма превышает баланс или меньше коммисии' :
                                                 isReady ? 'Отправить' : 'Заполните данные'
