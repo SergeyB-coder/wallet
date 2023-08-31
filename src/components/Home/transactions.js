@@ -1,8 +1,6 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { getTransactions } from './homeApi';
 import { useTelegram } from '../../hooks/useTelegram';
-import { useState } from 'react';
 import { dateConvert } from '../Common/funcs';
 import { useNavigate } from 'react-router-dom';
 import { parsePrice } from '../Ptp/ptpApi';
