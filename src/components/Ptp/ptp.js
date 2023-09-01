@@ -150,7 +150,7 @@ export function Ptp(props) {
 
     const faq =
         <div className='row button-trade-menu'>
-            <div className='trade-menu-text-col' onClick={() => { }}>
+            <div className='trade-menu-text-col' onClick={() => { window.open('https://t.me/fastex_wallet/19', "_blank") }}>
                 FAQ
             </div>
             <div className='trade-menu-text-col-2'>
@@ -160,7 +160,7 @@ export function Ptp(props) {
 
     const support =
         <div className='row button-trade-menu'>
-            <div className='trade-menu-text-col' onClick={() => { }}>
+            <div className='trade-menu-text-col' onClick={() => { window.open('https://t.me/fastex_sup', '_blank')}}>
                 Поддержка
             </div>
             <div className='trade-menu-text-col-2'>
