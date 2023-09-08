@@ -248,7 +248,7 @@ export function Ptp(props) {
                 dispatch(setQuantityOrders(data.orders.length))
             })
         })
-    }, []);
+    }, [dispatch, getSortedOrders]);
     return (
         <>
 

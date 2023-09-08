@@ -29,7 +29,7 @@ export function Market() {
     const rub_dollar = useSelector(selectRubDollar)
 
     const marketScreen = useSelector(selectMarketScreen)
-    const quantity_orders = useSelector(selectQuantityOrders)
+    // const quantity_orders = useSelector(selectQuantityOrders)
     // const [buyOrder, setBuyOrder] = useState(null)
     const buyOrder = useSelector(selectBuyOrder)
     const [currencyFiat, setCurrencyFiat] = useState(1)
