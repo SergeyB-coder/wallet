@@ -93,6 +93,7 @@ export function Ptp(props) {
         )
     })
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     function getSortedOrders(orders) {
         let arr = orders.slice()
         let price1 = 0
@@ -248,6 +249,7 @@ export function Ptp(props) {
                 dispatch(setQuantityOrders(data.orders.length))
             })
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch, getSortedOrders]);
     return (
         <>

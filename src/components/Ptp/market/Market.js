@@ -6,7 +6,7 @@ import { useTelegram } from '../../../hooks/useTelegram';
 import { Selecter } from '../../Common/selecter';
 import { getCompaniesPay } from '../settings_pay/settingsPayApi';
 import { getOrders } from './marketApi';
-import { selectBuyOrder, selectCompaniesPay, selectMarketScreen, selectOrders, selectQuantityOrders, setBuyOrder, setCompaniesPay, setMarketScreen, setOrders, setQuantityOrders } from './marketSlice';
+import { selectBuyOrder, selectCompaniesPay, selectMarketScreen, selectOrders, setBuyOrder, setCompaniesPay, setMarketScreen, setOrders, setQuantityOrders } from './marketSlice';
 import { ScreenBuy } from './screenBuy';
 
 import './style.css'
