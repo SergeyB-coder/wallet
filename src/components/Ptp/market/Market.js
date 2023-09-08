@@ -6,7 +6,7 @@ import { useTelegram } from '../../../hooks/useTelegram';
 import { Selecter } from '../../Common/selecter';
 import { getCompaniesPay } from '../settings_pay/settingsPayApi';
 import { getOrders } from './marketApi';
-import { selectBuyOrder, selectCompaniesPay, selectMarketScreen, selectOrders, setBuyOrder, setCompaniesPay, setMarketScreen, setOrders } from './marketSlice';
+import { selectBuyOrder, selectCompaniesPay, selectMarketScreen, selectOrders, selectQuantityOrders, setBuyOrder, setCompaniesPay, setMarketScreen, setOrders, setQuantityOrders } from './marketSlice';
 import { ScreenBuy } from './screenBuy';
 
 import './style.css'
@@ -29,6 +29,7 @@ export function Market() {
     const rub_dollar = useSelector(selectRubDollar)
 
     const marketScreen = useSelector(selectMarketScreen)
+    const quantity_orders = useSelector(selectQuantityOrders)
     // const [buyOrder, setBuyOrder] = useState(null)
     const buyOrder = useSelector(selectBuyOrder)
     const [currencyFiat, setCurrencyFiat] = useState(1)
@@ -159,6 +160,9 @@ export function Market() {
         <div className='divider-order-market'></div>
 
     useEffect(() => {
+        let filter_orders = new Array(orders.length).fill(1)
+        setListFilterOrders(filter_orders)
+
         parsePrice({}, (data) => {
             dispatch(setPriceMarket(data.price_market))
             dispatch(setPriceMarketTRX(data.price_market_trx))
@@ -167,11 +171,9 @@ export function Market() {
                 // console.log('useEffect')
                 const sorted_orders = getSortedOrders(data.orders)
                 dispatch(setOrders(sorted_orders))
-                let filter_orders = new Array(data.orders.length).fill(1)
-                // sorted_orders.forEach( (order, index) => {
-                //     if (order.currency_id !== 1) filter_orders[index] = 0
-                // })
-                setListFilterOrders(filter_orders)
+                
+                dispatch(setQuantityOrders(data.orders.length))
+
             })
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -187,7 +189,7 @@ export function Market() {
     // useEffect(() => {
 
     // }, [dispatch]);
-    
+
     // useEffect(() => {
     //     handleChangeCurrency(0)
     // }, [handleChangeCurrency]);
@@ -297,6 +299,9 @@ export function Market() {
                     </>
                 }
 
+                
+
+
                 {marketScreen === 'orders' &&
                     orders.map((order, index) => {
                         return (
@@ -311,7 +316,7 @@ export function Market() {
                                         <div className='mt-2'>
                                             {order.type_price_id !== 2 ? order.price : Math.round(price_market * (order.currency_fiat_id === 1 ? rub_dollar : 1) * order.percent_price) / 100}
                                             {/* {order.currency_fiat_id === 1 ? 'RUB' : 'USD'} */}
-                                            {CURRENCY_FIAT_LIST[order.currency_fiat_id-1] || ''}
+                                            {CURRENCY_FIAT_LIST[order.currency_fiat_id - 1] || ''}
                                         </div>
                                         <div className={order.type === 's' ? 'order-label' : 'mini-text-r'}>Цена за 1 {order.currency_id === 1 ? 'USDT BEP20' : 'USDT TRC20'}</div>
                                     </div>
@@ -336,7 +341,7 @@ export function Market() {
                                         <span className='order-info-1'>
                                             {(order.q_deals_maker || 0) + (order.q_deals_taker || 0)} сделок
                                         </span>
-                                        { Math.round(100 * (order.q_deals_maker || 0 + order.q_deals_taker || 0 - (order.q_deals_cancel_maker || 0) - (order.q_deals_cancel_taker || 0) ) / (order.q_deals_maker || 0 + order.q_deals_taker || 0)) || 0 } %
+                                        {Math.round(100 * ((order.q_deals_cancel_maker || 0) + (order.q_deals_cancel_taker || 0)) / ((order.q_deals_maker || 0) + (order.q_deals_taker || 0))) || 0} %
                                     </div>
                                 </div>
 
@@ -362,12 +367,12 @@ export function Market() {
                                         Лимиты
                                     </div>
                                     <div className='order-info-3'>
-                                        {`${Math.round(1000 * order.limit_order / (order.type_price_id !== 2 ? order.price : price_market * (order.currency_fiat_id === 1 ? rub_dollar : 1) * order.percent_price / 100)) / 1000} - ${ Math.round(100*(order.quantity - commission))/100 } USDT`}<br></br>
-                                        {`${order.limit_order} - ${ Math.round((order.quantity - commission) * ( order.type_price_id !== 2 ? order.price: price_market * (order.currency_fiat_id === 1 ? rub_dollar : 1) * order.percent_price / 100) * 1000) / 1000} ${order.currency_fiat_id === 1 ? 'Руб' : '$'}`}
+                                        {`${Math.round(1000 * order.limit_order / (order.type_price_id !== 2 ? order.price : price_market * (order.currency_fiat_id === 1 ? rub_dollar : 1) * order.percent_price / 100)) / 1000} - ${Math.round(100 * (order.quantity - commission)) / 100} USDT`}<br></br>
+                                        {`${order.limit_order} - ${Math.round((order.quantity - commission) * (order.type_price_id !== 2 ? order.price : price_market * (order.currency_fiat_id === 1 ? rub_dollar : 1) * order.percent_price / 100) * 1000) / 1000} ${order.currency_fiat_id === 1 ? 'Руб' : '$'}`}
                                     </div>
                                 </div>
 
-                                <div style={{marginTop: '5px'}} className='order-line-container'>
+                                <div style={{ marginTop: '5px' }} className='order-line-container'>
                                     <div className='order-line'></div>
                                 </div>
 
@@ -397,7 +402,7 @@ export function Market() {
                     })
                 }
 
-                {marketScreen === 'buy' && <ScreenBuy buyOrder={buyOrder} showMethodsPay={showMethodsPay} setShowMethodsPay={setShowMethodsPay}/>}
+                {marketScreen === 'buy' && <ScreenBuy buyOrder={buyOrder} showMethodsPay={showMethodsPay} setShowMethodsPay={setShowMethodsPay} />}
 
                 {marketScreen === 'select_method' &&
                     <div>

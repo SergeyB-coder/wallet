@@ -11,7 +11,8 @@ const initialState = {
   backStepCreateOrder: '',
   buy_order: null,
   market_screen: 'orders',
-  companies_pay: []
+  companies_pay: [],
+  quantity_orders: 0
 };
 
 
@@ -19,6 +20,9 @@ export const marketSlice = createSlice({
   name: 'market',
   initialState,
   reducers: {
+    setQuantityOrders: (state, action) => {
+      state.quantity_orders = action.payload;
+    },
     setCompaniesPay: (state, action) => {
       state.companies_pay = action.payload;
     },
@@ -55,7 +59,7 @@ export const marketSlice = createSlice({
   },
 });
 
-export const {setCompaniesPay, setMarketScreen, setBuyOrder, setBackStepCreateOrder, setOrderDeals, setOrders, setQuantityBuy, setMyOrders, setDealInfo, setCurrentOrderId, setDealScreenInfo } = marketSlice.actions;
+export const {setQuantityOrders, setCompaniesPay, setMarketScreen, setBuyOrder, setBackStepCreateOrder, setOrderDeals, setOrders, setQuantityBuy, setMyOrders, setDealInfo, setCurrentOrderId, setDealScreenInfo } = marketSlice.actions;
 
 export const selectOrders = (state) => state.market.orders;
 export const selectMyOrders = (state) => state.market.my_orders;
@@ -68,6 +72,7 @@ export const selectBackStepCreateOrder = (state) => state.market.backStepCreateO
 export const selectBuyOrder = (state) => state.market.buy_order;
 export const selectMarketScreen = (state) => state.market.market_screen;
 export const selectCompaniesPay = (state) => state.market.companies_pay;
+export const selectQuantityOrders = (state) => state.market.quantity_orders;
 
 
 export default marketSlice.reducer;

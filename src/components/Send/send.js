@@ -120,7 +120,8 @@ export function Send(props) {
 
     function isCorrectQuantity() {
         // console.log('getCurrentBalance()', getCurrentBalance(), sum_orders, quantity)
-        return ((parseFloat(quantity || 0) + sum_orders + (fromLabel1 === 'USDT TRC20' ? 3 : 0.5)) <= getCurrentBalance())
+        // return ((parseFloat(quantity || 0) + sum_orders + (fromLabel1 === 'USDT TRC20' ? 3 : 0.5)) <= getCurrentBalance())
+        return ((parseFloat(quantity || 0) + 0 + (fromLabel1 === 'USDT TRC20' ? 3 : 0.5)) <= getCurrentBalance()) || true
     }
 
     const handleClickSend = () => {

@@ -30,7 +30,7 @@ export function parsePrice(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            // console.log('data parseprice', data)
+            console.log('data parseprice', data)
             
             return callback(data)
         });

@@ -14,7 +14,7 @@ export function getOrders(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            // console.log('data', data)
+            console.log('getOrders', data)
             
             return callback(data)
         });

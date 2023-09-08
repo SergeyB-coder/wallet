@@ -20,11 +20,11 @@ export function useTelegram () {
         
         
         // init_data: 'tg',
-        // user_id: '2125428302',
+        // user_id: '1610258157',
         // user_id: 652065848,
         // first_name: 'Srg',
         // user_id: '1234567',
-        // first_name: 'Super',
+        // first_name: 'Srg',
         // user_id: 671690853,
         // first_name: 'Tradeex'
 

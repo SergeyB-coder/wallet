@@ -48,6 +48,7 @@ export function Home() {
 
 	const handleClickTrc = () => {
 		getTransactions({user_id: user_id, token: 'trx'}, (data) => {
+			console.log('getTransactions', data.transactions)
             setTransactions(data.transactions)
         })
 		setShowTransactions(true)

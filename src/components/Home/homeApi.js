@@ -86,7 +86,7 @@ export function getUserDeals(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            // console.log('data getUserDeals', data)
+            console.log('data getUserDeals', data)
             
             return callback(data)
         });

@@ -12,13 +12,14 @@ import { selectDealScreenInfo, setDealScreenInfo } from '../market/marketSlice';
 import { getDealMessages } from './chatApi';
 import { selectMessages, setMessages } from './chatSlice';
 import './style.css'
-import { selectNameUser } from '../../Home/homeSlice';
+import { selectNameUser, setNameUser } from '../../Home/homeSlice';
+import { getBalance } from '../../Home/homeApi';
 
 
 export function Chat () {
     let xhr = new XMLHttpRequest();
     const navigate = useNavigate()
-    const {tg} = useTelegram()
+    const {tg, init_data} = useTelegram()
     const { deal_id } = useParams();
     const {socket} = useSocket()
     
@@ -160,6 +161,15 @@ export function Chat () {
         tg.expand()
     }, [tg]);
 
+
+    useEffect(() => {
+        const local_name_user = localStorage.getItem('name_user')
+        if (name_user)	dispatch(setNameUser(local_name_user))
+        else getBalance({ user_id: user_id, init_data: init_data }, (data) => {
+			dispatch(setNameUser(data.name_user))
+		})
+    }, [dispatch, init_data, name_user, user_id]);
+
     return (
             <div className='chat-container'>
                 <div className='w-cntr color-bg-cntr-person mt-20'>
@@ -184,7 +194,7 @@ export function Chat () {
                     <label className='chat-title-text mt-25'>Чат c {deal_screen_info?.buyer_id?.toString() === user_id.toString() ? deal_screen_info?.saler: deal_screen_info?.buyer}</label>
                     <div className='chat-title-text-2'>
                         Сумма: {deal_screen_info?.quantity} {CURRENCY_LIST[deal_screen_info?.currency-1]}
-                        Цена: {deal_screen_info?.price} {CURRENCY_FIAT_LIST[deal_screen_info?.fiat-1]}
+                        {' Цена:'} {deal_screen_info?.price} {CURRENCY_FIAT_LIST[deal_screen_info?.fiat-1]}
                     </div>
                     
                     <div id='messages' className='container-messages mt-32'>
@@ -192,7 +202,7 @@ export function Chat () {
                             list_messages.map((message, index) => {
                                 return (
                                     name_user === message.first_name ?
-                                    <div style={{ display: 'flex', justifyContent: 'left', marginBottom: '10px'}}  key={index}>
+                                    <div style={{ display: 'flex', justifyContent: 'right', marginBottom: '10px'}}  key={index}>
                                         <div className='container-message-item'>
                                             <div className='msg-chat'>{message.text}</div>
                                             {message.url && 
@@ -207,7 +217,7 @@ export function Chat () {
 
                                         </div>
                                     </div>:
-                                    <div style={{display: 'flex', justifyContent: 'right', marginBottom: '10px'}} key={index}>
+                                    <div style={{display: 'flex', justifyContent: 'left', marginBottom: '10px'}} key={index}>
                                         <div className='container-my-message-item'>
                                             <div className='msg-chat'>{message.text}</div>
                                             {message.url && 

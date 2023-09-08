@@ -9,12 +9,19 @@ import { selectUserDeals, setUserDeals } from '../Home/homeSlice';
 // import { OrderItem } from './market/orderItem';
 import './style.css'
 import { dateConvert } from '../Common/funcs';
+import { parsePrice } from './ptpApi';
+import { selectPriceMarket, selectRubDollar, setPriceMarket, setPriceMarketTRX, setRubDollar } from './ptpSlice';
+import { getOrders } from './market/marketApi';
+import { setOrders, setQuantityOrders } from './market/marketSlice';
 
 export function Ptp(props) {
     const { tg } = useTelegram()
     const { user_id } = useTelegram()
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    const price_market = useSelector(selectPriceMarket)
+    const rub_dollar = useSelector(selectRubDollar)
 
     // const [content, setContent] = useState('orders') // orders, deals, complete_deal
 
@@ -61,42 +68,13 @@ export function Ptp(props) {
 
     const renderlistLastDeals = user_deals.slice(0, 3).map((deal, index) => {
         return (
-            // <div key={index} className='container-deal' onClick={() => { handleClickDeal(deal) }}>
-            //     <div className='deal-col-1'>
-            //         {/* <div className='text-deal'><span className='label-deal'>From:</span> {deal.user_from}</div>
-            // 			<div className='text-deal'><span className='label-deal'>To:</span> {deal.user_to}</div> */}
-            //         <div className='text-deal-date'> {deal?.datetime?.slice(0, 10)}</div>
-            //         {
-            //             deal.type_order === 'b' ?
-            //                 <div className='text-deal-request-from-b text-nowrap'>
-            //                     Покупка
-            //                 </div> :
-            //                 <div className='text-deal-request-from text-nowrap'>
-            //                     Продажа
-            //                 </div>
-            //         }
-            //     </div>
-            //     <div className='deal-col-2'>
-            //         <div className='text-deal-quantity mr-17'>{deal.quantity} USDT</div>
-            //         <div className='text-deal-q-fiat'>${deal.quantity}</div>
-            //         {/* <div className='text-deal text-nowrap'><span className='label-deal'>Статус: </span> 
-            // 				{
-            // 					deal.status === 'request' ? 'Запрос':
-            // 					deal.status === 'pay' ? 'Ожидание оплаты':
-            //                     deal.status === 'cancel' ? 'Отменена':
-            // 					'Завершена'
-            // 				}
-            // 			</div> */}
-            //     </div>
-            // </div>
-
-            // deal?.datetime?.slice(0, 10)
 
             <div key={index} className={`row-2 a-c ${deal.type_order === 'b' ? 'color-bg-deal' : 'color-bg-deal-r'} h-77 p-17 mt-20`} onClick={() => { handleClickDeal(deal) }}>
                 <div className='h-100'>
                     <div className='deal-text mt-18'>{dateConvert(deal?.datetime)}</div>
                     <div className={true ? 'deal-text-2 color-deal-text mt-10' : 'mt-10 deal-text-2 color-deal-r-text'}>
-                        {deal.type_order === 'b' ? 'Покупка' : 'Продажа'}
+                        { 
+                            (deal.type_order === 'b' && deal.id_from.toString() === user_id.toString()) || (deal.type_order === 's' && deal.id_to.toString() === user_id.toString()) ? 'Покупка' : 'Продажа'}
                     </div>
                 </div>
                 <div className='h-100'>
@@ -115,7 +93,26 @@ export function Ptp(props) {
         )
     })
 
+    function getSortedOrders(orders) {
+        let arr = orders.slice()
+        let price1 = 0
+        let price2 = 0
+        for (let i = 0; i < arr.length - 1; i++) {
+            for (let j = i + 1; j < arr.length; j++) {
+                price1 = (arr[i].type_price_id !== 2 ? arr[i].price / (arr[i].currency_fiat_id === 1 ? rub_dollar : 1) : price_market * arr[i].percent_price / 100)
+                price2 = (arr[j].type_price_id !== 2 ? arr[j].price / (arr[j].currency_fiat_id === 1 ? rub_dollar : 1) : price_market * arr[j].percent_price / 100)
 
+
+                if (price2 < price1) {
+                    const obj = arr[i]
+                    arr[i] = arr[j]
+                    arr[j] = obj
+                }
+
+            }
+        }
+        return arr
+    }
 
     // function handleClickOrder(order_id) {
     //     dispatch(setCurrentOrderId(order_id))
@@ -170,13 +167,13 @@ export function Ptp(props) {
 
 
     const menu_market =
-        <div className='row button-trade-menu'>
+        <div className='row button-trade-menu' onClick={handleClickMarket}>
             {/* <div className='trade-menu-user-col'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person-fill" viewBox="0 0 16 16">
                     <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
                 </svg>
             </div> */}
-            <div className='trade-menu-text-col' onClick={handleClickMarket}>
+            <div  className='trade-menu-text-col' >
                 Маркет
             </div>
             {/* {arrow_right} */}
@@ -238,6 +235,20 @@ export function Ptp(props) {
         tg.onEvent('backButtonClicked', backScreen)
         return () => { tg.offEvent('backButtonClicked', backScreen) }
     },)
+
+
+    useEffect(() => {
+        parsePrice({}, (data) => {
+            dispatch(setPriceMarket(data.price_market))
+            dispatch(setPriceMarketTRX(data.price_market_trx))
+            dispatch(setRubDollar(data.rub_dollar))
+            getOrders({ user_id: '' }, (data) => {
+                const sorted_orders = getSortedOrders(data.orders)
+                dispatch(setOrders(sorted_orders))
+                dispatch(setQuantityOrders(data.orders.length))
+            })
+        })
+    }, []);
     return (
         <>
 

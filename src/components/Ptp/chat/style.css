@@ -94,6 +94,8 @@
 .container-messages {
     height: 80vh;
     overflow: scroll;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .msg-chat {

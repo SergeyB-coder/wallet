@@ -59,6 +59,7 @@ export function ScreenBuy (props) {
                 type_order: props?.buyOrder.type,
                 method_pay_id: is_buy ? listMethodsPay[indexMethodPay].method_pay_id_taker: listMethodsPay[indexMethodPay].method_pay_id
             }, (data) => {
+                console.log('sendBuy res', data)
                 navigate('/deal/' + data.deal_id.toString(), {replace: true})
             })
         }
