@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBalance, getTransactions, getUserData } from './homeApi';
-import { selectBalance, selectBalanceTRX, selectBalanceTRXv, selectBalanceV, selectFirstRun, selectNameUser, setAddress, setAddressTRX, setBalance, setBalanceTRX, setBalanceTRXv, setBalanceV, setFirstRun, setNameUser } from './homeSlice';
+import { createWalletBit, getBalance, getTransactions, getUserData } from './homeApi';
+import { selectBalance, selectBalanceTRX, selectBalanceTRXv, selectBalanceV, selectFirstRun, selectNameUser, setAddress, setAddressBTC, setAddressTRX, setBalance, setBalanceBTC, setBalanceTRX, setBalanceTRXv, setBalanceV, setFirstRun, setNameUser } from './homeSlice';
 import { MenuButtons } from './menubuttons';
 import { useTelegram } from '../../hooks/useTelegram';
 import { svg_bep1, svg_binance, svg_btc, svg_tron1 } from '../../const/svgs';
@@ -14,7 +14,7 @@ import { selectPriceMarket, selectPriceMarketTRX, setPriceMarket, setPriceMarket
 
 
 export function Home() {
-	const { user_id, chat_id, first_name } = useTelegram()
+	const { user_id, chat_id, first_name, language_code } = useTelegram()
 
 	const dispatch = useDispatch()
 	// const navigate = useNavigate()
@@ -61,6 +61,10 @@ export function Home() {
 	}
 
 	useEffect(() => {
+		console.log('language_code ', language_code)
+	}, [language_code]);
+
+	useEffect(() => {
 		// console.log('init_data', init_data, user_id)
 
 		const local_balance = localStorage.getItem('balance')
@@ -101,9 +105,12 @@ export function Home() {
 			dispatch(setFirstRun(false))
 			dispatch(setAddress(data.address))
 			dispatch(setAddressTRX(data.address_trx))
+			dispatch(setAddressBTC(data.address_btc))
 			dispatch(setBalance(data.balance))
 			dispatch(setBalanceV(data.balance_v))
 			dispatch(setBalanceTRX(data.balance_trx))
+			dispatch(setBalanceBTC(1))
+			// dispatch(setBalanceBTC(data.balance_btc))
 			dispatch(setBalanceTRXv(data.balance_trx_v))
 			dispatch(setNameUser(data.name_user))
 			localStorage.setItem('name_user', data.name_user)
@@ -149,7 +156,7 @@ export function Home() {
 					<div className='home-container-balance h-230'>
 						<div className='d-flex justify-content-center '>
 							<div className='row d-flex justify-content-between align-items-center mt-30 title-balance' >
-								<div className='balance-label'>Ваш баланс</div>
+								<div className='balance-label' onClick={() => createWalletBit((d)=> {})}>Ваш баланс</div>
 								<div className='bottom-balance'>
 									{name_user}
 									{/* <span className='bottom-balance-percent'>+32%</span> */}

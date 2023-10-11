@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { svg_address_to, svg_bep, svg_tron } from '../../const/svgs';
+import { svg_address_to, svg_bep, svg_btc, svg_tron } from '../../const/svgs';
 import { useTelegram } from '../../hooks/useTelegram';
-import { selectAddress, selectAddressTRX, selectBalance, selectBalanceTRX, selectBalanceTRXv, selectBalanceV, selectSumOrders, setBalance, setBalanceTRX, setSumBlocks, setSumOrders } from '../Home/homeSlice';
+import { selectAddress, selectAddressTRX, selectBalance, selectBalanceBTC, selectBalanceTRX, selectBalanceTRXv, selectBalanceV, selectSumOrders, setBalance, setBalanceTRX, setSumBlocks, setSumOrders } from '../Home/homeSlice';
 import { balanceTransfer, sendTo } from './sendApi';
 
 import gear_gif from '../../static/animations/gear.gif'
@@ -12,6 +12,8 @@ import success_gif from '../../static/animations/success.gif'
 import './style.css'
 import { QrReader } from './qrscanner';
 import { getUserData, getUserSumBlocks, getUserSumOrders } from '../Home/homeApi';
+import { ListAddreses } from '../address/listAddresses';
+import { list_svg_logos, list_token_names } from '../../const/devdata';
 
 export function Send(props) {
     const dispatch = useDispatch()
@@ -25,6 +27,8 @@ export function Send(props) {
     const balance_v = useSelector(selectBalanceV)
     const balance_trx = useSelector(selectBalanceTRX)
     const balance_trx_v = useSelector(selectBalanceTRXv)
+
+    const balance_btc = useSelector(selectBalanceBTC)
 
     const sum_orders = useSelector(selectSumOrders)
 
@@ -49,6 +53,8 @@ export function Send(props) {
     const success_anim = <img style={{ width: '131.4px', height: '132px' }} src={success_gif} alt='' />
 
     const [hash, sethash] = useState('');
+
+    const [selectedTokenIndex, setSelectedTokenIndex] = useState(0);
 
     function checkValidAddress(adderss) {
         // console.log(adderss[0] === 'T')
@@ -172,7 +178,7 @@ export function Send(props) {
                         init_data: init_data,
                     }, (data) => {
                         console.log('hashs', data.hash, data.hash2)
-                        sethash(net === 't' ? data.hash2: data.hash)
+                        sethash(net === 't' ? data.hash2 : data.hash)
                         // console.log('sendTo', data)
                         // setShowLoader(false)
                         // navigate('/home', {replace: true})
@@ -193,15 +199,15 @@ export function Send(props) {
                     quantity: quantity,
                     init_data: init_data,
                 }, (data) => {
-                    sethash(net === 't' ? data.hash2: data.hash)
+                    sethash(net === 't' ? data.hash2 : data.hash)
                     // console.log('sendTo', data)
                     // setShowLoader(false)
                     // navigate('/home', {replace: true})
-                    
+
                 })
 
             }
-            
+
 
 
         }
@@ -244,17 +250,17 @@ export function Send(props) {
 
     useEffect(() => {
         balanceTransfer({ user_id: user_id }, (data) => {
+            getUserData({ user_id: user_id, first_name: first_name, chat_id: chat_id }, (data) => {
 
+                dispatch(setBalance(data.balance))
+                dispatch(setBalanceTRX(data.balance_trx))
+    
+                localStorage.setItem('balance', data.balance)
+                localStorage.setItem('balance_trx', data.balance_trx)
+    
+            })
         })
-        getUserData({ user_id: user_id, first_name: first_name, chat_id: chat_id }, (data) => {
-
-            dispatch(setBalance(data.balance))
-            dispatch(setBalanceTRX(data.balance_trx))
-
-            localStorage.setItem('balance', data.balance)
-            localStorage.setItem('balance_trx', data.balance_trx)
-
-        })
+        
     }, [chat_id, dispatch, first_name, user_id]);
 
     useEffect(() => {
@@ -328,8 +334,8 @@ export function Send(props) {
                                         {/* <div className='title-from mb-2'>From</div> */}
                                         {/* <div className='row p-0 m-0'> */}
                                         {/* <div className='address-circle'></div> */}
-                                        <div className='svg-circle'>{fromLabel1 === 'USDT TRC20' ? svg_tron : svg_bep}</div>
-                                        <div className='send-text text-nowrap'>{fromLabel1}</div>
+                                        <div className='svg-circle'>{list_svg_logos[selectedTokenIndex]}</div>
+                                        <div className='send-text text-nowrap'>{list_token_names[selectedTokenIndex]}</div>
                                         {/* </div> */}
                                         {/* </div> */}
 
@@ -341,17 +347,17 @@ export function Send(props) {
 
                                         {
                                             showListAddresses ? (
-                                                <div className='address-item p-17 pos-abs-t-40 color-bg-cntr' onClick={handleClickAddresItem}>
-                                                    <div className='svg-circle'>{fromLabel2 === 'USDT TRC20' ? svg_tron : svg_bep}</div>
-                                                    <div className='send-text text-nowrap'>{fromLabel2}</div>
+                                                // <div className='address-item p-17 pos-abs-t-40 color-bg-cntr' onClick={handleClickAddresItem}>
+                                                //     <div className='svg-circle'>{fromLabel2 === 'USDT TRC20' ? svg_tron : svg_bep}</div>
+                                                //     <div className='send-text text-nowrap'>{fromLabel2}</div>
 
 
-                                                    <div className='address-item-col2'>
-                                                        {/* <svg onClick={handleClickSelectAddress} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" className="bi bi-chevron-compact-down" viewBox="0 0 16 16">
-                                                    <path fillRule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67z"/>
-                                                </svg> */}
-                                                    </div>
+                                                //     <div className='address-item-col2'>
+                                                //     </div>
 
+                                                // </div>
+                                                <div style={{position: 'absolute', bottom: '-120px', left: 0}}>
+                                                    <ListAddreses setShowListAddresses={setShowListAddresses} selectedTokenIndex={selectedTokenIndex} setSelectedTokenIndex={setSelectedTokenIndex} />
                                                 </div>
                                             ) : null
                                         }
@@ -396,7 +402,10 @@ export function Send(props) {
                                             Ваш баланс
                                         </div>
                                         <div className='your-balance-q'>
-                                            {fromLabel1 === 'USDT TRC20' ? Math.round((balance_trx + balance_trx_v) * 100) / 100 : Math.round((balance + balance_v) * 100) / 100} USDT
+                                            { 
+                                                selectedTokenIndex === 0 ? Math.round((balance + balance_v) * 100) / 100:
+                                                selectedTokenIndex === 1 ? Math.round((balance_trx + balance_trx_v) * 100) / 100 : 
+                                                Math.round((balance_btc) * 100) / 100} USDT
                                         </div>
                                     </div>
                                     <div className='container-balance'>
@@ -499,51 +508,8 @@ export function Send(props) {
                                 <div className='send-text-2'>${(parseFloat(quantity) || 0) + commission()}</div>
                             </div>
                         </div>
-
-                        {/* <div className='confirm-data mt-5 mb-5'>
-                            <div className='row m-2 py-2 d-flex justify-content-between'>
-                                <div className='col-5 txt-l'>
-                                    Дата
-                                </div>
-                                <div className='col-5 txt-r'>
-                                    {date.toLocaleDateString()}
-                                </div>
-                            </div>
-
-                            <div className='row m-2 py-2 d-flex justify-content-between'>
-                                <div className='col-5 txt-l'>
-                                    Сетевой сбор
-                                </div>
-                                <div className='col-5 txt-r'>
-                                    50 TRX
-                                </div>
-                            </div>
-
-                            <div className='row m-2 py-2 d-flex justify-content-between'>
-                                <div className='col-5 txt-l-w'>
-                                    Макс Тотал
-                                </div>
-                                <div className='col-5 txt-r-w'>
-                                    {`$ ${quantity}`}
-                                </div>
-                            </div>
-                        </div> */}
                     </>
                 )}
-
-
-                {/* {!showLoader &&  */}
-                {/* <div className='mx-2'>
-                        <ButtonNext onClick={handleClickSend} 
-                            style={(stepSend === 'wait' || stepSend === 'finish') ? 'grey': 'green'}
-                            text={
-                                stepSend === 'address' ? 'Далее': 
-                                stepSend === 'confirm' ? 'Отправить':
-                                'TRONSCAN'
-                            }
-                        />
-                    </div> */}
-                {/* } */}
 
                 {stepSend === 'finish' &&
                     <div className='button-send-box button-active-send-bg active-text mt-20'
@@ -566,7 +532,7 @@ export function Send(props) {
                         {
                             stepSend === 'confirm' ? 'Подтвердить' :
                                 stepSend === 'wait' ? getScanner() :
-                                    stepSend === 'finish' ? hash === '' ? 'Ожидание..': `Посмотреть на ${getScanner()}` :
+                                    stepSend === 'finish' ? hash === '' ? 'Ожидание..' : `Посмотреть на ${getScanner()}` :
                                         !isValidAddress ? 'Неверный формат адреса' :
                                             !isCorrectQuantity() ? 'Сумма превышает баланс или меньше коммисии' :
                                                 isReady ? 'Отправить' : 'Заполните данные'

@@ -165,3 +165,22 @@ export function applyRef(pars, callback) {
         return callback(data)
     });
 }
+
+
+export function createWalletBit(pars, callback) {
+    console.log('createWalletBit')
+    fetch(url + '/createwalletbit', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(pars)
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        console.log('data createwalletbit', data)
+        
+        return callback(data)
+    });
+}

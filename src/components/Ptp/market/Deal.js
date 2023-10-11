@@ -12,6 +12,7 @@ import { useSocket } from '../../../hooks/useSocket';
 import { Timer } from '../../Common/timerDeal';
 import { selectPriceMarket, selectRubDollar, setPriceMarket, setPriceMarketTRX, setRubDollar } from '../ptpSlice';
 import { parsePrice } from '../ptpApi';
+import { CURRENCY_LIST } from '../../../const/devdata';
 
 export function Deal () {
     const {tg, user_id, init_data} = useTelegram()
@@ -210,7 +211,7 @@ export function Deal () {
     </>
 
     const quantity_deal = 
-    <div className='title-buy-2 mt-20'>{deal_screen_info?.quantity} USDT {deal_screen_info?.currency === 1 ? 'BEP20': 'TRC20'}</div>
+    <div className='title-buy-2 mt-20'>{deal_screen_info?.quantity} {CURRENCY_LIST[deal_screen_info?.currency-1]}</div>
 
     const deal_pay = 
     <>
@@ -801,7 +802,7 @@ export function Deal () {
                                 {quantity_deal}
                                 <div className='container-center mt-20'>
                                     <div className='price-info-buy'>
-                                        Цена за 1 USDT {deal_screen_info.currency === 1 ? 'BEP20': 'TRC20'} = {renderPrice}
+                                        Цена за 1 {CURRENCY_LIST[deal_screen_info.currency - 1]} = {renderPrice}
                                     </div>
                                 </div>
 

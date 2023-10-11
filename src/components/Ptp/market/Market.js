@@ -212,7 +212,7 @@ export function Market() {
                     <>
                         <div className='container-filter-sale-buy'>
                             <div className='text-market'>
-                                Маркет
+                                Маркет {listFilterOrders[0]}
                             </div>
 
                             <div className='container-buy-sale'>

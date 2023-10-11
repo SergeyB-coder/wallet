@@ -1,6 +1,15 @@
+import { svg_bep, svg_tron, svg_btc } from './svgs';
+
 export const CURRENCY_LIST = [
     'USDT BEP20',
-    'USDT TRC20'
+    'USDT TRC20',
+    'BTC Bitcoin'
+]
+
+export const CURRENCY_LIST_SHORT = [
+    'USDT',
+    'USDT',
+    'BTC'
 ]
 
 export const CURRENCY_FIAT_LIST = [
@@ -30,3 +39,8 @@ export const METHOD_PAY_LIST = [
     'QIWI',
     'VTB'
 ]
+
+
+
+export const list_svg_logos = [svg_bep, svg_tron, svg_btc]
+export const list_token_names = ['USDT BEP20', 'USDT TRC20', 'BTC (bitcoin)']

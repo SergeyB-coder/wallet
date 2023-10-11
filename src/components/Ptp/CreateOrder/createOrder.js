@@ -7,7 +7,7 @@ import { CreateOrder2 } from './createorder2';
 import { CreateOrder4 } from './createorder4';
 import { CreateOrder5 } from './createorder5';
 import { createOrder, parsePrice } from '../ptpApi';
-import { selectComment, selectCurrencyFiat, selectCurrencyOrder, selectLimitOrder, selectMethodPay, selectPercentPrice, selectPrice, selectPriceType, selectQuantityOrder, selectTimeLimit, selectTypeOrder, setPriceMarket, setPriceMarketTRX, setRubDollar } from '../ptpSlice';
+import { selectComment, selectCurrencyFiat, selectCurrencyOrder, selectLimitOrder, selectMethodPay, selectPercentPrice, selectPrice, selectPriceType, selectQuantityOrder, selectTimeLimit, selectTypeOrder, setPriceMarket, setPriceMarketBTC, setPriceMarketTRX, setRubDollar } from '../ptpSlice';
 import { CreateOrder3 } from './createorder3';
 import { selectMethodsPay } from '../settings_pay/settingsPaySlice';
 import { selectBackStepCreateOrder } from '../market/marketSlice';
@@ -136,6 +136,7 @@ export function CreateOrder() {
         parsePrice({}, (data) => {
             dispatch(setPriceMarket(data.price_market))
             dispatch(setPriceMarketTRX(data.price_market_trx))
+            dispatch(setPriceMarketBTC(data.res_btc.data.last))
             dispatch(setRubDollar(data.rub_dollar))            
         })
     }, [dispatch]);

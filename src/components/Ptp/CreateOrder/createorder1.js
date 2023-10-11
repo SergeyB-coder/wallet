@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CURRENCY_FIAT_LIST, CURRENCY_LIST, PRICE_TYPES } from '../../../const/devdata';
+import { CURRENCY_FIAT_LIST, CURRENCY_LIST, CURRENCY_LIST_SHORT, PRICE_TYPES } from '../../../const/devdata';
 import { Selecter } from '../../Common/selecter';
-import { selectBalance, selectBalanceTRX, selectBalanceTRXv, selectBalanceV, selectSumOrders } from '../../Home/homeSlice';
+import { selectBalance, selectBalanceBTC, selectBalanceTRX, selectBalanceTRXv, selectBalanceV, selectSumOrders } from '../../Home/homeSlice';
 // import { ButtonNext } from '../../Common/buttonNext';
 import './style.css'
 
-import { selectCurrencyFiat, selectCurrencyOrder, selectPriceType, selectLimitOrder, selectPercentPrice, selectPrice, selectPriceMarket, selectQuantityOrder, selectTypeOrder, setCurrencyFiat, setCurrencyOrder, setPriceType, setLimitOrder, setPercentPrice, setPrice, setQuantityOrder, setTypeOrder, selectRubDollar, setTimeLimit, selectTimeLimit } from '../ptpSlice';
+import { selectCurrencyFiat, selectCurrencyOrder, selectPriceType, selectLimitOrder, selectPercentPrice, selectPrice, selectPriceMarket, selectQuantityOrder, selectTypeOrder, setCurrencyFiat, setCurrencyOrder, setPriceType, setLimitOrder, setPercentPrice, setPrice, setQuantityOrder, setTypeOrder, selectRubDollar, setTimeLimit, selectTimeLimit, selectPriceMarketBTC } from '../ptpSlice';
 import { useState } from 'react';
 
 export function CreateOrder1(props) {
@@ -23,12 +23,14 @@ export function CreateOrder1(props) {
 
     const percent_price = useSelector(selectPercentPrice)
     const price_market = useSelector(selectPriceMarket)
+    const price_market_btc = useSelector(selectPriceMarketBTC)
     const rub_dollar = useSelector(selectRubDollar)
 
     const balance = useSelector(selectBalance)
     const balance_v = useSelector(selectBalanceV)
     const balance_trx = useSelector(selectBalanceTRX)
     const balance_trx_v = useSelector(selectBalanceTRXv)
+    const balance_btc = useSelector(selectBalanceBTC)
 
     const currency_order = useSelector(selectCurrencyOrder)
     // const priceType = useSelector(selectPriceType)
@@ -65,13 +67,14 @@ export function CreateOrder1(props) {
 
 
     function handleClickCurrencyItem(index) {
-        // console.log(index)
+        console.log(index)
         dispatch( setCurrencyOrder(index + 1) )
     }
 
     function getCurrentBalance() {
         if (currency_order === 2) return parseFloat(balance_trx+balance_trx_v)
-        else return parseFloat(balance + balance_v)
+        else if (currency_order === 1) return parseFloat(balance + balance_v)
+        else return parseFloat(balance_btc)
     }
 
     function isInputData () {
@@ -225,7 +228,7 @@ export function CreateOrder1(props) {
                     Цена на рынке
                 </div>
                 <div className='your-balance-q'>
-                    {Math.round((price_market * (currencyFiat === 1 ? rub_dollar: 1))*1000)/1000} {CURRENCY_FIAT_LIST[currencyFiat - 1]}
+                    {Math.round(((currency_order === 3 ? price_market_btc: price_market) * (currencyFiat === 1 ? rub_dollar: 1))*1000)/1000} {CURRENCY_FIAT_LIST[currencyFiat - 1]}
                 </div>
             </div>
             <div className='container-balance'>
@@ -233,7 +236,7 @@ export function CreateOrder1(props) {
                     Ваша цена
                 </div>
                 <div className='your-balance-q'>
-                    {Math.round((price_market * (currencyFiat === 1 ? rub_dollar: 1))*10*percent_price)/1000} {CURRENCY_FIAT_LIST[currencyFiat - 1]}
+                    {Math.round(((currency_order === 3 ? price_market_btc: price_market) * (currencyFiat === 1 ? rub_dollar: 1))*10*percent_price)/1000} {CURRENCY_FIAT_LIST[currencyFiat - 1]}
                 </div>
             </div>
         </div>
@@ -260,7 +263,7 @@ export function CreateOrder1(props) {
                     Цена на рынке
                 </div>
                 <div className='your-balance-q'>
-                    {Math.round((price_market * (currencyFiat === 1 ? rub_dollar: 1))*1000)/1000} {CURRENCY_FIAT_LIST[currencyFiat - 1]}
+                    {Math.round(( ( currency_order === 3 ? price_market_btc: price_market) * (currencyFiat === 1 ? rub_dollar: 1))*1000)/1000} {CURRENCY_FIAT_LIST[currencyFiat - 1]}
                 </div>
             </div>
         </div>  
@@ -280,11 +283,12 @@ export function CreateOrder1(props) {
         // </div>
         <div>
             <div className='send-address'>
-                <input className={isCorrectQuantity() ? 'address-to-input-2': 'address-to-input-2 not-valid'} type='number' placeholder='0 USDT' onChange={handleChangeQuantityOrder} value={quantity_order}/>
+                <input className={isCorrectQuantity() ? 'address-to-input-2': 'address-to-input-2 not-valid'} type='number' placeholder={'0 '+ CURRENCY_LIST_SHORT[currency_order-1] } onChange={handleChangeQuantityOrder} value={quantity_order}/>
                     
                 <div className='address-item-col2'>
                     <div style={{color: 'var(--text-mini)'}}>
-                        USDT
+                        {CURRENCY_LIST_SHORT[currency_order-1] }
+                        {/* USDT */}
                     </div>
                 </div>
                 
@@ -295,7 +299,11 @@ export function CreateOrder1(props) {
                     Ваш баланс
                 </div>
                 <div className='your-balance-q'>
-                    {currency_order === 1 ? balance + balance_v: balance_trx + balance_trx_v} USDT
+                    {
+                        currency_order === 1 ? balance + balance_v: 
+                        currency_order === 2 ? balance_trx + balance_trx_v:
+                        balance_btc
+                    } {CURRENCY_LIST_SHORT[currency_order-1]}
                 </div>
             </div>
             <div className='container-balance'>

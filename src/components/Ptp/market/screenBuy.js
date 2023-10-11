@@ -9,6 +9,7 @@ import { selectQuantityBuy, setMarketScreen, setQuantityBuy } from './marketSlic
 import { selectBalance, selectBalanceTRX, selectBalanceTRXv, selectNameUser } from '../../Home/homeSlice';
 import {  selectPriceMarket, selectRubDollar } from '../ptpSlice';
 import { setBackScreen, setNewMethod, setSelectedCompanyIndex } from '../settings_pay/settingsPaySlice';
+import { CURRENCY_LIST, CURRENCY_LIST_SHORT } from '../../../const/devdata';
 
 export function ScreenBuy (props) {
     const showMethodsPay = props.showMethodsPay
@@ -155,7 +156,7 @@ export function ScreenBuy (props) {
         <>
         {   showMethodsPay ?
             <div>
-                <div onClick={backScreen}>hhh</div>
+                {/* <div onClick={backScreen}>hhh</div> */}
                 <div style={{height: '43vh'}} className='container-list-companies overflow-auto mb-3'>
                     {listMethodsPay.map ((method, index) => {
                         return (
@@ -188,11 +189,13 @@ export function ScreenBuy (props) {
                         <input id='q_buy' className='buy-input text-buy' type='number' placeholder='0' 
                             onChange={handleChangeQuantity} value={quantity_buy}
                         />
-                        <span className='text-buy '>USDT</span>
+                        <span className='text-buy '>{CURRENCY_LIST_SHORT[props.buyOrder.currency_id-1]}</span>
                     </div>
 
                     <div className='container-center mt-20'>
-                        <div className='price-info-buy'>Цена за 1 USDT {props.buyOrder.currency_id === 1 ? 'BEP20': 'TRC20'} = {(props.buyOrder.type_price_id === 1 ? props.buyOrder.price: Math.round(price_market * (props.buyOrder.currency_fiat_id === 1 ? rub_dollar: 1) * props.buyOrder.percent_price)/100)} { props.buyOrder.currency_fiat_id === 1 ? ' руб': ' USD'}</div>
+                        <div className='price-info-buy'>Цена за 1 {CURRENCY_LIST[props.buyOrder.currency_id-1] + ' '} 
+                            {/* {props.buyOrder.currency_id === 1 ? 'BEP20': 'TRC20'} */}
+                             = {(props.buyOrder.type_price_id === 1 ? props.buyOrder.price: Math.round(price_market * (props.buyOrder.currency_fiat_id === 1 ? rub_dollar: 1) * props.buyOrder.percent_price)/100)} { props.buyOrder.currency_fiat_id === 1 ? ' руб': ' USD'}</div>
                     </div>
 
                     {/* <div className='container-center mt-20'>
@@ -243,8 +246,9 @@ export function ScreenBuy (props) {
                                 </div>
                                 <div className='order-info-3'>
                                     {Math.round(100*props.buyOrder.limit_order/(props.buyOrder.type_price_id === 1 ? props.buyOrder.price: price_market * (props.buyOrder.currency_fiat_id === 1 ? rub_dollar: 1) * props.buyOrder.percent_price/100))/100} {' - '}
-                                    { props.buyOrder.quantity} USDT 
-                                    { props.buyOrder.currency_id === 1 ? ' BEP20': ' TRC20'}<br></br>
+                                    { props.buyOrder.quantity} {CURRENCY_LIST[props.buyOrder.currency_id-1]} 
+                                    {/* { props.buyOrder.currency_id === 1 ? ' BEP20': ' TRC20'} */}
+                                    <br></br>
                                     { props.buyOrder.limit_order}  {' - '}
                                     { Math.round(props.buyOrder.quantity * (props.buyOrder.type_price_id === 1 ? props.buyOrder.price: price_market * (props.buyOrder.currency_fiat_id === 1 ? rub_dollar: 1) * props.buyOrder.percent_price/100))}
                                     { props.buyOrder.currency_fiat_id === 1 ? ' руб': ' USD'}

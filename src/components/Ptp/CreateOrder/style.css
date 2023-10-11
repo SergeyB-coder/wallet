@@ -369,6 +369,7 @@
 .order-settings-container-item {
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .check-order-container-item {

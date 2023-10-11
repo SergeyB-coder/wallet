@@ -3,10 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   address: '',
   address_trx: '',
+  address_btc: '',
   balance: 0,
   balance_v: 0,
   balance_trx: 0,
   balance_trx_v: 0,
+  balance_btc: 0,
   user_deals: [1, 1, 1],
   name_user: '',
   first_run: true,
@@ -19,6 +21,12 @@ export const homeSlice = createSlice({
   name: 'home',
   initialState,
   reducers: {
+    setBalanceBTC: (state, action) => {
+      state.balance_btc = action.payload;
+    },
+    setAddressBTC: (state, action) => {
+      state.address_btc = action.payload;
+    },
     setSumBlocks: (state, action) => {
       state.sum_blocks = action.payload;
     },
@@ -55,7 +63,7 @@ export const homeSlice = createSlice({
   },
 });
 
-export const {setBalanceV, setSumBlocks, setSumOrders, setFirstRun, setNameUser, setAddress, setAddressTRX, setBalance, setBalanceTRX, setBalanceTRXv, setUserDeals } = homeSlice.actions;
+export const {setBalanceBTC, setAddressBTC, setBalanceV, setSumBlocks, setSumOrders, setFirstRun, setNameUser, setAddress, setAddressTRX, setBalance, setBalanceTRX, setBalanceTRXv, setUserDeals } = homeSlice.actions;
 
 export const selectAddress = (state) => state.home.address;
 export const selectAddressTRX = (state) => state.home.address_trx;
@@ -68,6 +76,8 @@ export const selectFirstRun = (state) => state.home.first_run;
 export const selectSumOrders = (state) => state.home.sum_orders;
 export const selectSumBlocks = (state) => state.home.sum_blocks;
 export const selectBalanceV = (state) => state.home.balance_v;
+export const selectBalanceBTC = (state) => state.home.balance_btc;
+export const selectAddressBTC = (state) => state.home.address_btc;
 
 
 export default homeSlice.reducer;
