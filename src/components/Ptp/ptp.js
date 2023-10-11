@@ -13,17 +13,31 @@ import { parsePrice } from './ptpApi';
 import { selectPriceMarket, selectRubDollar, setPriceMarket, setPriceMarketTRX, setRubDollar } from './ptpSlice';
 import { getOrders } from './market/marketApi';
 import { setOrders, setQuantityOrders } from './market/marketSlice';
+import { dictionary } from '../../const/dictionary';
 
 export function Ptp(props) {
     const { tg } = useTelegram()
-    const { user_id } = useTelegram()
+    const { user_id, language_code } = useTelegram()
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const price_market = useSelector(selectPriceMarket)
     const rub_dollar = useSelector(selectRubDollar)
 
-    // const [content, setContent] = useState('orders') // orders, deals, complete_deal
+    //labels
+    const create_ad = language_code === 'ru' ? dictionary.p2p.create_ad.ru: dictionary.p2p.create_ad.en
+    const support_label = language_code === 'ru' ? dictionary.p2p.support.ru: dictionary.p2p.support.en
+    const market_label = language_code === 'ru' ? dictionary.p2p.market.ru: dictionary.p2p.market.en
+    const no_commission = language_code === 'ru' ? dictionary.p2p.no_commission.ru: dictionary.p2p.no_commission.en
+    const personal_area = language_code === 'ru' ? dictionary.p2p.personal_area.ru: dictionary.p2p.personal_area.en
+    const latest_deals = language_code === 'ru' ? dictionary.p2p.latest_deals.ru: dictionary.p2p.latest_deals.en
+    const purchase = language_code === 'ru' ? dictionary.p2p.purchase.ru: dictionary.p2p.purchase.en
+    const sale = language_code === 'ru' ? dictionary.p2p.sale.ru: dictionary.p2p.sale.en
+    const request = language_code === 'ru' ? dictionary.p2p.request.ru: dictionary.p2p.request.en
+    const waiting_payment = language_code === 'ru' ? dictionary.p2p.waiting_payment.ru: dictionary.p2p.waiting_payment.en
+    const canceled = language_code === 'ru' ? dictionary.p2p.canceled.ru: dictionary.p2p.canceled.en
+    const completed = language_code === 'ru' ? dictionary.p2p.completed.ru: dictionary.p2p.completed.en
+    
 
     const handleClickCreateOrder = () => {
         navigate('/createorder', { replace: true })
@@ -74,17 +88,17 @@ export function Ptp(props) {
                     <div className='deal-text mt-18'>{dateConvert(deal?.datetime)}</div>
                     <div className={true ? 'deal-text-2 color-deal-text mt-10' : 'mt-10 deal-text-2 color-deal-r-text'}>
                         { 
-                            (deal.type_order === 'b' && deal.id_from.toString() === user_id.toString()) || (deal.type_order === 's' && deal.id_to.toString() === user_id.toString()) ? 'Покупка' : 'Продажа'}
+                            (deal.type_order === 'b' && deal.id_from.toString() === user_id.toString()) || (deal.type_order === 's' && deal.id_to.toString() === user_id.toString()) ? purchase : sale}
                     </div>
                 </div>
                 <div className='h-100'>
                     <div className='text-deal-quantity color-q-text'>{deal.quantity} USDT</div>
                     <div className='deal-text-3 text-nowrap'>
                         {
-                            deal.status === 'request' ? 'Запрос' :
-                                deal.status === 'pay' ? 'Ожидание оплаты' :
-                                    deal.status === 'cancel' ? 'Отменена' :
-                                        'Завершена'
+                            deal.status === 'request' ? request :
+                                deal.status === 'pay' ? waiting_payment :
+                                    deal.status === 'cancel' ? canceled :
+                                    completed
                         }
                     </div>
                 </div>
@@ -139,7 +153,7 @@ export function Ptp(props) {
     const create_order =
         <div className='row button-trade-menu'>
             <div className='trade-menu-text-col' onClick={handleClickCreateOrder}>
-                Создать объявление
+                {create_ad}
             </div>
             <div className='trade-menu-text-col-2'>
 
@@ -159,7 +173,7 @@ export function Ptp(props) {
     const support =
         <div className='row button-trade-menu'>
             <div className='trade-menu-text-col' onClick={() => { window.open('https://t.me/fastex_sup', '_blank')}}>
-                Поддержка
+                {support_label}
             </div>
             <div className='trade-menu-text-col-2'>
 
@@ -175,25 +189,19 @@ export function Ptp(props) {
                 </svg>
             </div> */}
             <div  className='trade-menu-text-col' >
-                Маркет
+                {market_label}
             </div>
             {/* {arrow_right} */}
             <div className='trade-menu-text-col-2'>
-                Без комиссии
+                {no_commission}
             </div>
         </div>
 
     const person =
         <div className='row button-trade-menu'>
-            {/* <div className='trade-menu-user-col'>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person-fill" viewBox="0 0 16 16">
-                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-                </svg>
-            </div> */}
             <div className='trade-menu-text-col' onClick={handleClickPerson}>
-                Личный кабинет
+                {personal_area}
             </div>
-            {/* {arrow_right} */}
             <div className='trade-menu-text-col-2'>
 
             </div>
@@ -269,7 +277,7 @@ export function Ptp(props) {
             </div>
             <div className='d-flex justify-content-center'>
                 <div className='container-menu'>
-                    < div className='title-last-deals'>Последние сделки</div>
+                    < div className='title-last-deals'>{latest_deals}</div>
                 </div>
             </div>
 

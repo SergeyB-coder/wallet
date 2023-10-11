@@ -8,11 +8,17 @@ import { useTelegram } from '../../hooks/useTelegram';
 import { getWallet, getWalletTRX } from './homeApi';
 import { selectAddress, selectAddressTRX, setAddress, setAddressTRX } from './homeSlice';
 import './style.css'
+import { dictionary } from '../../const/dictionary';
 
 export function MenuButtons() {
     // const user_id = '652065848'
     // const user_id = '222'
-    const { user_id } = useTelegram()
+    const { user_id, language_code } = useTelegram()
+
+    //labels
+	const get = language_code === 'ru' ? dictionary.home.menu_get.ru: dictionary.home.menu_get.en
+    const send = language_code === 'ru' ? dictionary.home.menu_send.ru: dictionary.home.menu_send.en
+
     const dispatch = useDispatch()
     const address = useSelector(selectAddress)
     const address_trx = useSelector(selectAddressTRX)
@@ -50,19 +56,11 @@ export function MenuButtons() {
         <>
             <div className='d-flex justify-content-center position-relative'>
                 <div className='row container-buttons m-0 p-0'>
-                    {/* <Button 
-                        text={'Получить'} 
-                        d_svg={'M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z'}
-                        fill_svg={"var(--btn-bg-color)"}
-                        onClick={handleClickAddress}
-                        type={'recieve'}
-                        // style={{ marginLeft: 20}}
-                    /> */}
 
                     <div className='button-svg'>
                         <div  onClick={handleClickAddress}>
                             {svg_receive}
-                            <div className='text-button-menu'>Получить</div>
+                            <div className='text-button-menu'>{get}</div>
                         </div>                        
                     </div>
 
@@ -80,7 +78,7 @@ export function MenuButtons() {
                     <div className='button-svg'>
                         <div onClick={handleClickSend}>
                             {svg_send}
-                            <div className='text-button-menu'>Отправить</div>
+                            <div className='text-button-menu'>{send}</div>
                         </div>
                     </div>
                     

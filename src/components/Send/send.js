@@ -14,11 +14,12 @@ import { QrReader } from './qrscanner';
 import { getUserData, getUserSumBlocks, getUserSumOrders } from '../Home/homeApi';
 import { ListAddreses } from '../address/listAddresses';
 import { list_svg_logos, list_token_names } from '../../const/devdata';
+import { dictionary } from '../../const/dictionary';
 
 export function Send() {
     const dispatch = useDispatch()
     const [date, setDate] = useState(new Date())
-    const { tg, user_id, first_name, chat_id, init_data } = useTelegram()
+    const { tg, user_id, first_name, chat_id, init_data, language_code } = useTelegram()
     const navigate = useNavigate()
     const address = useSelector(selectAddress)
     const address_trx = useSelector(selectAddressTRX)
@@ -46,6 +47,24 @@ export function Send() {
     const [showQrScanner, setShowQrScanner] = useState(false);
     const [isReady, setIsReady] = useState(false);
     const [isValidAddress, setIsValidAddress] = useState(true);
+
+
+    //labels
+    const send_title = language_code === 'ru' ? dictionary.send.send.ru: dictionary.send.send.en
+    const yourbalance = language_code === 'ru' ? dictionary.send.yourbalance.ru: dictionary.send.yourbalance.en
+    const amount_adv = language_code === 'ru' ? dictionary.send.amount_adv.ru: dictionary.send.amount_adv.en
+    const amount_send_comm = language_code === 'ru' ? dictionary.send.amount_send_comm.ru: dictionary.send.amount_send_comm.en
+    const fill_details = language_code === 'ru' ? dictionary.send.fill_details.ru: dictionary.send.fill_details.en
+    const invalid_address = language_code === 'ru' ? dictionary.send.invalid_address.ru: dictionary.send.invalid_address.en
+    const wrong_amount = language_code === 'ru' ? dictionary.send.wrong_amount.ru: dictionary.send.wrong_amount.en
+    const confirm_transfer = language_code === 'ru' ? dictionary.send.confirm_transfer.ru: dictionary.send.confirm_transfer.en
+    const confirm = language_code === 'ru' ? dictionary.send.confirm_transfer.ru: dictionary.send.confirm_transfer.en
+    const expectation = language_code === 'ru' ? dictionary.send.expectation.ru: dictionary.send.expectation.en
+    const look_at = language_code === 'ru' ? dictionary.send.look_at.ru: dictionary.send.look_at.en
+    const assets = language_code === 'ru' ? dictionary.send.assets.ru: dictionary.send.assets.en
+    const recipient = language_code === 'ru' ? dictionary.send.recipient.ru: dictionary.send.recipient.en
+    const network_fee = language_code === 'ru' ? dictionary.send.network_fee.ru: dictionary.send.network_fee.en
+    const total = language_code === 'ru' ? dictionary.send.total.ru: dictionary.send.total.en
 
     const gear_anim = <img style={{ width: '131.4px', height: '132px' }} src={gear_gif} alt='' />
     const success_anim = <img style={{ width: '131.4px', height: '132px' }} src={success_gif} alt='' />
@@ -105,7 +124,7 @@ export function Send() {
     function isCorrectQuantity() {
         // console.log('getCurrentBalance()', getCurrentBalance(), sum_orders, quantity)
         // return ((parseFloat(quantity || 0) + sum_orders + (fromLabel1 === 'USDT TRC20' ? 3 : 0.5)) <= getCurrentBalance())
-        return ((parseFloat(quantity || 0) + 0 + (fromLabel1 === 'USDT TRC20' ? 3 : 0.5)) <= getCurrentBalance()) || true
+        return ((parseFloat(quantity || 0) + 0 + (fromLabel1 === 'USDT TRC20' ? 3 : 0.5)) <= getCurrentBalance())
     }
 
     const handleClickSend = () => {
@@ -278,8 +297,8 @@ export function Send() {
                 <div className='container-title mt-20'>
                     <div className='title-send' onClick={backScreen}>
                         {
-                            stepSend === 'address' ? 'Отправить' :
-                                stepSend === 'confirm' ? 'Подтвердите перевод' :
+                            stepSend === 'address' ? send_title :
+                                stepSend === 'confirm' ? confirm_transfer :
                                     stepSend === 'wait' ? 'Ожидайте статус' :
                                         'Транзакция завершена'
                         }
@@ -377,7 +396,7 @@ export function Send() {
 
                                     <div className='container-balance'>
                                         <div className='your-balance-text'>
-                                            Ваш баланс
+                                            {yourbalance}
                                         </div>
                                         <div className='your-balance-q'>
                                             { 
@@ -388,7 +407,7 @@ export function Send() {
                                     </div>
                                     <div className='container-balance'>
                                         <div className='your-balance-text'>
-                                            Сумма объявлений
+                                            {amount_adv}
                                         </div>
                                         <div className='your-balance-q'>
                                             {Math.round(sum_orders * 100) / 100} USDT
@@ -396,7 +415,7 @@ export function Send() {
                                     </div>
                                     <div className='container-balance'>
                                         <div className='your-balance-text'>
-                                            Сумма вывода / комиссия
+                                            {amount_send_comm}
                                         </div>
                                         <div className='your-balance-q'>
                                             {fromLabel1 === 'USDT TRC20' ? (quantity) : (quantity)} / {fromLabel1 === 'USDT TRC20' ? 3 : 0.5} USDT
@@ -412,28 +431,28 @@ export function Send() {
                 {stepSend === 'confirm' && (
                     <div className='color-bg-cntr h-162 pt-15 mt-20'>
                         <div className='row-2 p-17 h-29'>
-                            <div className='send-text-1'>Актив</div>
+                            <div className='send-text-1'>{assets}</div>
                             <div className='send-text-2'>{quantity} USDT</div>
                         </div>
 
                         {divider}
 
                         <div className='row-2 p-17 h-29'>
-                            <div className='send-text-1'>Получатель</div>
+                            <div className='send-text-1'>{recipient}</div>
                             <div className='send-text-2'>{addressTo.slice(0, 4) + '...' + addressTo.slice(28)}</div>
                         </div>
 
                         {divider}
 
                         <div className='row-2 p-17 h-29'>
-                            <div className='send-text-1'>Сетевой сбор</div>
+                            <div className='send-text-1'>{network_fee}</div>
                             <div className='send-text-2'>{fromLabel1 === 'USDT TRC20' ? '3 USDT' : '0.1 USDT'}</div>
                         </div>
 
                         {divider}
 
                         <div className='row-2 p-17 h-29 mt-6'>
-                            <div className='send-text-1'>Итого</div>
+                            <div className='send-text-1'>{total}</div>
                             <div className='send-text-2'>${parseFloat(quantity) + commission()}</div>
                         </div>
                     </div>
@@ -508,12 +527,12 @@ export function Send() {
                         }
                     >
                         {
-                            stepSend === 'confirm' ? 'Подтвердить' :
+                            stepSend === 'confirm' ? confirm :
                                 stepSend === 'wait' ? getScanner() :
-                                    stepSend === 'finish' ? hash === '' ? 'Ожидание..' : `Посмотреть на ${getScanner()}` :
-                                        !isValidAddress ? 'Неверный формат адреса' :
-                                            !isCorrectQuantity() ? 'Сумма превышает баланс или меньше коммисии' :
-                                                isReady ? 'Отправить' : 'Заполните данные'
+                                    stepSend === 'finish' ? hash === '' ? expectation : `${look_at} ${getScanner()}` :
+                                        !isValidAddress ? invalid_address :
+                                            !isCorrectQuantity() ? wrong_amount :
+                                                isReady ? send_title : fill_details
 
                         }
                     </div>

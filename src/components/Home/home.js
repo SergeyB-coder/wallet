@@ -9,8 +9,7 @@ import { useState } from 'react';
 import { Transactions } from './transactions';
 import { parsePrice } from '../Ptp/ptpApi';
 import { selectPriceMarket, selectPriceMarketTRX, setPriceMarket, setPriceMarketTRX, setRubDollar } from '../Ptp/ptpSlice';
-// import { Timer } from '../Common/timerDeal';
-// import { useNavigate } from 'react-router-dom';
+import { dictionary } from '../../const/dictionary';
 
 
 export function Home() {
@@ -37,6 +36,11 @@ export function Home() {
 	const [isHide, setIsHide] = useState(!first_run);
 
 	const [transactions, setTransactions] = useState([]);
+
+	//labels
+	const yourbalance = language_code === 'ru' ? dictionary.home.balance.ru:dictionary.home.balance.en
+	const token_management = language_code === 'ru' ? dictionary.home.token_management.ru:dictionary.home.token_management.en
+	
 
 	const handleClickBep = () => {
 		getTransactions({user_id: user_id, token: 'bep'}, (data) => {
@@ -156,7 +160,7 @@ export function Home() {
 					<div className='home-container-balance h-230'>
 						<div className='d-flex justify-content-center '>
 							<div className='row d-flex justify-content-between align-items-center mt-30 title-balance' >
-								<div className='balance-label' onClick={() => createWalletBit((d)=> {})}>Ваш баланс</div>
+								<div className='balance-label' onClick={() => createWalletBit((d)=> {})}>{yourbalance}</div>
 								<div className='bottom-balance'>
 									{name_user}
 									{/* <span className='bottom-balance-percent'>+32%</span> */}
@@ -184,7 +188,7 @@ export function Home() {
 					<MenuButtons />
 
 					<div className='d-flex justify-content-center'>
-						<div className='text-token-manage'>Управление токенами</div>
+						<div className='text-token-manage'>{token_management}</div>
 					</div>
 
 

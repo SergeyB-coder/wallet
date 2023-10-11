@@ -13,11 +13,12 @@ import './style.css'
 import { svg_share } from '../../../const/svgs';
 import { parsePrice } from '../ptpApi';
 import { selectPriceMarket, selectRubDollar, setPriceMarket, setPriceMarketTRX, setRubDollar } from '../ptpSlice';
+import { dictionary } from '../../../const/dictionary';
 
 
 export function Market() {
     const commission = 0.05
-    const { tg } = useTelegram()
+    const { tg, language_code } = useTelegram()
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -44,6 +45,19 @@ export function Market() {
     const [currentSelecter, setCurrentSelecter] = useState(''); //currency, fiat
 
     const [showMethodsPay, setShowMethodsPay] = useState(false);
+
+
+    //labels
+    const market_label = language_code === 'ru' ? dictionary.p2p.market.ru: dictionary.p2p.market.en
+    const buy_label = language_code === 'ru' ? dictionary.market.buy.ru: dictionary.market.buy.en
+    const sale_label = language_code === 'ru' ? dictionary.market.sale.ru: dictionary.market.sale.en
+    const all = language_code === 'ru' ? dictionary.market.all.ru: dictionary.market.all.en
+    const qty = language_code === 'ru' ? dictionary.market.qty.ru: dictionary.market.qty.en
+    const price_per = language_code === 'ru' ? dictionary.market.price_per.ru: dictionary.market.price_per.en
+    const transactions = language_code === 'ru' ? dictionary.market.transactions.ru: dictionary.market.transactions.en
+    const available = language_code === 'ru' ? dictionary.market.available.ru: dictionary.market.available.en
+    const limits = language_code === 'ru' ? dictionary.market.limits.ru: dictionary.market.limits.en
+    const payment_methods = language_code === 'ru' ? dictionary.market.payment_methods.ru: dictionary.market.payment_methods.en
 
     const backScreen = (() => {
         if (marketScreen === 'select_method') dispatch(setMarketScreen('orders'))
@@ -81,7 +95,7 @@ export function Market() {
         setIndexMethod(0)
         getCompaniesPay({ fiat_id: index + 1 }, (data) => {
             // console.log('getCompaniesPay', data)
-            dispatch(setCompaniesPay([{ name: 'Все' }, ...data.companies_pay]))
+            dispatch(setCompaniesPay([{ name: all }, ...data.companies_pay]))
         })
     }
 
@@ -182,9 +196,9 @@ export function Market() {
     useEffect(() => {
         getCompaniesPay({ fiat_id: currencyFiat }, (data) => {
             // console.log('getCompaniesPay', data)
-            dispatch(setCompaniesPay([{ name: 'Все' }, ...data.companies_pay]))
+            dispatch(setCompaniesPay([{ name: all }, ...data.companies_pay]))
         })
-    }, [currencyFiat, dispatch]);
+    }, [all, currencyFiat, dispatch]);
 
     // useEffect(() => {
 
@@ -212,7 +226,7 @@ export function Market() {
                     <>
                         <div className='container-filter-sale-buy'>
                             <div className='text-market'>
-                                Маркет {listFilterOrders[0]}
+                                {market_label}
                             </div>
 
                             <div className='container-buy-sale'>
@@ -222,7 +236,7 @@ export function Market() {
                                         setTypeOrderFilter('s')
                                     }}
                                 >
-                                    <div className={`selected-item-buy buy-sale-text ${typeOrderFilter === 's' && 'is_active'}`}>Купить</div>
+                                    <div className={`selected-item-buy buy-sale-text ${typeOrderFilter === 's' && 'is_active'}`}>{buy_label}</div>
                                 </div>
                                 <div className='filter-sale-buy-item'
                                     onClick={() => {
@@ -230,7 +244,7 @@ export function Market() {
                                         setTypeOrderFilter('b')
                                     }}
                                 >
-                                    <div className={`selected-item-sale buy-sale-text ${typeOrderFilter === 'b' && 'is_active'}`}>Продать</div>
+                                    <div className={`selected-item-sale buy-sale-text ${typeOrderFilter === 'b' && 'is_active'}`}>{sale_label}</div>
                                 </div>
                             </div>
                         </div>
@@ -293,7 +307,7 @@ export function Market() {
                             </div>
 
                             <div className='filter-item-quantity position-relative'>
-                                <input className='filter-input' type='number' placeholder='Кол-во' onChange={handleChangeFilterQuantity} value={filter_quantity} />
+                                <input className='filter-input' type='number' placeholder={qty} onChange={handleChangeFilterQuantity} value={filter_quantity} />
                             </div>
                         </div>
                     </>
@@ -318,7 +332,7 @@ export function Market() {
                                             {/* {order.currency_fiat_id === 1 ? 'RUB' : 'USD'} */}
                                             {CURRENCY_FIAT_LIST[order.currency_fiat_id - 1] || ''}
                                         </div>
-                                        <div className={order.type === 's' ? 'order-label' : 'mini-text-r'}>Цена за 1 {order.currency_id === 1 ? 'USDT BEP20' : 'USDT TRC20'}</div>
+                                        <div className={order.type === 's' ? 'order-label' : 'mini-text-r'}>{price_per} 1 {order.currency_id === 1 ? 'USDT BEP20' : 'USDT TRC20'}</div>
                                     </div>
 
                                     <div className='container-center a-c'>
@@ -326,7 +340,7 @@ export function Market() {
                                         <div className={order.type === 'b' ? 'order-sale ml-12' : 'order-buy ml-12'}
                                             onClick={() => { handleClickBuy(order) }}
                                         >
-                                            {order.type === 's' ? 'Купить' : 'Продать'}
+                                            {order.type === 's' ? buy_label : sale_label}
                                         </div>
                                     </div>
                                 </div>
@@ -339,7 +353,7 @@ export function Market() {
 
                                     <div className='order-info-2'>
                                         <span className='order-info-1'>
-                                            {(order.q_deals_maker || 0) + (order.q_deals_taker || 0)} сделок
+                                            {(order.q_deals_maker || 0) + (order.q_deals_taker || 0)} {transactions}
                                         </span>
                                         {Math.round(100 * ((order.q_deals_cancel_maker || 0) + (order.q_deals_cancel_taker || 0)) / ((order.q_deals_maker || 0) + (order.q_deals_taker || 0))) || 0} %
                                     </div>
@@ -351,7 +365,7 @@ export function Market() {
 
                                 <div className='order-row-1'>
                                     <div className='order-label-2'>
-                                        Доступно
+                                        {available}
                                     </div>
                                     <div className='order-info-3'>
                                         {order.quantity} USDT
@@ -364,11 +378,11 @@ export function Market() {
 
                                 <div className='order-row-1 h-30'>
                                     <div className='order-label-2'>
-                                        Лимиты
+                                        {limits}
                                     </div>
                                     <div className='order-info-3'>
                                         {`${Math.round(1000 * order.limit_order / (order.type_price_id !== 2 ? order.price : price_market * (order.currency_fiat_id === 1 ? rub_dollar : 1) * order.percent_price / 100)) / 1000} - ${Math.round(100 * (order.quantity - commission)) / 100} USDT`}<br></br>
-                                        {`${order.limit_order} - ${Math.round((order.quantity - commission) * (order.type_price_id !== 2 ? order.price : price_market * (order.currency_fiat_id === 1 ? rub_dollar : 1) * order.percent_price / 100) * 1000) / 1000} ${order.currency_fiat_id === 1 ? 'Руб' : '$'}`}
+                                        {`${order.limit_order} - ${Math.round((order.quantity - commission) * (order.type_price_id !== 2 ? order.price : price_market * (order.currency_fiat_id === 1 ? rub_dollar : 1) * order.percent_price / 100) * 1000) / 1000} ${order.currency_fiat_id === 1 ? 'Rub' : '$'}`}
                                     </div>
                                 </div>
 
@@ -391,7 +405,7 @@ export function Market() {
 
                                 <div className='order-row-1'>
                                     <div className='order-label-2'>
-                                        Методы оплаты
+                                        {payment_methods}
                                     </div>
                                     <div className='order-info-3'>
                                         {order.company}

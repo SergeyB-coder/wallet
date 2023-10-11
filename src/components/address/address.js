@@ -10,10 +10,11 @@ import { ListAddreses } from './listAddresses';
 
 
 import { list_svg_logos, list_token_names } from "../../const/devdata";
+import { dictionary } from '../../const/dictionary';
 
 
 export function Address (props) {
-    const {tg} = useTelegram()
+    const {tg, language_code} = useTelegram()
     const navigate = useNavigate()
     const address = useSelector(selectAddress)
     const address_trx = useSelector(selectAddressTRX)
@@ -25,16 +26,18 @@ export function Address (props) {
     const [showMessage, setShowMessage] = useState(false)
     
       
-    // const qr = new EthereumQRPlugin()
+    //labels
+	const address_your_wallet = language_code === 'ru' ? dictionary.get.address_your_wallet.ru: dictionary.get.address_your_wallet.en
+    const message_address1 = language_code === 'ru' ? dictionary.get.message_address1.ru: dictionary.get.message_address1.en
+    const message_address2 = language_code === 'ru' ? dictionary.get.message_address2.ru: dictionary.get.message_address2.en
+    const address_copied = language_code === 'ru' ? dictionary.get.address_copied.ru: dictionary.get.address_copied.en
+    const copy = language_code === 'ru' ? dictionary.get.copy.ru: dictionary.get.copy.en
+    const share = language_code === 'ru' ? dictionary.get.share.ru: dictionary.get.share.en
 
     const backScreen = () => {
         navigate('/', {replace: true})
         // navigate('/home', {replace: true})
     }
-
-    
-
-    
 
     const handleClickSelectAddress = () => {
         setShowListAddresses(!showListAddresses)
@@ -104,7 +107,7 @@ export function Address (props) {
                     </div>
 
                     <div className='label-address'>
-                        Адрес вашего кошелька
+                        {address_your_wallet}
                     </div>
 
                     <div className='address-text'
@@ -120,15 +123,14 @@ export function Address (props) {
                     </div>
 
                     <div className='message-address'>
-                        Отправляйте только Tether ({fromLabel1 !== 'USDT TRC20' ? 'BEP20':'TRC20'}) на этот адрес.
-                        Отправка любых других монет может привести к их безвозвратной потере.
+                        {message_address1} ({fromLabel1 !== 'USDT TRC20' ? 'BEP20':'TRC20'}) {message_address2}
                     </div>
 
                     
 
                     <div className='button-address-container'>
 
-                        {showMessage && <div className='address-copy-message'>Адрес скопирован!</div>}
+                        {showMessage && <div className='address-copy-message'>{address_copied}</div>}
 
                         <div className='address-copy-button'
                             onClick={() => {
@@ -140,10 +142,10 @@ export function Address (props) {
                                 setTimeout(() => {setShowMessage(false)}, 1000)
                             }}
                         >
-                            <label className='copy-label'>Скопировать</label>
+                            <label className='copy-label'>{copy}</label>
                         </div>
                         <div className='address-share-button'>
-                            <label className='share-label'>Поделиться</label>
+                            <label className='share-label'>{share}</label>
                         </div>
 
                     </div>

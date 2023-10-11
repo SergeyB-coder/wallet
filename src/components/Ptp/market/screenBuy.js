@@ -10,12 +10,13 @@ import { selectBalance, selectBalanceTRX, selectBalanceTRXv, selectNameUser } fr
 import {  selectPriceMarket, selectRubDollar } from '../ptpSlice';
 import { setBackScreen, setNewMethod, setSelectedCompanyIndex } from '../settings_pay/settingsPaySlice';
 import { CURRENCY_LIST, CURRENCY_LIST_SHORT } from '../../../const/devdata';
+import { dictionary } from '../../../const/dictionary';
 
 export function ScreenBuy (props) {
     const showMethodsPay = props.showMethodsPay
     const setShowMethodsPay = props.setShowMethodsPay
     const navigate = useNavigate()
-    const { user_id, init_data} = useTelegram()
+    const { user_id, init_data, language_code} = useTelegram()
     const dispatch = useDispatch()
 
     const name_user = useSelector(selectNameUser)
@@ -33,6 +34,16 @@ export function ScreenBuy (props) {
     // const [showMethodsPay, setShowMethodsPay] = useState(false);
     const [listMethodsPay, setListMethodsPay] = useState([]);
     const [indexMethodPay, setIndexMethodPay] = useState(9);
+
+    //labels
+    const you_buy = language_code === 'ru' ? dictionary.market.you_buy.ru: dictionary.market.you_buy.en
+    const price_per = language_code === 'ru' ? dictionary.market.price_per.ru: dictionary.market.price_per.en
+    const payment_methods = language_code === 'ru' ? dictionary.market.payment_methods.ru: dictionary.market.payment_methods.en
+    const limits = language_code === 'ru' ? dictionary.market.limits.ru: dictionary.market.limits.en
+    const choose = language_code === 'ru' ? dictionary.market.choose.ru: dictionary.market.choose.en
+    const message_buy = language_code === 'ru' ? dictionary.market.message_buy.ru: dictionary.market.message_buy.en
+    const amount_not_limit = language_code === 'ru' ? dictionary.market.amount_not_limit.ru: dictionary.market.amount_not_limit.en
+    const amount_exceeds_balance = language_code === 'ru' ? dictionary.market.amount_exceeds_balance.ru: dictionary.market.amount_exceeds_balance.en
 
     const is_buy = props.buyOrder.type === 'b'
 
@@ -174,7 +185,7 @@ export function ScreenBuy (props) {
             <div className='container-center'>
                 <div className='screen-buy-container mt-20'>
 
-                    <div className='title-buy'>{is_buy ? 'Вы продаете ': 'Вы покупаете у '} {props.buyOrder.first_name}</div>
+                    <div className='title-buy'>{is_buy ? 'Вы продаете ': you_buy} {props.buyOrder.first_name}</div>
 
                     <div className='container-buy-input mt-20'>
                         <input id='q_buy' className='buy-input text-buy' type='number' placeholder='0' 
@@ -184,7 +195,7 @@ export function ScreenBuy (props) {
                     </div>
 
                     <div className='container-center mt-20'>
-                        <div className='price-info-buy'>Цена за 1 {CURRENCY_LIST[props.buyOrder.currency_id-1] + ' '} 
+                        <div className='price-info-buy'>{price_per} 1 {CURRENCY_LIST[props.buyOrder.currency_id-1] + ' '} 
                             {/* {props.buyOrder.currency_id === 1 ? 'BEP20': 'TRC20'} */}
                              = {(props.buyOrder.type_price_id === 1 ? props.buyOrder.price: Math.round(price_market * (props.buyOrder.currency_fiat_id === 1 ? rub_dollar: 1) * props.buyOrder.percent_price)/100)} { props.buyOrder.currency_fiat_id === 1 ? ' руб': ' USD'}</div>
                     </div>
@@ -199,10 +210,10 @@ export function ScreenBuy (props) {
                         <div className='w-100'>
                             <div className='order-row-1' onClick={handleClickSelectMethodPay}>
                                 <div className='order-label-2'>
-                                    Методы оплаты
+                                    {payment_methods}
                                 </div>
                                 <div className='order-buy_text'>
-                                    {listMethodsPay[indexMethodPay]?.company_name || 'Выбрать'}
+                                    {listMethodsPay[indexMethodPay]?.company_name || choose}
                                 </div>
                             </div>
 
@@ -233,7 +244,7 @@ export function ScreenBuy (props) {
                             <div className='order-row-1'>
                                 
                                 <div className='order-label-2'>
-                                    Лимиты
+                                    {limits}
                                 </div>
                                 <div className='order-info-3'>
                                     {Math.round(100*props.buyOrder.limit_order/(props.buyOrder.type_price_id === 1 ? props.buyOrder.price: price_market * (props.buyOrder.currency_fiat_id === 1 ? rub_dollar: 1) * props.buyOrder.percent_price/100))/100} {' - '}
@@ -278,7 +289,7 @@ export function ScreenBuy (props) {
                     </div>
 
                     <div className='order-comment mt-20'>
-                        <div className='message-buy '>Внимательно прочтите следующие условия мерчанта перед размещением ордера. Несоблюдение условий может привести к неудачным транзакциям и финансовым потерям.</div>
+                        <div className='message-buy '>{message_buy}</div>
                         <div className='container-comment-text'>
                             <div className='comment-text'>{props.buyOrder.comment}</div>
                         </div>
@@ -297,8 +308,8 @@ export function ScreenBuy (props) {
                         }
                     >
                         {
-                            !isCorrectQuantity() ? 'Сумма превышает баланс': 
-                            !isQuantityInLimit() ? 'Сумма не в лимитах':
+                            !isCorrectQuantity() ? amount_exceeds_balance: 
+                            !isQuantityInLimit() ? amount_not_limit:
                             !listMethodsPay[indexMethodPay]?.company_name ? 'Добавьте метод оплаты':
                             'Начать сделку'
                         }
