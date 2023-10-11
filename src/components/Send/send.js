@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { svg_address_to, svg_bep, svg_btc, svg_tron } from '../../const/svgs';
+import { svg_address_to } from '../../const/svgs';
 import { useTelegram } from '../../hooks/useTelegram';
 import { selectAddress, selectAddressTRX, selectBalance, selectBalanceBTC, selectBalanceTRX, selectBalanceTRXv, selectBalanceV, selectSumOrders, setBalance, setBalanceTRX, setSumBlocks, setSumOrders } from '../Home/homeSlice';
 import { balanceTransfer, sendTo } from './sendApi';
@@ -15,7 +15,7 @@ import { getUserData, getUserSumBlocks, getUserSumOrders } from '../Home/homeApi
 import { ListAddreses } from '../address/listAddresses';
 import { list_svg_logos, list_token_names } from '../../const/devdata';
 
-export function Send(props) {
+export function Send() {
     const dispatch = useDispatch()
     const [date, setDate] = useState(new Date())
     const { tg, user_id, first_name, chat_id, init_data } = useTelegram()
@@ -35,11 +35,9 @@ export function Send(props) {
     const [stepSend, setStepSend] = useState('address') // address, confirm, wait, finish 
     // const [showLoader, setShowLoader] = useState(false)
 
-    const [address1, setAddress1] = useState(address)
-    const [address2, setAddress2] = useState(address_trx)
+    const [address1] = useState(address)
 
-    const [fromLabel1, setFromLabel1] = useState('USDT BEP20')
-    const [fromLabel2, setFromLabel2] = useState('USDT TRC20')
+    const [fromLabel1] = useState('USDT BEP20')
 
     const [addressTo, setAddressTo] = useState('')
     const [quantity, setQuantity] = useState('')
@@ -80,26 +78,6 @@ export function Send(props) {
         checkIsReady(addressTo, e.target.value)
         setQuantity(e.target.value)
     }
-
-    const handleClickAddresItem = () => {
-        setQuantity('0')
-        const from1 = fromLabel2
-        const from2 = fromLabel1
-        setFromLabel1(from1)
-        setFromLabel2(from2)
-        const a1 = address1
-        const a2 = address2
-        // console.log('a2', a2)
-        setAddress1(a2)
-        setAddress2(a1)
-        setShowListAddresses(false)
-
-        getUserSumOrders({ user_id: user_id, currency_id: (fromLabel1 === 'USDT TRC20' ? 2 : 1) }, (data) => {
-            console.log('sum_orders', data.sum_orders)
-            dispatch(setSumOrders(data.sum_orders))
-        })
-    }
-
 
     const handleChangeAddressTo = (e) => {
         checkIsReady(e.target.value, quantity)

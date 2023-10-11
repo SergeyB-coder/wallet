@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../../hooks/useTelegram';
 // import { ButtonNext } from '../../Common/buttonNext';
 import { getOrderMethods, sendBuy } from './marketApi';
-import { selectQuantityBuy, setMarketScreen, setQuantityBuy } from './marketSlice';
+import { selectQuantityBuy, setQuantityBuy } from './marketSlice';
 import { selectBalance, selectBalanceTRX, selectBalanceTRXv, selectNameUser } from '../../Home/homeSlice';
 import {  selectPriceMarket, selectRubDollar } from '../ptpSlice';
 import { setBackScreen, setNewMethod, setSelectedCompanyIndex } from '../settings_pay/settingsPaySlice';
@@ -75,15 +75,6 @@ export function ScreenBuy (props) {
         setShowMethodsPay(false)
     }
 
-    // const nextScreen = () => {
-    //     handleClickBuy()
-    // }
-
-    const backScreen = () => {
-        // console.log('backScreen', showMethodsPay)
-        if (showMethodsPay) setShowMethodsPay(false)
-        else dispatch(setMarketScreen('orders'))
-    }
 
     const handleClickAddMethod = (company_id) => {
         // console.log('company_id', company_id)

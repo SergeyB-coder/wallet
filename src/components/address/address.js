@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 import { selectAddress, selectAddressBTC, selectAddressTRX } from '../Home/homeSlice';
 import { useTelegram } from '../../hooks/useTelegram';
 import { useNavigate } from 'react-router-dom';
-import { svg_bep, svg_tron } from '../../const/svgs';
 import { ListAddreses } from './listAddresses';
 
 
@@ -21,7 +20,7 @@ export function Address (props) {
     const address_btc = useSelector(selectAddressBTC)
     const [showListAddresses, setShowListAddresses] = useState(false)
     const [selectedTokenIndex, setSelectedTokenIndex] = useState(0);
-    const [fromLabel1, setFromLabel1] = useState('USDT BEP20')
+    const [fromLabel1] = useState('USDT BEP20')
 
     const [showMessage, setShowMessage] = useState(false)
     
