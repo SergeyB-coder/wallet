@@ -44,6 +44,10 @@ export function ScreenBuy (props) {
     const message_buy = language_code === 'ru' ? dictionary.market.message_buy.ru: dictionary.market.message_buy.en
     const amount_not_limit = language_code === 'ru' ? dictionary.market.amount_not_limit.ru: dictionary.market.amount_not_limit.en
     const amount_exceeds_balance = language_code === 'ru' ? dictionary.market.amount_exceeds_balance.ru: dictionary.market.amount_exceeds_balance.en
+    const add_details = language_code === 'ru' ? dictionary.market.add_details.ru: dictionary.market.add_details.en
+    const add_payment_method = language_code === 'ru' ? dictionary.market.add_payment_method.ru: dictionary.market.add_payment_method.en
+    const start_deal = language_code === 'ru' ? dictionary.market.start_deal.ru: dictionary.market.start_deal.en
+
 
     const is_buy = props.buyOrder.type === 'b'
 
@@ -135,24 +139,7 @@ export function ScreenBuy (props) {
         })
     }, [props.buyOrder.id, props.buyOrder.type, props.buyOrder.user_id, user_id]);
 
-    // useEffect(() => {
-    //     let inp = document.getElementById('quantity')
-    //     inp.style.width = (20 + (quantity_buy && quantity_buy?.length + 1) * 13) + 'px'
-    // }, [quantity_buy]);
-    // useEffect(() => {
-    //     tg.onEvent('mainButtonClicked', nextScreen)
-    //         return () => {tg.offEvent('mainButtonClicked', nextScreen)}
-    //     }, )
-
-    // useEffect(() => {
-    //     tg.onEvent('backButtonClicked', backScreen)
-    //         return () => {tg.offEvent('backButtonClicked', backScreen)}
-    //     }, )
-
-    // useEffect(() => {
-    //     tg.MainButton.show()
-    //     tg.MainButton.setText('Начать сделку')
-    // }, [tg.MainButton]);
+    
 
     return (
         <>
@@ -174,7 +161,7 @@ export function ScreenBuy (props) {
                                         <div className='text-nowrap' style={{width: '50%', color: '#86EFAC', marginRight: '10px'}}
                                             onClick={() => handleClickAddMethod(method.company_id)}
                                         >
-                                            Добавить реквизиты
+                                            {add_details}
                                         </div>
                                     }
                                 </div>
@@ -197,7 +184,7 @@ export function ScreenBuy (props) {
                     <div className='container-center mt-20'>
                         <div className='price-info-buy'>{price_per} 1 {CURRENCY_LIST[props.buyOrder.currency_id-1] + ' '} 
                             {/* {props.buyOrder.currency_id === 1 ? 'BEP20': 'TRC20'} */}
-                             = {(props.buyOrder.type_price_id === 1 ? props.buyOrder.price: Math.round(price_market * (props.buyOrder.currency_fiat_id === 1 ? rub_dollar: 1) * props.buyOrder.percent_price)/100)} { props.buyOrder.currency_fiat_id === 1 ? ' руб': ' USD'}</div>
+                             = {(props.buyOrder.type_price_id === 1 ? props.buyOrder.price: Math.round(price_market * (props.buyOrder.currency_fiat_id === 1 ? rub_dollar: 1) * props.buyOrder.percent_price)/100)} { props.buyOrder.currency_fiat_id === 1 ? ' RUB': ' USD'}</div>
                     </div>
 
                     {/* <div className='container-center mt-20'>
@@ -253,7 +240,7 @@ export function ScreenBuy (props) {
                                     <br></br>
                                     { props.buyOrder.limit_order}  {' - '}
                                     { Math.round(props.buyOrder.quantity * (props.buyOrder.type_price_id === 1 ? props.buyOrder.price: price_market * (props.buyOrder.currency_fiat_id === 1 ? rub_dollar: 1) * props.buyOrder.percent_price/100))}
-                                    { props.buyOrder.currency_fiat_id === 1 ? ' руб': ' USD'}
+                                    { props.buyOrder.currency_fiat_id === 1 ? ' RUB': ' USD'}
                                 </div>
                             </div>
 
@@ -310,8 +297,8 @@ export function ScreenBuy (props) {
                         {
                             !isCorrectQuantity() ? amount_exceeds_balance: 
                             !isQuantityInLimit() ? amount_not_limit:
-                            !listMethodsPay[indexMethodPay]?.company_name ? 'Добавьте метод оплаты':
-                            'Начать сделку'
+                            !listMethodsPay[indexMethodPay]?.company_name ? add_payment_method:
+                            start_deal
                         }
                     </div>
                 

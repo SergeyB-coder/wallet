@@ -5,18 +5,22 @@ import { useTelegram } from '../../../hooks/useTelegram';
 import { getMyOrders } from '../market/marketApi';
 import { selectMyOrders, setCurrentOrderId, setMyOrders } from '../market/marketSlice';
 import { OrderItem } from '../market/orderItem';
+import { dictionary } from '../../../const/dictionary';
 // import { getMyOrders } from './market/marketApi';
 // import {  setMyOrders } from './market/marketSlice';
 // import { OrderItem } from './market/orderItem';
 // import './style.css'
 
 export function MyOrders (props) {
-    const {tg} = useTelegram()
+    const {tg, language_code} = useTelegram()
     const my_orders = useSelector(selectMyOrders)
     const {user_id} = useTelegram()
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const my_announcements = language_code === 'ru' ? dictionary.my_announcements.ru: dictionary.my_announcements.en
+    const setting_payment = language_code === 'ru' ? dictionary.setting_payment.ru: dictionary.setting_payment.en
+    const create_ad = language_code === 'ru' ? dictionary.create_ad.ru: dictionary.create_ad.en
 
     const handleClickCreateOrder = () => {
         navigate('/createorder', {replace: true})
@@ -52,7 +56,7 @@ export function MyOrders (props) {
                 </svg>
             </div>
             <div className='trade-menu-text-col' onClick={handleClickSettingsPay}>
-                Настройки оплаты
+                {setting_payment}
             </div>
             {arrow_right}
         </div>
@@ -67,7 +71,7 @@ export function MyOrders (props) {
                 </svg>
             </div>
             <div className='trade-menu-text-col'>
-                Создать объявление
+                {create_ad}
             </div>
             {arrow_right}
         </div>
@@ -98,7 +102,7 @@ export function MyOrders (props) {
             </div>
 
             <div className='my-order-container m-3'>
-                <div className='title-myorders'  >Мои объявления</div>
+                <div className='title-myorders'  >{my_announcements}</div>
                 {my_orders.map((order) => {
                         return (
                             <OrderItem onClick={handleClickOrder} order={order} key={order.id}/>

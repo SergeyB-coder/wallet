@@ -1,29 +1,34 @@
 import React, {useEffect, useState} from 'react';
 import { useSelector } from 'react-redux';
-// import { useTelegram } from '../../../hooks/useTelegram';
+import { useTelegram } from '../../../hooks/useTelegram';
 // import { ButtonNext } from '../../Common/buttonNext';
 import {  TIME_LIMITS } from '../../../const/devdata';
 
 import { selectQuantityOrder,  selectLimitOrder, selectTimeLimit, selectPrice, selectCurrencyFiat, selectPriceType, selectPriceMarket, selectRubDollar, selectPercentPrice } from '../ptpSlice';
 import { selectMethodsPay } from '../settings_pay/settingsPaySlice';
+import { dictionary } from '../../../const/dictionary';
 
 const commission = 0.0025
 
 export function CreateOrder4(props) {
+
+    const { language_code} = useTelegram()
     const listCheckedMethods = props.listCheckedMethods
 
-    const [methodPay, setMethodPay] = useState('');
-    // const {first_name} = useTelegram()
-    // const percent_price = useSelector(selectPercentPrice)
-    const quantity_order = useSelector(selectQuantityOrder)
-    // const limit_order = useSelector(selectLimitOrder)
-    // const currency_fiat = useSelector(selectCurrencyFiat)
-    // const currency_order = useSelector(selectCurrencyOrder)
-    // const currency_type = useSelector(selectPriceType)
+    const sum = language_code === 'ru' ? dictionary.sum.ru: dictionary.sum.en
+    const payment_method = language_code === 'ru' ? dictionary.payment_method.ru: dictionary.payment_method.en
+    const pay_within = language_code === 'ru' ? dictionary.pay_within.ru: dictionary.pay_within.en
+    const merchant_transaction = language_code === 'ru' ? dictionary.merchant_transaction.ru: dictionary.merchant_transaction.en
+    const create_ad = language_code === 'ru' ? dictionary.create_ad.ru: dictionary.create_ad.en
+    const buyer_commission = language_code === 'ru' ? dictionary.buyer_commission.ru: dictionary.buyer_commission.en
+    const check_ad = language_code === 'ru' ? dictionary.check_ad.ru: dictionary.check_ad.en
 
-    // const method_pay = useSelector(selectMethodPay)
+    const limits = language_code === 'ru' ? dictionary.limits.ru: dictionary.limits.en
+
+
+    const [methodPay, setMethodPay] = useState('');
+    const quantity_order = useSelector(selectQuantityOrder)
     const methods_pay = useSelector(selectMethodsPay)
-    // const price = useSelector(selectPrice)
     const limit_order = useSelector(selectLimitOrder)
     const timeLimit = useSelector(selectTimeLimit)
     const price = useSelector(selectPrice)
@@ -32,7 +37,6 @@ export function CreateOrder4(props) {
     const rub_dollar = useSelector(selectRubDollar)
     const percent_price = useSelector(selectPercentPrice)
     const currencyFiat = useSelector(selectCurrencyFiat)
-    // const typeOrder = useSelector(selectTypeOrder)
 
     const divider = 
         <div className='container-center'>
@@ -53,14 +57,14 @@ export function CreateOrder4(props) {
     return (
         <div className='container-create-order mt-20'>
             <div className='container-title'>
-                <div className='title-text'>Проверьте объявление</div>
+                <div className='title-text'>{check_ad}</div>
                 <div className='page-number'>4/4</div>
             </div>
             
             <div className='container-check-order mt-20'>
                 <div className='check-order-container-item'>
                     <div className='order-settings-label'>
-                        Сумма
+                        {sum}
                     </div>
 
                     <div className='check-order-text'>
@@ -72,12 +76,12 @@ export function CreateOrder4(props) {
 
                 <div className='check-order-container-item'>
                     <div className='order-settings-label'>
-                        Лимиты
+                        {limits}
                     </div>
 
                     <div className='check-order-text'>
                         {`${ Math.round(1000*limit_order/(type_price === 1 ? price: price_market * (currencyFiat === 1 ? rub_dollar: 1) * percent_price/100))/1000} - ${Math.round(1000* quantity_order * (1 - commission))/1000} USDT`}<br></br>
-                        {`${limit_order} - ${ Math.round((quantity_order * (1-commission))*(type_price === 1 ? price: price_market * (currencyFiat === 1 ? rub_dollar: 1) * percent_price/100)*1000)/1000 } ${currencyFiat === 1 ? 'Руб': '$'}`}
+                        {`${limit_order} - ${ Math.round((quantity_order * (1-commission))*(type_price === 1 ? price: price_market * (currencyFiat === 1 ? rub_dollar: 1) * percent_price/100)*1000)/1000 } ${currencyFiat === 1 ? '₽': '$'}`}
                     </div>
                 </div>
 
@@ -85,7 +89,7 @@ export function CreateOrder4(props) {
 
                 <div className='check-order-container-item'>
                     <div className='order-settings-label'>
-                        Метод оплаты
+                        {payment_method}
                     </div>
 
                     <div className='check-order-text'>
@@ -97,7 +101,7 @@ export function CreateOrder4(props) {
 
                 <div className='check-order-container-item'>
                     <div className='order-settings-label text-nowrap'>
-                        Оплатить в течение
+                        {pay_within}
                     </div>
 
                     <div className='check-order-text'>
@@ -108,15 +112,15 @@ export function CreateOrder4(props) {
                 {divider}
 
                 <div className='comment-check-order mt-20'>
-                    Комиссия продавца за каждую транзакцию — 0.25%.
-                    Комиссия покупателя — 0%
+                    {merchant_transaction} — 0.25%.
+                    {buyer_commission} — 0%
                 </div>
 
             </div>
-            {/* <ButtonNext onClick={props.handleClickCreateOrder} text={'Создать объявление'}/> */}
+            
 
             <div onClick={props.handleClickCreateOrder} className='button-send-box button-active-send-bg active-text mt-20'>
-                Создать объявление
+                {create_ad}
             </div>
         </div>
     );

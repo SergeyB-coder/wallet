@@ -8,10 +8,40 @@ import './style.css'
 
 import { selectCurrencyFiat, selectCurrencyOrder, selectPriceType, selectLimitOrder, selectPercentPrice, selectPrice, selectPriceMarket, selectQuantityOrder, selectTypeOrder, setCurrencyFiat, setCurrencyOrder, setPriceType, setLimitOrder, setPercentPrice, setPrice, setQuantityOrder, setTypeOrder, selectRubDollar, setTimeLimit, selectTimeLimit, selectPriceMarketBTC } from '../ptpSlice';
 import { useState } from 'react';
+import { useTelegram } from '../../../hooks/useTelegram';
+import { dictionary } from '../../../const/dictionary';
 
 export function CreateOrder1(props) {
     const dispatch = useDispatch()
-    // const setScreen = props.setScreen
+    const {language_code } = useTelegram()
+
+    const your_price = language_code === 'ru' ? dictionary.your_price.ru: dictionary.your_price.en
+    const sale = language_code === 'ru' ? dictionary.sale.ru: dictionary.sale.en
+    const the_sale = language_code === 'ru' ? dictionary.the_sale.ru: dictionary.the_sale.en
+    const purchase = language_code === 'ru' ? dictionary.purchase.ru: dictionary.purchase.en
+    const cryptocurrencies = language_code === 'ru' ? dictionary.cryptocurrencies.ru: dictionary.cryptocurrencies.en
+    const fiat_currency = language_code === 'ru' ? dictionary.fiat_currency.ru: dictionary.fiat_currency.en
+    const floating_price = language_code === 'ru' ? dictionary.floating_price.ru: dictionary.floating_price.en
+    const market_price = language_code === 'ru' ? dictionary.market_price.ru: dictionary.market_price.en
+    const fix_price = language_code === 'ru' ? dictionary.fix_price.ru: dictionary.fix_price.en
+    const yourbalance = language_code === 'ru' ? dictionary.fix_price.ru: dictionary.fix_price.en
+    const amount_adv = language_code === 'ru' ? dictionary.fix_price.ru: dictionary.fix_price.en
+    const max_label = language_code === 'ru' ? dictionary.max.ru: dictionary.max.en
+    const minut = language_code === 'ru' ? dictionary.minut.ru: dictionary.minut.en
+    const hour = language_code === 'ru' ? dictionary.hour.ru: dictionary.hour.en
+    const hours = language_code === 'ru' ? dictionary.hours.ru: dictionary.hours.en
+    const create_ad = language_code === 'ru' ? dictionary.create_ad.ru: dictionary.create_ad.en
+    const transaction_limit = language_code === 'ru' ? dictionary.transaction_limit.ru: dictionary.transaction_limit.en
+    const pay_within = language_code === 'ru' ? dictionary.pay_within.ru: dictionary.pay_within.en
+    const amount_exceeds_balance = language_code === 'ru' ? dictionary.amount_exceeds_balance.ru: dictionary.amount_exceeds_balance.en
+    const invalid_limit = language_code === 'ru' ? dictionary.invalid_limit.ru: dictionary.invalid_limit.en
+    const enter_data = language_code === 'ru' ? dictionary.enter_data.ru: dictionary.enter_data.en
+    const further = language_code === 'ru' ? dictionary.further.ru: dictionary.further.en
+    const price_type = language_code === 'ru' ? dictionary.price_type.ru: dictionary.price_type.en
+    const buy = language_code === 'ru' ? dictionary.buy.ru: dictionary.buy.en
+    const min_dot = language_code === 'ru' ? dictionary.min_dot.ru: dictionary.min_dot.en
+    const i_want = language_code === 'ru' ? dictionary.i_want.ru: dictionary.i_want.en
+    
 
     const sum_orders = useSelector(selectSumOrders)
     const quantity_order = useSelector(selectQuantityOrder)
@@ -103,7 +133,7 @@ export function CreateOrder1(props) {
     const type_order = 
         <div className='order-settings-container-item'>
             <div className='order-settings-label text-nowrap'>
-                Я хочу
+                {i_want}
             </div>
             <div className='container-buy-sale-type' 
                 onClick={() => {
@@ -112,10 +142,10 @@ export function CreateOrder1(props) {
                 }}
             >
                 <div className={`order-type-buy ${typeOrder === 'b' && 'is_select'}`}>
-                    Купить
+                    {buy}
                 </div>
                 <div className={`order-type-sale ${typeOrder === 's' && 'is_select'}`}>
-                    Продать
+                    {sale}
                 </div>
             </div>
         </div>
@@ -123,7 +153,7 @@ export function CreateOrder1(props) {
     const currency_sale = 
         <div className='order-settings-container-item'>
             <div className='order-settings-label'>
-                {`${typeOrder === 's' ? 'Продажа': 'Покупка'} криптовалюты`}
+                {`${typeOrder === 's' ? the_sale: purchase} ${cryptocurrencies}`}
             </div>
             <div className='order-settings-item-col2 position-relative'>
                 <svg width="9" height="8" viewBox="0 0 9 8" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -149,7 +179,7 @@ export function CreateOrder1(props) {
     const currency_fiat = 
         <div className='order-settings-container-item'>
             <div className='order-settings-label'>
-                Фиатная валюта
+                {fiat_currency}
             </div>
             <div className='order-settings-item-col2 position-relative'>
                 {/* <select className="select-currency" aria-label="Default select example" onChange={handleChangeCurrencyFiat}>
@@ -178,7 +208,7 @@ export function CreateOrder1(props) {
     const render_type_price = 
         <div className='order-settings-container-item'>
             <div className='order-settings-label'>
-                Тип цены
+                {price_type}
             </div>
             <div className='order-settings-item-col2 position-relative'>
                 <Selecter 
@@ -206,7 +236,7 @@ export function CreateOrder1(props) {
         //     </div>
         // </div>
         <div>
-            <div className='title-text mt-20'>Плавающая цена</div>
+            <div className='title-text mt-20'>{floating_price}</div>
             {/* <div className='currency-settings-container mt-1'>
                 {render_fix_price}
             </div> */}
@@ -225,7 +255,7 @@ export function CreateOrder1(props) {
 
             <div className='container-balance'>
                 <div className='your-balance-text'>
-                    Цена на рынке
+                    {market_price}
                 </div>
                 <div className='your-balance-q'>
                     {Math.round(((currency_order === 3 ? price_market_btc: price_market) * (currencyFiat === 1 ? rub_dollar: 1))*1000)/1000} {CURRENCY_FIAT_LIST[currencyFiat - 1]}
@@ -233,7 +263,7 @@ export function CreateOrder1(props) {
             </div>
             <div className='container-balance'>
                 <div className='your-balance-text'>
-                    Ваша цена
+                    {your_price}
                 </div>
                 <div className='your-balance-q'>
                     {Math.round(((currency_order === 3 ? price_market_btc: price_market) * (currencyFiat === 1 ? rub_dollar: 1))*10*percent_price)/1000} {CURRENCY_FIAT_LIST[currencyFiat - 1]}
@@ -243,7 +273,7 @@ export function CreateOrder1(props) {
 
     const render_fix_price =
         <div>
-            <div className='title-text mt-20'>Фиксированная цена</div>
+            <div className='title-text mt-20'>{fix_price}</div>
             {/* <div className='currency-settings-container mt-1'>
                 {render_fix_price}
             </div> */}
@@ -252,7 +282,7 @@ export function CreateOrder1(props) {
                     
                 <div className='address-item-col2'>
                     <div style={{color: 'var(--text-mini)'}}>
-                        {currencyFiat === 1 ? 'Руб': '$'}
+                        {currencyFiat === 1 ? '₽': '$'}
                     </div>
                 </div>
                 
@@ -260,7 +290,7 @@ export function CreateOrder1(props) {
 
             <div className='container-balance'>
                 <div className='your-balance-text'>
-                    Цена на рынке
+                    {market_price}
                 </div>
                 <div className='your-balance-q'>
                     {Math.round(( ( currency_order === 3 ? price_market_btc: price_market) * (currencyFiat === 1 ? rub_dollar: 1))*1000)/1000} {CURRENCY_FIAT_LIST[currencyFiat - 1]}
@@ -270,17 +300,6 @@ export function CreateOrder1(props) {
                     
 
     const render_summ_sale = 
-        // <div className='row button-currency-settings'>
-        //     <div className='currency-settings-item-col1'>
-        //         <input 
-        //             style={parseFloat(quantity_order) > parseFloat(balance) && typeOrder === 's' ? {color: '#DF2E38'}: {}} 
-        //             className='bg-input' type='number' placeholder='Сумма' 
-        //             onChange={handleChangeQuantityOrder} value={quantity_order}/>
-        //     </div>
-        //     <div className='currency-settings-item-col2'>
-        //         USDT
-        //     </div>
-        // </div>
         <div>
             <div className='send-address'>
                 <input className={isCorrectQuantity() ? 'address-to-input-2': 'address-to-input-2 not-valid'} type='number' placeholder={'0 '+ CURRENCY_LIST_SHORT[currency_order-1] } onChange={handleChangeQuantityOrder} value={quantity_order}/>
@@ -288,7 +307,6 @@ export function CreateOrder1(props) {
                 <div className='address-item-col2'>
                     <div style={{color: 'var(--text-mini)'}}>
                         {CURRENCY_LIST_SHORT[currency_order-1] }
-                        {/* USDT */}
                     </div>
                 </div>
                 
@@ -296,7 +314,7 @@ export function CreateOrder1(props) {
 
             <div className='container-balance'>
                 <div className='your-balance-text'>
-                    Ваш баланс
+                    {yourbalance}
                 </div>
                 <div className='your-balance-q'>
                     {
@@ -308,7 +326,7 @@ export function CreateOrder1(props) {
             </div>
             <div className='container-balance'>
                 <div className='your-balance-text'>
-                    Сумма объявлений
+                    {amount_adv}
                 </div>
                 <div className='your-balance-q'>
                     {Math.round(sum_orders * 100)/100} USDT 
@@ -318,7 +336,7 @@ export function CreateOrder1(props) {
 
     const render_limit_order_min = 
             <div className='limit-order-container'>
-                <input className={`${isCorrectLimit() ? 'limit-input': 'limit-input-bad'} w-order`} type='number' placeholder='Мин.' onChange={handleChangeLimitOrder} value={limit_order}/>
+                <input className={`${isCorrectLimit() ? 'limit-input': 'limit-input-bad'} w-order`} type='number' placeholder={min_dot} onChange={handleChangeLimitOrder} value={limit_order}/>
                 
                 <div className='currency-fiat-label'>
                     {CURRENCY_FIAT_LIST[currencyFiat - 1]}
@@ -327,7 +345,7 @@ export function CreateOrder1(props) {
 
     const render_limit_order_max = 
             <div className='limit-order-container'>
-                    <input className='address-to-input-2 w-order' type='number' placeholder='Макс.' onChange={handleChangeLimitOrder} 
+                    <input className='address-to-input-2 w-order' type='number' placeholder={max_label} onChange={handleChangeLimitOrder} 
                         value={ Math.round((parseFloat(quantity_order) * (type_price === 1 ? price: percent_price*price_market*(currencyFiat === 1 ? rub_dollar: 1)/100))*1000)/1000 }
                     />
                 <div className='currency-fiat-label'>
@@ -338,29 +356,18 @@ export function CreateOrder1(props) {
 
     const time_limit = 
         <div className='row d-flex justify-content-between p-0 mx-0 mt-10'>
-            {/* <div className='currency-settings-item-col1 text-nowrap'>
-                Оплатить в течение
-            </div>
-            <div className='currency-settings-item-col2 '>
-                <Selecter 
-                    list_values={TIME_LIMITS} 
-                    class_name={'select-currency text-nowrap'} 
-                    setIndex={(idx) => {dispatch(setTimeLimit(idx + 1))}} 
-                    selected_value={timeLimit}
-                />{chevron}
-            </div> */}
             <div className={`order-rect w-time-limit-2 order-text-2 ${time_limit_order === 1 && 'is-select-1'}`} 
                 onClick={ () => dispatch(setTimeLimit(1))} 
             >
-                15 мин
+                15 {minut}
             </div>
             <div className={`order-rect w-time-limit-1 order-text-2 ${time_limit_order === 2 && 'is-select-1'}`}
                 onClick={ () => dispatch(setTimeLimit(2))}>
-                1 час
+                1 {hour}
             </div>
             <div className={`order-rect w-time-limit order-text-2 text-nowrap ${time_limit_order === 3 && 'is-select-1'}`}
                 onClick={ () => dispatch(setTimeLimit(3))}>
-                6 часов
+                6 {hours}
             </div>
         </div>
     
@@ -368,7 +375,7 @@ export function CreateOrder1(props) {
     return (
         <div className='container-create-order mt-20'>
             <div className='container-title'>
-                <div className='title-text'>Создать объявление</div>
+                <div className='title-text'>{create_ad}</div>
                 <div className='page-number'>1/4</div>
             </div>
 
@@ -395,23 +402,17 @@ export function CreateOrder1(props) {
                 )
             }
 
-            {/* <div className='t-left-align  mini-info'>{`Цена на маркете: ${Math.round((price_market * (currencyFiat === 1 ? rub_dollar: 1))*1000)/1000}`} {CURRENCY_FIAT_LIST[currencyFiat - 1]}</div>
-            <div className='t-left-align  mini-info'>{`Цена в вашем объявлении: ${type_price === 1 ? price: Math.round(price_market*(currencyFiat === 1 ? rub_dollar: 1)*percent_price*1000/100)/1000}`}  {CURRENCY_FIAT_LIST[currencyFiat - 1]}</div> */}
-
-
             <div>
                 {render_summ_sale}
             </div>
 
-            {/* <div className='t-left-align  mini-info'>{`Ваш баланс: ${currency_order === 1 ? balance: balance_trx + balance_trx_v} USDT`}</div> */}
-
-            <div className='title-text mt-20'>Лимит сделки</div>
+            <div className='title-text mt-20'>{transaction_limit}</div>
             <div className='row d-flex justify-content-between p-0 mx-0 mt-20'>
                     {render_limit_order_min}
                     {render_limit_order_max}
             </div>
             
-            <div className='title-text mt-20'>Оплатить в течение</div>
+            <div className='title-text mt-20'>{pay_within}</div>
             {time_limit}
             
             {/* <ButtonNext onClick={() => {props.setScreen('createorder2')}}/> */}
@@ -423,10 +424,10 @@ export function CreateOrder1(props) {
                 className={`button-send-box ${isCorrectQuantity() && isCorrectLimit() && isInputData() ? 'button-active-send-bg active-text': 'button-send-bg disable-text'} mt-20`}
             >
                 {
-                    !isCorrectQuantity() ? 'Сумма превышает баланс': 
-                    !isCorrectLimit() ? 'Неверный лимит':
-                    !isInputData() ? 'Введите данные':
-                    'Далее'
+                    !isCorrectQuantity() ? amount_exceeds_balance: 
+                    !isCorrectLimit() ? invalid_limit:
+                    !isInputData() ? enter_data:
+                    further
                      
                 }
             </div>

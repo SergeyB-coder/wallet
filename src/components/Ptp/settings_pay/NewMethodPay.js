@@ -7,21 +7,27 @@ import { Selecter } from '../../Common/selecter';
 import { CURRENCY_FIAT_LIST } from '../../../const/devdata';
 import { deleteMethodPay, getCompaniesPay, getUserMethodsPay, newMethodPay, updateMethodPay } from './settingsPayApi';
 import { useTelegram } from '../../../hooks/useTelegram';
+import { dictionary } from '../../../const/dictionary';
 
 export function NewMethodPay( props ) {
     const setMethodId = props.setMethodId
     const methodId = props.methodId
     const setIsNew = props.setIsNew
     const is_new = props.is_new
-    const { user_id } = useTelegram()
+    const { user_id, language_code } = useTelegram()
     const dispatch = useDispatch()
     const [showListCompaniesPay, setShowListCompaniesPay] = useState(false);
     const [currencyFiat, setCurrencyFiat] = useState(1)
     
     const [selectedCompanyIndex, setSelectedCompanyIndex] = useState(0);
 
-    // const companyIndex = useSelector(selectSelectdCompanyIndex)
-    
+    const add_payments_method = language_code === 'ru' ? dictionary.add_payments_method.ru: dictionary.add_payments_method.en
+    const account_card_phone = language_code === 'ru' ? dictionary.account_card_phone.ru: dictionary.account_card_phone.en
+    const save = language_code === 'ru' ? dictionary.save.ru: dictionary.save.en
+    const delete_label = language_code === 'ru' ? dictionary.delete.ru: dictionary.delete.en 
+    const payment_method = language_code === 'ru' ? dictionary.payment_method.ru: dictionary.payment_method.en
+    const full_name = language_code === 'ru' ? dictionary.full_name.ru: dictionary.full_name.en
+
 
     const companies_pay = useSelector(selectCompaniesPay)
     const card = useSelector(selectCard)
@@ -160,10 +166,10 @@ export function NewMethodPay( props ) {
                             </div>
                         </>:
                         <>
-                            <div className='method-pay-title'>{methodId === 0 ? 'Добавить метод оплаты': ''}</div>
+                            <div className='method-pay-title'>{methodId === 0 ? add_payments_method: ''}</div>
 
                             <div className='container-method-info mt-2 p-3'>
-                                <div className='method-pay-label mt-3'>Метод</div>
+                                <div className='method-pay-label mt-3'>{payment_method}</div>
                                 <div className='cntr-row mt-10'>
                                     
                                     <div className='method-input'>
@@ -188,32 +194,20 @@ export function NewMethodPay( props ) {
 
                                 </div>
                                 
-                                <input className='method-input mt-2 ' onChange={handleChangeCard} value={card} placeholder='Аккаунт, карта/телефон'/>
-                                <input className='method-input mt-2 mb-4' onChange={handleChangeInfo} value={info} placeholder='ФИО'/>
+                                <input className='method-input mt-2 ' onChange={handleChangeCard} value={card} placeholder={account_card_phone}/>
+                                <input className='method-input mt-2 mb-4' onChange={handleChangeInfo} value={info} placeholder={full_name}/>
                             </div>
-
-                            {/* <label style={{textAlign: 'left', width: '100%'}}>Название</label>
-                            <input className='method-input' type='text' onChange={handleChangeNameMethod} value={name_method}/>
-
-                            <label style={{textAlign: 'left', width: '100%'}}>Банк</label>
-                            <input className='method-input' type='text'  onChange={handleChangeBank} value={bank}/>
-
-                            <label style={{textAlign: 'left', width: '100%'}}>Номер карты</label>
-                            <input className='method-input' type='number' onChange={handleChangeCard} value={card}/>
-
-                            <label style={{textAlign: 'left', width: '100%'}}>Комментарий</label>
-                            <input className='method-input' type='text' onChange={handleChangeInfo} value={info}/> */}
 
                             <div className='method-text-button button-new-method mt-3' 
                                 onClick={is_new ? handleSaveMethod: handleUpdateMethod}
                             >
-                                Сохранить
+                                {save}
                             </div>
                             {!is_new &&
                                 <div className='method-text-button button-new-method mt-3' 
                                     onClick={handleDeleteMethod}
                                 >
-                                    Удалить
+                                    {delete_label}
                                 </div>
                             }
                         </>

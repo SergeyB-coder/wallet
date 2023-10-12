@@ -10,11 +10,12 @@ import { selectDealInfo, setDealInfo } from './market/marketSlice';
 import clock_gif from '../../static/animations/clock.gif'
 import hands_gif from '../../static/animations/hands.gif'
 import { selectNameUser } from '../Home/homeSlice';
+import { dictionary } from '../../const/dictionary';
 
 export function CompleteDeal () {
     const dispatch = useDispatch()
 
-    const {tg,  user_id} = useTelegram()
+    const {tg,  user_id, language_code} = useTelegram()
 
     const navigate = useNavigate()
     const deal_info = useSelector(selectDealInfo)
@@ -25,6 +26,8 @@ export function CompleteDeal () {
     const [showWait, setShowWait] = useState(false)
     const [error, setError] = useState('')
     const [isCancelDeal, setIsCancelDeal] = useState(false)
+
+    const price_per = language_code === 'ru' ? dictionary.price_per.ru: dictionary.price_per.en
 
     const handleClickSale = () => {
         // setShowLoader(true)
@@ -111,11 +114,6 @@ export function CompleteDeal () {
     return (
         <div className='container-center'>  
             <div className='w-cntr'>
-                {/* <div className='mt-5 deal-item p-3'>
-                    <div  style={{color: 'var(--text-light-color)'}}>
-                        {deal_info.user_to ? deal_info.user_to: deal_info.buyer} { deal_info.type_order === 's' ? ' покупает у вас': ' продает вам'}
-                    </div>
-                </div> */}
 
                 <div className='container-title mt-20'>
                     <div className='title-text'><span className='title-text-g'>{deal_info.user_to ? deal_info.user_to: deal_info.buyer}</span> { deal_info.type_order === 's' ? ' хочет купить у вас': 'хочет продать вам'}</div>
@@ -126,7 +124,7 @@ export function CompleteDeal () {
                 </div>
 
                 <div className='container-center mt-20'>
-                    <div className='price-info-buy'>Цена за 1 USDT {deal_info.currency === 1 ? 'BEP20': 'TRC20'} = {deal_info?.price}</div>
+                    <div className='price-info-buy'>{price_per} 1 USDT {deal_info.currency === 1 ? 'BEP20': 'TRC20'} = {deal_info?.price}</div>
                 </div>
 
                 <div className='color-bg-cntr h-cntr-deal w-cntr mt-20'>

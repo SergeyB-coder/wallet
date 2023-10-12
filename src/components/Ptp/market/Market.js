@@ -390,18 +390,7 @@ export function Market() {
                                     <div className='order-line'></div>
                                 </div>
 
-                                {/* <div className='order-row-1'>
-                                    <div className='order-label-2'>
-                                        Сумма
-                                    </div>
-                                    <div className='order-info-3'>
-                                        {'0.13 USDT'}
-                                    </div>
-                                </div> */}
-
-                                {/* <div className='order-line-container'>
-                                    <div className='order-line'></div>
-                                </div> */}
+                                
 
                                 <div className='order-row-1'>
                                     <div className='order-label-2'>

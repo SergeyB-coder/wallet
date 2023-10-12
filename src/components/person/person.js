@@ -12,14 +12,42 @@ import { selectPriceMarket, selectRubDollar, setComment, setCurrencyFiat, setCur
 import { selectBalance, selectBalanceTRX, selectBalanceTRXv, selectBalanceV, selectNameUser } from '../Home/homeSlice';
 // import { setMethodsPay } from '../Ptp/settings_pay/settingsPaySlice';
 import './style.css'
+import { dictionary } from '../../const/dictionary';
 const commission = 0.05
 let summ_orders_bep = 0
 let summ_orders_trc = 0
 export function Person(props) {
     
-    const { user_id, tg } = useTelegram()
+    const { user_id, tg, language_code } = useTelegram()
     const navigate = useNavigate()
     const dispatch = useDispatch()
+
+    const name_will_id = language_code === 'ru' ? dictionary.name_will_id.ru: dictionary.name_will_id.en
+    const completed_transactions = language_code === 'ru' ? dictionary.completed_transactions.ru: dictionary.completed_transactions.en
+    const insufficient_balance = language_code === 'ru' ? dictionary.insufficient_balance.ru: dictionary.insufficient_balance.en
+    const ads_activated = language_code === 'ru' ? dictionary.ads_activated.ru: dictionary.ads_activated.en
+    const ads_deactivated = language_code === 'ru' ? dictionary.ads_deactivated.ru: dictionary.ads_deactivated.en
+    const cancel = language_code === 'ru' ? dictionary.cancel.ru: dictionary.cancel.en
+    const personal_area = language_code === 'ru' ? dictionary.personal_area.ru: dictionary.personal_area.en
+    const setting_payment = language_code === 'ru' ? dictionary.setting_payment.ru: dictionary.setting_payment.en
+    const activity_ads = language_code === 'ru' ? dictionary.activity_ads.ru: dictionary.activity_ads.en
+
+    const your_advertisements = language_code === 'ru' ? dictionary.your_advertisements.ru: dictionary.your_advertisements.en
+    const create_ad = language_code === 'ru' ? dictionary.create_ad.ru: dictionary.create_ad.en
+    const price_per = language_code === 'ru' ? dictionary.price_per.ru: dictionary.price_per.en
+    const buy = language_code === 'ru' ? dictionary.buy.ru: dictionary.buy.en
+
+    const sale = language_code === 'ru' ? dictionary.sale.ru: dictionary.sale.en
+    const payment_methods = language_code === 'ru' ? dictionary.payment_methods.ru: dictionary.payment_methods.en
+    const edit = language_code === 'ru' ? dictionary.edit.ru: dictionary.edit.en
+
+    const stop_label = language_code === 'ru' ? dictionary.stop.ru: dictionary.stop.en
+    const launch = language_code === 'ru' ? dictionary.launch.ru: dictionary.launch.en
+    const amount_deals = language_code === 'ru' ? dictionary.amount_deals.ru: dictionary.amount_deals.en
+    const deals_label = language_code === 'ru' ? dictionary.deals.ru: dictionary.deals.en
+    const available = language_code === 'ru' ? dictionary.available.ru: dictionary.available.en
+    const limits = language_code === 'ru' ? dictionary.limits.ru: dictionary.limits.en
+
 
     const [allOrderActive, setAllOrderActive] = useState(true);
     const [orders, setOrders] = useState([]);
@@ -81,7 +109,7 @@ export function Person(props) {
         // console.log('handleClickAllOrderActive', summ_orders_bep, summ_orders_trc, balance, balance_v, balance_trx, balance_trx_v)
 
         if ((summ_orders_bep > balance+balance_v || summ_orders_trc > balance_trx+balance_trx_v) && !allOrderActive) {
-            setPopUpText('Недостаточный баланс')
+            setPopUpText(insufficient_balance)
             setShowPopUp(true)
 
             setTimeout(() => { setShowPopUp(false) }, 2000)
@@ -95,7 +123,7 @@ export function Person(props) {
                 })
             })
 
-            setPopUpText(allOrderActive ? 'Объявления деактивированы': 'Объявления активированы')
+            setPopUpText(allOrderActive ? ads_deactivated: ads_activated)
             setShowPopUp(true)
 
             setTimeout(() => { setShowPopUp(false) }, 2000)
@@ -136,7 +164,7 @@ export function Person(props) {
     const pop_up =
         <div className='pop_up'>
             <div className='pop_up_text' >{popUpText}</div>
-            <div className='pop_up_text_cancel'>Отмена</div>
+            <div className='pop_up_text_cancel'>{cancel}</div>
         </div>
 
     useEffect(() => {
@@ -193,7 +221,7 @@ export function Person(props) {
             {showPopUp && pop_up}
             <div className='w-cntr'>
                 <div className='container-title mt-20'>
-                    <div className='title-text'>Личный кабинет</div>
+                    <div className='title-text'>{personal_area}</div>
                 </div>
 
                 <div className='h-cntr-person color-bg-cntr-person pt-26 mt-20'>
@@ -201,7 +229,7 @@ export function Person(props) {
 
                     <div className='container-center'>
                         <div className='mini-text w-227'>
-                            Это имя будет Вашим ID для всех операций на P2P Маркете.
+                            {name_will_id}
                         </div>
                     </div>
                 </div>
@@ -212,7 +240,7 @@ export function Person(props) {
                             {qDeals}
                         </div>
                         <div className='mini-text'>
-                            Количество сделок
+                            {amount_deals}
                         </div>
                     </div>
                     <div className='cntr-2 color-bg-cntr-person'>
@@ -220,7 +248,7 @@ export function Person(props) {
                             {(qMDeals !== 0 && Math.round(qMDealsEnd*100/qMDeals)) || 0}%
                         </div>
                         <div className='mini-text'>
-                            Завершенные сделки
+                            {completed_transactions}
                         </div>
                     </div>
                 </div>
@@ -229,7 +257,7 @@ export function Person(props) {
 
                     <div className='row-2 p-17 a-c h-47' onClick={handleClickSettingsPay}>
                         <div className='item-text'>
-                            Настройка оплаты
+                            {setting_payment}
                         </div>
                         <div>
                             <svg width="5" height="9" viewBox="0 0 5 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -244,7 +272,7 @@ export function Person(props) {
 
                     <div className='row-2 p-17 a-c h-47'>
                         <div className='item-text'>
-                            Активность всех объявлений
+                            {activity_ads}
                         </div>
                         {/* <div>
                             <div className={1 ? 'method-switch': 'method-switch-off'}
@@ -266,7 +294,7 @@ export function Person(props) {
                 </div>
 
                 <div className='container-title mt-20'>
-                    <div className='title-text'>Ваши объявления</div>
+                    <div className='title-text'>{your_advertisements}</div>
                 </div>
 
                 <div className='container-center mt-20'>
@@ -277,7 +305,7 @@ export function Person(props) {
                             </svg>
                         </div>
                         <div className='btn-add-method-text' onClick={handleClickCreateOrder}>
-                            Создать объявление
+                            {create_ad}
                         </div>
                     </div>
                 </div>
@@ -298,7 +326,7 @@ export function Person(props) {
                                             {order.type_price_id !== 2 ? order.price : Math.round(price_market * (order.currency_fiat_id === 1 ? rub_dollar : 1) * order.percent_price) / 100}
                                             {order.currency_fiat_id === 1 ? 'RUB' : 'USD'}
                                         </div>
-                                        <div className={order.type === 's' ? 'order-label' : 'mini-text-r'}>Цена за 1 {order.currency_id === 1 ? 'USDT BEP20' : 'USDT TRC20'}</div>
+                                        <div className={order.type === 's' ? 'order-label' : 'mini-text-r'}>{price_per} 1 {order.currency_id === 1 ? 'USDT BEP20' : 'USDT TRC20'}</div>
                                     </div>
 
                                     <div className='container-center a-c'>
@@ -306,7 +334,7 @@ export function Person(props) {
                                         <div className={order.type === 'b' ? 'order-sale ml-12' : 'order-buy ml-12'}
                                             onClick={() => { }}
                                         >
-                                            {order.type === 's' ? 'Купить' : 'Продать'}
+                                            {order.type === 's' ? buy : sale}
                                         </div>
                                     </div>
                                 </div>
@@ -319,7 +347,7 @@ export function Person(props) {
 
                                     <div className='order-info-2'>
                                         <span className='order-info-1'>
-                                            3 сделки
+                                            3 {deals_label}
                                         </span>
                                         67%
                                     </div>
@@ -331,7 +359,7 @@ export function Person(props) {
 
                                 <div className='order-row-1'>
                                     <div className='order-label-2'>
-                                        Доступно
+                                        {available}
                                     </div>
                                     <div className='order-info-3'>
                                         {order.quantity} USDT
@@ -344,11 +372,11 @@ export function Person(props) {
 
                                 <div className='order-row-1'>
                                     <div className='order-label-2'>
-                                        Лимиты
+                                        {limits}
                                     </div>
                                     <div className='order-info-3'>
                                         {`${Math.round(1000 * order.limit_order / (order.type_price_id === 1 ? order.price : price_market * (order.currency_fiat_id === 1 ? rub_dollar : 1) * order.percent_price / 100)) / 1000} - ${order.quantity - commission} USDT`}<br></br>
-                                        {`${order.limit_order} - ${Math.round((order.quantity - commission) * (order.type_price_id === 1 ? order.price : price_market * (order.currency_fiat_id === 1 ? rub_dollar : 1) * order.percent_price / 100) * 1000) / 1000} ${order.currency_fiat_id === 1 ? 'Руб' : '$'}`}
+                                        {`${order.limit_order} - ${Math.round((order.quantity - commission) * (order.type_price_id === 1 ? order.price : price_market * (order.currency_fiat_id === 1 ? rub_dollar : 1) * order.percent_price / 100) * 1000) / 1000} ${order.currency_fiat_id === 1 ? '₽' : '$'}`}
                                     </div>
                                 </div>
 
@@ -356,22 +384,9 @@ export function Person(props) {
                                     <div className='order-line'></div>
                                 </div>
 
-                                {/* <div className='order-row-1'>
-                                        <div className='order-label-2'>
-                                            Сумма
-                                        </div>
-                                        <div className='order-info-3'>
-                                            {'0.13 USDT'}
-                                        </div>
-                                    </div> */}
-
-                                {/* <div className='order-line-container'>
-                                        <div className='order-line'></div>
-                                    </div> */}
-
                                 <div className='order-row-1'>
                                     <div className='order-label-2 t-a-l'>
-                                        Методы оплаты
+                                        {payment_methods}
                                     </div>
                                     <div className='order-info-3'>
                                         {order.company}
@@ -382,18 +397,18 @@ export function Person(props) {
                                     <div className='btn-edit'
                                         onClick={() => handleClickEditOrder(index)}
                                     >
-                                        Редактировать
+                                        {edit}
                                     </div>
                                     {order.active ?
                                         <div className='btn-run'
                                             onClick={() => handleClickStopOrder(index)}
                                         >
-                                            Остановить
+                                            {stop_label}
                                         </div> :
                                         <div className='btn-run'
                                             onClick={() => handleClickRunOrder(index)}
                                         >
-                                            Запустить
+                                            {launch}
                                         </div>
                                     }
                                 </div>

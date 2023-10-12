@@ -13,9 +13,10 @@ import { Timer } from '../../Common/timerDeal';
 import { selectPriceMarket, selectRubDollar, setPriceMarket, setPriceMarketTRX, setRubDollar } from '../ptpSlice';
 import { parsePrice } from '../ptpApi';
 import { CURRENCY_LIST } from '../../../const/devdata';
+import { dictionary } from '../../../const/dictionary';
 
 export function Deal () {
-    const {tg, user_id, init_data} = useTelegram()
+    const {tg, user_id, init_data, language_code } = useTelegram()
     const { deal_id } = useParams();
     const navigate = useNavigate()
     const {socket} = useSocket()
@@ -42,10 +43,55 @@ export function Deal () {
     const price_market = useSelector(selectPriceMarket)
     const rub_dollar = useSelector(selectRubDollar)
 
+    //labels
+    const personal_area = language_code === 'ru' ? dictionary.p2p.personal_area.ru: dictionary.p2p.personal_area.en
+    const deal = language_code === 'ru' ? dictionary.market.deal.ru: dictionary.market.deal.en
+    const you_buying = language_code === 'ru' ? dictionary.market.you_buying.ru: dictionary.market.you_buying.en
+    const you_sell = language_code === 'ru' ? dictionary.market.you_sell.ru: dictionary.market.you_sell.en
+    const sells = language_code === 'ru' ? dictionary.market.sells.ru: dictionary.market.sells.en
+    const chat_buyer = language_code === 'ru' ? dictionary.market.chat_buyer.ru: dictionary.market.chat_buyer.en
+    const chat_seller = language_code === 'ru' ? dictionary.market.chat_seller.ru: dictionary.market.chat_seller.en
+    const attention = language_code === 'ru' ? dictionary.market.attention.ru: dictionary.market.attention.en
+    const you_must_send = language_code === 'ru' ? dictionary.market.you_must_send.ru: dictionary.market.you_must_send.en
+    const within_15_minutes = language_code === 'ru' ? dictionary.market.within_15_minutes.ru: dictionary.market.within_15_minutes.en
+    const transfer_payment_within = language_code === 'ru' ? dictionary.market.transfer_payment_within.ru: dictionary.market.transfer_payment_within.en
+    const confirm_payment = language_code === 'ru' ? dictionary.market.confirm_payment.ru: dictionary.market.confirm_payment.en
+    const status_label = language_code === 'ru' ? dictionary.market.status.ru: dictionary.market.status.en
+    const buyer_confirmed_payment = language_code === 'ru' ? dictionary.market.buyer_confirmed_payment.ru: dictionary.market.buyer_confirmed_payment.en
+    const make_sure_money = language_code === 'ru' ? dictionary.market.make_sure_money.ru: dictionary.market.make_sure_money.en
+    const payment_methods = language_code === 'ru' ? dictionary.market.payment_methods.ru: dictionary.market.payment_methods.en
+    const transaction_progress = language_code === 'ru' ? dictionary.market.transaction_progress.ru: dictionary.market.transaction_progress.en
+    const confirm_pay_label = language_code === 'ru' ? dictionary.market.confirm_pay.ru: dictionary.market.confirm_pay.en
+    const deal_canceled = language_code === 'ru' ? dictionary.market.deal_canceled.ru: dictionary.market.deal_canceled.en
+    const appeal = language_code === 'ru' ? dictionary.market.appeal.ru: dictionary.market.appeal.en
+    const you_have_active_appeal = language_code === 'ru' ? dictionary.market.you_have_active_appeal.ru: dictionary.market.you_have_active_appeal.en
+    const waiting_confirmation = language_code === 'ru' ? dictionary.market.waiting_confirmation.ru: dictionary.market.waiting_confirmation.en
+    const from_seller = language_code === 'ru' ? dictionary.market.from_seller.ru: dictionary.market.from_seller.en
+    const deal_completed = language_code === 'ru' ? dictionary.market.deal_completed.ru: dictionary.market.deal_completed.en
+    const waiting_confirm_seller = language_code === 'ru' ? dictionary.market.waiting_confirm_seller.ru: dictionary.market.waiting_confirm_seller.en
+    const update_status = language_code === 'ru' ? dictionary.market.update_status.ru: dictionary.market.update_status.en
+    const you_credited = language_code === 'ru' ? dictionary.market.you_credited.ru: dictionary.market.you_credited.en
+    const price_label = language_code === 'ru' ? dictionary.market.price.ru: dictionary.market.price.en
+    const price_per = language_code === 'ru' ? dictionary.market.price_per.ru: dictionary.market.price_per.en
+    const sum_label = language_code === 'ru' ? dictionary.market.sum.ru: dictionary.market.sum.en
+    const wants_buy_you = language_code === 'ru' ? dictionary.market.wants_buy_you.ru: dictionary.market.wants_buy_you.en
+    const buys = language_code === 'ru' ? dictionary.market.buys.ru: dictionary.market.buys.en
+    const payment_label = language_code === 'ru' ? dictionary.market.payment.ru: dictionary.market.payment.en
+    const you_sold = language_code === 'ru' ? dictionary.market.you_sold.ru: dictionary.market.you_sold.en
+    const seller_confirmed = language_code === 'ru' ? dictionary.market.seller_confirmed.ru: dictionary.market.seller_confirmed.en
+    const wants_sell = language_code === 'ru' ? dictionary.market.wants_sell.ru: dictionary.market.wants_sell.en
+    const time_accept = language_code === 'ru' ? dictionary.market.time_accept.ru: dictionary.market.time_accept.en
+    const refuse = language_code === 'ru' ? dictionary.market.refuse.ru: dictionary.market.refuse.en
+    const accept_request = language_code === 'ru' ? dictionary.market.accept_request.ru: dictionary.market.accept_request.en
+    const purchase_amount = language_code === 'ru' ? dictionary.market.purchase_amount.ru: dictionary.market.purchase_amount.en
+    const from_buyer = language_code === 'ru' ? dictionary.market.from_buyer.ru: dictionary.market.from_buyer.en
+    const account_card_phone = language_code === 'ru' ? dictionary.market.account_card_phone.ru: dictionary.market.account_card_phone.en
+    const full_name = language_code === 'ru' ? dictionary.market.full_name.ru: dictionary.market.full_name.en
+
     // const [timer, setTimer] = useState(60);
     // let t = 60
 
-    const str_type_deal = deal_screen_info?.type_order === 'b' ? 'Вы продаете': 'Вы покупаете'
+    const str_type_deal = deal_screen_info?.type_order === 'b' ? you_sell: you_buying
 
     const handleSendMessage = (status) => {
         // console.log('emit', status)
@@ -65,26 +111,6 @@ export function Deal () {
             setTimeDeal(data.deal.time_limit_order*60 - data.delta_time/1000)
             setShowTimer(true)
             dispatch(setDealScreenInfo(data.deal))  
-
-            // if (data.deal.saler_id.toString() === user_id.toString()) {
-            //     dispatch(setDealScreenInfo(data.deal))
-            //     // navigate('/completedeal', {replace: true})
-            // }
-            // else {
-            //     dispatch(setDealScreenInfo(data.deal))    
-            //     if (data.deal.status === "pay") {
-            //         // setShowConfirmPay(true)
-            //     }
-            //     else if (data.deal.status === "request") {
-            //         const I = setInterval(()=>{
-            //             if (t === 0) clearInterval(I)
-            //             t--;
-            //             setTimer(t)
-            //         }, 1000)
-            //     }
-
-                
-            // }
             
         }) 
     }
@@ -219,7 +245,7 @@ export function Deal () {
         <div className='title-buy-mini mt-13'># {deal_screen_info?.deal_id}</div>
         <div className='cntr-left'>
             <div className='open-chat-btn mt-13' onClick={()=>{navigate(`/chat/${deal_screen_info.deal_id}`, {replace: true})}}>
-                {!error && (deal_screen_info?.type_order === 's' ? 'Чат с покупателем': 'Чат с продавцом')}
+                {!error && (deal_screen_info?.type_order === 's' ? chat_buyer: chat_seller)}
             </div>
         </div>
 
@@ -229,10 +255,10 @@ export function Deal () {
 
         <div className='order-row-1 mt-18'>
             <div className='deal-label-1'>
-                Статус
+                {status_label}
             </div>
             <div className='order-info-3'>
-                <div className='deal-text-1'>Продавец подтвердил зявку</div>  
+                <div className='deal-text-1'>{seller_confirmed}</div>  
             </div>
         </div>
 
@@ -241,12 +267,12 @@ export function Deal () {
         </div>
             
         <div className='order-row-1'>
-            <div className='alert-text'>Внимание</div>
+            <div className='alert-text'>{attention}</div>
             <div className='allert-text-2 w-182 mr-17'>
-                    Вы должны отправить{' '} 
+                    {you_must_send}{' '} 
                     {renderSumm} 
                     {deal_screen_info?.fiat === 1 ? ' RUB ': ' USD '} 
-                    в течение 15 минут
+                    {within_15_minutes}
                     
             </div>
         </div>
@@ -255,7 +281,7 @@ export function Deal () {
             <div className='w-100'>
                 <div className='deal-row-1 mt-12'>
                     <div className='order-label-2'>
-                        Методы оплаты
+                        {payment_methods}
                     </div>
                     <div className='order-info-3'>
                         {deal_screen_info?.company}
@@ -273,7 +299,7 @@ export function Deal () {
 
                 <div className='order-row-1 mb-12'>
                     <div className='deal-label-2 w-130'>
-                        Аккаунт, номер карты или телефон
+                        {account_card_phone}
                     </div>
                     {/* <div className='order-info-3'>
                         {deal_screen_info?.card_number}
@@ -308,7 +334,7 @@ export function Deal () {
 
         <div className='container-center mt-20 color-bg-cntr h-82'>
             <div className='w-100'>
-                    <div className='deal-text-3 mt-17'>Переведите оплату в течение</div>
+                    <div className='deal-text-3 mt-17'>{transfer_payment_within}</div>
                     <div className='timer-text h-34' 
                         style={{display: 'flex', alignItems: 'flex-end', justifyContent: 'center'}}
                     >
@@ -318,7 +344,7 @@ export function Deal () {
         </div>
 
         <div onClick={hanldeConfirm} className='button-send-box button-active-send-bg active-text mt-20'>
-            Подтвердить платеж
+            {confirm_payment}
         </div>
     </>
 
@@ -328,7 +354,7 @@ export function Deal () {
         <div className='title-buy-mini mt-13'># {deal_screen_info?.deal_id}</div>
         <div className='cntr-left'>
             <div className='open-chat-btn mt-13' onClick={()=>{navigate(`/chat/${deal_screen_info.deal_id}`, {replace: true})}}>
-                Чат с покупателем
+                {chat_buyer}
             </div>
         </div>
 
@@ -338,10 +364,10 @@ export function Deal () {
 
         <div className='order-row-1 mt-18'>
             <div className='deal-label-1'>
-                Статус
+                {status_label}
             </div>
             <div className='order-info-3'>
-                <div className='deal-text-1'>Покупатель подтвердил оплату</div>  
+                <div className='deal-text-1'>{buyer_confirmed_payment}</div>  
             </div>
         </div>
 
@@ -350,13 +376,9 @@ export function Deal () {
         </div>
             
         <div className='order-row-1'>
-            <div className='alert-text'>Внимание</div>
+            <div className='alert-text'>{attention}</div>
             <div className='allert-text-2 w-182 mr-17'>
-                {
-                    `
-                    Убедитесь что фиаты поступили прежде чем подтверждать оплату
-                    `
-                }
+                {make_sure_money}
             </div>
         </div>
 
@@ -364,7 +386,7 @@ export function Deal () {
             <div className='w-100'>
                 <div className='deal-row-1 mt-12'>
                     <div className='order-label-2'>
-                        Методы оплаты
+                        {payment_methods}
                     </div>
                     <div className='order-info-3'>
                         {deal_screen_info?.company}
@@ -382,7 +404,7 @@ export function Deal () {
 
                 <div className='order-row-1 mb-12'>
                     <div className='deal-label-2 w-130'>
-                        Аккаунт, номер карты или телефон
+                        {account_card_phone}
                     </div>
                     <div className='order-info-3'
                         onClick={handleClickCopyCard}
@@ -407,7 +429,7 @@ export function Deal () {
 
                 <div className='order-row-1 mb-12'>
                     <div className='deal-label-2 w-130'>
-                        ФИО
+                        {full_name}
                     </div>
                     <div className='order-info-3'
                         onClick={handleClickCopyCard}
@@ -428,7 +450,7 @@ export function Deal () {
         
 
         <div onClick={handleEndDeal} className='button-send-box button-active-send-bg active-text mt-20'>
-            {waitTransaction ? 'Транзакция выполняется..': 'Подтвердить оплату'}
+            {waitTransaction ? transaction_progress: confirm_pay_label}
         </div>
     </>
 
@@ -448,22 +470,21 @@ export function Deal () {
                 <img style={{width: '131.4px', height: '132px'}} src={cancel_gif} alt=''/>:
             </div>
             <div className='wait-text'>
-                {/* Вам начислено {deal_screen_info?.quantity} USDT */}
             </div>  
             <div className='wait-text-1 mt-20'>
-                Сделка отменена
+                {deal_canceled}
             </div> 
         </div>
         
         <div className='cntr-between mt-20'>
             <div onClick={handleAppilate} className='button-send-box button-send-bg deal-end-text-1 w-161'>
-                Апелляция
+                {appeal}
             </div>
             <div onClick={()=>navigate('/person', {replace: true})} className='button-send-box button-active-send-bg active-text w-161'>
-                Личный кабинет
+                {personal_area}
             </div>
         </div>
-        {showErrorAppilate && <div className='text_error_appilate'>У вас есть действующая апелляция</div>}
+        {showErrorAppilate && <div className='text_error_appilate'>{you_have_active_appeal}</div>}
     </>
 
     
@@ -528,13 +549,13 @@ export function Deal () {
 
                         {   (deal_screen_info?.status === 'request' || deal_screen_info?.status === 'confirm') &&
                             <>
-                                <div className='title-buy-label mt-20'>Сделка № {deal_screen_info?.deal_id}</div>
+                                <div className='title-buy-label mt-20'>{deal} № {deal_screen_info?.deal_id}</div>
                                 {/* <div className='title-buy'>{str_type_deal} {deal_screen_info?.saler}</div> */}
                                 <div className='title-buy mt-20'>{str_type_deal}</div>
                                 {quantity_deal}
 
                                 {/* <div className='saler-buyer mt-20'>{str_type_deal.charAt(3).toUpperCase() + str_type_deal.slice(4, str_type_deal.length-1)} {deal_screen_info?.saler}</div> */}
-                                <div className='saler-buyer mt-20'>Продает {deal_screen_info?.saler}</div>
+                                <div className='saler-buyer mt-20'>{sells} {deal_screen_info?.saler}</div>
 
                                 <div className='color-bg-cntr h-cntr-deal w-cntr mt-20'>
                                     <div className='container-center'>
@@ -547,13 +568,13 @@ export function Deal () {
                                         } */}
                                         <img style={{width: '131.4px', height: '132px'}} src={clock_gif} alt=''/>
                                     </div>
-                                    <div className='wait-text'>Ожиданием подтверждения
+                                    <div className='wait-text'>{waiting_confirmation}
                                     </div>  
                                     <div className='wait-text-1 mt-20'>
                                         {  
                                             deal_screen_info?.status === 'end' ? 
-                                            'Сделка совершена': 
-                                            'от продавца'
+                                            deal_completed: 
+                                            from_seller
                                         }  
                                     </div> 
                                 </div>
@@ -561,7 +582,7 @@ export function Deal () {
                                 <div>
                                     <div className='deal-row-1 mt-12'>
                                         <div className='order-label-2'>
-                                            Методы оплаты
+                                            {payment_methods}
                                         </div>
                                         <div className='order-info-3'>
                                             {deal_screen_info?.company}
@@ -574,7 +595,7 @@ export function Deal () {
 
                                     <div className='order-row-1'>
                                         <div className='order-label-2'>
-                                            Цена
+                                            {price_label}
                                         </div>
                                         <div className='order-info-3'>
                                             {/* {deal_screen_info?.price}  */}
@@ -589,7 +610,7 @@ export function Deal () {
 
                                     <div className='order-row-1'>
                                         <div className='order-label-2'>
-                                            Cумма покупки
+                                            {purchase_amount}
                                         </div>
                                         <div className='order-info-3'>
                                             {renderSumm}
@@ -600,7 +621,7 @@ export function Deal () {
                                 </div>
                                 <div className='container-center mt-20 color-bg-cntr h-82'>
             <div className='w-100'>
-                    <div className='deal-text-3 mt-17'>Ожидание подтверждения сделки от продавца</div>
+                    <div className='deal-text-3 mt-17'>{waiting_confirm_seller}</div>
                     <div className='timer-text h-34' 
                         style={{display: 'flex', alignItems: 'flex-end', justifyContent: 'center'}}
                      > 
@@ -609,20 +630,20 @@ export function Deal () {
             </div>
         </div>
                                 <div onClick={()=>handleGetDealInfo()} className='button-send-box button-active-send-bg active-text mt-20'>
-                                    Обновить статус
+                                    {update_status}
                                 </div>
                             </>
                         }
 
                         {   (deal_screen_info?.status === 'end') &&
                             <>
-                                <div className='title-buy-label mt-20'>Сделка № {deal_screen_info?.deal_id}</div>
+                                <div className='title-buy-label mt-20'>{deal} № {deal_screen_info?.deal_id}</div>
                                 {/* <div className='title-buy'>{str_type_deal} {deal_screen_info?.saler}</div> */}
                                 <div className='title-buy mt-20'>{str_type_deal}</div>
                                 {quantity_deal}
 
                                 {/* <div className='saler-buyer mt-20'>{str_type_deal.charAt(3).toUpperCase() + str_type_deal.slice(4, str_type_deal.length-1)} {deal_screen_info?.saler}</div> */}
-                                <div className='saler-buyer mt-20'>Продает {deal_screen_info?.saler}</div>
+                                <div className='saler-buyer mt-20'>{sells} {deal_screen_info?.saler}</div>
 
                                 <div className='color-bg-cntr h-cntr-deal w-cntr mt-20'>
                                     <div className='container-center'>
@@ -636,17 +657,17 @@ export function Deal () {
                                         <img style={{width: '131.4px', height: '132px'}} src={salute_gif} alt=''/>:
                                     </div>
                                     <div className='wait-text'>
-                                        Вам начислено {deal_screen_info?.quantity} USDT
+                                        {you_credited} {deal_screen_info?.quantity} USDT
                                     </div>  
                                     <div className='wait-text-1 mt-20'>
-                                        Сделка совершена
+                                        {deal_completed}
                                     </div> 
                                 </div>
 
                                 <div>
                                     <div className='deal-row-1 mt-12'>
                                         <div className='order-label-2'>
-                                            Методы оплаты
+                                            {payment_methods}
                                         </div>
                                         <div className='order-info-3'>
                                             {deal_screen_info?.company}
@@ -659,7 +680,7 @@ export function Deal () {
 
                                     <div className='order-row-1'>
                                         <div className='order-label-2'>
-                                            Цена
+                                            {price_label}
                                         </div>
                                         <div className='order-info-3'>
                                             {renderPrice}
@@ -674,7 +695,7 @@ export function Deal () {
 
                                     <div className='order-row-1'>
                                         <div className='order-label-2'>
-                                            Cумма покупки
+                                            {purchase_amount}
                                         </div>
                                         <div className='order-info-3'>
                                             {renderSumm} {deal_screen_info?.fiat === 1 ? 'RUB': 'USD'}
@@ -685,13 +706,13 @@ export function Deal () {
                                 
                                 <div className='cntr-between mt-20'>
                                     <div onClick={handleAppilate} className='button-send-box button-send-bg deal-end-text-1 w-161'>
-                                        Апелляция
+                                        {appeal}
                                     </div>
                                     <div onClick={()=>navigate('/person', {replace: true})} className='button-send-box button-active-send-bg active-text w-161'>
-                                        Личный кабинет
+                                        {personal_area}
                                     </div>
                                 </div>
-                                {showErrorAppilate && <div className='text_error_appilate'>У вас есть действующая апелляция</div>}
+                                {showErrorAppilate && <div className='text_error_appilate'>{you_have_active_appeal}</div>}
                             </>
                         }
                     </>
@@ -703,13 +724,13 @@ export function Deal () {
 
                         {   deal_screen_info?.status === 'pay' &&
                             <>
-                                <div className='title-buy-label mt-20'>Сделка № {deal_screen_info?.deal_id}</div>
+                                <div className='title-buy-label mt-20'>{deal} № {deal_screen_info?.deal_id}</div>
                                 {/* <div className='title-buy'>{str_type_deal} {deal_screen_info?.saler}</div> */}
-                                <div className='title-buy mt-20'>Вы продаете</div>
+                                <div className='title-buy mt-20'>{you_sell}</div>
                                 {quantity_deal}
 
                                 {/* <div className='saler-buyer mt-20'>{str_type_deal.charAt(3).toUpperCase() + str_type_deal.slice(4, str_type_deal.length-1)} {deal_screen_info?.saler}</div> */}
-                                <div className='saler-buyer mt-20'>Покупает {deal_screen_info?.buyer}</div>
+                                <div className='saler-buyer mt-20'>{buys} {deal_screen_info?.buyer}</div>
 
                                 <div className='color-bg-cntr h-cntr-deal w-cntr mt-20'>
                                     <div className='container-center'>
@@ -722,17 +743,17 @@ export function Deal () {
                                         } */}
                                         <img style={{width: '131.4px', height: '132px'}} src={clock_gif} alt=''/>
                                     </div>
-                                    <div className='wait-text'>Ожиданием подтверждения {deal_screen_info?.status === 'pay' && 'оплаты'}
+                                    <div className='wait-text'>{waiting_confirmation} {deal_screen_info?.status === 'pay' && {payment_label}}
                                     </div>  
                                     <div className='wait-text-1 mt-20'>
-                                        от покупателя
+                                        {from_buyer}
                                     </div> 
                                 </div>
 
                                 <div>
                                     <div className='deal-row-1 mt-12'>
                                         <div className='order-label-2'>
-                                            Методы оплаты
+                                            {payment_methods}
                                         </div>
                                         <div className='order-info-3'>
                                             {deal_screen_info?.company}
@@ -745,7 +766,7 @@ export function Deal () {
 
                                     <div className='order-row-1'>
                                         <div className='order-label-2'>
-                                            Цена
+                                            {price_label}
                                         </div>
                                         <div className='order-info-3'>
                                             {/* {deal_screen_info?.price}  */}
@@ -761,7 +782,7 @@ export function Deal () {
 
                                     <div className='order-row-1'>
                                         <div className='order-label-2'>
-                                            Cумма покупки
+                                            {purchase_amount}
                                         </div>
                                         <div className='order-info-3'>
                                             {/* {Math.round(deal_screen_info?.price * deal_screen_info?.quantity*1000)/1000}  */}
@@ -785,7 +806,7 @@ export function Deal () {
                                 </div>
 
                                 <div onClick={()=>handleGetDealInfo()} className='button-send-box button-active-send-bg active-text mt-20'>
-                                    Обновить статус
+                                    {update_status}
                                 </div>
                             </>
                         }
@@ -797,12 +818,12 @@ export function Deal () {
                         {   deal_screen_info?.status === 'request' &&
                             <>  
                                 <div className='container-title mt-20'>
-                                    <div className='title-text'><span className='title-text-g'>{deal_screen_info.buyer}</span> хочет купить у вас</div>
+                                    <div className='title-text'><span className='title-text-g'>{deal_screen_info.buyer}</span> {wants_buy_you}</div>
                                 </div>
                                 {quantity_deal}
                                 <div className='container-center mt-20'>
                                     <div className='price-info-buy'>
-                                        Цена за 1 {CURRENCY_LIST[deal_screen_info.currency - 1]} = {renderPrice}
+                                        {price_per} 1 {CURRENCY_LIST[deal_screen_info.currency - 1]} = {renderPrice}
                                     </div>
                                 </div>
 
@@ -810,7 +831,7 @@ export function Deal () {
                                     <div className='w-100'>
                                         <div className='order-row-1'>
                                             <div className='order-label-2'>
-                                                Метод оплаты
+                                                {payment_methods}
                                             </div>
                                             <div className='order-info-3'>
                                                 {deal_screen_info.company}
@@ -823,7 +844,7 @@ export function Deal () {
 
                                         <div className='order-row-1'>
                                             <div className='order-label-2'>
-                                                Сумма
+                                                {sum_label}
                                             </div>
                                             <div className='order-info-3'>
                                                 
@@ -843,7 +864,7 @@ export function Deal () {
 
                                 <div className='cntr-center'>
                                     <div className='open-chat-btn mt-13' onClick={()=>{navigate(`/chat/${deal_screen_info.deal_id}`, {replace: true})}}>
-                                        Чат с покупателем
+                                        {chat_buyer}
                                     </div>
                                 </div>
 
@@ -853,7 +874,7 @@ export function Deal () {
 
                                 <div className='container-center mt-20 color-bg-cntr h-82'>
                                     <div className='w-100'>
-                                            <div className='deal-text-3 mt-17'>Время на принятие запроса</div>
+                                            <div className='deal-text-3 mt-17'>{time_accept}</div>
                                             <div className='timer-text h-34' 
                                                 style={{display: 'flex', alignItems: 'flex-end', justifyContent: 'center'}}
                                             >
@@ -866,13 +887,13 @@ export function Deal () {
                                     <div className='btn-disable-deal' 
                                         onClick={handleClickCancelDeal}
                                     >
-                                        Отказаться
+                                        {refuse}
                                     </div>
 
                                     <div className='btn-accept-deal' 
                                         onClick={handleClickAccept}
                                     >
-                                        Принять запрос
+                                        {accept_request}
                                     </div>
                                 </div>
                             </>
@@ -880,13 +901,7 @@ export function Deal () {
 
                         {   (deal_screen_info?.status === 'end') &&
                             <>
-                                <div className='title-buy-label mt-20'>Сделка № {deal_screen_info?.deal_id}</div>
-                                {/* <div className='title-buy'>{str_type_deal} {deal_screen_info?.saler}</div> */}
-                                {/* <div className='title-buy mt-20'>{str_type_deal}</div>
-                                {quantity_deal} */}
-
-                                {/* <div className='saler-buyer mt-20'>{str_type_deal.charAt(3).toUpperCase() + str_type_deal.slice(4, str_type_deal.length-1)} {deal_screen_info?.saler}</div> */}
-                                {/* <div className='saler-buyer mt-20'>Продает {deal_screen_info?.saler}</div> */}
+                                <div className='title-buy-label mt-20'>{deal} № {deal_screen_info?.deal_id}</div>
 
                                 <div className='color-bg-cntr h-cntr-deal w-cntr mt-20'>
                                     <div className='container-center'>
@@ -900,17 +915,17 @@ export function Deal () {
                                         <img style={{width: '131.4px', height: '132px'}} src={salute_gif} alt=''/>:
                                     </div>
                                     <div className='wait-text'>
-                                        Вы продали {deal_screen_info?.quantity} USDT
+                                        {you_sold} {deal_screen_info?.quantity} USDT
                                     </div>  
                                     <div className='wait-text-1 mt-20'>
-                                        Сделка совершена
+                                        {deal_completed}
                                     </div> 
                                 </div>
 
                                 <div>
                                     <div className='deal-row-1 mt-12'>
                                         <div className='order-label-2'>
-                                            Методы оплаты
+                                            {payment_methods}
                                         </div>
                                         <div className='order-info-3'>
                                             {deal_screen_info?.company}
@@ -923,7 +938,7 @@ export function Deal () {
 
                                     <div className='order-row-1'>
                                         <div className='order-label-2'>
-                                            Цена
+                                            {price_label}
                                         </div>
                                         <div className='order-info-3'>
                                             {renderPrice} 
@@ -937,7 +952,7 @@ export function Deal () {
 
                                     <div className='order-row-1'>
                                         <div className='order-label-2'>
-                                            Cумма покупки
+                                            {purchase_amount}
                                         </div>
                                         <div className='order-info-3'>
                                             {renderSumm} 
@@ -949,13 +964,13 @@ export function Deal () {
                                 
                                 <div className='cntr-between mt-20'>
                                     <div onClick={handleAppilate} className='button-send-box button-send-bg deal-end-text-1 w-161'>
-                                        Апелляция
+                                        {appeal}
                                     </div>
                                     <div onClick={()=>navigate('/person', {replace: true})} className='button-send-box button-active-send-bg active-text w-161'>
-                                        Личный кабинет
+                                        {personal_area}
                                     </div>
                                 </div>
-                                {showErrorAppilate && <div className='text_error_appilate'>У вас есть действующая апелляция</div>}
+                                {showErrorAppilate && <div className='text_error_appilate'>{you_have_active_appeal}</div>}
                             </>
                         }
                     </>
@@ -970,12 +985,12 @@ export function Deal () {
                         {   deal_screen_info?.status === 'request' &&
                             <>  
                                 <div className='container-title mt-20'>
-                                    <div className='title-text'><span className='title-text-g'>{}</span>{deal_screen_info.buyer} хочет продать вам</div>
+                                    <div className='title-text'><span className='title-text-g'>{}</span>{deal_screen_info.buyer} {wants_sell}</div>
                                 </div>
                                 {quantity_deal}
                                 <div className='container-center mt-20'>
                                     <div className='price-info-buy'>
-                                        Цена за 1 USDT {deal_screen_info.currency === 1 ? 'BEP20': 'TRC20'} = 
+                                        {price_per} USDT {deal_screen_info.currency === 1 ? 'BEP20': 'TRC20'} = 
                                         {renderPrice}
                                     </div>
                                 </div>
@@ -984,7 +999,7 @@ export function Deal () {
                                     <div className='w-100'>
                                         <div className='order-row-1'>
                                             <div className='order-label-2'>
-                                                Метод оплаты
+                                                {payment_methods}
                                             </div>
                                             <div className='order-info-3'>
                                                 {deal_screen_info.company}
@@ -997,7 +1012,7 @@ export function Deal () {
 
                                         <div className='order-row-1'>
                                             <div className='order-label-2'>
-                                                Сумма
+                                                {sum_label}
                                             </div>
                                             <div className='order-info-3'>
                                                 {renderSumm} 
@@ -1014,7 +1029,7 @@ export function Deal () {
 
                                 <div className='cntr-center'>
                                     <div className='open-chat-btn mt-13' onClick={()=>{navigate(`/chat/${deal_screen_info.deal_id}`, {replace: true})}}>
-                                        Чат с покупателем
+                                        {chat_buyer}
                                     </div>
                                 </div>
 
@@ -1024,7 +1039,7 @@ export function Deal () {
 
                                 <div className='container-center mt-20 color-bg-cntr h-82'>
                                     <div className='w-100'>
-                                            <div className='deal-text-3 mt-17'>Переведите оплату в течение</div>
+                                            <div className='deal-text-3 mt-17'>{transfer_payment_within}</div>
                                             <div className='timer-text h-34' 
                                                 style={{display: 'flex', alignItems: 'flex-end', justifyContent: 'center'}}
                                             >
@@ -1037,13 +1052,13 @@ export function Deal () {
                                     <div className='btn-disable-deal' 
                                         onClick={handleClickCancelDeal}
                                     >
-                                        Отказаться
+                                        {refuse}
                                     </div>
 
                                     <div className='btn-accept-deal' 
                                         onClick={handleClickAccept}
                                     >
-                                        Принять запрос
+                                        {accept_request}
                                     </div>
                                 </div>
                             </>
@@ -1055,13 +1070,13 @@ export function Deal () {
 
                         {   deal_screen_info?.status === 'confirm' &&
                             <>
-                                <div className='title-buy-label mt-20'>Сделка № {deal_screen_info?.deal_id}</div>
+                                <div className='title-buy-label mt-20'>{deal} № {deal_screen_info?.deal_id}</div>
                                 {/* <div className='title-buy'>{str_type_deal} {deal_screen_info?.saler}</div> */}
-                                <div className='title-buy mt-20'>Вы покупаете</div>
+                                <div className='title-buy mt-20'>{you_buying}</div>
                                 {quantity_deal}
 
                                 {/* <div className='saler-buyer mt-20'>{str_type_deal.charAt(3).toUpperCase() + str_type_deal.slice(4, str_type_deal.length-1)} {deal_screen_info?.saler}</div> */}
-                                <div className='saler-buyer mt-20'>Продает {deal_screen_info?.buyer}</div>
+                                <div className='saler-buyer mt-20'>{sells} {deal_screen_info?.buyer}</div>
 
                                 <div className='color-bg-cntr h-cntr-deal w-cntr mt-20'>
                                     <div className='container-center'>
@@ -1074,13 +1089,13 @@ export function Deal () {
                                         } */}
                                         <img style={{width: '131.4px', height: '132px'}} src={clock_gif} alt=''/>
                                     </div>
-                                    <div className='wait-text'>Ожиданием подтверждения
+                                    <div className='wait-text'>{waiting_confirmation}
                                     </div>  
                                     <div className='wait-text-1 mt-20'>
                                         {  
                                             deal_screen_info?.status === 'end' ? 
-                                            'Сделка совершена': 
-                                            'от продавца'
+                                            deal_completed: 
+                                            from_seller
                                         }  
                                     </div> 
                                 </div>
@@ -1088,7 +1103,7 @@ export function Deal () {
                                 <div>
                                     <div className='deal-row-1 mt-12'>
                                         <div className='order-label-2'>
-                                            Методы оплаты
+                                            {payment_methods}
                                         </div>
                                         <div className='order-info-3'>
                                             {deal_screen_info?.company}
@@ -1101,7 +1116,7 @@ export function Deal () {
 
                                     <div className='order-row-1'>
                                         <div className='order-label-2'>
-                                            Цена
+                                            {price_label}
                                         </div>
                                         <div className='order-info-3'>
                                             {renderPrice} 
@@ -1115,7 +1130,7 @@ export function Deal () {
 
                                     <div className='order-row-1'>
                                         <div className='order-label-2'>
-                                            Cумма покупки
+                                            {purchase_amount}
                                         </div>
                                         <div className='order-info-3'>
                                             {renderSumm} 
@@ -1126,20 +1141,14 @@ export function Deal () {
                                 </div>
 
                                 <div onClick={()=>handleGetDealInfo()} className='button-send-box button-active-send-bg active-text mt-20'>
-                                    Обновить статус
+                                    {update_status}
                                 </div>
                             </>
                         }
 
                         {   (deal_screen_info?.status === 'end') &&
                             <>
-                                <div className='title-buy-label mt-20'>Сделка № {deal_screen_info?.deal_id}</div>
-                                {/* <div className='title-buy'>{str_type_deal} {deal_screen_info?.saler}</div> */}
-                                {/* <div className='title-buy mt-20'>{str_type_deal}</div>
-                                {quantity_deal} */}
-
-                                {/* <div className='saler-buyer mt-20'>{str_type_deal.charAt(3).toUpperCase() + str_type_deal.slice(4, str_type_deal.length-1)} {deal_screen_info?.saler}</div> */}
-                                {/* <div className='saler-buyer mt-20'>Продает {deal_screen_info?.saler}</div> */}
+                                <div className='title-buy-label mt-20'>{deal} № {deal_screen_info?.deal_id}</div>
 
                                 <div className='color-bg-cntr h-cntr-deal w-cntr mt-20'>
                                     <div className='container-center'>
@@ -1153,17 +1162,17 @@ export function Deal () {
                                         <img style={{width: '131.4px', height: '132px'}} src={salute_gif} alt=''/>:
                                     </div>
                                     <div className='wait-text'>
-                                        Вам начислено {deal_screen_info?.quantity} USDT
+                                        {you_credited} {deal_screen_info?.quantity} USDT
                                     </div>  
                                     <div className='wait-text-1 mt-20'>
-                                        Сделка совершена
+                                        {deal_completed}
                                     </div> 
                                 </div>
 
                                 <div>
                                     <div className='deal-row-1 mt-12'>
                                         <div className='order-label-2'>
-                                            Методы оплаты
+                                            {payment_methods}
                                         </div>
                                         <div className='order-info-3'>
                                             {deal_screen_info?.company}
@@ -1176,7 +1185,7 @@ export function Deal () {
 
                                     <div className='order-row-1'>
                                         <div className='order-label-2'>
-                                            Цена
+                                            {price_label}
                                         </div>
                                         <div className='order-info-3'>
                                             {renderPrice} 
@@ -1190,7 +1199,7 @@ export function Deal () {
 
                                     <div className='order-row-1'>
                                         <div className='order-label-2'>
-                                            Cумма покупки
+                                            {purchase_amount}
                                         </div>
                                         <div className='order-info-3'>
                                             {renderSumm} 
@@ -1202,13 +1211,13 @@ export function Deal () {
                                 
                                 <div className='cntr-between mt-20'>
                                     <div onClick={handleAppilate} className='button-send-box button-send-bg deal-end-text-1 w-161'>
-                                        Апелляция
+                                        {appeal}
                                     </div>
                                     <div onClick={()=>navigate('/person', {replace: true})} className='button-send-box button-active-send-bg active-text w-161'>
-                                        Личный кабинет
+                                        {personal_area}
                                     </div>
                                 </div>
-                                {showErrorAppilate && <div className='text_error_appilate'>У вас есть действующая апелляция</div>}
+                                {showErrorAppilate && <div className='text_error_appilate'>{you_have_active_appeal}</div>}
                             </>
                         }
                     </>
@@ -1222,13 +1231,13 @@ export function Deal () {
 
                         {   (deal_screen_info?.status === 'request' || deal_screen_info?.status === 'pay' ) &&
                             <>
-                                <div className='title-buy-label mt-20'>Сделка № {deal_screen_info?.deal_id}</div>
+                                <div className='title-buy-label mt-20'>{deal} № {deal_screen_info?.deal_id}</div>
                                 {/* <div className='title-buy'>{str_type_deal} {deal_screen_info?.saler}</div> */}
                                 <div className='title-buy mt-20'>{str_type_deal}</div>
                                 {quantity_deal}
 
                                 {/* <div className='saler-buyer mt-20'>{str_type_deal.charAt(3).toUpperCase() + str_type_deal.slice(4, str_type_deal.length-1)} {deal_screen_info?.saler}</div> */}
-                                <div className='saler-buyer mt-20'>Покупает {deal_screen_info?.saler}</div>
+                                <div className='saler-buyer mt-20'>{buys} {deal_screen_info?.saler}</div>
 
                                 <div className='color-bg-cntr h-cntr-deal w-cntr mt-20'>
                                     <div className='container-center'>
@@ -1241,17 +1250,17 @@ export function Deal () {
                                         } */}
                                         <img style={{width: '131.4px', height: '132px'}} src={clock_gif} alt=''/>
                                     </div>
-                                    <div className='wait-text'>Ожиданием подтверждения {deal_screen_info?.status === 'pay' && 'оплаты'}
+                                    <div className='wait-text'>{waiting_confirmation} {deal_screen_info?.status === 'pay' && payment_label}
                                     </div>  
                                     <div className='wait-text-1 mt-20'>
-                                        от покупателя
+                                        {from_buyer}
                                     </div> 
                                 </div>
 
                                 <div>
                                     <div className='deal-row-1 mt-12'>
                                         <div className='order-label-2'>
-                                            Методы оплаты
+                                            {payment_methods}
                                         </div>
                                         <div className='order-info-3'>
                                             {deal_screen_info?.company}
@@ -1264,7 +1273,7 @@ export function Deal () {
 
                                     <div className='order-row-1'>
                                         <div className='order-label-2'>
-                                            Цена
+                                            {price_label}
                                         </div>
                                         <div className='order-info-3'>
                                             {renderPrice} 
@@ -1278,7 +1287,7 @@ export function Deal () {
 
                                     <div className='order-row-1'>
                                         <div className='order-label-2'>
-                                            Cумма покупки
+                                            {purchase_amount}
                                         </div>
                                         <div className='order-info-3'>
                                             {renderSumm} 
@@ -1289,7 +1298,7 @@ export function Deal () {
                                 </div>
 
                                 <div onClick={()=>handleGetDealInfo()} className='button-send-box button-active-send-bg active-text mt-20'>
-                                    Обновить статус
+                                    {update_status}
                                 </div>
                             </>
                         }
@@ -1300,13 +1309,7 @@ export function Deal () {
 
                         {   (deal_screen_info?.status === 'end') &&
                             <>
-                                <div className='title-buy-label mt-20'>Сделка № {deal_screen_info?.deal_id}</div>
-                                {/* <div className='title-buy'>{str_type_deal} {deal_screen_info?.saler}</div> */}
-                                {/* <div className='title-buy mt-20'>{str_type_deal}</div>
-                                {quantity_deal} */}
-
-                                {/* <div className='saler-buyer mt-20'>{str_type_deal.charAt(3).toUpperCase() + str_type_deal.slice(4, str_type_deal.length-1)} {deal_screen_info?.saler}</div> */}
-                                {/* <div className='saler-buyer mt-20'>Продает {deal_screen_info?.saler}</div> */}
+                                <div className='title-buy-label mt-20'>{deal} № {deal_screen_info?.deal_id}</div>
 
                                 <div className='color-bg-cntr h-cntr-deal w-cntr mt-20'>
                                     <div className='container-center'>
@@ -1320,17 +1323,17 @@ export function Deal () {
                                         <img style={{width: '131.4px', height: '132px'}} src={salute_gif} alt=''/>:
                                     </div>
                                     <div className='wait-text'>
-                                        Вы продали {deal_screen_info?.quantity} USDT
+                                        {you_sold} {deal_screen_info?.quantity} USDT
                                     </div>  
                                     <div className='wait-text-1 mt-20'>
-                                        Сделка совершена
+                                        {deal_completed}
                                     </div> 
                                 </div>
 
                                 <div>
                                     <div className='deal-row-1 mt-12'>
                                         <div className='order-label-2'>
-                                            Методы оплаты
+                                            {payment_methods}
                                         </div>
                                         <div className='order-info-3'>
                                             {deal_screen_info?.company}
@@ -1343,7 +1346,7 @@ export function Deal () {
 
                                     <div className='order-row-1'>
                                         <div className='order-label-2'>
-                                            Цена
+                                            {price_label}
                                         </div>
                                         <div className='order-info-3'>
                                             {renderPrice} 
@@ -1357,7 +1360,7 @@ export function Deal () {
 
                                     <div className='order-row-1'>
                                         <div className='order-label-2'>
-                                            Cумма покупки
+                                            {purchase_amount}
                                         </div>
                                         <div className='order-info-3'>
                                             {renderSumm} 
@@ -1369,13 +1372,13 @@ export function Deal () {
                                 
                                 <div className='cntr-between mt-20'>
                                     <div onClick={handleAppilate} className='button-send-box button-send-bg deal-end-text-1 w-161'>
-                                        Апелляция
+                                        {appeal}
                                     </div>
                                     <div onClick={()=>navigate('/person', {replace: true})} className='button-send-box button-active-send-bg active-text w-161'>
-                                        Личный кабинет
+                                        {personal_area}
                                     </div>
                                 </div>
-                                {showErrorAppilate && <div className='text_error_appilate'>У вас есть действующая апелляция</div>}
+                                {showErrorAppilate && <div className='text_error_appilate'>{you_have_active_appeal}</div>}
                             </>
                         }
                     </>
@@ -1387,30 +1390,5 @@ export function Deal () {
       );
 }
 
-// const handleClickEndDeal = () => {
-    //     setShowLoader(true)
-    //     // console.log('deal_screen_info', deal_screen_info)
-    //     sendEndDeal(
-    //         {
-    //             deal_id: deal_screen_info.deal_id, 
-    //             order_id: deal_screen_info.order_id, 
-    //             user_to_id: deal_screen_info.type_order === 's' ?
-    //                 (deal_screen_info.id_to ? deal_screen_info.id_to: deal_screen_info.buyer_id):
-    //                 (deal_screen_info.id_from ? deal_screen_info.id_from: deal_screen_info.saler_id),
-    //             user_from: first_name,
-    //             user_from_id: user_id,
-    //             type_order: deal_screen_info.type_order
-    //         }, (data) => {
-    //         handleGetDealInfo()
-    //         setShowLoader(false)
-    //         if (data.error) {
-    //             setError(data.error)
-    //         }
-    //         else {
-    //             setError('Сделка совершена')
-    //         }
-            
-    //         // handleClose()
-    //     })
-    // }
+
 

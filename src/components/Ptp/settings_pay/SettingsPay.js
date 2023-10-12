@@ -7,12 +7,17 @@ import {   selectBackScreen, selectMethodsPay, selectNewMethod, setBank, setCard
 
 import './style.css'
 import { NewMethodPay } from './NewMethodPay';
+import { dictionary } from '../../../const/dictionary';
 
 
 export function SettingsPay() {
-    const { user_id, tg } = useTelegram()
+    const { user_id, tg, language_code } = useTelegram()
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    const add = language_code === 'ru' ? dictionary.add.ru: dictionary.add.en
+    const payment_methods = language_code === 'ru' ? dictionary.payment_methods.ru: dictionary.payment_methods.en
+    const card = language_code === 'ru' ? dictionary.card.ru: dictionary.card.en
 
     const showNewMethod = useSelector(selectNewMethod)
     const [is_new, setIsNew] = useState(true)
@@ -73,16 +78,16 @@ export function SettingsPay() {
         <div className='container-settings-pay p-4'>
             {   !showNewMethod &&
                 <div>
-                    <div className='method-text-button button-new-method' onClick={() => dispatch(setNewMethod(true))}>Добавить</div>
+                    <div className='method-text-button button-new-method' onClick={() => dispatch(setNewMethod(true))}>{add}</div>
 
-                    <div className='method-text mt-4 mb-2'>Методы оплаты</div>
+                    <div className='method-text mt-4 mb-2'>{payment_methods}</div>
 
                     <div className='container-list-methods'>
                         {list_methods.map ((method) => {
                             return (
                                     <div key={method.id} className='container-method' onClick={() => {handleClickMethod(method.id)}}>
                                         <div className='text-deal'>{method.company_name}</div>
-                                        <div className='text-deal'><span className='label-deal'>Карта: </span> {method.card_number}</div>
+                                        <div className='text-deal'><span className='label-deal'>{card} </span> {method.card_number}</div>
                                     </div>
                             )
                         })}

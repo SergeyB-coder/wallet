@@ -150,33 +150,6 @@ export function Address (props) {
 
                     </div>
 
-                    {/* <div style={{position: 'relative'}}>
-                        <div style={{color: 'white'}} onClick={handleClickCurrencyBalance}>{currencyBalance}</div>
-                        {showListCurrency ? 
-                        <div style={{position: 'absolute', width: '60vw', display: 'flex', justifyContent: 'center'}}>
-                            <div>
-                            {CURRENCY_LIST.map((currency, index) => {
-                                return (
-                                    <div onClick={()=>{handleClickCurrencyItem(index)}} key={index} style={{marginTop:3, border: '0.5px solid grey', borderRadius: 5, width: 'fit-content'}} className="select-currency">{currency}</div>
-                                )
-                            })}
-                            </div>
-                        </div>: null}
-                    </div> */}
-                    
-
-
-                    {/* <button className='address-copy-button' onClick={() => {
-                            const copy_address = fromLabel1 !== 'USDT TRC20' ? address: address_trx
-                            navigator.clipboard.writeText(copy_address)
-                            setShowMessage(true)
-                            setTimeout(() => {setShowMessage(false)}, 1000)
-                        }}
-                    >
-                        Копировать адрес
-                    </button> */}
-
-                    
                 </div>
             </div>
             

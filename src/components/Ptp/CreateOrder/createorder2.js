@@ -7,10 +7,17 @@ import { selectMethodsPay, setCompaniesPay, setMethodsPay } from '../settings_pa
 // import { ButtonNext } from '../../Common/buttonNext';
 import { useState } from 'react';
 import { NewMethodPay } from '../settings_pay/NewMethodPay';
+import { dictionary } from '../../../const/dictionary';
 
 export function CreateOrder2(props) {
-    const {user_id} = useTelegram()
+    const {user_id, language_code} = useTelegram()
     const dispatch = useDispatch()
+
+    const add_payment_methods = language_code === 'ru' ? dictionary.add_payment_methods.ru: dictionary.add_payment_methods.en
+    const add_payments_method = language_code === 'ru' ? dictionary.add_payments_method.ru: dictionary.add_payments_method.en
+
+    const further = language_code === 'ru' ? dictionary.further.ru: dictionary.further.en
+    const choose_payment_method = language_code === 'ru' ? dictionary.choose_payment_method.ru: dictionary.choose_payment_method.en
 
     const listCheckedMethods = props.listCheckedMethods
     const setListCheckedMethods = props.setListCheckedMethods
@@ -27,33 +34,7 @@ export function CreateOrder2(props) {
             <div className='divider-method'></div>
         </div>
 
-    // const arrow_right = 
-    //     <div className='trade-menu-arrow-col'>
-    //         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-chevron-right" viewBox="0 0 16 16">
-    //             <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-    //         </svg>
-    //     </div>
-
-    // const render_method_pay = 
-    // <div className='row button-currency-settings'>
-    //     <div className='currency-settings-item-col1'>
-    //         <div>
-    //             <div className='method-order-text1'>{method_pay?.name}</div>
-    //             <div className='method-order-text2'>{method_pay?.card_number}</div>
-    //         </div>
-    //     </div>
-    //     <div className='method-pay-col2'>
-    //         <div className='form-check form-switch'>
-    //             <input className="form-check-input" type="checkbox" />
-    //         </div>
-    //     </div>
-            
-    // </div>
-
-    // function handleClickCompany(index) {
-    //     setIndexSelectedCompany(index)
-    //     setShowNewMethod(true)
-    // }
+    
 
     function handleClickCheck(index) {        
         let arr = listCheckedMethods.slice()
@@ -146,7 +127,7 @@ export function CreateOrder2(props) {
 
                 <div className='container-create-order mt-20'>
                     <div className='container-title'>
-                        <div className='title-text'>Добавить методы оплаты</div>
+                        <div className='title-text'>{add_payment_methods}</div>
                         <div className='page-number'>2/4</div>
                     </div>
 
@@ -178,7 +159,7 @@ export function CreateOrder2(props) {
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M15 30C23.2843 30 30 23.2843 30 15C30 6.71573 23.2843 0 15 0C6.71573 0 0 6.71573 0 15C0 23.2843 6.71573 30 15 30ZM22 17.9251V13.0749H17.2752V8H11.7248V13.0749H7V17.9251H11.7248V23H17.2752V17.9251H22Z" fill="#86EFAC"/>
                                 </svg>
                             </div>
-                            <div className='btn-add-method-text'>Добавить метод оплаты</div>
+                            <div className='btn-add-method-text'>{add_payments_method}</div>
                         </div>
                     </div>
                     
@@ -188,7 +169,7 @@ export function CreateOrder2(props) {
                     <div onClick={() => { if (listCheckedMethods.indexOf(true) !== -1) props.setScreen('createorder3') }} 
                         className={`button-send-box ${listCheckedMethods.indexOf(true) !== -1 ? 'button-active-send-bg active-text': 'button-send-bg disable-text'} mt-20`}
                     >
-                        {listCheckedMethods.indexOf(true) !== -1 ? 'Далее': 'Выберите метод оплаты'}
+                        {listCheckedMethods.indexOf(true) !== -1 ? further: choose_payment_method}
                     </div>
                 </div>
             }
