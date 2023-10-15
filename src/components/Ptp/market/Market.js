@@ -6,7 +6,7 @@ import { useTelegram } from '../../../hooks/useTelegram';
 import { Selecter } from '../../Common/selecter';
 import { getCompaniesPay } from '../settings_pay/settingsPayApi';
 import { getOrders } from './marketApi';
-import { selectBuyOrder, selectCompaniesPay, selectMarketScreen, selectOrders, setBuyOrder, setCompaniesPay, setMarketScreen, setOrders, setQuantityOrders } from './marketSlice';
+import { selectBuyOrder, selectCompaniesPay, selectListFilterOrders, selectMarketScreen, selectOrders, setBuyOrder, setCompaniesPay, setListFilterOrders, setMarketScreen, setOrders, setQuantityOrders } from './marketSlice';
 import { ScreenBuy } from './screenBuy';
 
 import './style.css'
@@ -38,7 +38,7 @@ export function Market() {
     const [typeOrderFilter, setTypeOrderFilter] = useState('s')
     const [indexMethod, setIndexMethod] = useState(0);
 
-    const [listFilterOrders, setListFilterOrders] = useState([])
+    const listFilterOrders = useSelector(selectListFilterOrders)
 
     const [filter_quantity, setFilter_quantity] = useState('')
 
@@ -48,16 +48,16 @@ export function Market() {
 
 
     //labels
-    const market_label = language_code === 'ru' ? dictionary.p2p.market.ru: dictionary.p2p.market.en
-    const buy_label = language_code === 'ru' ? dictionary.market.buy.ru: dictionary.market.buy.en
-    const sale_label = language_code === 'ru' ? dictionary.market.sale.ru: dictionary.market.sale.en
-    const all = language_code === 'ru' ? dictionary.market.all.ru: dictionary.market.all.en
-    const qty = language_code === 'ru' ? dictionary.market.qty.ru: dictionary.market.qty.en
-    const price_per = language_code === 'ru' ? dictionary.market.price_per.ru: dictionary.market.price_per.en
-    const transactions = language_code === 'ru' ? dictionary.market.transactions.ru: dictionary.market.transactions.en
-    const available = language_code === 'ru' ? dictionary.market.available.ru: dictionary.market.available.en
-    const limits = language_code === 'ru' ? dictionary.market.limits.ru: dictionary.market.limits.en
-    const payment_methods = language_code === 'ru' ? dictionary.market.payment_methods.ru: dictionary.market.payment_methods.en
+    const market_label = language_code === 'ru' ? dictionary.p2p.market.ru : dictionary.p2p.market.en
+    const buy_label = language_code === 'ru' ? dictionary.market.buy.ru : dictionary.market.buy.en
+    const sale_label = language_code === 'ru' ? dictionary.market.sale.ru : dictionary.market.sale.en
+    const all = language_code === 'ru' ? dictionary.market.all.ru : dictionary.market.all.en
+    const qty = language_code === 'ru' ? dictionary.market.qty.ru : dictionary.market.qty.en
+    const price_per = language_code === 'ru' ? dictionary.market.price_per.ru : dictionary.market.price_per.en
+    const transactions = language_code === 'ru' ? dictionary.market.transactions.ru : dictionary.market.transactions.en
+    const available = language_code === 'ru' ? dictionary.market.available.ru : dictionary.market.available.en
+    const limits = language_code === 'ru' ? dictionary.market.limits.ru : dictionary.market.limits.en
+    const payment_methods = language_code === 'ru' ? dictionary.market.payment_methods.ru : dictionary.market.payment_methods.en
 
     const backScreen = (() => {
         if (marketScreen === 'select_method') dispatch(setMarketScreen('orders'))
@@ -80,7 +80,7 @@ export function Market() {
             if (order.currency_id === (index + 1)) newListFilterOrders[i] = 1
             else newListFilterOrders[i] = 0
         });
-        setListFilterOrders(newListFilterOrders)
+        dispatch(setListFilterOrders(newListFilterOrders))
     }
 
     function handleChangeCurrencyFiat(index) {
@@ -90,7 +90,7 @@ export function Market() {
             if (order.currency_fiat_id === (index + 1)) newListFilterOrders[i] = 1
             else newListFilterOrders[i] = 0
         });
-        setListFilterOrders(newListFilterOrders)
+        dispatch(setListFilterOrders(newListFilterOrders))
 
         setIndexMethod(0)
         getCompaniesPay({ fiat_id: index + 1 }, (data) => {
@@ -121,7 +121,7 @@ export function Market() {
         }
 
 
-        setListFilterOrders(newListFilterOrders)
+        dispatch(setListFilterOrders(newListFilterOrders))
     }
 
     const handleClickSelectMethod = () => {
@@ -174,8 +174,7 @@ export function Market() {
         <div className='divider-order-market'></div>
 
     useEffect(() => {
-        let filter_orders = new Array(orders.length).fill(1)
-        setListFilterOrders(filter_orders)
+
 
         parsePrice({}, (data) => {
             dispatch(setPriceMarket(data.price_market))
@@ -185,7 +184,10 @@ export function Market() {
                 // console.log('useEffect')
                 const sorted_orders = getSortedOrders(data.orders)
                 dispatch(setOrders(sorted_orders))
-                
+
+                let filter_orders = new Array(sorted_orders.length).fill(1)
+                dispatch(setListFilterOrders(filter_orders))
+
                 dispatch(setQuantityOrders(data.orders.length))
 
             })
@@ -313,7 +315,7 @@ export function Market() {
                     </>
                 }
 
-                
+
 
 
                 {marketScreen === 'orders' &&
@@ -390,7 +392,7 @@ export function Market() {
                                     <div className='order-line'></div>
                                 </div>
 
-                                
+
 
                                 <div className='order-row-1'>
                                     <div className='order-label-2'>

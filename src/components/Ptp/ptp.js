@@ -12,7 +12,7 @@ import { dateConvert } from '../Common/funcs';
 import { parsePrice } from './ptpApi';
 import { selectPriceMarket, selectRubDollar, setPriceMarket, setPriceMarketTRX, setRubDollar } from './ptpSlice';
 import { getOrders } from './market/marketApi';
-import { setOrders, setQuantityOrders } from './market/marketSlice';
+import { setListFilterOrders, setOrders, setQuantityOrders } from './market/marketSlice';
 import { dictionary } from '../../const/dictionary';
 
 export function Ptp(props) {
@@ -253,6 +253,10 @@ export function Ptp(props) {
             dispatch(setRubDollar(data.rub_dollar))
             getOrders({ user_id: '' }, (data) => {
                 const sorted_orders = getSortedOrders(data.orders)
+
+                let filter_orders = new Array(sorted_orders.length).fill(1)
+                dispatch(setListFilterOrders(filter_orders))
+
                 dispatch(setOrders(sorted_orders))
                 dispatch(setQuantityOrders(data.orders.length))
             })
