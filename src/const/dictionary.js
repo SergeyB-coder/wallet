@@ -376,7 +376,7 @@ export const dictionary = {
         sum: {
             ru: 'Сумма',
             en: 'Sum'
-        },
+        }, //!
 
         wants_buy_you: {
             ru: 'хочет купить у вас',
@@ -445,6 +445,11 @@ export const dictionary = {
         }, //!
         
         
+    },
+
+    sum: {
+        ru: 'Сумма',
+        en: 'Sum'
     },
 
     your_price: {
