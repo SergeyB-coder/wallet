@@ -156,7 +156,7 @@ export function ScreenBuy (props) {
                                     onClick={()=>handleClickMethodPay(index)}
                                 >
                                     <div style={{width: '45%'}}>
-                                        <div className='text-company'>{method.company_name}22</div>
+                                        <div className='text-company'>{method.company_name}</div>
                                         <div className='text-card'>{props.buyOrder.type === 'b' ? method.card_number: ''}</div>
                                     </div>
                                     {
