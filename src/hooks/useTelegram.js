@@ -6,15 +6,15 @@ export function useTelegram () {
         query_id: tg.initDataUnsafe.query_id,
 
         
-        user_id: tg.initDataUnsafe.user.id,
-        first_name: tg.initDataUnsafe.user.first_name,
-        init_data: tg.initData,
-        language_code: tg.initDataUnsafe.user.language_code,
+        // user_id: tg.initDataUnsafe.user.id,
+        // first_name: tg.initDataUnsafe.user.first_name,
+        // init_data: tg.initData,
+        // language_code: tg.initDataUnsafe.user.language_code,
 
 
-        // user_id: 638484379,
-        // first_name: 'Sash',
-        // language_code: 'en'
+        user_id: 638484379,
+        first_name: 'Sash',
+        language_code: 'en'
         
         // user_id: 745921856,
         // first_name: 'Alex', 

@@ -6,7 +6,7 @@ import { useTelegram } from '../../../hooks/useTelegram';
 import { Selecter } from '../../Common/selecter';
 import { getCompaniesPay } from '../settings_pay/settingsPayApi';
 import { getOrders } from './marketApi';
-import { selectBuyOrder, selectCompaniesPay, selectListFilterOrders, selectMarketScreen, selectOrders, setBuyOrder, setCompaniesPay, setListFilterOrders, setMarketScreen, setOrders, setQuantityOrders } from './marketSlice';
+import { selectBuyOrder, selectCompaniesPay, selectListFilterOrders, selectMarketScreen, selectOrders, selectShowMethodsPay, setBuyOrder, setCompaniesPay, setListFilterOrders, setMarketScreen, setOrders, setQuantityOrders, setShowMethodsPay } from './marketSlice';
 import { ScreenBuy } from './screenBuy';
 
 import './style.css'
@@ -44,7 +44,7 @@ export function Market() {
 
     const [currentSelecter, setCurrentSelecter] = useState(''); //currency, fiat
 
-    const [showMethodsPay, setShowMethodsPay] = useState(false);
+    const showMethodsPay = useSelector(selectShowMethodsPay)
 
 
     //labels
@@ -62,7 +62,7 @@ export function Market() {
     const backScreen = (() => {
         if (marketScreen === 'select_method') dispatch(setMarketScreen('orders'))
         else if (marketScreen === 'buy') {
-            if (showMethodsPay) setShowMethodsPay(false)
+            if (showMethodsPay) dispatch(setShowMethodsPay(false))
             else dispatch(setMarketScreen('orders'))
         }
         else navigate('/ptp', { replace: true })
@@ -407,7 +407,7 @@ export function Market() {
                     })
                 }
 
-                {marketScreen === 'buy' && <ScreenBuy buyOrder={buyOrder} showMethodsPay={showMethodsPay} setShowMethodsPay={setShowMethodsPay} />}
+                {marketScreen === 'buy' && <ScreenBuy buyOrder={buyOrder} />}
 
                 {marketScreen === 'select_method' &&
                     <div>

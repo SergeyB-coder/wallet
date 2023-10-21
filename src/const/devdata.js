@@ -29,8 +29,8 @@ export const PRICE_TYPES = [
 
 export const TIME_LIMITS = [
     '15 мин',
-    '30 мин',
-    '1 час'
+    '1 час',
+    '6 часов'
 ]
 
 export const METHOD_PAY_LIST = [

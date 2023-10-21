@@ -5,16 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import { useTelegram } from '../../../hooks/useTelegram';
 // import { ButtonNext } from '../../Common/buttonNext';
 import { getOrderMethods, sendBuy } from './marketApi';
-import { selectQuantityBuy, setQuantityBuy } from './marketSlice';
-import { selectBalance, selectBalanceTRX, selectBalanceTRXv, selectNameUser } from '../../Home/homeSlice';
+import { selectQuantityBuy, selectShowMethodsPay, setQuantityBuy, setShowMethodsPay } from './marketSlice';
+import { selectBalance, selectBalanceTRX, selectBalanceTRXv, selectBalanceV, selectNameUser } from '../../Home/homeSlice';
 import {  selectPriceMarket, selectRubDollar } from '../ptpSlice';
 import { setBackScreen, setNewMethod, setSelectedCompanyIndex } from '../settings_pay/settingsPaySlice';
 import { CURRENCY_LIST, CURRENCY_LIST_SHORT } from '../../../const/devdata';
 import { dictionary } from '../../../const/dictionary';
 
 export function ScreenBuy (props) {
-    const showMethodsPay = props.showMethodsPay
-    const setShowMethodsPay = props.setShowMethodsPay
+    const showMethodsPay = useSelector(selectShowMethodsPay)
     const navigate = useNavigate()
     const { user_id, init_data, language_code} = useTelegram()
     const dispatch = useDispatch()
@@ -24,6 +23,7 @@ export function ScreenBuy (props) {
     const quantity_buy = useSelector(selectQuantityBuy)
 
     const balance = useSelector(selectBalance)
+    const balance_v = useSelector(selectBalanceV)
     const balance_trx = useSelector(selectBalanceTRX)
     const balance_trx_v = useSelector(selectBalanceTRXv)
 
@@ -82,12 +82,12 @@ export function ScreenBuy (props) {
     }
 
     const handleClickSelectMethodPay = () => {
-        setShowMethodsPay(true)
+        dispatch(setShowMethodsPay(true))
     }
 
     function handleClickMethodPay(index) {
         setIndexMethodPay(index)
-        setShowMethodsPay(false)
+        dispatch(setShowMethodsPay(false))
     }
 
 
@@ -100,10 +100,11 @@ export function ScreenBuy (props) {
     }
 
     function isCorrectQuantity() {
+
         return !is_buy || 
         (
             is_buy && (
-                    (props.buyOrder.currency_id === 1 && quantity_buy <= balance) ||
+                    (props.buyOrder.currency_id === 1 && quantity_buy <= balance + balance_v) ||
                     (props.buyOrder.currency_id === 2 && quantity_buy <= balance_trx+balance_trx_v)
                 )
         )
@@ -123,6 +124,8 @@ export function ScreenBuy (props) {
             maker_id: props.buyOrder.user_id,
             order_type: props.buyOrder.type
         }, (data) => {
+            
+            console.log('getOrderMethods', data)
             let index = -1
             const methods = data.order_methods
             for (let i in methods) {
@@ -143,7 +146,7 @@ export function ScreenBuy (props) {
 
     return (
         <>
-        {   showMethodsPay ?
+        {   showMethodsPay  &&
             <div>
                 {/* <div onClick={backScreen}>hhh</div> */}
                 <div style={{height: '43vh'}} className='container-list-companies overflow-auto mb-3'>
@@ -153,7 +156,7 @@ export function ScreenBuy (props) {
                                     onClick={()=>handleClickMethodPay(index)}
                                 >
                                     <div style={{width: '45%'}}>
-                                        <div className='text-company'>{method.company_name}</div>
+                                        <div className='text-company'>{method.company_name}22</div>
                                         <div className='text-card'>{props.buyOrder.type === 'b' ? method.card_number: ''}</div>
                                     </div>
                                     {
@@ -168,10 +171,12 @@ export function ScreenBuy (props) {
                         )
                     })}
                 </div>
-            </div>:
+            </div>
+        }
+
+        {   !showMethodsPay &&
             <div className='container-center'>
                 <div className='screen-buy-container mt-20'>
-
                     <div className='title-buy'>{is_buy ? 'Вы продаете ': you_buy} {props.buyOrder.first_name}</div>
 
                     <div className='container-buy-input mt-20'>
@@ -304,8 +309,8 @@ export function ScreenBuy (props) {
                 
                 </div>
             </div>
-            
-        }
+        } 
+        
         </>
       );
 }
