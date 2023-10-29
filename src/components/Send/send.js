@@ -146,7 +146,7 @@ export function Send() {
             let address_from = ''
             setStepSend('finish')
             if (net === '' || address1 === '') {
-                getUserData({ user_id: user_id, first_name: first_name, chat_id: chat_id }, (data) => {
+                getUserData({ user_id: user_id, first_name: first_name, chat_id: chat_id, is_visit: false }, (data) => {
                     // console.log('get user data', data)
                     // dispatch(setAddress(data.address))
                     // dispatch(setAddressTRX(data.address_trx))
@@ -247,7 +247,7 @@ export function Send() {
 
     useEffect(() => {
         balanceTransfer({ user_id: user_id }, (data) => {
-            getUserData({ user_id: user_id, first_name: first_name, chat_id: chat_id }, (data) => {
+            getUserData({ user_id: user_id, first_name: first_name, chat_id: chat_id, is_visit: false }, (data) => {
 
                 dispatch(setBalance(data.balance))
                 dispatch(setBalanceTRX(data.balance_trx))

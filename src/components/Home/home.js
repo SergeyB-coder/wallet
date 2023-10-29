@@ -103,7 +103,7 @@ export function Home() {
 
 			// setTimeout(() => {setIsLoadData(false)}, 400)
 		})
-		getUserData({ user_id: user_id, first_name: first_name, chat_id: chat_id }, (data) => {
+		getUserData({ user_id: user_id, first_name: first_name, chat_id: chat_id, is_visit: true }, (data) => {
 			setIsHide(true)
 			console.log('get user data', data)
 			dispatch(setFirstRun(false))
