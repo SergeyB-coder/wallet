@@ -1,5 +1,5 @@
 .send-container {
-    width: 335px;
+    width: var(--with-elements);
 }
 
 .title-send {
@@ -25,7 +25,7 @@
 
 .address-item {
     margin-top: 20px;
-    width: 335px;
+    width: var(--with-elements);
     height: 60px;
 
     border: 1px solid #585858;
@@ -118,7 +118,7 @@
     padding: 9px 13px;
     gap: 8px;
 
-    width: 335px;
+    width: var(--with-elements);
     height: 42px;
 
     background: rgba(255, 255, 255, 0.1);

@@ -8,7 +8,7 @@ import { svg_bep1, svg_binance, svg_btc, svg_tron1 } from '../../const/svgs';
 import { useState } from 'react';
 import { Transactions } from './transactions';
 import { parsePrice } from '../Ptp/ptpApi';
-import { selectPriceMarket, selectPriceMarketTRX, setPriceMarket, setPriceMarketTRX, setRubDollar } from '../Ptp/ptpSlice';
+import { selectPriceMarket, selectPriceMarketBTC, selectPriceMarketBTCh, selectPriceMarketTRX, selectPriceMarketTRXh, setPriceMarket, setPriceMarketBTC, setPriceMarketBTCh, setPriceMarketTRX, setPriceMarketTRXh, setRubDollar } from '../Ptp/ptpSlice';
 import { dictionary } from '../../const/dictionary';
 
 
@@ -28,6 +28,13 @@ export function Home() {
 
 	const price_market = useSelector(selectPriceMarket)
 	const price_market_trx = useSelector(selectPriceMarketTRX)
+	const price_market_trx_h = useSelector(selectPriceMarketTRXh)
+
+	const price_market_btc = useSelector(selectPriceMarketBTC)
+	const price_market_btc_h = useSelector(selectPriceMarketBTCh)
+
+	const delta_usdt = Math.round(((price_market_trx - price_market_trx_h)/price_market_trx_h) * 10000)/100
+	const delta_btc = Math.round(((price_market_btc - price_market_btc_h)/price_market_btc_h) * 10000)/100
 	// const rub_dollar = useSelector(selectRubDollar)
 	const first_run = useSelector(selectFirstRun)
 
@@ -135,6 +142,11 @@ export function Home() {
 			dispatch(setPriceMarketTRX(data.price_market_trx))
 			dispatch(setRubDollar(data.rub_dollar))
 
+			dispatch(setPriceMarketTRXh(data.prices_h.usdt))
+
+			dispatch(setPriceMarketBTC(data.res_btc.data.last))
+			dispatch(setPriceMarketBTCh(data.prices_h.btc))
+
 			localStorage.setItem('price_market', data.price_market)
 			localStorage.setItem('price_market_trx', data.price_market_trx)
 			localStorage.setItem('rub_dollar', data.rub_dollar)
@@ -204,9 +216,12 @@ export function Home() {
 									</div>
 									<div className='wallet-item-info ps-0'>
 										<div className='token-text text-nowrap' style={{ textAlign: 'left' }}>Tether BEP</div>
-										<div className='token-balance-text mt-2 text-nowrap'>{Math.round((parseFloat(balance || 0 + balance_v || 0)) * 100) / 100} USDT</div>
+										<div className='token-balance-text mt-2 text-nowrap'>
+											{Math.round((parseFloat(price_market_trx || 0)) * 100) / 100} $ <span className={delta_usdt >= 0 ? 'green_delta':'red_delta'}>{delta_usdt >= 0 ? '  +':'  -'}{Math.abs(delta_usdt)}%</span>
+										</div>
 									</div>
 									<div className='wallet-item-info2'>
+										<div className='token-balance-text mt-2 text-nowrap'>{Math.round((parseFloat(balance || 0 + balance_v || 0)) * 100) / 100} USDT</div>
 										<div className='token-balance-text2 text-nowrap' style={{ textAlign: 'right' }}>${Math.round((parseFloat((balance || 0) + balance_v || 0)) * 100 * price_market) / 100}</div>
 										{/* <div className='bottom-info text-nowrap mt-2'>+23%</div> */}
 									</div>
@@ -240,9 +255,12 @@ export function Home() {
 									</div>
 									<div className='wallet-item-info ps-0'>
 										<div className='token-text text-nowrap' style={{ textAlign: 'left' }}>Tether TRC</div>
-										<div className='token-balance-text mt-2'>{Math.round((parseFloat(balance_trx || 0) + parseFloat(balance_trx_v || 0) ) * 100) / 100} USDT</div>
+										<div className='token-balance-text mt-2 text-nowrap'>
+											{Math.round((parseFloat(price_market_trx || 0)) * 100) / 100} $ <span className={delta_usdt >= 0 ? 'green_delta':'red_delta'}>{delta_usdt >= 0 ? '  +':'  -'}{Math.abs(delta_usdt)}%</span>
+										</div>
 									</div>
 									<div className='wallet-item-info2'>
+										<div className='token-balance-text mt-2'>{Math.round((parseFloat(balance_trx || 0) + parseFloat(balance_trx_v || 0) ) * 100) / 100} USDT</div>
 										<div className='token-balance-text2 text-nowrap' style={{ textAlign: 'right' }}>${ (Math.round( ( parseFloat(balance_trx || 0) + parseFloat(balance_trx_v || 0) ) * 100 * price_market_trx)) / 100}</div>
 										{/* <div className='bottom-info text-nowrap mt-2'>+23%</div> */}
 									</div>
@@ -271,9 +289,13 @@ export function Home() {
 									</div>
 									<div className='wallet-item-info ps-0'>
 										<div className='token-text text-nowrap' style={{ textAlign: 'left', color: '#A8A196' }}>Bitcoin</div>
-										<div className='token-balance-text mt-2' style={{ color: '#A8A196' }}>0 BTC</div>
+										<div className='token-balance-text mt-2 text-nowrap'>
+											{Math.round((parseFloat(price_market_btc || 0)) * 100) / 100} $ <span className={delta_btc >= 0 ? 'green_delta':'red_delta'}>{delta_btc >= 0 ? '  +':'  -'}{Math.abs(delta_btc)}%</span>
+										</div>
+										
 									</div>
 									<div className='wallet-item-info2'>
+										<div className='token-balance-text mt-2' style={{ color: '#A8A196' }}>0 BTC</div>
 										<div className='token-balance-text2 text-nowrap' style={{ textAlign: 'right', color: '#A8A196' }}>$0</div>
 										{/* <div className='bottom-info text-nowrap mt-2'>+23%</div> */}
 									</div>

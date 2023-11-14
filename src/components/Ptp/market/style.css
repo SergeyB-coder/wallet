@@ -6,7 +6,7 @@
 
 .market-container {
     padding-top: 17px;
-    width: 335px;
+    width: var(--with-elements);
 }
 
 .filter-input {
@@ -431,7 +431,7 @@
 }
 
 .screen-buy-container {
-    width: 335px;
+    width: var(--with-elements);
 
     
 }

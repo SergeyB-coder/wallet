@@ -27,6 +27,8 @@
 
     --bg-container-color: #333333;
     --divider-color: rgba(151, 151, 151, 0.8);
+
+    --with-elements: 350px;
 }
 
 .sale-label-l {
@@ -59,7 +61,7 @@ select {
 
 .trade-menu-container {
     padding-top: 8px;
-    width: 335px;
+    width: var(--with-elements);
     height: 295px;
 
     background: rgba(0, 0, 0, 0.4);
@@ -67,7 +69,7 @@ select {
 }
 
 .container-menu {
-    width: 335px;
+    width: var(--with-elements);
 }
 
 .title-last-deals {

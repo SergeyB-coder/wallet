@@ -216,7 +216,7 @@
 }
 
 .container-check-order {
-    width: 335px;
+    width: var(--with-elements);
     height: 274px;
 
     /* Gray 1 */
@@ -226,7 +226,7 @@
 }
 
 .container-finish-order {
-    width: 335px;
+    width: var(--with-elements);
     height: 227px;
 
     /* Gray 1 */
@@ -239,7 +239,7 @@
 
 .container-comment-input {
     
-    width: 335px;
+    width: var(--with-elements);
     height: 198px;
     background: rgba(255, 255, 255, 0.1);
     /* shadow/sm */
@@ -249,7 +249,7 @@
 }
 
 .comment-input {
-    width: 335px;
+    width: var(--with-elements);
     caret-color: var(--text-mini);
     border: none;
     outline: none;
@@ -313,7 +313,7 @@
 }
 
 .container-create-order {
-    width: 335px;
+    width: var(--with-elements);
 }
 
 .container-title {
@@ -325,7 +325,7 @@
 .order-settings-container {
     padding-top: 20px;
     height: 231px;
-    /* width: 335px; */
+    /* width: var(--with-elements); */
     /* Gray 1 */
 
     background: rgba(51, 51, 51, 0.5);
@@ -337,7 +337,7 @@
     padding-top: 20px;
     padding-bottom: 24px;
     /* height: 137px; */
-    /* width: 335px; */
+    /* width: var(--with-elements); */
     /* Gray 1 */
 
     background: rgba(51, 51, 51, 0.5);

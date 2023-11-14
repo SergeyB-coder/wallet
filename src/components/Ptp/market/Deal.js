@@ -535,7 +535,7 @@ export function Deal () {
 
     return (
         <div className='container-center'>
-            <div style={{width: '335px'}}>
+            <div style={{width: 'var(--with-elements)'}}>
 
             {isCancelDeal && render_cancel_deal}
 
