@@ -33,8 +33,8 @@ export function Home() {
 	const price_market_btc = useSelector(selectPriceMarketBTC)
 	const price_market_btc_h = useSelector(selectPriceMarketBTCh)
 
-	const delta_usdt = Math.round(((price_market_trx - price_market_trx_h)/price_market_trx_h) * 10000)/100
-	const delta_btc = Math.round(((price_market_btc - price_market_btc_h)/price_market_btc_h) * 10000)/100
+	const delta_usdt = price_market_trx_h !== 0 ? Math.round(((price_market_trx - price_market_trx_h)/price_market_trx_h) * 10000)/100: 0
+	const delta_btc = price_market_trx_h !== 0 ? Math.round(((price_market_btc - price_market_btc_h)/price_market_btc_h) * 10000)/100: 0
 	// const rub_dollar = useSelector(selectRubDollar)
 	const first_run = useSelector(selectFirstRun)
 
