@@ -221,8 +221,8 @@ export function Home() {
 										</div>
 									</div>
 									<div className='wallet-item-info2'>
-										<div className='token-balance-text mt-2 text-nowrap'>{Math.round((parseFloat(balance || 0 + balance_v || 0)) * 100) / 100} USDT</div>
-										<div className='token-balance-text2 text-nowrap' style={{ textAlign: 'right' }}>${Math.round((parseFloat((balance || 0) + balance_v || 0)) * 100 * price_market) / 100}</div>
+										<div className='token-balance-text2 mt-2 text-nowrap'>{Math.round((parseFloat(balance || 0 + balance_v || 0)) * 100) / 100} USDT</div>
+										<div className='token-balance-text text-nowrap' style={{ textAlign: 'right' }}>${Math.round((parseFloat((balance || 0) + balance_v || 0)) * 100 * price_market) / 100}</div>
 										{/* <div className='bottom-info text-nowrap mt-2'>+23%</div> */}
 									</div>
 								</>
@@ -260,8 +260,8 @@ export function Home() {
 										</div>
 									</div>
 									<div className='wallet-item-info2'>
-										<div className='token-balance-text mt-2'>{Math.round((parseFloat(balance_trx || 0) + parseFloat(balance_trx_v || 0) ) * 100) / 100} USDT</div>
-										<div className='token-balance-text2 text-nowrap' style={{ textAlign: 'right' }}>${ (Math.round( ( parseFloat(balance_trx || 0) + parseFloat(balance_trx_v || 0) ) * 100 * price_market_trx)) / 100}</div>
+										<div className='token-balance-text2 mt-2'>{Math.round((parseFloat(balance_trx || 0) + parseFloat(balance_trx_v || 0) ) * 100) / 100} USDT</div>
+										<div className='token-balance-text text-nowrap' style={{ textAlign: 'right' }}>${ (Math.round( ( parseFloat(balance_trx || 0) + parseFloat(balance_trx_v || 0) ) * 100 * price_market_trx)) / 100}</div>
 										{/* <div className='bottom-info text-nowrap mt-2'>+23%</div> */}
 									</div>
 								</>
@@ -295,8 +295,8 @@ export function Home() {
 										
 									</div>
 									<div className='wallet-item-info2'>
-										<div className='token-balance-text mt-2' style={{ color: '#A8A196' }}>0 BTC</div>
-										<div className='token-balance-text2 text-nowrap' style={{ textAlign: 'right', color: '#A8A196' }}>$0</div>
+										<div className='token-balance-text2 mt-2' >0 BTC</div>
+										<div className='token-balance-text text-nowrap' style={{ textAlign: 'right', color: '#A8A196' }}>$0</div>
 										{/* <div className='bottom-info text-nowrap mt-2'>+23%</div> */}
 									</div>
 								</>
