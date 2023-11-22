@@ -87,11 +87,12 @@ export function Person(props) {
     }
 
     function handleClickEditOrder(index) {
+        console.log('currency_order', orders[index])
         dispatch(setPercentPrice(orders[index].percent_price))
         dispatch(setQuantityOrder(orders[index].quantity))
         dispatch(setLimitOrder(orders[index].limit_order))
         dispatch(setCurrencyFiat(orders[index].currency_fiat_id))
-        dispatch(setCurrencyOrder(orders[index].currency_order))
+        dispatch(setCurrencyOrder(orders[index].currency_id))
         dispatch(setPrice(orders[index].price))
         // dispatch(setMethodPay(orders[index].method_pay))
 
