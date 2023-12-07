@@ -34,7 +34,7 @@ export function Market() {
     // const [buyOrder, setBuyOrder] = useState(null)
     const buyOrder = useSelector(selectBuyOrder)
     const [currencyFiat, setCurrencyFiat] = useState(1)
-    const [currencyNum, setCurrencyNum] = useState(1)
+    const [currencyNum, setCurrencyNum] = useState(4)
     const [typeOrderFilter, setTypeOrderFilter] = useState('s')
     const [indexMethod, setIndexMethod] = useState(0);
 
@@ -74,10 +74,11 @@ export function Market() {
     }
 
     function handleChangeCurrency(index) {
+        
         setCurrencyNum(index + 1)
         let newListFilterOrders = listFilterOrders.slice()
         orders.forEach((order, i) => {
-            if (order.currency_id === (index + 1)) newListFilterOrders[i] = 1
+            if (order.currency_id === (index + 1) || index === 3) newListFilterOrders[i] = 1
             else newListFilterOrders[i] = 0
         });
         dispatch(setListFilterOrders(newListFilterOrders))
@@ -115,7 +116,7 @@ export function Market() {
                             order.price :
                             Math.round(price_market * (order.currency_fiat_id === 1 ? rub_dollar : 1) * order.percent_price) / 100
                     ) <= q_filter && q_filter <= order.quantity - commission
-                ) && order.currency_id === currencyNum) newListFilterOrders[i] = 1
+                ) && (order.currency_id === currencyNum || currencyNum === 4)) newListFilterOrders[i] = 1
                 else newListFilterOrders[i] = 0
             });
         }
@@ -294,7 +295,7 @@ export function Market() {
                                 </svg>
                                 {/* </div> */}
                                 <Selecter
-                                    list_values={CURRENCY_LIST}
+                                    list_values={[...CURRENCY_LIST, 'All']}
                                     class_name={'filter-item-currency text-nowrap'}
                                     setIndex={handleChangeCurrency}
                                     selected_value={currencyNum}
@@ -334,7 +335,12 @@ export function Market() {
                                             {/* {order.currency_fiat_id === 1 ? 'RUB' : 'USD'} */}
                                             {CURRENCY_FIAT_LIST[order.currency_fiat_id - 1] || ''}
                                         </div>
-                                        <div className={order.type === 's' ? 'order-label' : 'mini-text-r'}>{price_per} 1 {order.currency_id === 1 ? 'USDT BEP20' : 'USDT TRC20'}</div>
+                                        <div 
+                                            className={order.type === 's' ? 'order-label' : 'mini-text-r'}>{price_per} 1 {
+                                                order.currency_id === 1 ? 'USDT BEP20' : 
+                                                order.currency_id === 2 ?'USDT TRC20': 'BTC'
+                                            }
+                                        </div>
                                     </div>
 
                                     <div className='container-center a-c'>
@@ -370,7 +376,7 @@ export function Market() {
                                         {available}
                                     </div>
                                     <div className='order-info-3'>
-                                        {order.quantity} USDT
+                                        {order.quantity} {order.currency_id === 3 ? 'BTC':'USDT'}
                                     </div>
                                 </div>
 
@@ -383,7 +389,7 @@ export function Market() {
                                         {limits}
                                     </div>
                                     <div className='order-info-3'>
-                                        {`${Math.round(1000 * order.limit_order / (order.type_price_id !== 2 ? order.price : price_market * (order.currency_fiat_id === 1 ? rub_dollar : 1) * order.percent_price / 100)) / 1000} - ${Math.round(100 * (order.quantity - commission)) / 100} USDT`}<br></br>
+                                        {`${Math.round(1000 * order.limit_order / (order.type_price_id !== 2 ? order.price : price_market * (order.currency_fiat_id === 1 ? rub_dollar : 1) * order.percent_price / 100)) / 1000} - ${Math.round(100 * (order.quantity - commission)) / 100} ${order.currency_id === 3 ? 'BTC': 'USDT'}`}<br></br>
                                         {`${order.limit_order} - ${Math.round((order.quantity - commission) * (order.type_price_id !== 2 ? order.price : price_market * (order.currency_fiat_id === 1 ? rub_dollar : 1) * order.percent_price / 100) * 1000) / 1000} ${order.currency_fiat_id === 1 ? 'Rub' : '$'}`}
                                     </div>
                                 </div>
