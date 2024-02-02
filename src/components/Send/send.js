@@ -75,8 +75,8 @@ export function Send() {
 
     function checkValidAddress(adderss) {
         // console.log(adderss[0] === 'T')
-        if (fromLabel1 === 'USDT TRC20' && adderss.length > 0) return adderss[0] === 'T'
-        else if (fromLabel1 === 'USDT BEP20' && adderss.length > 1) return adderss.slice(0, 2) === '0x'
+        if (selectedTokenIndex === 1 && adderss.length > 0) return adderss[0] === 'T'
+        else if (selectedTokenIndex === 0 && adderss.length > 1) return adderss.slice(0, 2) === '0x'
         if (adderss.length === 0) return true
         return false
     }
@@ -107,24 +107,24 @@ export function Send() {
     }
 
     function commission() {
-        return fromLabel1 === 'USDT TRC20' ? 3 : 0.1
+        return selectedTokenIndex === 1 ? 3 : 0.1
     }
 
     function getCurrentBalance() {
-        // console.log('balance + balance_v', balance + balance_v)
-        if (fromLabel1 === 'USDT TRC20') return parseFloat(balance_trx + balance_trx_v)
+        console.log('getCurrentBalance', balance, balance_v, balance_trx, balance_trx_v)
+        if (selectedTokenIndex === 1) return parseFloat(balance_trx + balance_trx_v)
         else return parseFloat(balance + balance_v)
     }
 
     function getScanner() {
-        if (fromLabel1 === 'USDT TRC20') return 'TRONSCAN'
+        if (selectedTokenIndex === 1) return 'TRONSCAN'
         else return 'Etherscan'
     }
 
     function isCorrectQuantity() {
         // console.log('getCurrentBalance()', getCurrentBalance(), sum_orders, quantity)
-        // return ((parseFloat(quantity || 0) + sum_orders + (fromLabel1 === 'USDT TRC20' ? 3 : 0.5)) <= getCurrentBalance())
-        return ((parseFloat(quantity || 0) + 0 + (fromLabel1 === 'USDT TRC20' ? 3 : 0.5)) <= getCurrentBalance())
+        // return ((parseFloat(quantity || 0) + sum_orders + (selectedTokenIndex === 1 ? 3 : 0.5)) <= getCurrentBalance())
+        return ((parseFloat(quantity || 0) + 0 + (selectedTokenIndex === 1 ? 3 : 0.5)) <= getCurrentBalance())
     }
 
     const handleClickSend = () => {
@@ -156,7 +156,7 @@ export function Send() {
                     // dispatch(setBalanceTRXv(data.balance_trx_v))
                     // dispatch(setNameUser(data.name_user))
                     // setTimeout(() => {setIsLoadData(false)}, 400)
-                    if (fromLabel1 === 'USDT TRC20') {
+                    if (selectedTokenIndex === 1) {
                         net = 't'
                         address_from = data.address_trx
                     }
@@ -210,7 +210,7 @@ export function Send() {
         }
 
         else if (stepSend === 'finish' && hash) {
-            if (fromLabel1 === 'USDT TRC20') window.open('https://tronscan.io/#/transaction/' + hash, "_blank")
+            if (selectedTokenIndex === 1) window.open('https://tronscan.io/#/transaction/' + hash, "_blank")
             else window.open('https://bscscan.com/tx/' + hash, "_blank")
             // navigate('/', {replace: true})
             // navigate('/home', {replace: true})
@@ -261,18 +261,18 @@ export function Send() {
     }, [chat_id, dispatch, first_name, user_id]);
 
     useEffect(() => {
-        getUserSumBlocks({ user_id: user_id, currency_id: (fromLabel1 === 'USDT TRC20' ? 2 : 1) }, (data) => {
+        getUserSumBlocks({ user_id: user_id, currency_id: (selectedTokenIndex === 1 ? 2 : 1) }, (data) => {
             // console.log('sum_blocks', data.sum_blocks)
             dispatch(setSumBlocks(data.sum_blocks))
         })
-    }, [dispatch, fromLabel1, user_id]);
+    }, [dispatch, user_id]);
 
     useEffect(() => {
-        getUserSumOrders({ user_id: user_id, currency_id: (fromLabel1 === 'USDT TRC20' ? 2 : 1) }, (data) => {
+        getUserSumOrders({ user_id: user_id, currency_id: (selectedTokenIndex === 1 ? 2 : 1) }, (data) => {
             console.log('sum_orders', data.sum_orders)
             dispatch(setSumOrders(data.sum_orders))
         })
-    }, [dispatch, fromLabel1, user_id]);
+    }, [dispatch, user_id]);
 
     useEffect(() => {
         // const inp = document.getElementById('q-send')
@@ -386,7 +386,7 @@ export function Send() {
 
                                         <div className='address-item-col2'>
                                             <div style={{ color: 'var(--text-mini)' }}
-                                                onClick={() => { fromLabel1 === 'USDT TRC20' ? setQuantity(balance_trx + balance_trx_v) : setQuantity(balance) }}
+                                                onClick={() => { selectedTokenIndex === 1 ? setQuantity(balance_trx + balance_trx_v) : setQuantity(balance) }}
                                             >
                                                 Max
                                             </div>
@@ -418,7 +418,7 @@ export function Send() {
                                             {amount_send_comm}
                                         </div>
                                         <div className='your-balance-q'>
-                                            {fromLabel1 === 'USDT TRC20' ? (quantity) : (quantity)} / {fromLabel1 === 'USDT TRC20' ? 3 : 0.5} USDT
+                                            {selectedTokenIndex === 1 ? (quantity) : (quantity)} / {selectedTokenIndex === 1 ? 3 : 0.5} USDT
                                         </div>
                                     </div>
 
@@ -446,7 +446,7 @@ export function Send() {
 
                         <div className='row-2 p-17 h-29'>
                             <div className='send-text-1'>{network_fee}</div>
-                            <div className='send-text-2'>{fromLabel1 === 'USDT TRC20' ? '3 USDT' : '0.1 USDT'}</div>
+                            <div className='send-text-2'>{selectedTokenIndex === 1 ? '3 USDT' : '0.1 USDT'}</div>
                         </div>
 
                         {divider}
@@ -495,7 +495,7 @@ export function Send() {
 
                             <div className='row-2 p-17 h-29'>
                                 <div className='send-text-1'>Сетевой сбор</div>
-                                <div className='send-text-2'>{fromLabel1 === 'USDT TRC20' ? '3 USDT' : '0.1 USDT'}</div>
+                                <div className='send-text-2'>{selectedTokenIndex === 1 ? '3 USDT' : '0.1 USDT'}</div>
                             </div>
 
                             {divider}
