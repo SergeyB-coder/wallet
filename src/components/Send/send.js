@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { svg_address_to } from '../../const/svgs';
 import { useTelegram } from '../../hooks/useTelegram';
-import { selectAddress, selectAddressTRX, selectBalance, selectBalanceBTC, selectBalanceTRX, selectBalanceTRXv, selectBalanceV, selectSumOrders, setBalance, setBalanceTRX, setSumBlocks, setSumOrders } from '../Home/homeSlice';
+import { selectAddress, selectBalance, selectBalanceBTC, selectBalanceTRX, selectBalanceTRXv, selectBalanceV, selectSumOrders, setBalance, setBalanceTRX, setSumBlocks, setSumOrders } from '../Home/homeSlice';
 import { balanceTransfer, sendTo } from './sendApi';
 
 import gear_gif from '../../static/animations/gear.gif'
@@ -22,7 +22,7 @@ export function Send() {
     const { tg, user_id, first_name, chat_id, init_data, language_code } = useTelegram()
     const navigate = useNavigate()
     const address = useSelector(selectAddress)
-    const address_trx = useSelector(selectAddressTRX)
+    // const address_trx = useSelector(selectAddressTRX)
 
     const balance = useSelector(selectBalance)
     const balance_v = useSelector(selectBalanceV)
@@ -38,7 +38,7 @@ export function Send() {
 
     const [address1] = useState(address)
 
-    const [fromLabel1] = useState('USDT BEP20')
+    // const [fromLabel1] = useState('USDT BEP20')
 
     const [addressTo, setAddressTo] = useState('')
     const [quantity, setQuantity] = useState('')
@@ -110,11 +110,11 @@ export function Send() {
         return selectedTokenIndex === 1 ? 3 : 0.1
     }
 
-    function getCurrentBalance() {
-        console.log('getCurrentBalance', balance, balance_v, balance_trx, balance_trx_v)
-        if (selectedTokenIndex === 1) return parseFloat(balance_trx + balance_trx_v)
-        else return parseFloat(balance + balance_v)
-    }
+    // function getCurrentBalance() {
+    //     console.log('getCurrentBalance', balance, balance_v, balance_trx, balance_trx_v)
+    //     if (selectedTokenIndex === 1) return parseFloat(balance_trx + balance_trx_v)
+    //     else return parseFloat(balance + balance_v)
+    // }
 
     function getScanner() {
         if (selectedTokenIndex === 1) return 'TRONSCAN'
@@ -266,14 +266,14 @@ export function Send() {
             // console.log('sum_blocks', data.sum_blocks)
             dispatch(setSumBlocks(data.sum_blocks))
         })
-    }, [dispatch, user_id]);
+    }, [dispatch, selectedTokenIndex, user_id]);
 
     useEffect(() => {
         getUserSumOrders({ user_id: user_id, currency_id: (selectedTokenIndex === 1 ? 2 : 1) }, (data) => {
             console.log('sum_orders', data.sum_orders)
             dispatch(setSumOrders(data.sum_orders))
         })
-    }, [dispatch, user_id]);
+    }, [dispatch, selectedTokenIndex, user_id]);
 
     useEffect(() => {
         // const inp = document.getElementById('q-send')
