@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createWalletBit, getBalance, getTransactions, getUserData } from './homeApi';
+import { activateAccount, createWalletBit, getBalance, getTransactions, getUserData } from './homeApi';
 import { selectBalance, selectBalanceTRX, selectBalanceTRXv, selectBalanceV, selectFirstRun, selectNameUser, setAddress, setAddressBTC, setAddressTRX, setBalance, setBalanceBTC, setBalanceTRX, setBalanceTRXv, setBalanceV, setFirstRun, setNameUser } from './homeSlice';
 import { MenuButtons } from './menubuttons';
 import { useTelegram } from '../../hooks/useTelegram';
@@ -138,11 +138,12 @@ export function Home() {
 
 	useEffect(() => {
 		parsePrice({}, (data) => {
+			if (!data.res) return
 			dispatch(setPriceMarket(data.price_market))
 			dispatch(setPriceMarketTRX(data.price_market_trx))
 			dispatch(setRubDollar(data.rub_dollar))
 
-			dispatch(setPriceMarketTRXh(data.prices_h.usdt))
+			dispatch(setPriceMarketTRXh(data.prices_h && isNaN(data.prices_h) ? data.prices_h.usdt: 0))
 
 			dispatch(setPriceMarketBTC(data.res_btc.data.last))
 			dispatch(setPriceMarketBTCh(data.prices_h.btc))
@@ -162,6 +163,10 @@ export function Home() {
 		tg.onEvent('backButtonClicked', backScreen)
 		return () => { tg.offEvent('backButtonClicked', backScreen) }
 	},)
+
+	useEffect(() => {
+		activateAccount({address_trx: 'TBs551svwG3hjowbd4n1JgAxtLMB7qJvoT'}, ()=>{})
+	}, []);
 
 	return (
 		<>
@@ -222,7 +227,7 @@ export function Home() {
 									</div>
 									<div className='wallet-item-info2'>
 										<div className='token-balance-text2 mt-2 text-nowrap'>{Math.round((parseFloat(balance || 0 + balance_v || 0)) * 100) / 100} USDT</div>
-										<div className='token-balance-text text-nowrap' style={{ textAlign: 'right' }}>${Math.round((parseFloat((balance || 0) + balance_v || 0)) * 100 * price_market) / 100}</div>
+										<div className='token-balance-text text-nowrap' style={{ textAlign: 'right' }}>${Math.round(((parseFloat(balance) || 0) + (parseFloat(balance_v) || 0)) * 100 * (parseFloat(price_market) || 0)) / 100}</div>
 										{/* <div className='bottom-info text-nowrap mt-2'>+23%</div> */}
 									</div>
 								</>

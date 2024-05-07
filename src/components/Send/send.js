@@ -124,7 +124,8 @@ export function Send() {
     function isCorrectQuantity() {
         // console.log('getCurrentBalance()', getCurrentBalance(), sum_orders, quantity)
         // return ((parseFloat(quantity || 0) + sum_orders + (selectedTokenIndex === 1 ? 3 : 0.5)) <= getCurrentBalance())
-        return ((parseFloat(quantity || 0) + 0 + (selectedTokenIndex === 1 ? 3 : 0.5)) <= getCurrentBalance())
+        // return ((parseFloat(quantity || 0) + 0 + (selectedTokenIndex === 1 ? 3 : 0.5)) <= getCurrentBalance())
+        return true
     }
 
     const handleClickSend = () => {
@@ -141,8 +142,8 @@ export function Send() {
             setStepSend('wait')
 
             let net = ''
-            if (address1 === address) net = 'b'
-            else if (address1 === address_trx) net = 't'
+            if (selectedTokenIndex === 0) net = 'b'
+            else if (selectedTokenIndex === 1) net = 't'
             let address_from = ''
             setStepSend('finish')
             if (net === '' || address1 === '') {

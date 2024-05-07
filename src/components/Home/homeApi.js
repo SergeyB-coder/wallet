@@ -30,7 +30,25 @@ export function getBalance(pars, callback) {
         })
         .then((response) => response.json())
         .then((data) => {
-            // console.log('data getbalance', data)
+            console.log('data getbalance', data)
+            
+            return callback(data)
+        });
+
+}
+
+export function activateAccount(pars, callback) {
+    fetch(url + '/activateaccount', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(pars)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('data activateaccount', data)
             
             return callback(data)
         });
