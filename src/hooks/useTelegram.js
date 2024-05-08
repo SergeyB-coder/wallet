@@ -3,13 +3,13 @@ const tg = window.Telegram.WebApp
 export function useTelegram () {
     return {
         tg,
-        // query_id: tg.initDataUnsafe.query_id,
+        query_id: tg.initDataUnsafe.query_id,
 
         
-        // user_id: tg.initDataUnsafe.user.id,
-        // first_name: tg.initDataUnsafe.user.first_name,
-        // init_data: tg.initData,
-        // language_code: tg.initDataUnsafe.user.language_code,
+        user_id: tg.initDataUnsafe.user.id,
+        first_name: tg.initDataUnsafe.user.first_name,
+        init_data: tg.initData,
+        language_code: tg.initDataUnsafe.user.language_code,
 
 
         
@@ -29,8 +29,8 @@ export function useTelegram () {
         
         // init_data: 'tg',
         // user_id: '1610258157',
-        user_id: 652065848,
-        first_name: 'Srg',
+        // user_id: 652065848,
+        // first_name: 'Srg',
         // user_id: '1234567',
         // first_name: 'Srg',
         // user_id: 671690853,
@@ -40,7 +40,7 @@ export function useTelegram () {
         // user_id: '184934838',
         
         // first_name: 'GF',
-        language_code: 'ru'
+        // language_code: 'ru'
 
     }
 }
