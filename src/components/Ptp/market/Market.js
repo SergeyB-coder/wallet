@@ -178,20 +178,22 @@ export function Market() {
 
 
         parsePrice({}, (data) => {
+            if (!data.res) return
             dispatch(setPriceMarket(data.price_market))
             dispatch(setPriceMarketTRX(data.price_market_trx))
             dispatch(setRubDollar(data.rub_dollar))
-            getOrders({ user_id: '' }, (data) => {
-                // console.log('useEffect')
-                const sorted_orders = getSortedOrders(data.orders)
-                dispatch(setOrders(sorted_orders))
+            
+        })
+        getOrders({ user_id: '' }, (data) => {
+            // console.log('useEffect')
+            const sorted_orders = getSortedOrders(data.orders)
+            dispatch(setOrders(sorted_orders))
 
-                let filter_orders = new Array(sorted_orders.length).fill(1)
-                dispatch(setListFilterOrders(filter_orders))
+            let filter_orders = new Array(sorted_orders.length).fill(1)
+            dispatch(setListFilterOrders(filter_orders))
 
-                dispatch(setQuantityOrders(data.orders.length))
+            dispatch(setQuantityOrders(data.orders.length))
 
-            })
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch]);

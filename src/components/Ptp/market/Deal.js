@@ -491,6 +491,7 @@ export function Deal () {
 
     useEffect(() => {
         parsePrice({}, (data) => {
+            if (!data.res) return
             dispatch(setPriceMarket(data.price_market))
             dispatch(setPriceMarketTRX(data.price_market_trx))
             dispatch(setRubDollar(data.rub_dollar))            

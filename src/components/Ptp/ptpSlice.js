@@ -6,8 +6,8 @@ const initialState = {
     currency_fiat: 1,
     percent_price: '',
     price: '',
-    price_market: 0,
-    price_market_trx: 0,
+    price_market: 0.9,
+    price_market_trx: 1.1,
     price_market_btc: 0,
     price_market_trx_h: 0,
     price_market_btc_h: 0,
@@ -16,7 +16,7 @@ const initialState = {
     price_type: 1,
     time_limit: 1,
     method_pay: null,
-    rub_dollar: 0,
+    rub_dollar: 90,
     comment: ''
 };
 
