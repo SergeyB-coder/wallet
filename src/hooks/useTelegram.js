@@ -15,7 +15,7 @@ export function useTelegram () {
         
         // user_id: 164441883,
         // first_name: 'Klepa Qeqi',
-        // language_code: 'ru'
+        // language_code: 'ru',
 
 
         // user_id: 638484379,

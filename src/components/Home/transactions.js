@@ -52,11 +52,11 @@ export function Transactions (props) {
         }, )
     
     useEffect(() => {
-        parsePrice({}, (data) => {
-            dispatch(setPriceMarket(data.price_market))
-            dispatch(setPriceMarketTRX(data.price_market_trx))
-            dispatch(setRubDollar(data.rub_dollar))            
-        })
+        // parsePrice({}, (data) => {
+        //     dispatch(setPriceMarket(data.price_market))
+        //     dispatch(setPriceMarketTRX(data.price_market_trx))
+        //     dispatch(setRubDollar(data.rub_dollar))            
+        // })
     }, [dispatch]);
 
     return (
