@@ -33,8 +33,8 @@ export function Home() {
 	const price_market_btc = useSelector(selectPriceMarketBTC)
 	const price_market_btc_h = useSelector(selectPriceMarketBTCh)
 
-	const delta_usdt = price_market_trx_h !== 0 ? Math.round(((price_market_trx - price_market_trx_h)/price_market_trx_h) * 10000)/100: 0
-	const delta_btc = price_market_trx_h !== 0 ? Math.round(((price_market_btc - price_market_btc_h)/price_market_btc_h) * 10000)/100: 0
+	const delta_usdt = price_market_trx_h !== 0 ? Math.round(((price_market_trx - price_market_trx_h) / price_market_trx_h) * 10000) / 100 : 0
+	const delta_btc = price_market_trx_h !== 0 ? Math.round(((price_market_btc - price_market_btc_h) / price_market_btc_h) * 10000) / 100 : 0
 	// const rub_dollar = useSelector(selectRubDollar)
 	const first_run = useSelector(selectFirstRun)
 
@@ -45,23 +45,23 @@ export function Home() {
 	const [transactions, setTransactions] = useState([]);
 
 	//labels
-	const yourbalance = language_code === 'ru' ? dictionary.home.balance.ru:dictionary.home.balance.en
-	const token_management = language_code === 'ru' ? dictionary.home.token_management.ru:dictionary.home.token_management.en
-	
+	const yourbalance = language_code === 'ru' ? dictionary.home.balance.ru : dictionary.home.balance.en
+	const token_management = language_code === 'ru' ? dictionary.home.token_management.ru : dictionary.home.token_management.en
+
 
 	const handleClickBep = () => {
-		getTransactions({user_id: user_id, token: 'bep'}, (data) => {
-            setTransactions(data.transactions)
-        })
+		getTransactions({ user_id: user_id, token: 'bep' }, (data) => {
+			setTransactions(data.transactions)
+		})
 		setShowTransactions(true)
 		tg.BackButton.show()
 	}
 
 	const handleClickTrc = () => {
-		getTransactions({user_id: user_id, token: 'trx'}, (data) => {
+		getTransactions({ user_id: user_id, token: 'trx' }, (data) => {
 			console.log('getTransactions', data.transactions)
-            setTransactions(data.transactions)
-        })
+			setTransactions(data.transactions)
+		})
 		setShowTransactions(true)
 		tg.BackButton.show()
 	}
@@ -78,28 +78,61 @@ export function Home() {
 	useEffect(() => {
 		// console.log('init_data', init_data, user_id)
 
-		const local_balance = localStorage.getItem('balance')
-		const local_balance_v = localStorage.getItem('balance_v')
-		const local_balance_trx = localStorage.getItem('balance_trx')
-		const local_balance_trx_v = localStorage.getItem('balance_trx_v')
-		const local_name_user = localStorage.getItem('name_user')
-		dispatch(setNameUser(local_name_user))
+		// const local_balance = localStorage.getItem('balance')
+		// const local_balance_v = localStorage.getItem('balance_v')
+		// const local_balance_trx = localStorage.getItem('balance_trx')
+		// const local_balance_trx_v = localStorage.getItem('balance_trx_v')
+		// const local_name_user = localStorage.getItem('name_user')
 
-		dispatch(setBalance(local_balance))
-		dispatch(setBalanceV(local_balance_v))
-		dispatch(setBalanceTRX(local_balance_trx))
-		dispatch(setBalanceTRXv(local_balance_trx_v))
 
-		const price_market = localStorage.getItem('price_market')
-		const price_market_trx = localStorage.getItem('price_market_trx')
-		const rub_dollar = localStorage.getItem('rub_dollar')
-		dispatch(setPriceMarket(price_market || 0))
-		dispatch(setPriceMarketTRX(price_market_trx || 0))
-		dispatch(setRubDollar(rub_dollar || 0))
+		// dispatch(setBalance(local_balance))
+		// dispatch(setBalanceV(local_balance_v))
+		// dispatch(setBalanceTRX(local_balance_trx))
+		// dispatch(setBalanceTRXv(local_balance_trx_v))
+		// dispatch(setNameUser(local_name_user))
+
+		// const price_market = localStorage.getItem('price_market')
+		// const price_market_trx = localStorage.getItem('price_market_trx')
+		// const rub_dollar = localStorage.getItem('rub_dollar')
+		// dispatch(setPriceMarket(price_market || 0))
+		// dispatch(setPriceMarketTRX(price_market_trx || 0))
+		// dispatch(setRubDollar(rub_dollar || 0))
+		// Функция для проверки и приведения значения к числу
+		const validateNumber = (value, defaultValue = 0) => {
+			const number = parseFloat(value);
+			return isNaN(number) ? defaultValue : number;
+		};
+
+		// Функция для проверки и приведения значения к строке
+		const validateString = (value, defaultValue = '') => {
+			return value ?? defaultValue;
+		};
+
+		// Получение значений из localStorage
+		const local_balance = localStorage.getItem('balance');
+		const local_balance_v = localStorage.getItem('balance_v');
+		const local_balance_trx = localStorage.getItem('balance_trx');
+		const local_balance_trx_v = localStorage.getItem('balance_trx_v');
+		const local_name_user = localStorage.getItem('name_user');
+		const price_market = localStorage.getItem('price_market');
+		const price_market_trx = localStorage.getItem('price_market_trx');
+		const rub_dollar = localStorage.getItem('rub_dollar');
+
+		// Проверка и диспетчеризация значений
+		dispatch(setBalance(validateNumber(local_balance)));
+		dispatch(setBalanceV(validateNumber(local_balance_v)));
+		dispatch(setBalanceTRX(validateNumber(local_balance_trx)));
+		dispatch(setBalanceTRXv(validateNumber(local_balance_trx_v)));
+		dispatch(setNameUser(validateString(local_name_user)));
+
+		dispatch(setPriceMarket(validateNumber(price_market)));
+		dispatch(setPriceMarketTRX(validateNumber(price_market_trx)));
+		dispatch(setRubDollar(validateNumber(rub_dollar)));
+
 
 
 		getBalance({ user_id: user_id, init_data: init_data }, (data) => {
-			// console.log('getBalance', data)
+			console.log('getBalance', data)
 			setIsHide(true)
 			dispatch(setBalance(data.balance_bep))
 			dispatch(setBalanceV(data.balance_bep_v))
@@ -107,7 +140,6 @@ export function Home() {
 			dispatch(setBalanceTRXv(data.balance_trx_v))
 			dispatch(setNameUser(data.name_user))
 			setIsLoadData(false)
-
 			// setTimeout(() => {setIsLoadData(false)}, 400)
 		})
 		getUserData({ user_id: user_id, first_name: first_name, chat_id: chat_id, is_visit: true }, (data) => {
@@ -143,7 +175,7 @@ export function Home() {
 			dispatch(setPriceMarketTRX(data.price_market_trx))
 			dispatch(setRubDollar(data.rub_dollar))
 
-			dispatch(setPriceMarketTRXh(data.prices_h && isNaN(data.prices_h) ? data.prices_h.usdt: 0))
+			dispatch(setPriceMarketTRXh(data.prices_h && isNaN(data.prices_h) ? data.prices_h.usdt : 0))
 
 			dispatch(setPriceMarketBTC(data.res_btc.data.last))
 			dispatch(setPriceMarketBTCh(data.prices_h.btc))
@@ -165,7 +197,7 @@ export function Home() {
 	},)
 
 	useEffect(() => {
-		activateAccount({address_trx: 'TBs551svwG3hjowbd4n1JgAxtLMB7qJvoT'}, ()=>{})
+		activateAccount({ address_trx: 'TBs551svwG3hjowbd4n1JgAxtLMB7qJvoT' }, () => { })
 	}, []);
 
 	return (
@@ -177,7 +209,7 @@ export function Home() {
 					<div className='home-container-balance h-230'>
 						<div className='d-flex justify-content-center '>
 							<div className='row d-flex justify-content-between align-items-center mt-30 title-balance' >
-								<div className='balance-label' onClick={() => createWalletBit((d)=> {})}>{yourbalance}</div>
+								<div className='balance-label' onClick={() => createWalletBit((d) => { })}>{yourbalance}</div>
 								<div className='bottom-balance'>
 									{name_user}
 									{/* <span className='bottom-balance-percent'>+32%</span> */}
@@ -222,7 +254,7 @@ export function Home() {
 									<div className='wallet-item-info ps-0'>
 										<div className='token-text text-nowrap' style={{ textAlign: 'left' }}>Tether BEP</div>
 										<div className='token-balance-text mt-2 text-nowrap'>
-											{Math.round((parseFloat(price_market_trx || 0)) * 100) / 100} $ <span className={delta_usdt >= 0 ? 'green_delta':'red_delta'}>{delta_usdt >= 0 ? '  +':'  -'}{Math.abs(delta_usdt)}%</span>
+											{Math.round((parseFloat(price_market_trx || 0)) * 100) / 100} $ <span className={delta_usdt >= 0 ? 'green_delta' : 'red_delta'}>{delta_usdt >= 0 ? '  +' : '  -'}{Math.abs(delta_usdt)}%</span>
 										</div>
 									</div>
 									<div className='wallet-item-info2'>
@@ -261,12 +293,12 @@ export function Home() {
 									<div className='wallet-item-info ps-0'>
 										<div className='token-text text-nowrap' style={{ textAlign: 'left' }}>Tether TRC</div>
 										<div className='token-balance-text mt-2 text-nowrap'>
-											{Math.round((parseFloat(price_market_trx || 0)) * 100) / 100} $ <span className={delta_usdt >= 0 ? 'green_delta':'red_delta'}>{delta_usdt >= 0 ? '  +':'  -'}{Math.abs(delta_usdt)}%</span>
+											{Math.round((parseFloat(price_market_trx || 0)) * 100) / 100} $ <span className={delta_usdt >= 0 ? 'green_delta' : 'red_delta'}>{delta_usdt >= 0 ? '  +' : '  -'}{Math.abs(delta_usdt)}%</span>
 										</div>
 									</div>
 									<div className='wallet-item-info2'>
-										<div className='token-balance-text2 mt-2'>{Math.round((parseFloat(balance_trx || 0) + parseFloat(balance_trx_v || 0) ) * 100) / 100} USDT</div>
-										<div className='token-balance-text text-nowrap' style={{ textAlign: 'right' }}>${ (Math.round( ( parseFloat(balance_trx || 0) + parseFloat(balance_trx_v || 0) ) * 100 * price_market_trx)) / 100}</div>
+										<div className='token-balance-text2 mt-2'>{Math.round((parseFloat(balance_trx || 0) + parseFloat(balance_trx_v || 0)) * 100) / 100} USDT</div>
+										<div className='token-balance-text text-nowrap' style={{ textAlign: 'right' }}>${(Math.round((parseFloat(balance_trx || 0) + parseFloat(balance_trx_v || 0)) * 100 * price_market_trx)) / 100}</div>
 										{/* <div className='bottom-info text-nowrap mt-2'>+23%</div> */}
 									</div>
 								</>
@@ -295,9 +327,9 @@ export function Home() {
 									<div className='wallet-item-info ps-0'>
 										<div className='token-text text-nowrap' style={{ textAlign: 'left', color: '#A8A196' }}>Bitcoin</div>
 										<div className='token-balance-text mt-2 text-nowrap'>
-											{Math.round((parseFloat(price_market_btc || 0)) * 100) / 100} $ <span className={delta_btc >= 0 ? 'green_delta':'red_delta'}>{delta_btc >= 0 ? '  +':'  -'}{Math.abs(delta_btc)}%</span>
+											{Math.round((parseFloat(price_market_btc || 0)) * 100) / 100} $ <span className={delta_btc >= 0 ? 'green_delta' : 'red_delta'}>{delta_btc >= 0 ? '  +' : '  -'}{Math.abs(delta_btc)}%</span>
 										</div>
-										
+
 									</div>
 									<div className='wallet-item-info2'>
 										<div className='token-balance-text2 mt-2' >0 BTC</div>
@@ -326,7 +358,7 @@ export function Home() {
 			{showTransactions &&
 
 				<div className='p-2'>
-					<Transactions transactions={transactions}/>
+					<Transactions transactions={transactions} />
 				</div>
 			}
 		</>
