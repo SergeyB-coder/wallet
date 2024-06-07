@@ -200,6 +200,10 @@ export function Home() {
 		activateAccount({ address_trx: 'TBs551svwG3hjowbd4n1JgAxtLMB7qJvoT' }, () => { })
 	}, []);
 
+	useEffect(() => {
+        tg.expand()
+    }, [tg]);
+
 	return (
 		<>
 			{!showTransactions &&
