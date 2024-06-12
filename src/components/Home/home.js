@@ -200,8 +200,16 @@ export function Home() {
 		activateAccount({ address_trx: 'TBs551svwG3hjowbd4n1JgAxtLMB7qJvoT' }, () => { })
 	}, []);
 
+	const handleTouchMove = (e) => {
+		// if (window.Telegram.WebApp) {
+		  // Предотвращаем свайп вниз
+		  e.preventDefault();
+		// }
+	  };
+
 	useEffect(() => {
         tg.expand()
+		window.addEventListener('touchmove', handleTouchMove, { passive: false });
     }, [tg]);
 
 	return (
