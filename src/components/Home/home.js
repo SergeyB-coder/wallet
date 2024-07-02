@@ -203,13 +203,13 @@ export function Home() {
 	const handleTouchMove = (e) => {
 		// if (window.Telegram.WebApp) {
 		  // Предотвращаем свайп вниз
-		  e.preventDefault();
+		//   e.preventDefault();
 		// }
 	  };
 
 	useEffect(() => {
         tg.expand()
-		window.addEventListener('touchmove', handleTouchMove, { passive: false });
+		// window.addEventListener('touchmove', handleTouchMove, { passive: false });
     }, [tg]);
 
 	return (
